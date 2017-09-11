@@ -1,5 +1,5 @@
 // timeline 
-let Timeline = (function() {
+let Timeline = (function($, dispatch) {
   
   let T = {};
 
@@ -9,4 +9,4 @@ let Timeline = (function() {
   }
 
   return T;
-})();
+})(jQuery, Dispatch);
