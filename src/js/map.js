@@ -9,6 +9,7 @@ let Map = (function($, dispatch) {
   M.initialize = function (container) {
     var map = L.map(container).setView([29.717, -95.402], 16);
     tileLayer = L.tileLayer(tileserver + year + '/all/{z}/{x}/{y}.png?layer=').addTo(map);
+    return M;
   }
 
   M.setYear = function (newYear) {

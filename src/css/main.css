@@ -20,6 +20,59 @@ header {
 
 #timeline {
   height: 50px;
+  padding: 0 30px;
+}
+
+.year-stepper, .timeline {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.year-stepper {
+  width: 140px;
+}
+
+.year {
+  font-size: 34px;
+  font-weight: bold;
+  color: #07407B;
+}
+
+.timeline {
+  position: relative;
+  width: calc(100% - 140px);
+  cursor: pointer;
+}
+
+.timeline-track {
+  height: 30px;
+  background-color: #6986A3;
+}
+
+.timeline-slider {
+  position: absolute;
+  background-color: #ccc;
+  width: 1px;
+  height: 20px;
+  border: 8px solid #666;
+  border-radius: 3px;
+  left: 0;
+  top: -4px;
+  margin-left: -8px;
+}
+
+.timeline-probe {
+  position: absolute;
+  background-color: #333;
+  color: white;
+  font-size: 12px;
+  padding: 8px;
+  width: 30px;
+  border-radius: 5px;
+  margin-left: -23px;
+  top: -45px;
+  text-align: center;
+  display: none;
 }
 
 /* MAP */
