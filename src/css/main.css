@@ -30,6 +30,12 @@ header {
 
 .year-stepper {
   width: 140px;
+  margin-right: 20px;
+}
+
+.year-stepper > * {
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .year {
@@ -38,9 +44,29 @@ header {
   color: #07407B;
 }
 
+.year-stepper i:before {
+  color: #666;
+  border-radius: 50%;
+  border: 1px solid #666;
+  width: 18px;
+  line-height: 18px;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.year-stepper i:hover:before {
+  color: #333;
+  border-color: #333;
+}
+
+.year-stepper i.disabled:before, .year-stepper i.disabled:hover:before {
+  color: #ccc;
+  border-color: #ccc;
+}
+
 .timeline {
   position: relative;
-  width: calc(100% - 140px);
+  width: calc(100% - 160px);
   cursor: pointer;
 }
 

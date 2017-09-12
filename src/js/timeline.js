@@ -35,11 +35,19 @@ let Timeline = (function($, dispatch) {
       .on('mouseleave', function () {
         $('.timeline-probe', timeline).hide();
       });
-  }
 
-  $(window).resize(function () {
-    addTicks();
-  });
+    $('.icon-angle-left', stepper).click(function () {
+      updateYear(year - 1);
+    });
+
+    $('.icon-angle-right', stepper).click(function () {
+      updateYear(year + 1);
+    });
+
+    $(window).resize(function () {
+      addTicks();
+    });
+  }
 
   function getDataForMouseEvent (e) {
     let t = $('.timeline-track', timeline);
@@ -102,6 +110,8 @@ let Timeline = (function($, dispatch) {
     var pct = (year - yearRange[0]) / (yearRange[1] - yearRange[0]);
     $('.timeline-slider', timeline).css('left', pct * 100 + '%');
     dispatch.call('changeyear', this, year);
+    $('.icon-angle-left', stepper).toggleClass('disabled', year == yearRange[0]);
+    $('.icon-angle-right', stepper).toggleClass('disabled', year == yearRange[1]);
   }
 
   T.initialize = function (yearsData, containerId) {
@@ -124,8 +134,8 @@ let Timeline = (function($, dispatch) {
     timeline
       .append('<div class="timeline-probe">' + year + '<div>');
 
+    updateYear(year);
     addTicks();
-
     init_events();
   }
 
