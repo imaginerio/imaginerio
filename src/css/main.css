@@ -115,11 +115,11 @@ header {
   top: 0;
   width: 1px;
   border-left: 1px solid #07407B;
-  height: 10px;
+  height: 5px;
 }
 
 .tick-minor {
-  height: 5px;
+  height: 10px;
 }
 
 .tick span {
@@ -130,7 +130,7 @@ header {
   width: 40px;
   text-align: center;
   margin-left: -20px;
-  top: 12px;
+  top: 7px;
 }
 
 .tick:first-child, .tick:last-child {
