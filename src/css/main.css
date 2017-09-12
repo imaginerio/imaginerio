@@ -46,7 +46,8 @@ header {
 
 .timeline-track {
   height: 30px;
-  background-color: #6986A3;
+  background-color: #CCC;
+  border-radius: 5px;
 }
 
 .timeline-slider {
@@ -73,6 +74,51 @@ header {
   top: -45px;
   text-align: center;
   display: none;
+}
+
+.ticks {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  user-select: none;
+}
+
+.tick {
+  position: absolute;
+  top: 0;
+  width: 1px;
+  border-left: 1px solid #07407B;
+  height: 10px;
+}
+
+.tick-minor {
+  height: 5px;
+}
+
+.tick span {
+  font-weight: bold;
+  position: absolute;
+  display: block;
+  color: #07407B;
+  width: 40px;
+  text-align: center;
+  margin-left: -20px;
+  top: 12px;
+}
+
+.tick:first-child, .tick:last-child {
+  border: none;
+}
+
+.tick-major:first-child span {
+  text-align: left;
+  margin-left: 5px;
+}
+
+.tick-major:last-child span {
+  text-align: right;
+  margin-left: -45px;
 }
 
 /* MAP */

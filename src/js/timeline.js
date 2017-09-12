@@ -37,6 +37,10 @@ let Timeline = (function($, dispatch) {
       });
   }
 
+  $(window).resize(function () {
+    addTicks();
+  });
+
   function getDataForMouseEvent (e) {
     let t = $('.timeline-track', timeline);
     let x = e.pageX - t.offset().left;
@@ -44,6 +48,36 @@ let Timeline = (function($, dispatch) {
     pct = Math.max(0, Math.min(pct, 1));
     let y = Math.round(pct * (yearRange[1] - yearRange[0]) + yearRange[0]);
     return {pct: pct, year: y};
+  }
+
+  function addTicks () {
+    $('.ticks', timeline).remove()
+    let major = window.innerWidth >= 800 ? 10 : 20;
+    let minor = major / 2;
+    let ticksContainer = $('<div class="ticks">').prependTo($('.timeline-track'), timeline);
+    appendTick('major', yearRange[0], ticksContainer);
+    let next = Math.ceil(yearRange[0] / minor) * minor;
+    if (next === yearRange[0]) next += minor;
+    while (next < yearRange[1]) {
+      appendTick(next % major === 0 ? 'major' : 'minor', next, ticksContainer);
+      next += minor;
+    }
+    let last = $('.tick:last-child', ticksContainer);
+    if (last.hasClass('tick-major') && last.position().left > $('.timeline-track', timeline).width() - 55)
+      $('span', last).remove();
+    let first = $('.tick-major', ticksContainer).eq(1);
+    if (first.position().left < 55)
+      $('span', first).remove();
+    appendTick('major', yearRange[1], ticksContainer);
+  }
+
+  function appendTick (type, value, container) {
+    var pct = (value - yearRange[0]) / (yearRange[1] - yearRange[0]);
+    var t = $('<div>')
+      .attr('class', 'tick tick-' + type)
+      .css('left', pct * 100 + '%')
+      .appendTo(container);
+    if (type == 'major') t.append('<span>' + value + '</span>');
   }
 /*
   function snapToYear (y) {
@@ -62,10 +96,10 @@ let Timeline = (function($, dispatch) {
   }
 */
   function updateYear (y) {
-    y = Math.max(years[0], Math.min(+y, years[years.length-1]));
+    y = Math.max(yearRange[0], Math.min(+y, yearRange[1]));
     year = y;
     $('.year', stepper).html(year);
-    var pct = (year - years[0]) / (years[years.length-1] - years[0]);
+    var pct = (year - yearRange[0]) / (yearRange[1] - yearRange[0]);
     $('.timeline-slider', timeline).css('left', pct * 100 + '%');
     dispatch.call('changeyear', this, year);
   }
@@ -89,6 +123,8 @@ let Timeline = (function($, dispatch) {
       .append('<div class="timeline-slider">');
     timeline
       .append('<div class="timeline-probe">' + year + '<div>');
+
+    addTicks();
 
     init_events();
   }
