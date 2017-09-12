@@ -19,7 +19,7 @@ let Timeline = (function($, dispatch) {
           y = d.year;
         })
         .on('mouseup.timeslide mouseleave.timeslide', function (){
-          $(document).off('mousemove.timeslide mouseup.timeline mouseleave.timeslide');
+          $(document).off('mousemove.timeslide mouseup.timeslide mouseleave.timeslide');
           updateYear(y);
         })
     });

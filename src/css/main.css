@@ -31,7 +31,7 @@ header {
 .panel-toggle {
   position: absolute;
   background-color: white;
-  z-index: 400;
+  z-index: 700;
   height: 20px;
   padding: 10px 20px;
   cursor: pointer;
