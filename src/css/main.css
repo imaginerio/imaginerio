@@ -1,6 +1,7 @@
 html, body {
   margin: 0;
   font: 13px/17px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #666;
 }
 
 main {
@@ -157,4 +158,44 @@ header {
 
 #filmstrip {
   height: 170px;
+  position: relative;
+}
+
+#filmstrip.collapsed {
+  height: 0px;
+}
+
+.filmstrip-toggle {
+  position: absolute;
+  background-color: white;
+  width: 230px;
+  height: 20px;
+  top: -30px;
+  z-index: 400;
+  padding: 10px 20px;
+  border-top-right-radius: 5px;
+  cursor: pointer;
+  line-height: 10px;
+  font-weight: bold;
+}
+
+.filmstrip-toggle > * {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.filmstrip-toggle > i {
+  float: right;
+}
+
+#filmstrip .filmstrip-toggle i.icon-angle-double-up {
+  display: none;
+}
+
+#filmstrip.collapsed .filmstrip-toggle i.icon-angle-double-down {
+  display: none;
+}
+
+#filmstrip.collapsed .filmstrip-toggle i.icon-angle-double-up {
+  display: inline-block;
 }
