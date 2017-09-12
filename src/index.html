@@ -9,15 +9,21 @@
 </head>
 <body>
 
-  <main>
+  <main class='flex-column'>
 
   <header>header</header>
   <section id='timeline'></section>
-  <section id='legend'></section>
-  <section id='map'></section>
-  <section id='filmstrip' class='collapsed'>
-    <div class='filmstrip-toggle'><span>VIEWS</span><i class='icon-angle-double-up'></i><i class='icon-angle-double-down'></i></div>
-  </section>
+  <div class='flex-row'>
+    <aside id='legend' class='panel collapsed'>
+      <div class='panel-toggle legend-toggle'><i class='icon-list-bullet'></i><span>MAP LEGEND</span><i class='icon-angle-double-right open'></i><i class='icon-angle-double-left close'></i></div>
+    </aside>
+    <div class='flex-column'>
+      <section id='map'></section>
+      <section id='filmstrip' class='panel collapsed'>
+        <div class='panel-toggle filmstrip-toggle'><span>VIEWS</span><i class='icon-angle-double-up open'></i><i class='icon-angle-double-down close'></i></div>
+      </section>
+    </div>
+  </div>
 
   </main>
 

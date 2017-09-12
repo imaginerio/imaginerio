@@ -15,5 +15,6 @@ function initialize (yearsData) {
   Map.initialize('map').setYear(year);
   Timeline.initialize(years, 'timeline');
   Filmstrip.initialize();
+  Legend.initialize();
   // etc.
 }

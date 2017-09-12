@@ -7,14 +7,61 @@ html, body {
 main {
   width: 100%;
   height: 100%;
+}
+
+.flex-column {
+  flex: 1;
   display: flex;
   flex-direction: column;
+}
+
+.flex-row {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
 }
 
 /* HEADER */
 
 header {
   height: 65px;
+}
+
+/* GENERAL LAYOUTS */
+.panel-toggle {
+  position: absolute;
+  background-color: white;
+  z-index: 400;
+  height: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  line-height: 20px;
+  font-weight: bold;
+}
+
+.panel-toggle > * {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.panel-toggle span {
+  margin-left: 15px;
+}
+
+.panel-toggle > i {
+  float: right;
+}
+
+.panel-toggle i.open {
+  display: none;
+}
+
+.panel.collapsed .panel-toggle i.close {
+  display: none;
+}
+
+.panel.collapsed .panel-toggle i.open {
+  display: inline-block;
 }
 
 /* TIMELINE */
@@ -154,6 +201,14 @@ header {
   flex: 1;
 }
 
+.leaflet-left .leaflet-control.leaflet-control-zoom {
+  margin-left: 20px;
+}
+
+.leaflet-bottom .leaflet-control.leaflet-control-zoom {
+  margin-bottom: 50px;
+}
+
 /* FILMSTRIP */
 
 #filmstrip {
@@ -166,36 +221,52 @@ header {
 }
 
 .filmstrip-toggle {
-  position: absolute;
-  background-color: white;
   width: 230px;
-  height: 20px;
-  top: -30px;
-  z-index: 400;
-  padding: 10px 20px;
+  top: -40px;
   border-top-right-radius: 5px;
-  cursor: pointer;
-  line-height: 10px;
-  font-weight: bold;
 }
 
-.filmstrip-toggle > * {
-  display: inline-block;
-  vertical-align: middle;
+/* LEGEND */
+
+#legend {
+  width: 280px;
+  position: relative;
 }
 
-.filmstrip-toggle > i {
-  float: right;
+#legend.collapsed {
+  width: 0;
 }
 
-#filmstrip .filmstrip-toggle i.icon-angle-double-up {
+.legend-toggle {
+  width: 10px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  top: 20px;
+  left: 280px;
+}
+
+#legend.collapsed .legend-toggle {
+  left: 0;
+  width: 160px;
+}
+
+.legend-toggle i.icon-list-bullet {
+  float: none;
   display: none;
 }
 
-#filmstrip.collapsed .filmstrip-toggle i.icon-angle-double-down {
+#legend.subsequent.collapsed .legend-toggle {
+  width: 10px;
+}
+
+.legend-toggle span {
   display: none;
 }
 
-#filmstrip.collapsed .filmstrip-toggle i.icon-angle-double-up {
+#legend.collapsed .legend-toggle span, #legend.collapsed .legend-toggle i.icon-list-bullet{
   display: inline-block;
+}
+
+#legend.subsequent .legend-toggle span, #legend.subsequent .legend-toggle i.icon-angle-double-right {
+  display: none;
 }
