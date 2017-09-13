@@ -13,8 +13,8 @@ function initialize (yearsData) {
   years = yearsData;
   year = yearsData[0];
   Map.initialize('map').setYear(year);
-  Timeline.initialize(years, 'timeline');
-  Filmstrip.initialize();
+  Timeline.initialize(years, 'timeline').setYear(year);
+  Filmstrip.initialize().setYear(year);
   Legend.initialize();
   // etc.
 }

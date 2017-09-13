@@ -214,6 +214,7 @@ header {
 #filmstrip {
   height: 170px;
   position: relative;
+  transition: height .25s;
 }
 
 #filmstrip.collapsed {
@@ -224,6 +225,7 @@ header {
   width: 230px;
   top: -40px;
   border-top-right-radius: 5px;
+  transition: y .25s;
 }
 
 /* LEGEND */
@@ -231,6 +233,7 @@ header {
 #legend {
   width: 280px;
   position: relative;
+  transition: width .25s;
 }
 
 #legend.collapsed {
@@ -243,6 +246,7 @@ header {
   border-bottom-right-radius: 5px;
   top: 20px;
   left: 280px;
+  transition: left .25s, width .25s;
 }
 
 #legend.collapsed .legend-toggle {

@@ -20,7 +20,7 @@ let Timeline = (function($, dispatch) {
         })
         .on('mouseup.timeslide mouseleave.timeslide', function (){
           $(document).off('mousemove.timeslide mouseup.timeslide mouseleave.timeslide');
-          updateYear(y);
+          changeYear(y);
         })
     });
 
@@ -37,11 +37,11 @@ let Timeline = (function($, dispatch) {
       });
 
     $('.icon-angle-left', stepper).click(function () {
-      updateYear(year - 1);
+      changeYear(year - 1);
     });
 
     $('.icon-angle-right', stepper).click(function () {
-      updateYear(year + 1);
+      changeYear(year + 1);
     });
 
     $(window).resize(function () {
@@ -103,13 +103,17 @@ let Timeline = (function($, dispatch) {
     }
   }
 */
+  function changeYear (y) {
+    updateYear(y);
+    dispatch.call('changeyear', this, year);
+  }
+
   function updateYear (y) {
     y = Math.max(yearRange[0], Math.min(+y, yearRange[1]));
     year = y;
     $('.year', stepper).html(year);
     var pct = (year - yearRange[0]) / (yearRange[1] - yearRange[0]);
     $('.timeline-slider', timeline).css('left', pct * 100 + '%');
-    dispatch.call('changeyear', this, year);
     $('.icon-angle-left', stepper).toggleClass('disabled', year == yearRange[0]);
     $('.icon-angle-right', stepper).toggleClass('disabled', year == yearRange[1]);
   }
@@ -137,12 +141,14 @@ let Timeline = (function($, dispatch) {
     updateYear(year);
     addTicks();
     init_events();
+
+    return T;
   }
 
   T.setYear = function (newYear) {
     if (newYear == year) return;
-    year = newYear;
-    $('.year', stepper).html(year);
+    updateYear(newYear);
+    return T;
   }
 
   return T;
