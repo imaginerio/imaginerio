@@ -16,6 +16,7 @@ function initialize (yearsData) {
   Timeline.initialize(years, 'timeline').setYear(year);
   Filmstrip.initialize().setYear(year);
   Legend.initialize();
+  Search.initialize('search').setYear(year);
   init_ui();
 }
 
@@ -25,6 +26,7 @@ function init_ui () {
     $('header').addClass('search');
     $(document).on('click.search', function (e) {
       if (!$.contains(document.getElementById('search'), e.target)) {
+        Search.clear();
         $('header').removeClass('search');
         $(document).off('click.search');
       }

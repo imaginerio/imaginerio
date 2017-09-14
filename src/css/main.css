@@ -53,42 +53,6 @@ header > img {
   font-size: 20px;
 }
 
-#search {
-  display: none;
-}
-
-header.search #search {
-  display: inline-block;
-}
-
-header.search #controls-right .search-hide {
-  display: none;
-}
-
-#search input {
-  font-size: 15px;
-  line-height: 30px;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  outline: none;
-  border: 1px solid #999;
-  margin: 0;
-  padding: 1px 5px;
-  width: 260px;
-  cursor: text;
-}
-
-#search-go {
-  line-height: 30px;
-  width: 30px;
-  text-align: center;
-  background-color: #999999;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  color: white;
-  padding: 2px;
-}
-
 /* GENERAL LAYOUTS */
 .panel-toggle {
   position: absolute;
@@ -124,6 +88,81 @@ header.search #controls-right .search-hide {
 
 .panel.collapsed .panel-toggle i.open {
   display: inline-block;
+}
+
+/* SEARCH */
+
+#search {
+  display: none;
+  position: relative;
+}
+
+header.search #search {
+  display: inline-block;
+}
+
+header.search #controls-right .search-hide {
+  display: none;
+}
+
+#search input {
+  font-size: 15px;
+  line-height: 30px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  outline: none;
+  border: 1px solid #999;
+  margin: 0;
+  padding: 1px 5px;
+  width: 260px;
+  cursor: text;
+}
+
+#search > .search-go {
+  line-height: 30px;
+  width: 30px;
+  text-align: center;
+  background-color: #999999;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  color: white;
+  padding: 2px;
+}
+
+#search > .search-results {
+  position: absolute;
+  z-index: 700;
+  top: 42px;
+  right: 0;
+  background-color: white;
+  width: 300px;
+  display: none;
+  line-height: 34px;
+  border-radius: 5px;
+}
+
+.results-group > span, .results-group > div {
+  padding: 0 15px;
+}
+
+.results-group > span {
+  color: white;
+  background-color: #666;
+  display: block;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+.search-result {
+  margin: 10px 0;
+}
+
+.search-result span {
+  display: inline-block;
+  background-color: #EEEEEE;
+  width: 220px;
+  border-radius: 5px;
+  padding: 0 10px;
 }
 
 /* TIMELINE */

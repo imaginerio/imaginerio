@@ -14,9 +14,9 @@ let Filmstrip = (function($, dispatch) {
 
   function updateYear (y) {
     year = y;
-    $.getJSON(server + 'raster/' + year, function(json) {
-      console.log(json)
-    })
+    // $.getJSON(server + 'raster/' + year, function(json) {
+    //   console.log(json)
+    // })
   }
 
   F.initialize = function () {
