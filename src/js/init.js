@@ -24,6 +24,7 @@ function init_ui () {
   $('#search-button').click(function (e) {
     e.stopPropagation();
     $('header').addClass('search');
+    $('#search input').focus();
     $(document).on('click.search', function (e) {
       if (!$.contains(document.getElementById('search'), e.target)) {
         Search.clear();

@@ -41,8 +41,28 @@ let Search = (function($, dispatch) {
         _.each(g, function (r) {
           let row = $('<div>').attr('class', 'search-result')
             .append('<i class="icon-right-dir"></i>')
-            .append('<span>' + r.name + '</span>')
+            .append('<i class="icon-down-dir"></i>')
             .appendTo(groupContainer);
+          let span = $('<span>' + r.name + '</span>')
+            .appendTo(row);
+          span.prepend('<i class="icon-binoculars">');
+          row.on('click', function () {
+              if (row.hasClass('expanded')) {
+                row.removeClass('expanded');
+              } else {
+                row.addClass('expanded');
+                if (!$('.result-details', row).length) {
+                  let details = $('<div>')
+                    .attr('class', 'result-details')
+                    .appendTo(row);
+                  $.getJSON(server + 'details/' + r.id[0], function(response) {
+                    if (!response.length) return;
+                    if (response[0].creator) $('<p>Creator: <span>' + response[0].creator + '</span></p>').appendTo(details);
+                    if (response[0].year) $('<p>Mapped: <span>' + response[0].year + '</span></p>').appendTo(details);
+                  });
+                }
+              }
+            });
         });
       });
       

@@ -147,6 +147,12 @@
       ]
     },
     {
+      "uid": "73ffeb70554099177620847206c12457",
+      "css": "binoculars",
+      "code": 61925,
+      "src": "fontawesome"
+    },
+    {
       "uid": "26c49ae7c46cc1743f30d5eb3e4a9ee7",
       "css": "tsquare2",
       "code": 59393,
