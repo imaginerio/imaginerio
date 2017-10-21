@@ -13,6 +13,7 @@ main {
   flex: 1;
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .flex-row {
@@ -355,6 +356,37 @@ header.search #controls-right .search-hide {
   top: -40px;
   border-top-right-radius: 5px;
   transition: y .25s;
+}
+
+.filmstrip-contents {
+  display: flex;
+  flex-direction: row;
+}
+
+.filmstrip-thumbnail, .filmstrip-showall {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 20px;
+}
+
+.filmstrip-thumbnails {
+  flex: 1;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.filmstrip-showall {
+  border: 1px solid #95989A;
+  text-align: center;
+  line-height: 130px;
+}
+
+.raster-types i {
+  display: block;
+  font-size: 20px;
+  margin: 20px 10px;
 }
 
 /* LEGEND */
