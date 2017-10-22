@@ -435,3 +435,7 @@ header.search #controls-right .search-hide {
 #legend.subsequent .legend-toggle span, #legend.subsequent .legend-toggle i.icon-angle-double-right {
   display: none;
 }
+
+.legend-group, .layer {
+  margin-left: 20px;
+}
