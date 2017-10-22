@@ -22,11 +22,26 @@ let Legend = (function($, dispatch) {
         $('<div>').attr('class', 'category-title').html(categoryName).appendTo(cat);
         _.each(category, function (obj) { // there's an extra level here
           _.each(obj, function (group, groupName) {
-            console.log(group)
             let gr = $('<div>').attr('class', 'legend-group').appendTo(cat);
-            $('<div>').attr('class', 'group-title').html(groupName).appendTo(gr);
+            let groupTitle = $('<div>').attr('class', 'group-title').appendTo(gr);
+            $('<label>')
+              .html(groupName)
+              .prepend('<input type="checkbox" checked>')
+              .appendTo(groupTitle);
             _.each(group.features, function (feature) {
-              $('<div>').attr('class', 'layer').html(feature).appendTo(gr);
+              let layer = $('<div>').attr('class', 'layer').appendTo(gr);
+              $('<div>')
+                .attr('class', 'layer-existing')
+                .html(feature)
+                .prepend('<i class="icon-binoculars">')
+                .appendTo(layer);
+
+              // how to know if this exists?
+              $('<div>')
+                .attr('class', 'layer-plans')
+                .html('Plans')
+                .prepend('<i class="icon-tsquare">')
+                .appendTo(layer);
             });
           });
         });

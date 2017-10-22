@@ -22,6 +22,11 @@ main {
   flex-direction: row;
 }
 
+.right-side {
+  height: calc(100% - 115px);
+  overflow: hidden;
+}
+
 /* HEADER */
 
 header {
@@ -395,6 +400,7 @@ header.search #controls-right .search-hide {
   width: 280px;
   position: relative;
   transition: width .25s;
+  height: 100%;
 }
 
 #legend.collapsed {
@@ -436,6 +442,47 @@ header.search #controls-right .search-hide {
   display: none;
 }
 
-.legend-group, .layer {
+.legend-contents {
+  height: 100%;
+  overflow: auto;
+}
+
+.legend-group {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.group-title label {
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 40px;
+}
+
+.group-title label input{
+  margin-right: 10px;
+}
+
+.layer {
   margin-left: 20px;
+}
+
+.layer-existing, .layer-plans {
+  line-height: 30px;
+  padding: 0 5px;
+  background-color: #eee;
+  display: inline-block;
+  margin: 3px 0px;
+  border-radius: 5px;
+  width: 140px;
+  cursor: pointer;
+}
+
+.layer-plans {
+  width: auto;
+  margin-left: 10px;
+  padding-right: 10px;
+}
+
+.layer-existing i, .layer-plans i {
+  margin-right: 5px;
 }
