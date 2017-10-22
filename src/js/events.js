@@ -1,5 +1,5 @@
 // events
-let Dispatch = d3.dispatch('changeyear');
+let Dispatch = d3.dispatch('changeyear', 'highlightfeature', 'removehighlight');
 
 Dispatch.on('changeyear', function (newYear) {
   year = newYear;
@@ -7,4 +7,12 @@ Dispatch.on('changeyear', function (newYear) {
   Legend.setYear(newYear);
   Filmstrip.setYear(newYear);
   Search.setYear(newYear);
+});
+
+Dispatch.on('highlightfeature', function (json) {
+  Map.highlightFeature(json);
+});
+
+Dispatch.on('removehighlight', function (json) {
+  Map.removeHighlight();
 });

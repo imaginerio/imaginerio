@@ -34,7 +34,17 @@ let Legend = (function($, dispatch) {
                 .attr('class', 'layer-existing')
                 .html(feature)
                 .prepend('<i class="icon-binoculars">')
-                .appendTo(layer);
+                .appendTo(layer)
+                .click(function () {
+                  dispatch.call('removehighlight', this);
+                  if (!$(this).hasClass('highlighted')) {
+                    $('.layer-existing.highlighted').removeClass('highlighted');
+                    highlightFeature(feature);
+                    $(this).toggleClass('highlighted');
+                  } else {
+                    $(this).removeClass('highlighted');
+                  }
+                });
 
               // how to know if this exists?
               $('<div>')
@@ -47,6 +57,12 @@ let Legend = (function($, dispatch) {
         });
       });
     });
+  }
+
+  function highlightFeature (feature) {
+    $.getJSON(server + 'feature/' + year + '/' + feature, function (json) {
+      dispatch.call('highlightfeature', this, json);
+    })
   }
 
   Lg.initialize = function () {

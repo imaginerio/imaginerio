@@ -477,6 +477,11 @@ header.search #controls-right .search-hide {
   cursor: pointer;
 }
 
+.layer-existing.highlighted, .layer-plans.highlighted {
+  background-color: #666;
+  color: white;
+}
+
 .layer-plans {
   width: auto;
   margin-left: 10px;
