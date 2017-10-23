@@ -56,6 +56,7 @@ let Map = (function($, dispatch) {
       style: () => highlightTopStyle,
       pointToLayer: (pt, latlng) => L.circleMarker(latlng, highlightMarkerTopStyle)
     }).addTo(map);
+    map.fitBounds(highlightLayerBottom.getBounds());
   }
 
   M.removeHighlight = function () {

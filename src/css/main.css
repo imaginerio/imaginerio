@@ -363,6 +363,20 @@ header.search #controls-right .search-hide {
   transition: y .25s;
 }
 
+.mini-thumbs div {
+  display: inline-block;
+  border-radius: 50%;
+  width: 20px; 
+  height: 20px;
+  overflow: hidden;
+  margin: 0 3px;
+}
+
+.mini-thumbs div img {
+  width: 20px;
+  min-height: 20px;
+}
+
 .filmstrip-contents {
   display: flex;
   flex-direction: row;
@@ -391,7 +405,19 @@ header.search #controls-right .search-hide {
 .raster-types i {
   display: block;
   font-size: 20px;
-  margin: 20px 10px;
+  padding: 12px 10px;
+  cursor: pointer;
+}
+
+.raster-types i.selected {
+  background-color: #2361AA;
+  color: white;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.raster-types i.disabled {
+  color: #ccc;
 }
 
 /* LEGEND */

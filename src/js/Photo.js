@@ -15,5 +15,9 @@ let Photo = function (data, thumbUrl) {
     return thumb;
   }
 
+  P.getImage = function () {
+    return $('<img>').attr('src', thumbUrl.replace('size1', 'size0') + file + '.jpg');
+  }
+
   return P;
 };
