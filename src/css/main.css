@@ -27,6 +27,20 @@ main {
   overflow: hidden;
 }
 
+.button {
+  border-radius: 5px;
+  line-height: 30px;
+  padding: 0 15px;
+  text-align: center;
+  margin: 10px auto;
+  cursor: pointer;
+}
+
+.button.red {
+  background-color: #eee;
+  color: #E02727;
+}
+
 /* HEADER */
 
 header {
@@ -516,4 +530,28 @@ header.search #controls-right .search-hide {
 
 .layer-existing i, .layer-plans i {
   margin-right: 5px;
+}
+
+/* Probes */
+
+#fixed-probe {
+  position: absolute;
+  top: 135px;
+  right: 20px;
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px;
+  z-index: 1000;
+  box-shadow: 0 0 8px rgba(0,0,0,.25);
+}
+
+.fixed-probe-title {
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+#fixed-probe img {
+  max-height: 190px;
+  margin: auto;
+  display: block;
 }

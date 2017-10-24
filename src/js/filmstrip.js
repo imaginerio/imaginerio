@@ -69,7 +69,7 @@ let Filmstrip = (function($, _, dispatch) {
       let thumb = p.getThumb()
         .click(function () {
           if (p.data.layer == 'plans' || p.data.layer == 'maps') {
-            dispatch.call('addoverlay', this, p.data.overlay);
+            dispatch.call('addoverlay', this, p.data);
           }
         })
       $('.filmstrip-thumbnails').append(thumb);

@@ -3,6 +3,7 @@ const tileserver = 'http://54.190.53.18:3001/tiles/';
 const rasterserver = 'http://54.190.53.18:3001/raster/';
 
 const thumbnaillUrl = 'http://mdxdv.artstor.org/thumb/imgstor/size1/sslps/c7730355/';
+const imageUrl = 'http://mdxdv.artstor.org/thumb/imgstor/size2/sslps/c7730355/';
 
 var years;
 var year;
