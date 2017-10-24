@@ -1,5 +1,5 @@
 // events
-let Dispatch = d3.dispatch('changeyear', 'highlightfeature', 'removehighlight');
+let Dispatch = d3.dispatch('changeyear', 'highlightfeature', 'removehighlight', 'addoverlay');
 
 Dispatch.on('changeyear', function (newYear) {
   year = newYear;
@@ -15,4 +15,8 @@ Dispatch.on('highlightfeature', function (json) {
 
 Dispatch.on('removehighlight', function (json) {
   Map.removeHighlight();
+});
+
+Dispatch.on('addoverlay', function (overlay) {
+  Map.addOverlay(overlay);
 });

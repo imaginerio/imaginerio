@@ -29,6 +29,7 @@ let Filmstrip = (function($, _, dispatch) {
         $('.filmstrip-showall').show();
         _.each(rasters, function (r) {
           r.photo = Photo(r, thumbnaillUrl);
+          r.overlay = Overlay(r);
         });
         let minis = rasters.slice(0, Math.min(3, rasters.length));
         $('.mini-thumbs', filmstrip).empty();
@@ -65,7 +66,13 @@ let Filmstrip = (function($, _, dispatch) {
     $('.filmstrip-thumbnails').empty();
     let photos = _.pluck(_.filter(rasters, function(r){ return r.layer === selectedType }), 'photo');
     photos.forEach(function (p) {
-      $('.filmstrip-thumbnails').append(p.getThumb())
+      let thumb = p.getThumb()
+        .click(function () {
+          if (p.data.layer == 'plans' || p.data.layer == 'maps') {
+            dispatch.call('addoverlay', this, p.data.overlay);
+          }
+        })
+      $('.filmstrip-thumbnails').append(thumb);
     });
   }
 

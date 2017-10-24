@@ -6,6 +6,7 @@ let Map = (function($, dispatch) {
   let map;
   let year = 2015;
   let tileLayer;
+  let overlayLayer;
   let highlightLayerBottom;
   let highlightLayerTop;
   let highlightBottomStyle = {
@@ -57,10 +58,24 @@ let Map = (function($, dispatch) {
       pointToLayer: (pt, latlng) => L.circleMarker(latlng, highlightMarkerTopStyle)
     }).addTo(map);
     map.fitBounds(highlightLayerBottom.getBounds());
+
+    return M;
   }
 
   M.removeHighlight = function () {
     if (highlightLayerBottom && map.hasLayer(highlightLayerBottom)) map.removeLayer(highlightLayerBottom).removeLayer(highlightLayerTop);
+    return M;
+  }
+
+  M.addOverlay = function (overlay) {
+    if (overlayLayer && map.hasLayer(overlayLayer)) map.removeLayer(overlayLayer);
+    overlayLayer = overlay.layer().addTo(map);
+    return M;
+  }
+
+  M.removeOverlay = function () {
+    if (overlayLayer && map.hasLayer(overlayLayer)) map.removeLayer(overlayLayer);
+    return M;
   }
 
   return M;
