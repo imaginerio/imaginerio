@@ -8,17 +8,25 @@ const imageUrl = 'http://mdxdv.artstor.org/thumb/imgstor/size2/sslps/c7730355/';
 var years;
 var year;
 
+var names;
+
 // runtime stuff
 
-$.getJSON(server + 'timeline', initialize);
+$.getJSON(server + 'timeline', function(yearsData) {
+  years = yearsData;
+  if (names) initialize();
+});
+$.getJSON(server + 'names/en', function(namesData) {
+  names = namesData;
+  if (years) initialize();
+});
 
 function initialize (yearsData) {
-  years = yearsData;
-  year = yearsData[0];
+  year = 1910; // a year that actually has something
   Map.initialize('map').setYear(year);
   Timeline.initialize(years, 'timeline').setYear(year);
   Filmstrip.initialize().setYear(year);
-  Legend.initialize();
+  Legend.initialize().setYear(year);
   Search.initialize('search').setYear(year);
   init_ui();
 }

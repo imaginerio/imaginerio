@@ -492,6 +492,10 @@ header.search #controls-right .search-hide {
   border-bottom: 1px solid #ccc;
 }
 
+.legend-group.planned input{
+  visibility: hidden;
+}
+
 .group-title label {
   font-size: 15px;
   font-weight: bold;
@@ -522,6 +526,12 @@ header.search #controls-right .search-hide {
   color: white;
 }
 
+.layer-existing.not-present, .layer-existing.not-present:hover {
+  background-color: transparent;
+  color: #666;
+  cursor: default;
+}
+
 .layer-plans {
   width: auto;
   margin-left: 10px;
@@ -535,6 +545,7 @@ header.search #controls-right .search-hide {
 /* Probes */
 
 #fixed-probe {
+  display: none;
   position: absolute;
   top: 135px;
   right: 20px;

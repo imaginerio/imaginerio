@@ -36,6 +36,9 @@ let Map = (function($, dispatch) {
     map = L.map(container, {zoomControl: false}).setView([29.717, -95.402], 16);
     L.control.zoom({position:'bottomleft'}).addTo(map);
     tileLayer = L.tileLayer(tileserver + year + '/all/{z}/{x}/{y}.png').addTo(map);
+    $(window).on('transitionend', function () {
+      map.invalidateSize();
+    });
     return M;
   }
 
