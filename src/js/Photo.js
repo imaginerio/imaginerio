@@ -7,12 +7,12 @@ let Photo = function (data, thumbUrl) {
   P.data = data;
 
   let file = data.file.replace('SSID', '');
+  let _thumb = $('<div>')
+    .attr('class', 'filmstrip-thumbnail')
+    .css('background-image', 'url(' + thumbUrl + file + '.jpg)');
 
-  P.getThumb = function () {
-    let thumb = $('<div>')
-      .attr('class', 'filmstrip-thumbnail')
-      .css('background-image', 'url(' + thumbUrl + file + '.jpg)');
-    return thumb;
+  P.thumb = function () {
+    return _thumb;
   }
 
   P.getImage = function () {

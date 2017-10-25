@@ -375,6 +375,11 @@ header.search #controls-right .search-hide {
   top: -40px;
   border-top-right-radius: 5px;
   transition: y .25s;
+  padding-left: 0;
+}
+
+.mini-thumbs {
+  margin-left: 10px;
 }
 
 .mini-thumbs div {
@@ -402,6 +407,7 @@ header.search #controls-right .search-hide {
   border-radius: 50%;
   display: inline-block;
   margin: 20px;
+  cursor: pointer;
 }
 
 .filmstrip-thumbnails {
@@ -544,15 +550,19 @@ header.search #controls-right .search-hide {
 
 /* Probes */
 
-#fixed-probe {
+.probe {
   display: none;
   position: absolute;
+  z-index: 1000;
+}
+
+#fixed-probe {
+  
   top: 135px;
   right: 20px;
   background-color: white;
   border-radius: 5px;
   padding: 20px;
-  z-index: 1000;
   box-shadow: 0 0 8px rgba(0,0,0,.25);
 }
 
@@ -565,4 +575,26 @@ header.search #controls-right .search-hide {
   max-height: 190px;
   margin: auto;
   display: block;
+}
+
+#filmstrip-probe .content {
+  background-color: rgba(51, 51, 51, .9);
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+  padding: 10px 20px;
+  max-width: 150px;
+}
+
+#filmstrip-probe p {
+  margin: 3px 0;
+}
+
+#filmstrip-probe .tail {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 16px solid rgba(51, 51, 51, .9);
+  margin-left: calc(50% - 10px);
 }

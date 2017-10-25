@@ -21,6 +21,8 @@ let Filmstrip = (function($, _, dispatch) {
     year = y;
     $.getJSON(server + 'raster/' + year, function(json) {
       rasters = json;
+      $('.mini-thumbs', filmstrip).empty();
+      $('.filmstrip-thumbnails').empty();
       if (!rasters.length) {
         $('.filmstrip-showall').hide();  // and show some message
         $('.raster-types i.selected').removeClass('selected');
@@ -32,7 +34,6 @@ let Filmstrip = (function($, _, dispatch) {
           r.overlay = Overlay(r);
         });
         let minis = rasters.slice(0, Math.min(3, rasters.length));
-        $('.mini-thumbs', filmstrip).empty();
         _.each(minis, function (m) {
           $('<div>')
             .append(m.photo.getImage())
@@ -66,12 +67,18 @@ let Filmstrip = (function($, _, dispatch) {
     $('.filmstrip-thumbnails').empty();
     let photos = _.pluck(_.filter(rasters, function(r){ return r.layer === selectedType }), 'photo');
     photos.forEach(function (p) {
-      let thumb = p.getThumb()
+      let thumb = p.thumb()
         .click(function () {
-          if (p.data.layer == 'plans' || p.data.layer == 'maps') {
+          if (p.data.layer != 'viewsheds') {
             dispatch.call('addoverlay', this, p.data);
           }
         })
+        .mouseover(function () {
+          filmstripProbe(p);
+        })
+        .mouseout(function () {
+          $('#filmstrip-probe').hide();
+        });
       $('.filmstrip-thumbnails').append(thumb);
     });
   }
