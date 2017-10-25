@@ -10,6 +10,17 @@ let Legend = (function($, dispatch) {
     $('.legend-toggle').click(function () {
       legend.toggleClass('collapsed').addClass('subsequent');
     });
+    $('.legend-contents').on('change', function (){
+      // checkbox clicks
+      let list = [];
+      $('.legend-contents input').each(function () {
+        if (!$(this).is(':checked')) {
+          list.push($(this).parent().parent().parent().attr('data-group'));
+        }
+      });
+      if (!list.length) list = ['all'];
+      dispatch.call('setlayers', this, list);
+    })
   }
 
   function updateYear (y) {
@@ -69,6 +80,8 @@ let Legend = (function($, dispatch) {
             addLayerPlanned(plan.featuretyp, layer);
           })
         });
+
+
       });
     });
   }

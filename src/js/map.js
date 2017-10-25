@@ -31,11 +31,12 @@ let Map = (function($, dispatch) {
     fill: false,
     radius: 3
   }
+  let layers = ['all']; // either 'all' or a list of DISABLED layers
 
   M.initialize = function (container) {
     map = L.map(container, {zoomControl: false}).setView([29.717, -95.402], 16);
     L.control.zoom({position:'bottomleft'}).addTo(map);
-    tileLayer = L.tileLayer(tileserver + year + '/all/{z}/{x}/{y}.png').addTo(map);
+    tileLayer = L.tileLayer(tileserver + year + '/' + layers.join(',') + '/{z}/{x}/{y}.png').addTo(map);
     $(window).on('transitionend', function () {
       map.invalidateSize();
     });
@@ -45,8 +46,14 @@ let Map = (function($, dispatch) {
   M.setYear = function (newYear) {
     if (newYear == year) return;
     year = newYear;
-    tileLayer.setUrl(tileserver + year + '/all/{z}/{x}/{y}.png');
+    tileLayer.setUrl(tileserver + year + '/' + layers.join(',') + '/{z}/{x}/{y}.png');
     M.removeHighlight();
+    return M;
+  }
+
+  M.setLayers = function (list) {
+    layers = list;
+    tileLayer.setUrl(tileserver + year + '/' + layers.join(',') + '/{z}/{x}/{y}.png');
     return M;
   }
 
