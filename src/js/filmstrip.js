@@ -35,8 +35,7 @@ let Filmstrip = (function($, _, dispatch) {
         });
         let minis = rasters.slice(0, Math.min(3, rasters.length));
         _.each(minis, function (m) {
-          $('<div>')
-            .append(m.photo.getImage())
+          m.photo.getImage([20])
             .appendTo($('.mini-thumbs', filmstrip));
         })
       }
@@ -67,14 +66,17 @@ let Filmstrip = (function($, _, dispatch) {
     $('.filmstrip-thumbnails').empty();
     let photos = _.pluck(_.filter(rasters, function(r){ return r.layer === selectedType }), 'photo');
     photos.forEach(function (p) {
-      let thumb = p.thumb()
+      let thumb = p.getImage([130])
+        .attr('class', 'filmstrip-thumbnail')
         .click(function () {
           if (p.data.layer != 'viewsheds') {
-            dispatch.call('addoverlay', this, p.data);
+            dispatch.call('addoverlay', this, p);
+          } else {
+            rasterProbe(p);
           }
         })
         .mouseover(function () {
-          filmstripProbe(p);
+          filmstripProbe.call(this, p);
         })
         .mouseout(function () {
           $('#filmstrip-probe').hide();

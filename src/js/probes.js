@@ -1,20 +1,26 @@
-function overlayProbe (data) {
-  $('#fixed-probe').empty().show();
-  $('<p>').attr('class', 'fixed-probe-title').html(data.description).appendTo('#fixed-probe');
-  $('<img>')
-    .attr('src', imageUrl + data.file.replace('SSID', '') + '.jpg')
-    .appendTo('#fixed-probe');
-  $('<div>')
-    .attr('class', 'button red')
-    .html('Remove Overlay')
-    .appendTo('#fixed-probe')
-    .click(function () {
-    Dispatch.call('removeoverlay', this);
-  });
+function rasterProbe (p) {
+  $('#fixed-probe .content').empty();
+  $('#fixed-probe').show();
+  $('<p>').attr('class', 'fixed-probe-title').html(p.data.description).appendTo('#fixed-probe .content');
+  let size = p.getScaled([300, 190]);
+  p.getImage([300, 190])
+    .attr('class', 'fixed-image')
+    .css('width', size[0] + 'px')
+    .css('height', size[1] + 'px')
+    .appendTo('#fixed-probe .content');
+  if (p.data.layer != 'viewsheds') {
+    $('<div>')
+      .attr('class', 'button red')
+      .html('Remove Overlay')
+      .appendTo('#fixed-probe .content')
+      .click(function () {
+      Dispatch.call('removeoverlay', this);
+    });
+  }
 }
 
 function filmstripProbe (photo) {
-  let offset = photo.thumb().offset();
+  let offset = $(this).offset();
   $('#filmstrip-probe .content')
     .empty()
     .html('<p><strong>' + photo.data.description + '</strong></p><p>' + photo.data.date + '</p><p><em>Click to view on map</em></p>')

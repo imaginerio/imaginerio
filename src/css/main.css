@@ -391,11 +391,6 @@ header.search #controls-right .search-hide {
   margin: 0 3px;
 }
 
-.mini-thumbs div img {
-  width: 20px;
-  min-height: 20px;
-}
-
 .filmstrip-contents {
   display: flex;
   flex-direction: row;
@@ -557,7 +552,6 @@ header.search #controls-right .search-hide {
 }
 
 #fixed-probe {
-  
   top: 135px;
   right: 20px;
   background-color: white;
@@ -566,15 +560,22 @@ header.search #controls-right .search-hide {
   box-shadow: 0 0 8px rgba(0,0,0,.25);
 }
 
+#fixed-probe .icon-times {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}
+
 .fixed-probe-title {
   font-weight: bold;
   margin: 5px 0;
 }
 
-#fixed-probe img {
-  max-height: 190px;
+#fixed-probe .fixed-image {
   margin: auto;
   display: block;
+  background-repeat: no-repeat;
 }
 
 #filmstrip-probe .content {

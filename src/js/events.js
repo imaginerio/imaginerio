@@ -18,9 +18,9 @@ Dispatch.on('removehighlight', function (json) {
   $('.layer-existing.highlighted, .layer-plans.highlighted').removeClass('highlighted');
 });
 
-Dispatch.on('addoverlay', function (data) {
-  Map.addOverlay(data.overlay);
-  overlayProbe(data);
+Dispatch.on('addoverlay', function (p) {
+  Map.addOverlay(p.data.overlay);
+  rasterProbe(p);
 });
 
 Dispatch.on('removeoverlay', function () {
