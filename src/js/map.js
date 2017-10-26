@@ -8,6 +8,14 @@ let Map = (function($, dispatch) {
   let tileLayer;
   let overlayLayer;
   let viewshedPoints;
+  let viewshedIcon = L.icon({
+    iconUrl: 'img/viewshed.png',
+    iconSize: [33, 37.25],
+    iconAnchor: [16.5, 27.25]
+  });
+  let viewshedStyle = {
+    icon: viewshedIcon
+  };
   let highlightLayerBottom;
   let highlightLayerTop;
   let highlightBottomStyle = {
@@ -53,11 +61,22 @@ let Map = (function($, dispatch) {
       if (!json.features.length) return;
       let points = _.map(json.features, function (f) {
         return {type:'Feature', 
-          properties: _.extend(f.properties, {cone: L.geoJSON({type:'Feature', geometry: f.geometry.geometries[1]})}),
+          properties: _.extend(
+            f.properties, 
+            {
+              cone: L.geoJSON({type:'Feature', geometry: f.geometry.geometries[1]}, {
+                style: function () { return highlightBottomStyle; }
+              })
+            }
+          ),
           geometry: {type: 'Point', coordinates: f.geometry.geometries[1].coordinates[0][0]}}
       });
       removeViewsheds();
       viewshedPoints = L.geoJSON({type:'FeatureCollection', features: points}, {
+        pointToLayer: function (pt, latlng) {
+          return L.marker(latlng, viewshedStyle);
+        },
+
         onEachFeature: function(feature, layer) {
           layer.on('mouseover', function () {
             feature.properties.cone.addTo(map);
