@@ -7,6 +7,7 @@ let Map = (function($, dispatch) {
   let year = 2015;
   let tileLayer;
   let overlayLayer;
+  let viewshedPoints;
   let highlightLayerBottom;
   let highlightLayerTop;
   let highlightBottomStyle = {
@@ -48,6 +49,24 @@ let Map = (function($, dispatch) {
     year = newYear;
     tileLayer.setUrl(tileserver + year + '/' + layers.join(',') + '/{z}/{x}/{y}.png');
     M.removeHighlight();
+    $.getJSON(server + 'visual/' + year, function(json) {
+      if (!json.features.length) return;
+      let points = _.map(json.features, function (f) {
+        return {type:'Feature', 
+          properties: _.extend(f.properties, {cone: L.geoJSON({type:'Feature', geometry: f.geometry.geometries[1]})}),
+          geometry: {type: 'Point', coordinates: f.geometry.geometries[1].coordinates[0][0]}}
+      });
+      removeViewsheds();
+      viewshedPoints = L.geoJSON({type:'FeatureCollection', features: points}, {
+        onEachFeature: function(feature, layer) {
+          layer.on('mouseover', function () {
+            feature.properties.cone.addTo(map);
+          }).on('mouseout', function () {
+            if (map.hasLayer(feature.properties.cone)) map.removeLayer(feature.properties.cone);
+          });
+        }
+      }).addTo(map);
+    })
     return M;
   }
 
@@ -86,6 +105,10 @@ let Map = (function($, dispatch) {
   M.removeOverlay = function () {
     if (overlayLayer && map.hasLayer(overlayLayer)) map.removeLayer(overlayLayer);
     return M;
+  }
+
+  function removeViewsheds () {
+    if (viewshedPoints && map.hasLayer(viewshedPoints)) map.removeLayer(viewshedPoints);
   }
 
   return M;
