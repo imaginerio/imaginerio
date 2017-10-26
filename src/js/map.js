@@ -57,6 +57,7 @@ let Map = (function($, dispatch) {
     year = newYear;
     tileLayer.setUrl(tileserver + year + '/' + layers.join(',') + '/{z}/{x}/{y}.png');
     M.removeHighlight();
+    removeViewsheds();
     $.getJSON(server + 'visual/' + year, function(json) {
       if (!json.features.length) return;
       let points = _.map(json.features, function (f) {
@@ -71,7 +72,6 @@ let Map = (function($, dispatch) {
           ),
           geometry: {type: 'Point', coordinates: f.geometry.geometries[1].coordinates[0][0]}}
       });
-      removeViewsheds();
       viewshedPoints = L.geoJSON({type:'FeatureCollection', features: points}, {
         pointToLayer: function (pt, latlng) {
           return L.marker(latlng, viewshedStyle);
