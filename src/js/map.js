@@ -78,9 +78,11 @@ let Map = (function($, dispatch) {
         },
 
         onEachFeature: function(feature, layer) {
-          layer.on('mouseover', function () {
+          layer.on('mouseover', function (e) {
             feature.properties.cone.addTo(map);
+            mapProbe(e, feature.properties.description);
           }).on('mouseout', function () {
+            $('#map-probe').hide();
             if (map.hasLayer(feature.properties.cone)) map.removeLayer(feature.properties.cone);
           }).on('click', function () {
             Dispatch.call('viewshedclick', this, this.feature.properties.id)

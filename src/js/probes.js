@@ -31,3 +31,18 @@ function filmstripProbe (photo) {
       left: offset.left + 65 - $('#filmstrip-probe').width()/2 + 'px'
     });
 }
+
+function mapProbe (event, content) {
+  let probe = $('#map-probe').show();
+  $('#map-probe .content').empty().html(content);
+  let x = event.originalEvent.pageX;
+  if (x > window.innerWidth / 2) x -= probe.outerWidth() + 10;
+  else x += 10;
+  let y = event.originalEvent.pageY;
+  if (y < window.innerHeight / 2) y -= probe.outerHeight() + 10;
+  else y += 10;
+  probe.css({
+    top: y + 'px',
+    left: x + 'px'
+  });
+}
