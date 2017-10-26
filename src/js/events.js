@@ -1,5 +1,5 @@
 // events
-let Dispatch = d3.dispatch('changeyear', 'highlightfeature', 'removehighlight', 'addoverlay', 'removeoverlay', 'setlayers');
+let Dispatch = d3.dispatch('changeyear', 'highlightfeature', 'removehighlight', 'addoverlay', 'removeoverlay', 'setlayers', 'viewshedclick');
 
 Dispatch.on('changeyear', function (newYear) {
   year = newYear;
@@ -30,4 +30,9 @@ Dispatch.on('removeoverlay', function () {
 
 Dispatch.on('setlayers', function (list) {
   Map.setLayers(list);
+});
+
+Dispatch.on('viewshedclick', function (id) {
+  let raster = _.find(Filmstrip.getRasters(), function (r) { return r.id == id });
+  if (raster) rasterProbe(raster.photo);
 });

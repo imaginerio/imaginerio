@@ -82,7 +82,9 @@ let Map = (function($, dispatch) {
             feature.properties.cone.addTo(map);
           }).on('mouseout', function () {
             if (map.hasLayer(feature.properties.cone)) map.removeLayer(feature.properties.cone);
-          });
+          }).on('click', function () {
+            Dispatch.call('viewshedclick', this, this.feature.properties.id)
+          })
         }
       }).addTo(map);
     })

@@ -97,5 +97,9 @@ let Filmstrip = (function($, _, dispatch) {
     return F;
   }
 
+  F.getRasters = function () {
+    return rasters;
+  }
+
   return F;
 })(jQuery, _, Dispatch);
