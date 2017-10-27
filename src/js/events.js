@@ -1,5 +1,5 @@
 // events
-let Dispatch = d3.dispatch('changeyear', 'highlightfeature', 'removehighlight', 'addoverlay', 'removeoverlay', 'setlayers', 'viewshedclick', 'showresults');
+let Dispatch = d3.dispatch('changeyear', 'highlightfeature', 'removehighlight', 'addoverlay', 'removeoverlay', 'setlayers', 'viewshedclick', 'showresults', 'drawfeature');
 
 Dispatch.on('changeyear', function (newYear) {
   year = newYear;
@@ -40,3 +40,8 @@ Dispatch.on('viewshedclick', function (id) {
 Dispatch.on('showresults', function (results) {
   Search.showResults(results);
 });
+
+Dispatch.on('drawfeature', function (name) {
+  Map.drawFeature(name);
+  // also open a fixed probe
+})

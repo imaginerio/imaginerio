@@ -140,6 +140,21 @@ let Map = (function($, dispatch) {
     return M;
   }
 
+  M.drawFeature = function (name) {
+    M.removeHighlight();
+    $.getJSON(server + 'draw/' + year + '/' + encodeURIComponent(name), function (json) {
+      highlightLayerBottom = L.geoJson(json, {
+        style: () => highlightBottomStyle,
+        pointToLayer: (pt, latlng) => L.circleMarker(latlng, highlightMarkerBottomStyle)
+      }).addTo(map);
+      highlightLayerTop = L.geoJson(json, {
+        style: () => highlightTopStyle,
+        pointToLayer: (pt, latlng) => L.circleMarker(latlng, highlightMarkerTopStyle)
+      }).addTo(map);
+      map.fitBounds(highlightLayerBottom.getBounds());
+    });
+  }
+
   function removeViewsheds () {
     if (viewshedPoints && map.hasLayer(viewshedPoints)) map.removeLayer(viewshedPoints);
   }
