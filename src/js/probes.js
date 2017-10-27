@@ -2,8 +2,8 @@ function rasterProbe (p) {
   $('#fixed-probe .content').empty();
   $('#fixed-probe').show();
   $('<p>').attr('class', 'fixed-probe-title').html(p.data.description).appendTo('#fixed-probe .content');
-  let size = p.getScaled([300, 190]);
-  p.getImage([300, 190])
+  let size = p.getScaled([400, 300]);
+  p.getImage([400, 300])
     .attr('class', 'fixed-image')
     .css('width', size[0] + 'px')
     .css('height', size[1] + 'px')

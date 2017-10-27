@@ -112,19 +112,6 @@ header > img {
 
 /* SEARCH */
 
-#search {
-  display: none;
-  position: relative;
-}
-
-header.search #search {
-  display: inline-block;
-}
-
-header.search #controls-right .search-hide {
-  display: none;
-}
-
 #search input {
   font-size: 15px;
   line-height: 30px;
@@ -136,9 +123,19 @@ header.search #controls-right .search-hide {
   padding: 1px 5px;
   width: 260px;
   cursor: text;
+  display: none;
+}
+
+header.search #search input, header.search #search > .search-go {
+  display: inline-block;
+}
+
+header.search #controls-right .search-hide {
+  display: none;
 }
 
 #search > .search-go {
+  display: none;
   line-height: 30px;
   width: 30px;
   text-align: center;
@@ -152,8 +149,8 @@ header.search #controls-right .search-hide {
 #search > .search-results {
   position: absolute;
   z-index: 700;
-  top: 42px;
-  right: 0;
+  top: 122px;
+  right: 30px;
   background-color: white;
   width: 300px;
   display: none;
@@ -604,4 +601,9 @@ header.search #controls-right .search-hide {
   background-color: white;
   border-radius: 5px;
   padding: 10px;
+  max-width: 150px;
+}
+
+#map-probe strong {
+  color: #333;
 }

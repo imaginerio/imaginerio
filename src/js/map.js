@@ -16,6 +16,11 @@ let Map = (function($, dispatch) {
   let viewshedStyle = {
     icon: viewshedIcon
   };
+  let viewshedConeStyle = {
+    stroke: false,
+    fillColor: '#1a1a1a',
+    fillOpacity: .6
+  }
   let highlightLayerBottom;
   let highlightLayerTop;
   let highlightBottomStyle = {
@@ -43,7 +48,12 @@ let Map = (function($, dispatch) {
   let layers = ['all']; // either 'all' or a list of DISABLED layers
 
   M.initialize = function (container) {
-    map = L.map(container, {zoomControl: false}).setView([29.717, -95.402], 16);
+    map = L.map(container, {
+        zoomControl: false,
+        maxZoom: 17
+      })
+      .setView([29.717, -95.402], 16)
+      .on('click', probe);
     L.control.zoom({position:'bottomleft'}).addTo(map);
     tileLayer = L.tileLayer(tileserver + year + '/' + layers.join(',') + '/{z}/{x}/{y}.png').addTo(map);
     $(window).on('transitionend', function () {
@@ -66,7 +76,7 @@ let Map = (function($, dispatch) {
             f.properties, 
             {
               cone: L.geoJSON({type:'Feature', geometry: f.geometry.geometries[1]}, {
-                style: function () { return highlightBottomStyle; }
+                style: function () { return viewshedConeStyle; }
               })
             }
           ),
@@ -80,12 +90,12 @@ let Map = (function($, dispatch) {
         onEachFeature: function(feature, layer) {
           layer.on('mouseover', function (e) {
             feature.properties.cone.addTo(map);
-            mapProbe(e, feature.properties.description);
+            mapProbe(e, '<strong>' + feature.properties.description + '</strong><br><em>Click for details</em>');
           }).on('mouseout', function () {
             $('#map-probe').hide();
             if (map.hasLayer(feature.properties.cone)) map.removeLayer(feature.properties.cone);
           }).on('click', function () {
-            Dispatch.call('viewshedclick', this, this.feature.properties.id)
+            Dispatch.call('viewshedclick', this, this.feature.properties.id);
           })
         }
       }).addTo(map);
@@ -132,6 +142,29 @@ let Map = (function($, dispatch) {
 
   function removeViewsheds () {
     if (viewshedPoints && map.hasLayer(viewshedPoints)) map.removeLayer(viewshedPoints);
+  }
+
+  function probe (e) {
+    let zoom = map.getZoom();
+    let probeZoom;
+    switch ( zoom ){
+      case 15:
+        probeZoom = .5;
+        break;
+      case 16:
+        probeZoom = .35;
+        break;
+      case 17:
+        probeZoom = .2;
+        break;
+      default:
+        probeZoom = .6;
+        break;
+    }
+    let off = layers[0] == 'all' ? '' : layers.join(',');
+    $.getJSON(server + 'probe/' + year + '/' + probeZoom + '/' + e.latlng.lng + ',' + e.latlng.lat + '/' + off, function (json) {
+      Dispatch.call('showresults', this, _.indexBy(json, 'name'));
+    });
   }
 
   return M;

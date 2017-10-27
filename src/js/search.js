@@ -21,13 +21,13 @@ let Search = (function($, dispatch) {
     if (val != searchVal) {
       searchVal = val;
       if (request && request.readyState != 4) request.abort();
-      request = $.getJSON(server + 'search/' + year + '/' + val, showResults);
+      request = $.getJSON(server + 'search/' + year + '/' + val, S.showResults);
     } else if (searchVal) {
-      showResults(searchResults)
+      S.showResults(searchResults)
     }
   }
 
-  function showResults (results) {
+  S.showResults = function (results) {
     searchResults = results;
     if (_.size(searchResults)) {
       let array = _.mapObject(results, function(r, k){ return _.extend(r, {name: k}); });
@@ -36,7 +36,7 @@ let Search = (function($, dispatch) {
       _.each(groups, function (g, gName) {
         let groupContainer = $('<div>')
           .attr('class', 'results-group')
-          .append('<span>' + gName + '</span>')
+          .append('<span>' + names[gName.toLowerCase()] || gName + '</span>')
           .appendTo(resultsContainer);
         _.each(g, function (r) {
           let row = $('<div>').attr('class', 'search-result')
@@ -46,7 +46,7 @@ let Search = (function($, dispatch) {
           let span = $('<span>' + r.name + '</span>')
             .appendTo(row);
           span.prepend('<i class="icon-binoculars">');
-          row.on('click', function () {
+          $('i.icon-right-dir, i.icon-down-dir', row).on('click', function () {
               if (row.hasClass('expanded')) {
                 row.removeClass('expanded');
               } else {
