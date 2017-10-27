@@ -28,7 +28,6 @@ let Search = (function($, dispatch) {
   }
 
   S.showResults = function (results) {
-    console.log(results)
     searchResults = results;
     if (_.size(searchResults)) {
       let array = _.mapObject(results, function(r, k){ return _.extend(r, {name: k}); });
@@ -47,7 +46,7 @@ let Search = (function($, dispatch) {
           let span = $('<span>' + r.name + '</span>')
             .appendTo(row)
             .on('click', function () {
-              Dispatch.call('drawfeature', this, r.name);
+              Dispatch.call('drawfeature', this, r);
             })
             .prepend('<i class="icon-binoculars">');
           $('i.icon-right-dir, i.icon-down-dir', row).on('click', function () {
@@ -87,6 +86,7 @@ let Search = (function($, dispatch) {
 
   S.setYear = function (newYear) {
     year = newYear;
+    resultsContainer.hide();
     return S;
   }
 

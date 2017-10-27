@@ -48,5 +48,6 @@ function init_ui () {
   $('#fixed-probe .icon-times').click(function () {
     $('#fixed-probe').hide();
     Dispatch.call('removeoverlay', this);
+    Dispatch.call('removehighlight', this);
   })
 }

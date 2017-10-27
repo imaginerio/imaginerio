@@ -46,3 +46,10 @@ function mapProbe (event, content) {
     left: x + 'px'
   });
 }
+
+function detailsProbe (name, content) {
+  $('#fixed-probe .content').empty();
+  $('#fixed-probe').show();
+  $('<p>').attr('class', 'fixed-probe-title').html(name).appendTo('#fixed-probe .content');
+  if (content) $('#fixed-probe .content').append(content);
+}

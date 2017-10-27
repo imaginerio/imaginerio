@@ -41,7 +41,15 @@ Dispatch.on('showresults', function (results) {
   Search.showResults(results);
 });
 
-Dispatch.on('drawfeature', function (name) {
-  Map.drawFeature(name);
-  // also open a fixed probe
+Dispatch.on('drawfeature', function (data) {
+  Map.drawFeature(data.name);
+  Search.clear();
+  $.getJSON(server + 'details/' + data.id[0], function(response) {
+    let content = '';
+    if (response.length) {
+      if (response[0].creator) content += '<p>Creator: <span>' + response[0].creator + '</span></p>';
+      if (response[0].year) content += '<p>Mapped: <span>' + response[0].year + '</span></p>';
+    }
+    detailsProbe(data.name, content);
+  });
 })
