@@ -8,6 +8,7 @@ let Timeline = (function($, dispatch) {
   let years;
   let yearRange = [];
   let year = 2015;
+  let _ears;
 
   function init_events () {
     $('.timeline-slider, .timeline-track', timeline).on('mousedown', function (e) {
@@ -56,6 +57,18 @@ let Timeline = (function($, dispatch) {
     pct = Math.max(0, Math.min(pct, 1));
     let y = Math.round(pct * (yearRange[1] - yearRange[0]) + yearRange[0]);
     return {pct: pct, year: y};
+  }
+
+  function addEras () {
+    _eras.forEach(function (e, i) {
+      let pct0 = (e.dates[0] - yearRange[0]) / (yearRange[1] - yearRange[0]);
+      let pctW = (e.dates[1] - e.dates[0] + 1) / (yearRange[1] - yearRange[0]);
+      let era = $('<div>')
+        .attr('class', 'era era-' + i)
+        .css('left', pct0 * 100 + '%')
+        .css('width', pctW * 100 + '%')
+        .prependTo($('.timeline-track', timeline));
+    });
   }
 
   function addTicks () {
@@ -118,9 +131,10 @@ let Timeline = (function($, dispatch) {
     $('.icon-angle-right', stepper).toggleClass('disabled', year == yearRange[1]);
   }
 
-  T.initialize = function (yearsData, containerId) {
+  T.initialize = function (yearsData, eras, containerId) {
     if (timeline) return;
     let container = $('#' + containerId);
+    _eras = eras;
     years = yearsData;
     year = yearsData[0];
     yearRange = [+years[0], +years[years.length-1]];
@@ -140,6 +154,7 @@ let Timeline = (function($, dispatch) {
 
     updateYear(year);
     addTicks();
+    addEras();
     init_events();
 
     return T;

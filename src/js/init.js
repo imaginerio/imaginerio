@@ -14,6 +14,7 @@ var names;
 
 $.getJSON(server + 'timeline', function(yearsData) {
   years = yearsData;
+  while (years[0] < eras[0].dates[0]) years.shift();  // force min year and first era to match
   if (names) initialize();
 });
 $.getJSON(server + 'names/en', function(namesData) {
@@ -21,10 +22,10 @@ $.getJSON(server + 'names/en', function(namesData) {
   if (years) initialize();
 });
 
-function initialize (yearsData) {
+function initialize () {
   year = 1910; // a year that actually has something
   Map.initialize('map').setYear(year);
-  Timeline.initialize(years, 'timeline').setYear(year);
+  Timeline.initialize(years, eras, 'timeline').setYear(year);
   Filmstrip.initialize().setYear(year);
   Legend.initialize().setYear(year);
   Search.initialize('search').setYear(year);
@@ -49,5 +50,20 @@ function init_ui () {
     $('#fixed-probe').hide();
     Dispatch.call('removeoverlay', this);
     Dispatch.call('removehighlight', this);
-  })
+  });
+
+  eras.forEach(function (e, i) {
+    let div = $('<div>').attr('class', 'era-tag');
+    $('<div>').attr('class', 'era-' + i).appendTo(div);
+    $('<p>').html(e.name + ' (' + e.dates.join(' – ') + ')').appendTo(div);
+    div.appendTo('#era-tags');
+  });
+
+  $('.go-button').click(function () {
+    $('main').removeClass('eras');
+  });
+
+  $('#eras-button').click(function () {
+    $('main').addClass('eras');
+  });
 }

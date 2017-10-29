@@ -9,6 +9,10 @@ main {
   height: 100%;
 }
 
+#intro {
+  display: none;
+}
+
 .flex-column {
   flex: 1;
   display: flex;
@@ -268,6 +272,8 @@ header.search #controls-right .search-hide {
   height: 30px;
   background-color: #CCC;
   border-radius: 5px;
+  position: relative;
+  overflow: hidden;
 }
 
 .timeline-slider {
@@ -308,8 +314,9 @@ header.search #controls-right .search-hide {
   position: absolute;
   top: 0;
   width: 1px;
-  border-left: 1px solid #07407B;
+  border-left: 1px solid white;
   height: 5px;
+  font-size: 12px;
 }
 
 .tick-minor {
@@ -320,7 +327,7 @@ header.search #controls-right .search-hide {
   font-weight: bold;
   position: absolute;
   display: block;
-  color: #07407B;
+  color: white;
   width: 40px;
   text-align: center;
   margin-left: -20px;
@@ -339,6 +346,23 @@ header.search #controls-right .search-hide {
 .tick-major:last-child span {
   text-align: right;
   margin-left: -45px;
+}
+
+.era {
+  position: absolute;
+  height: 100%;
+}
+
+.era-0 {
+  background-color: #7CA2CE;
+}
+
+.era-1 {
+  background-color: #467FC1;
+}
+
+.era-2 {
+  background-color: #2361AA;
 }
 
 /* MAP */
@@ -361,6 +385,7 @@ header.search #controls-right .search-hide {
   height: 170px;
   position: relative;
   transition: height .25s;
+  background-color: white;
 }
 
 #filmstrip.collapsed {
@@ -606,4 +631,87 @@ header.search #controls-right .search-hide {
 
 #map-probe strong {
   color: #333;
+}
+
+/* INTRO/ERAS VIEW */
+
+.eras #filmstrip {
+  position: absolute;
+  bottom: 0;
+  z-index: 2000;
+  width: 100%;
+}
+
+.eras #timeline{
+  visibility: hidden;
+}
+
+.eras #intro {
+  display: block;
+  position: absolute;
+  z-index: 1999;
+  height: calc(100% - 65px);
+  top: 65px;
+  width: 100%;
+  background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.9) 60%, rgba(255,255,255,0) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,0.9) 60%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(255,255,255,0.9) 60%,rgba(255,255,255,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+.eras .leaflet-control-container {
+  display: none;
+}
+
+.eras #eras-button {
+  visibility: hidden;
+}
+
+.era-description {
+  font-size: 20px;
+  font-weight: 100;
+  width: 50%;
+  margin: 30px auto;
+  line-height: 24px;
+}
+
+#intro h1 {
+  font-size: 65px;
+  font-weight: 100;
+  color: #07407B;
+  text-align: center;
+}
+
+.go-button {
+  background-color: #2361AA;
+  border-radius: 5px;
+  color: white;
+  font-size: 27px;
+  font-weight: 500;
+  width: 275px;
+  margin: auto;
+  text-align: center;
+  padding: 30px;
+  cursor: pointer;
+}
+
+#era-tags {
+  text-align: center;
+}
+
+.era-tag {
+  display: inline-block;
+  margin: 0 20px 20px 20px;
+  cursor: pointer;
+}
+
+.era-tag div {
+  width: 12px;
+  height: 16px;
+  border-radius: 3px;
+  margin-right: 10px;
+}
+
+.era-tag > * {
+  display: inline-block;
+  vertical-align: middle;
 }
