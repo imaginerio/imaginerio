@@ -95,6 +95,10 @@ header > img {
   font-size: 20px;
 }
 
+.eras #top-right-buttons, .eras #search-button {
+  display: none;
+}
+
 /* GENERAL LAYOUTS */
 .panel-toggle {
   position: absolute;
