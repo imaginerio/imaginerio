@@ -15,6 +15,8 @@ let Filmstrip = (function($, _, dispatch) {
     });
 
     $('.raster-types i').click(filterTypes);
+
+    $('.filmstrip-showall').click(showAll);
   }
 
   function updateYear (y) {
@@ -64,25 +66,60 @@ let Filmstrip = (function($, _, dispatch) {
 
   function showThumbs () {
     $('.filmstrip-thumbnails').empty();
+    let title = selectedType == 'viewsheds' ? 'views' : selectedType;
+    $('.filmstrip-toggle span', filmstrip).html(title.toUpperCase());
     let photos = _.pluck(_.filter(rasters, function(r){ return r.layer === selectedType }), 'photo');
     photos.forEach(function (p) {
-      let thumb = p.getImage([130])
-        .attr('class', 'filmstrip-thumbnail')
-        .click(function () {
-          if (p.data.layer != 'viewsheds') {
-            dispatch.call('addoverlay', this, p);
-          } else {
-            rasterProbe(p);
-          }
-        })
-        .mouseover(function () {
-          filmstripProbe.call(this, p);
-        })
-        .mouseout(function () {
-          $('#filmstrip-probe').hide();
-        });
-      $('.filmstrip-thumbnails').append(thumb);
+      addPhoto(p, $('.filmstrip-thumbnails'));
     });
+  }
+
+  function addPhoto (p, container) {
+    let thumb = p.getImage([130])
+      .attr('class', 'filmstrip-thumbnail')
+      .click(function () {
+        $('.probe').hide()
+        if (p.data.layer != 'viewsheds') {
+          dispatch.call('addoverlay', this, p);
+        } else {
+          rasterProbe(p);
+        }
+        $('.all-thumbs').remove();
+      })
+      .mouseover(function () {
+        filmstripProbe.call(this, p);
+      })
+      .mouseout(function () {
+        $('#filmstrip-probe').hide();
+      });
+    container.append(thumb);
+    return thumb;
+  }
+
+  function showAll (e) {
+    e.stopPropagation();
+    let mask = $('<div>').attr('class', 'all-thumbs').appendTo('main')
+      .click(function () { mask.remove(); });
+    let container = $('<div>').attr('class', 'content').appendTo(mask)
+    let close = $('<i class="icon-times">').appendTo(container)
+      .click(function () { mask.remove(); });
+    let groups = _.groupBy(rasters, 'layer');
+    if (groups.viewsheds) addThumbSection(groups.viewsheds, 'Views', 'icon-camera', container);
+    if (groups.maps) addThumbSection(groups.maps, 'Maps', 'icon-map-o', container);
+    if (groups.plans) addThumbSection(groups.plans, 'Plans', 'icon-tsquare', container);
+    if (groups.aerials) addThumbSection(groups.aerials, 'Aerials', 'icon-flight', container);
+  }
+
+  function addThumbSection (group, title, icon, container) {
+    let section = $('<div>').attr('class', 'thumbs-section').appendTo(container);
+      $('<p>').attr('class', 'thumbs-title')
+        .html(' ' + title)
+        .prepend('<i class="' + icon + '"></i>')
+        .appendTo(section)
+      let photos = _.pluck(group, 'photo');
+      photos.forEach(function (p) {
+        addPhoto(p, section);
+      });
   }
 
   F.initialize = function () {

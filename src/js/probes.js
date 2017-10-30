@@ -39,7 +39,7 @@ function mapProbe (event, content) {
   if (x > window.innerWidth / 2) x -= probe.outerWidth() + 10;
   else x += 10;
   let y = event.originalEvent.pageY;
-  if (y < window.innerHeight / 2) y -= probe.outerHeight() + 10;
+  if (y > window.innerHeight / 2) y -= probe.outerHeight() + 10;
   else y += 10;
   probe.css({
     top: y + 'px',
