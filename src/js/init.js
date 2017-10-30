@@ -54,7 +54,8 @@ function init_ui () {
   });
 
   $('.lightbox').click(function (e) {
-    if (e.target == this || $(e.target).hasClass('icon-times')) $('.lightbox').hide();
+    // close on background click except when uploading memory (too easy/annoying to close by accident)
+    if ((e.target == this && !$('.memory')[0]) || $(e.target).hasClass('icon-times')) $('.lightbox').hide();
   });
 
   eras.forEach(function (e, i) {
@@ -104,3 +105,51 @@ function init_ui () {
     $('main').addClass('eras');
   });
 }
+
+function showAddMemory () {
+  $('.lightbox').show();
+  $('.lightbox .content > div').remove();
+  let div = $('<div>').attr('class', 'memory').appendTo('.lightbox .content');
+  div.append('<h2>Add a memory</h2>');
+  let inputRow = $('<div>').attr('class', 'input-row').appendTo(div);
+  inputRow.append('<div><h3>Name</h3><input type="text" placeholder="Enter name (optional)"/></div>');
+  inputRow.append('<div><h3>Graduation date</h3><select><option value="" selected>Year</option></select></div>');
+  let now = new Date().getFullYear();
+  for (let y = 1900; y <= now; y ++) {
+    $('select', inputRow).append('<option value="' + y + '">' + y + '</option>');
+  }
+  div
+    .append('<h3>Memory text</h3>')
+    .append('<p><i class="icon-picture"></i>Drag images (PNG or JPG) to this window to include with your memory.</p>')
+    .append('<textarea placeholder="Write your memory here">');
+
+  $('<div>').attr('class', 'submit').html('Submit').appendTo(div);  // to do: submit handler
+  $('<div>').attr('class', 'cancel').html('Cancel').appendTo(div).click(function () { $('.lightbox').hide(); });
+
+  div
+    .on('drop', function (e){ e.preventDefault(); upload(e.originalEvent.dataTransfer.files);})
+    .on('dragover', function(e){ e.preventDefault(); div.addClass('dragover'); })
+    .on('dragleave', function(e){ e.preventDefault(); div.removeClass('dragover'); })
+}
+
+function upload(files) {
+  $('.memory').removeClass('dragover');
+  var f = files[0];
+
+  // Only process image files.
+  if (!f.type.match('image/jpeg') && !f.type.match('image/png')) {
+       alert('The file must be a jpeg or png image') ;
+       return false ;
+  }
+  var reader = new FileReader();
+
+  // When the image is loaded,
+  // run handleReaderLoad function
+  reader.onload = function(e){
+    $('<img>').attr('src', e.target.result).insertAfter('.memory p').attr('class', 'memory-image');
+  }
+  // Read in the image file as a data URL.
+  reader.readAsDataURL(f);            
+}
+
+$('#add-memory-button').click(showAddMemory);

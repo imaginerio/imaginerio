@@ -847,3 +847,68 @@ header.search #controls-right .search-hide {
 .lightbox a.image {
   width: 150px;
 }
+
+/* ADD MEMORY */
+
+.lightbox h2, .lightbox h3, .memory p {
+  color: #07407B;
+}
+
+.lightbox h2 {
+  font-size: 27px;
+}
+
+.lightbox h3 {
+  font-size: 20px;
+  font-weight: 200;
+  margin-bottom: 5px;
+}
+
+.input-row div {
+  display: inline-block;
+  margin-right: 40px;
+}
+
+.input-row input {
+  width: 350px;
+}
+
+.lightbox textarea {
+  width: 100%;
+  height: calc(100% - 290px);
+}
+
+.submit, .cancel {
+  float: right;
+  padding: 10px 20px;
+  margin-top: 20px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.submit {
+  color: white;
+  background-color: #999;
+  border-radius: 5px;
+  padding: 10px 20px;
+}
+
+.memory p {
+  margin: 0;
+  padding: 10px 0;
+}
+
+.memory.dragover p {
+  color: white;
+  background-color: #07407B;
+}
+
+.memory.dragover textarea {
+  background-color: #ccc;
+}
+
+.memory-image {
+  max-width: 100%;
+  margin: 20px auto;
+  display: block;
+}
