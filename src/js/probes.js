@@ -1,4 +1,5 @@
 function rasterProbe (p) {
+  Dispatch.call('removeall', this);
   $('#fixed-probe .content').empty();
   $('#fixed-probe').show();
   $('<p>').attr('class', 'fixed-probe-title').html(p.data.description).appendTo('#fixed-probe .content');

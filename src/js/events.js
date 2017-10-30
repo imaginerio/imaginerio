@@ -1,5 +1,5 @@
 // events
-let Dispatch = d3.dispatch('changeyear', 'setyear', 'highlightfeature', 'removehighlight', 'addoverlay', 'removeoverlay', 'setlayers', 'viewshedclick', 'showresults', 'drawfeature');
+let Dispatch = d3.dispatch('changeyear', 'setyear', 'highlightfeature', 'removehighlight', 'addoverlay', 'removeoverlay', 'setlayers', 'viewshedclick', 'showresults', 'drawfeature', 'removeall');
 
 Dispatch.on('changeyear', function (newYear) {
   year = newYear;
@@ -57,4 +57,10 @@ Dispatch.on('drawfeature', function (data) {
     }
     detailsProbe(data.name, content);
   });
+});
+
+Dispatch.on('removeall', function () {
+  $('.probe').hide();
+  $('.lightbox').hide();
+  $('main').removeClass('eras');
 })

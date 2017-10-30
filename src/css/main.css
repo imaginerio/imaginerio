@@ -458,39 +458,13 @@ header.search #controls-right .search-hide {
   color: #ccc;
 }
 
-.all-thumbs {
-  position: absolute;
-  z-index: 2999;
-  width: 100%;
-  left: 0;
-  top: 0;
-  height: 100%;
-  background-color: rgba(255,255,255,.9);
-}
-
-.all-thumbs .content {
-  position: absolute;
-  left: calc(50% - 378px);
-  top: 65px;
-  width: 756px;
-  max-height: calc(100% - 170px);
-  overflow: auto;
-  border-radius: 5px;
-  background-color: white;
-  box-shadow: 0 0 8px rgba(0,0,0,.25);
-  padding: 20px;
-}
-
-.all-thumbs .content .icon-times {
-  float: right;
-}
-
 .all-thumbs .filmstrip-thumbnail {
   margin: 10px;
 }
 
 .thumbs-section {
   border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
 }
 
 .thumbs-section:last-child {
@@ -800,4 +774,34 @@ header.search #controls-right .search-hide {
 
 #era-stepper > * {
   display: inline-block;
+}
+
+/* LIGHTBOX */
+
+.lightbox {
+  position: absolute;
+  z-index: 2999;
+  width: 100%;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background-color: rgba(255,255,255,.9);
+  display: none;
+}
+
+.lightbox .content {
+  position: absolute;
+  left: calc(50% - 378px);
+  top: 65px;
+  width: 756px;
+  max-height: calc(100% - 170px);
+  overflow: auto;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 0 8px rgba(0,0,0,.25);
+  padding: 20px;
+}
+
+.lightbox .content .icon-times {
+  float: right;
 }

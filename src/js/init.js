@@ -52,6 +52,10 @@ function init_ui () {
     Dispatch.call('removehighlight', this);
   });
 
+  $('.lightbox').click(function (e) {
+    if (e.target == this || $(e.target).hasClass('icon-times')) $('.lightbox').hide();
+  });
+
   eras.forEach(function (e, i) {
     let div = $('<div>').attr('class', 'era-tag')
       .click(function () {

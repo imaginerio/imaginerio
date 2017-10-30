@@ -78,13 +78,11 @@ let Filmstrip = (function($, _, dispatch) {
     let thumb = p.getImage([130])
       .attr('class', 'filmstrip-thumbnail')
       .click(function () {
-        $('.probe').hide()
         if (p.data.layer != 'viewsheds') {
           dispatch.call('addoverlay', this, p);
         } else {
           rasterProbe(p);
         }
-        $('.all-thumbs').remove();
       })
       .mouseover(function () {
         filmstripProbe.call(this, p);
@@ -96,13 +94,10 @@ let Filmstrip = (function($, _, dispatch) {
     return thumb;
   }
 
-  function showAll (e) {
-    e.stopPropagation();
-    let mask = $('<div>').attr('class', 'all-thumbs').appendTo('main')
-      .click(function () { mask.remove(); });
-    let container = $('<div>').attr('class', 'content').appendTo(mask)
-    let close = $('<i class="icon-times">').appendTo(container)
-      .click(function () { mask.remove(); });
+  function showAll () {
+    $('.lightbox').show();
+    $('.lightbox .content > div').remove();
+    let container = $('<div>').attr('class', 'all-thumbs').appendTo('.lightbox .content');
     let groups = _.groupBy(rasters, 'layer');
     if (groups.viewsheds) addThumbSection(groups.viewsheds, 'Views', 'icon-camera', container);
     if (groups.maps) addThumbSection(groups.maps, 'Maps', 'icon-map-o', container);
