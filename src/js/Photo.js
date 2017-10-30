@@ -12,18 +12,21 @@ let Photo = function (data, thumbUrl) {
   let tempImages = [];
   P.metadata = {};
 
-  $.getJSON( 'http://www.sscommons.org/openlibrary/secure/imagefpx/' + data.id + '/7730355/5', function( json ){
+  let request = $.getJSON( 'http://www.sscommons.org/openlibrary/secure/imagefpx/' + data.id + '/7730355/5', function( json ){
     P.metadata = json[0];
     tempImages.forEach(function (img) {
       img.div.css('background-image', 'url(' + getUrl(img.size) + ')');
+      if (img.setDimensions) {
+        let s = P.getScaled(img.size);
+        imd.div.css('width', s[0] + 'px').css('height', s[1] + 'px');
+      }
     });
 
-    $.ajax( 'http://www.sscommons.org/openlibrary/secure/metadata/' + data.id + '?_method=FpHtml',{
+    request = $.ajax( 'http://www.sscommons.org/openlibrary/secure/metadata/' + data.id + '?_method=FpHtml',{
       dataType : 'html',
       success : function( html )
       {
         P.href  = $( html ).find( 'td' ).last().text().replace( /\s/gm, '' );
-        //_thumb.css('background-image', 'url(' + getUrl([130,130]) + ')');
       }
     });
   });
@@ -37,9 +40,9 @@ let Photo = function (data, thumbUrl) {
     return _thumb;
   }
 
-  P.getImage = function (size) {
-    let div = $('<div>');
-    if (!P.metadata.imageServer) tempImages.push({div: div, size: size});
+  P.getImage = function (size, setDimensionsOnLoad) {
+    let div = $('<div>').bind('destroyed', function(){ request.abort(); });
+    if (!P.metadata.imageServer) tempImages.push({div: div, size: size, setDimensions: setDimensionsOnLoad});
     else div.css('background-image', 'url(' + getUrl(size) + ')');
     return div;
   }

@@ -4,7 +4,7 @@ function rasterProbe (p) {
   $('#fixed-probe').show();
   $('<p>').attr('class', 'fixed-probe-title').html(p.data.description).appendTo('#fixed-probe .content');
   let size = p.getScaled([400, 300]);
-  let img = p.getImage([400, 300])
+  let img = p.getImage([400, 300], true)
     .attr('class', 'fixed-image')
     .css('width', size[0] + 'px')
     .css('height', size[1] + 'px')
@@ -16,7 +16,7 @@ function rasterProbe (p) {
       let div = $('<div>').appendTo('.lightbox .content');
       let w = $('.lightbox .content').width();
       let h = window.innerHeight  - 300;
-      let size = p.getScaled([w, h]);
+      let size = p.getScaled([w, h], true);
       p.getImage([w, h])
         .attr('class', 'lightbox-image')
         .css('width', size[0] + 'px')

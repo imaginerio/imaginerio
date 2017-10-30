@@ -10,6 +10,16 @@ var year;
 
 var names;
 
+(function($){
+  $.event.special.destroyed = {
+    remove: function(o) {
+      if (o.handler) {
+        o.handler()
+      }
+    }
+  }
+})(jQuery)
+
 // runtime stuff
 
 $.getJSON(server + 'timeline', function(yearsData) {
