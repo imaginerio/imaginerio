@@ -53,13 +53,44 @@ function init_ui () {
   });
 
   eras.forEach(function (e, i) {
-    let div = $('<div>').attr('class', 'era-tag');
+    let div = $('<div>').attr('class', 'era-tag')
+      .click(function () {
+        showEra(i);
+      });
     $('<div>').attr('class', 'era-' + i).appendTo(div);
     $('<p>').html(e.name + ' (' + e.dates.join(' – ') + ')').appendTo(div);
     div.appendTo('#era-tags');
   });
 
-  $('.go-button').click(function () {
+  function showEra (i) {
+    let e = eras[i];
+    $('#intro h1').html(e.name);
+    $('.era-description').html(e.description);
+    $('.go-button').html('Go to Map').addClass('era')
+      .off('click')
+      .on('click', function () {
+        $('main').removeClass('eras');
+        Dispatch.call('setyear', this, e.dates[0]);
+      });
+    $('#era-tags').hide();
+    $('#era-stepper').show();
+    $('.era-years').html(e.dates.join(' – '));
+    $('#intro').data('era', i);
+    $('#era-stepper .icon-angle-left').toggleClass('disabled', (i == 0));
+    $('#era-stepper .icon-angle-right').toggleClass('disabled', (i == eras.length-1));
+  }
+
+  $('#era-stepper .icon-angle-left').click(function (){
+    if ($(this).hasClass('disabled')) return;
+    showEra(+$('#intro').data('era') - 1);
+  });
+
+  $('#era-stepper .icon-angle-right').click(function (){
+    if ($(this).hasClass('disabled')) return;
+    showEra(+$('#intro').data('era') + 1);
+  });
+
+  $('.go-button').on('click', function () {
     $('main').removeClass('eras');
   });
 

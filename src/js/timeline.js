@@ -75,7 +75,7 @@ let Timeline = (function($, dispatch) {
     $('.ticks', timeline).remove()
     let major = window.innerWidth >= 800 ? 10 : 20;
     let minor = major / 2;
-    let ticksContainer = $('<div class="ticks">').prependTo($('.timeline-track'), timeline);
+    let ticksContainer = $('<div class="ticks">').insertBefore($('.timeline-slider'), timeline);
     appendTick('major', yearRange[0], ticksContainer);
     let next = Math.ceil(yearRange[0] / minor) * minor;
     if (next === yearRange[0]) next += minor;

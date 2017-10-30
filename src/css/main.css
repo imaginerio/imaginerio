@@ -348,7 +348,7 @@ header.search #controls-right .search-hide {
   margin-left: -45px;
 }
 
-.era {
+#timeline .era {
   position: absolute;
   height: 100%;
 }
@@ -570,7 +570,7 @@ header.search #controls-right .search-hide {
 .probe {
   display: none;
   position: absolute;
-  z-index: 1000;
+  z-index: 3000;
 }
 
 #fixed-probe {
@@ -694,6 +694,12 @@ header.search #controls-right .search-hide {
   cursor: pointer;
 }
 
+.go-button.era {
+  background-color: transparent;
+  border: 2px solid #2361AA;
+  color: #2361AA;
+}
+
 #era-tags {
   text-align: center;
 }
@@ -714,4 +720,39 @@ header.search #controls-right .search-hide {
 .era-tag > * {
   display: inline-block;
   vertical-align: middle;
+}
+
+#era-stepper {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 100;
+  display: none;
+}
+
+.era-years {
+  color: #07407B;
+  width: 40%;
+}
+
+#era-stepper i {
+  color: #666666;
+  border-radius: 50%;
+  border: 1px solid #666666;
+  line-height: 25px;
+  width: 25px;
+  cursor: pointer;
+}
+
+#era-stepper i:before {
+  width: auto;
+}
+
+#era-stepper i.disabled {
+  color: #ccc;
+  border-color: #ccc;
+  cursor: default;
+}
+
+#era-stepper > * {
+  display: inline-block;
 }

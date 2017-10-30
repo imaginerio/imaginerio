@@ -1,5 +1,5 @@
 // events
-let Dispatch = d3.dispatch('changeyear', 'highlightfeature', 'removehighlight', 'addoverlay', 'removeoverlay', 'setlayers', 'viewshedclick', 'showresults', 'drawfeature');
+let Dispatch = d3.dispatch('changeyear', 'setyear', 'highlightfeature', 'removehighlight', 'addoverlay', 'removeoverlay', 'setlayers', 'viewshedclick', 'showresults', 'drawfeature');
 
 Dispatch.on('changeyear', function (newYear) {
   year = newYear;
@@ -7,6 +7,11 @@ Dispatch.on('changeyear', function (newYear) {
   Legend.setYear(newYear);
   Filmstrip.setYear(newYear);
   Search.setYear(newYear);
+});
+
+Dispatch.on('setyear', function (newYear) {
+  Timeline.setYear(newYear);
+  Dispatch.call('changeyear', this, newYear);
 });
 
 Dispatch.on('highlightfeature', function (json) {
