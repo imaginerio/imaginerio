@@ -57,7 +57,8 @@ let Map = (function($, dispatch) {
   M.initialize = function (container) {
     map = L.map(container, {
         zoomControl: false,
-        maxZoom: 17
+        maxZoom: 18,
+        minZoom: 15
       })
       .setView([29.717, -95.402], 16)
       .on('click', probe);
@@ -201,6 +202,9 @@ let Map = (function($, dispatch) {
         break;
       case 17:
         probeZoom = .2;
+        break;
+      case 18:
+        probeZoom = .1;
         break;
       default:
         probeZoom = .6;

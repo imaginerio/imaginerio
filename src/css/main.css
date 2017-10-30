@@ -591,6 +591,11 @@ header.search #controls-right .search-hide {
   margin-right: 10px;
 }
 
+.group-title .swatch {
+  float: right;
+  margin-top: 10px;
+}
+
 .layer {
   margin-left: 20px;
 }

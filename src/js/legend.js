@@ -29,6 +29,7 @@ let Legend = (function($, dispatch) {
     $('.legend-contents').empty();
     $.getJSON(server + 'layers/' + year, function(layersJson) {
       $.getJSON(server + 'plans/' + year, function(plansJson) {
+        console.log(layersJson)
         _.each(layersJson, function (category, categoryName) {
           let cat = $('<div>').attr('class', 'legend-category').appendTo('.legend-contents');
           $('<div>').attr('class', 'category-title').html(categoryName.toUpperCase()).appendTo(cat);
@@ -61,6 +62,7 @@ let Legend = (function($, dispatch) {
                   addLayerPlanned(plan.featuretyp, layer);
                 }); 
               }
+              let swatch = add_swatch(group.style).appendTo(groupTitle);
             });
           });
         });
@@ -125,6 +127,25 @@ let Legend = (function($, dispatch) {
     $.getJSON(server + 'feature/' + year + '/' + feature, function (json) {
       dispatch.call('highlightfeature', this, json);
     })
+  }
+
+  function add_swatch( style )
+  {
+    var swatch = $( document.createElement( 'div' ) ).addClass( "swatch" );
+    if( style.shape.match( /svg$/ ) )
+    {
+      swatch.load( "img/legend/" + style.shape );
+    }
+    else
+    {
+      swatch.append(
+        $( document.createElement( 'img' ) ).attr( "src", "img/legend/" + style.shape )
+      );
+    }
+
+    if( style.fill || style.stroke ) swatch.css( style );
+
+    return swatch;
   }
 
   Lg.initialize = function () {
