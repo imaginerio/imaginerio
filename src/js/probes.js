@@ -8,7 +8,33 @@ function rasterProbe (p) {
     .attr('class', 'fixed-image')
     .css('width', size[0] + 'px')
     .css('height', size[1] + 'px')
-    .appendTo('#fixed-probe .content');
+    .appendTo('#fixed-probe .content')
+    .click(function () {
+      Dispatch.call('removeall', this);
+      $('.lightbox').show();
+      $('.lightbox .content > div').remove();
+      let div = $('<div>').appendTo('.lightbox .content');
+      let w = $('.lightbox .content').width();
+      let h = window.innerHeight  - 300;
+      let size = p.getScaled([w, h]);
+      p.getImage([w, h])
+        .attr('class', 'lightbox-image')
+        .css('width', size[0] + 'px')
+        .css('height', size[1] + 'px')
+        .appendTo(div);
+      $('<a>')
+        .attr('class', 'image blue-button')
+        .attr('href', 'http://www.sscommons.org/openlibrary/' + p.href + '&fs=true')
+        .attr('target', 'blank')
+        .html('View image on SharedShelf Commons')
+        .appendTo(div);
+      $('<p>')
+        .html(p.data.description)
+        .appendTo(div);
+    });
+  $('<div>').attr('class', 'blue-button').html('More...').appendTo('#fixed-probe .content').click(function () {
+    img.click();
+  });
   if (p.data.layer != 'viewsheds') {
     $('<div>')
       .attr('class', 'button red')

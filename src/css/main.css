@@ -45,6 +45,24 @@ main {
   color: #E02727;
 }
 
+.blue-button {
+  background-color: transparent;
+  border: 1px solid #2361AA;
+  color: #2361AA;
+  border-radius: 5px;
+  margin: auto;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  width: 80px;
+  padding: 10px;
+  float: right;
+}
+
+.icon-times {
+  cursor: pointer;
+}
+
 /* HEADER */
 
 header {
@@ -605,7 +623,6 @@ header.search #controls-right .search-hide {
   position: absolute;
   top: 5px;
   right: 5px;
-  cursor: pointer;
 }
 
 .fixed-probe-title {
@@ -617,6 +634,7 @@ header.search #controls-right .search-hide {
   margin: auto;
   display: block;
   background-repeat: no-repeat;
+  cursor: pointer;
 }
 
 #filmstrip-probe .content {
@@ -804,4 +822,12 @@ header.search #controls-right .search-hide {
 
 .lightbox .content .icon-times {
   float: right;
+}
+
+.lightbox-image {
+  margin: 20px auto;
+}
+
+.lightbox a.image {
+  width: 150px;
 }

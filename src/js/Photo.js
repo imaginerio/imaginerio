@@ -22,7 +22,7 @@ let Photo = function (data, thumbUrl) {
       dataType : 'html',
       success : function( html )
       {
-        //var href = $( html ).find( 'td' ).last().text().replace( /\s/gm, '' );
+        P.href  = $( html ).find( 'td' ).last().text().replace( /\s/gm, '' );
         //_thumb.css('background-image', 'url(' + getUrl([130,130]) + ')');
       }
     });
