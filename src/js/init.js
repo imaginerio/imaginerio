@@ -26,7 +26,7 @@ function initialize () {
   year = 1910; // a year that actually has something
   Map.initialize('map').setYear(year);
   Timeline.initialize(years, eras, 'timeline').setYear(year);
-  Filmstrip.initialize().setYear(year);
+  Filmstrip.initialize();//.setYear(year);
   Legend.initialize().setYear(year);
   Search.initialize('search').setYear(year);
   init_ui();
@@ -69,6 +69,7 @@ function init_ui () {
 
   function showEra (i) {
     let e = eras[i];
+    Filmstrip.setYear(e.dates[0], e.dates[1]);
     $('#intro h1').html(e.name);
     $('.era-description').html(e.description);
     $('.go-button').html('Go to Map').addClass('era')
@@ -96,7 +97,7 @@ function init_ui () {
   });
 
   $('.go-button').on('click', function () {
-    $('main').removeClass('eras');
+    $('.era-tag').first().click();
   });
 
   $('#eras-button').click(function () {

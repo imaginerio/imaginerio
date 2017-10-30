@@ -9,6 +9,7 @@ let Map = (function($, dispatch) {
   let overlayLayer;
   let viewshedPoints;
   let selectedViewshed;
+  let selectedViewshedData;
   let viewshedIcon = L.icon({
     iconUrl: 'img/viewshed.png',
     iconSize: [33, 37.25],
@@ -70,6 +71,8 @@ let Map = (function($, dispatch) {
 
   M.setYear = function (newYear) {
     if (newYear == year) return;
+    selectedViewshed = null;
+    selectedViewshedData = null;
     year = newYear;
     tileLayer.setUrl(tileserver + year + '/' + layers.join(',') + '/{z}/{x}/{y}.png');
     M.removeHighlight();
@@ -105,8 +108,10 @@ let Map = (function($, dispatch) {
           })
         }
       }).addTo(map);
+      if (selectedViewshedData) { // was set after year change & before json load
+        M.zoomToView(selectedViewshedData);
+      }
     });
-    selectedViewshed = null;
     return M;
   }
 
@@ -165,10 +170,12 @@ let Map = (function($, dispatch) {
   M.clearSelected = function () {
     if (selectedViewshed) selectedViewshed.setIcon(viewshedIcon).setZIndexOffset(99);
     selectedViewshed = null;
+    selectedViewshedData = null;
   }
 
   M.zoomToView = function (raster) {
     M.clearSelected();
+    selectedViewshedData = raster;
     viewshedPoints.eachLayer(function(l){
       if (l.feature.properties.id == raster.id) {
         map.setView(l.getLatLng());

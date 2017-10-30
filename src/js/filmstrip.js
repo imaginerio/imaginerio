@@ -19,10 +19,11 @@ let Filmstrip = (function($, _, dispatch) {
     $('.filmstrip-showall').click(showAll);
   }
 
-  function updateYear (y) {
+  function updateYear (y, max) {
     year = y;
-    $.getJSON(server + 'raster/' + year, function(json) {
-      rasters = json;
+    $.getJSON(server + 'raster/' + year + (max ? ('?max=' + max) : ''), function(json) {
+      filmstrip.show();
+      rasters = _.reject(json, function(r){ return r.id === null });
       $('.mini-thumbs', filmstrip).empty();
       $('.filmstrip-thumbnails').empty();
       if (!rasters.length) {
@@ -68,7 +69,11 @@ let Filmstrip = (function($, _, dispatch) {
     $('.filmstrip-thumbnails').empty();
     let title = selectedType == 'viewsheds' ? 'views' : selectedType;
     $('.filmstrip-toggle span', filmstrip).html(title.toUpperCase());
-    let photos = _.pluck(_.filter(rasters, function(r){ return r.layer === selectedType }), 'photo');
+    let photos = _.chain(rasters)
+      .filter(function(r){ return r.layer === selectedType })
+      .sortBy('date')
+      .pluck('photo')
+      .value();
     photos.forEach(function (p) {
       addPhoto(p, $('.filmstrip-thumbnails'));
     });
@@ -78,6 +83,7 @@ let Filmstrip = (function($, _, dispatch) {
     let thumb = p.getImage([130])
       .attr('class', 'filmstrip-thumbnail')
       .click(function () {
+        if ($('main').hasClass('eras')) dispatch.call('setyear', this, p.data.date);
         if (p.data.layer != 'viewsheds') {
           dispatch.call('addoverlay', this, p);
         } else {
@@ -98,7 +104,10 @@ let Filmstrip = (function($, _, dispatch) {
     $('.lightbox').show();
     $('.lightbox .content > div').remove();
     let container = $('<div>').attr('class', 'all-thumbs').appendTo('.lightbox .content');
-    let groups = _.groupBy(rasters, 'layer');
+    let rast = _.chain(rasters)
+      .sortBy('date')
+      .value();
+    let groups = _.groupBy(rast, 'layer');
     if (groups.viewsheds) addThumbSection(groups.viewsheds, 'Views', 'icon-camera', container);
     if (groups.maps) addThumbSection(groups.maps, 'Maps', 'icon-map-o', container);
     if (groups.plans) addThumbSection(groups.plans, 'Plans', 'icon-tsquare', container);
@@ -123,8 +132,8 @@ let Filmstrip = (function($, _, dispatch) {
     return F;
   }
 
-  F.setYear = function (newYear) {
-    updateYear(newYear);
+  F.setYear = function (newYear, maxYear) {
+    updateYear(newYear, maxYear);
 
     return F;
   }
