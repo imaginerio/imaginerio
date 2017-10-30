@@ -121,7 +121,7 @@ function showAddMemory () {
   div
     .append('<h3>Memory text</h3>')
     .append('<p><i class="icon-picture"></i>Drag images (PNG or JPG) to this window to include with your memory.</p>')
-    .append('<textarea placeholder="Write your memory here">');
+    .append('<textarea placeholder="Enter your memory...">');
 
   $('<div>').attr('class', 'submit').html('Submit').appendTo(div);  // to do: submit handler
   $('<div>').attr('class', 'cancel').html('Cancel').appendTo(div).click(function () { $('.lightbox').hide(); });

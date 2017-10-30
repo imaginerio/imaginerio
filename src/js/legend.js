@@ -31,7 +31,7 @@ let Legend = (function($, dispatch) {
       $.getJSON(server + 'plans/' + year, function(plansJson) {
         _.each(layersJson, function (category, categoryName) {
           let cat = $('<div>').attr('class', 'legend-category').appendTo('.legend-contents');
-          //$('<div>').attr('class', 'category-title').html(categoryName).appendTo(cat);
+          $('<div>').attr('class', 'category-title').html(categoryName.toUpperCase()).appendTo(cat);
           _.each(category, function (obj) { // there's an extra level here
             _.each(obj, function (group, groupName) {
               let gr = $('<div>').attr('class', 'legend-group').attr('data-group', groupName).appendTo(cat);

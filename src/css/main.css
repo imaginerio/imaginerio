@@ -551,6 +551,18 @@ header.search #controls-right .search-hide {
   display: none;
 }
 
+.legend-category {
+  margin-bottom: 10px;
+}
+
+.category-title {
+  background-color: #666;
+  color: white;
+  padding: 0 10px;
+  font-size: 12px;
+  line-height: 34px;
+}
+
 .legend-contents {
   height: 100%;
   overflow: auto;
@@ -559,6 +571,10 @@ header.search #controls-right .search-hide {
 .legend-group {
   padding: 10px;
   border-bottom: 1px solid #ccc;
+}
+
+.legend-group:last-child {
+  border-bottom: none;
 }
 
 .legend-group.planned input{
