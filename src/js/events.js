@@ -63,4 +63,5 @@ Dispatch.on('removeall', function () {
   $('.probe').hide();
   $('.lightbox').hide();
   $('main').removeClass('eras');
+  Map.clearSelected();
 })

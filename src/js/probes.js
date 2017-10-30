@@ -4,7 +4,7 @@ function rasterProbe (p) {
   $('#fixed-probe').show();
   $('<p>').attr('class', 'fixed-probe-title').html(p.data.description).appendTo('#fixed-probe .content');
   let size = p.getScaled([400, 300]);
-  p.getImage([400, 300])
+  let img = p.getImage([400, 300])
     .attr('class', 'fixed-image')
     .css('width', size[0] + 'px')
     .css('height', size[1] + 'px')
@@ -17,6 +17,8 @@ function rasterProbe (p) {
       .click(function () {
       Dispatch.call('removeoverlay', this);
     });
+  } else {
+    Map.zoomToView(p.data);
   }
 }
 

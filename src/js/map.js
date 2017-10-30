@@ -8,8 +8,14 @@ let Map = (function($, dispatch) {
   let tileLayer;
   let overlayLayer;
   let viewshedPoints;
+  let selectedViewshed;
   let viewshedIcon = L.icon({
     iconUrl: 'img/viewshed.png',
+    iconSize: [33, 37.25],
+    iconAnchor: [16.5, 27.25]
+  });
+  let viewshedActiveIcon = L.icon({
+    iconUrl: 'img/viewshed_active.png',
     iconSize: [33, 37.25],
     iconAnchor: [16.5, 27.25]
   });
@@ -99,7 +105,8 @@ let Map = (function($, dispatch) {
           })
         }
       }).addTo(map);
-    })
+    });
+    selectedViewshed = null;
     return M;
   }
 
@@ -152,6 +159,22 @@ let Map = (function($, dispatch) {
         pointToLayer: (pt, latlng) => L.circleMarker(latlng, highlightMarkerTopStyle)
       }).addTo(map);
       map.fitBounds(highlightLayerBottom.getBounds());
+    });
+  }
+
+  M.clearSelected = function () {
+    if (selectedViewshed) selectedViewshed.setIcon(viewshedIcon).setZIndexOffset(99);
+    selectedViewshed = null;
+  }
+
+  M.zoomToView = function (raster) {
+    M.clearSelected();
+    viewshedPoints.eachLayer(function(l){
+      if (l.feature.properties.id == raster.id) {
+        map.setView(l.getLatLng());
+        selectedViewshed = l;
+        l.setIcon(viewshedActiveIcon).setZIndexOffset(100);
+      }
     });
   }
 

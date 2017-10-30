@@ -50,6 +50,7 @@ function init_ui () {
     $('#fixed-probe').hide();
     Dispatch.call('removeoverlay', this);
     Dispatch.call('removehighlight', this);
+    Map.clearSelected();
   });
 
   $('.lightbox').click(function (e) {
