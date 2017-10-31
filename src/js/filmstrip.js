@@ -11,7 +11,10 @@ let Filmstrip = (function($, _, dispatch) {
 
   function init_events () {
     $('.filmstrip-toggle').click(function () {
-      filmstrip.toggleClass('collapsed');
+      if (!mobile)
+        filmstrip.toggleClass('collapsed');
+      else 
+        filmstrip.toggleClass('partial');
     });
 
     $('.raster-types i').click(filterTypes);
@@ -42,16 +45,19 @@ let Filmstrip = (function($, _, dispatch) {
             .appendTo($('.mini-thumbs', filmstrip));
         })
       }
-      $('.icon-camera', filmstrip).toggleClass('disabled', !_.some(rasters, function(r){ return r.layer === 'viewsheds'}));
-      $('.icon-flight', filmstrip).toggleClass('disabled', !_.some(rasters, function(r){ return r.layer === 'aerials'}));
-      $('.icon-tsquare', filmstrip).toggleClass('disabled', !_.some(rasters, function(r){ return r.layer === 'plans'}));
-      $('.icon-map-o', filmstrip).toggleClass('disabled', !_.some(rasters, function(r){ return r.layer === 'maps'}));
+      $('.icon-camera, .raster-type-labels span.views', filmstrip).toggleClass('disabled', !_.some(rasters, function(r){ return r.layer === 'viewsheds'}));
+      $('.icon-flight, .raster-type-labels span.aerials', filmstrip).toggleClass('disabled', !_.some(rasters, function(r){ return r.layer === 'aerials'}));
+      $('.icon-tsquare, .raster-type-labels span.plans', filmstrip).toggleClass('disabled', !_.some(rasters, function(r){ return r.layer === 'plans'}));
+      $('.icon-map-o, .raster-type-labels span.maps', filmstrip).toggleClass('disabled', !_.some(rasters, function(r){ return r.layer === 'maps'}));
       showThumbs();
       if ($('.raster-types i.selected', filmstrip).hasClass('disabled') || !$('.raster-types i.selected', filmstrip).length) $('.raster-types i').not('.disabled').first().click();
     });
   }
 
   function filterTypes (e) {
+    if (e.originalEvent) {
+      filmstrip.removeClass('collapsed').removeClass('partial');
+    }
     if ($(e.target).hasClass('disabled')) return;
     $('.raster-types i.selected').removeClass('selected');
     let c = $(e.target).attr('class');

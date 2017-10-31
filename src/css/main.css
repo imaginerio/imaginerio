@@ -243,9 +243,13 @@ header.search #controls-right .search-hide {
   padding: 0 30px;
 }
 
-.year-stepper, .timeline {
+.year-stepper, .timeline-inner {
   display: inline-block;
   vertical-align: middle;
+}
+
+.timeline-inner {
+  width: calc(100% - 160px);
 }
 
 .year-stepper {
@@ -286,7 +290,7 @@ header.search #controls-right .search-hide {
 
 .timeline {
   position: relative;
-  width: calc(100% - 160px);
+  width: 100%;
   cursor: pointer;
 }
 
@@ -939,6 +943,10 @@ header.search #controls-right .search-hide {
   .desktop {
     display: none !important;
   }
+
+  .mobile {
+    display: block;
+  }
   
   /*HEADER*/
 
@@ -1022,6 +1030,7 @@ header.search #controls-right .search-hide {
     padding: 15px;
     background-color: rgba(255, 255, 255, .8);
     height: 20px;
+    width: 100%;
   }
 
   .timeline {
@@ -1141,5 +1150,90 @@ header.search #controls-right .search-hide {
     border-radius: 5px;
     top: 110px;
     padding: 10px 15px
+  }
+
+  /* FILMSTRIP */
+
+  #filmstrip, #filmstrip.collapsed {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 2600;
+  }
+
+  #filmstrip.collapsed {
+    z-index: auto;
+  }
+
+  .filmstrip-toggle {
+    width: 46px;
+    top: auto;
+    bottom: 50px;
+    right: 15px;
+    border-radius: 50%;
+    padding: 0;
+    height: 46px;
+    line-height: 15px;
+    text-align: center;
+    font-size: 24px;
+    background-color: #2361AA;
+    color: white;
+  }
+
+  .filmstrip-toggle i {
+    font-size: 24px;
+    line-height: 50px;
+    width: 46px;
+  }
+
+  #filmstrip .raster-type-labels, #filmstrip .raster-types {
+    display: none;
+  }
+
+  #filmstrip.partial .raster-types {
+    display: block;
+    position: absolute;
+    z-index: 2500;
+    right: 15px;
+    bottom: 115px;
+  }
+
+  #filmstrip.partial .raster-type-labels {
+    display: block;
+    position: absolute;
+    z-index: 2500;
+    right: 20px;
+    bottom: 135px;
+    margin-right: 50px;
+  }
+
+  .raster-type-labels span.disabled {
+    display: none;
+  }
+
+  .raster-types i.disabled {
+    display: none;
+  }
+
+  .raster-types i, .raster-types i.selected {
+    width: 46px;
+    border-radius: 50%;
+    padding: 0;
+    height: 46px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 24px;
+    background-color: white;
+    color: #666;
+    margin: 10px 0;
+  }
+
+  .raster-type-labels span {
+    display: block;
+    background: rgba(255,255,255,.8);
+    margin-top: 28px;
+    padding: 5px 8px;
+    border-radius: 3px;
+    text-align: right;
   }
 }

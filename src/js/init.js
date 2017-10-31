@@ -46,14 +46,16 @@ function initialize () {
 
 function init_ui () {
   if (mobile) {
-    $('.mobile').show();
     $('#legend .mobile-header .icon-times').click(function () {
       $('#legend').toggleClass('collapsed');
     });
     $('#search .icon-left-big').click(function () {
       Search.clear();
       $('header').removeClass('search');
-    })
+    });
+    $('#filmstrip').addClass('collapsed').insertBefore('#map');
+  } else {
+    $('.mobile').hide();
   }
   $('#search-button').click(function (e) {
     e.stopPropagation();
