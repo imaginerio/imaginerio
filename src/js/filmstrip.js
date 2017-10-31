@@ -111,6 +111,7 @@ let Filmstrip = (function($, _, dispatch) {
   }
 
   function showAll () {
+    filmstrip.removeClass('partial');
     $('.lightbox').show();
     $('.lightbox .content > div').remove();
     let container = $('<div>').attr('class', 'all-thumbs').appendTo('.lightbox .content');
