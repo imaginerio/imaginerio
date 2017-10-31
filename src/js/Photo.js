@@ -18,7 +18,7 @@ let Photo = function (data, thumbUrl) {
       img.div.css('background-image', 'url(' + getUrl(img.size) + ')');
       if (img.setDimensions) {
         let s = P.getScaled(img.size);
-        imd.div.css('width', s[0] + 'px').css('height', s[1] + 'px');
+        img.div.css('width', s[0] + 'px').css('height', s[1] + 'px');
       }
     });
 
