@@ -55,9 +55,6 @@ let Filmstrip = (function($, _, dispatch) {
   }
 
   function filterTypes (e) {
-    if (e.originalEvent) {
-      filmstrip.removeClass('collapsed').removeClass('partial');
-    }
     if ($(e.target).hasClass('disabled')) return;
     $('.raster-types i.selected').removeClass('selected');
     let c = $(e.target).attr('class');
@@ -67,6 +64,13 @@ let Filmstrip = (function($, _, dispatch) {
     else if (c == 'icon-tsquare') type = 'plans';
     else if (c == 'icon-map-o') type = 'maps';
     selectedType = type;
+    if (e.originalEvent) {
+      if (mobile) {
+        showAll();
+        $('.all-thumbs').scrollTop($('.' + c, '.lightbox .content').position().top);
+        return;
+      }
+    }
     showThumbs();
     $(e.target).addClass('selected');
   }
