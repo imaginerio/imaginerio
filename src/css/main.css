@@ -1009,6 +1009,25 @@ header.search #controls-right .search-hide {
     width: 75%;
   }
 
+  #era-tags {
+    text-align: left;
+    margin-left: 12.5%;
+  }
+
+  .era-tag {
+    display: block;
+    margin: 0 0 5px 0;
+    cursor: pointer;
+  }
+
+  .era-tag p {
+    margin: 0;
+  }
+
+  .go-button {
+    padding: 15px 30px;
+  }
+
   /*TIMELINE*/
 
   .year-stepper, .timeline {
