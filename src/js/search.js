@@ -47,6 +47,7 @@ let Search = (function($, dispatch) {
           let span = $('<span>' + r.name + '</span>')
             .appendTo(row)
             .on('click', function () {
+              $('header').removeClass('search');
               Dispatch.call('drawfeature', this, r);
             })
             .prepend('<i class="icon-binoculars">');

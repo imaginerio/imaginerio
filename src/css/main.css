@@ -1026,6 +1026,7 @@ header.search #controls-right .search-hide {
 
   .go-button {
     padding: 15px 30px;
+    margin-top: 25px;
   }
 
   /*TIMELINE*/
@@ -1299,11 +1300,11 @@ header.search #controls-right .search-hide {
     float: none;
     display: inline-block;
     vertical-align: bottom;
+    margin-left: 10px;
   }
 
   #fixed-probe .blue-button.slider-toggle {
     width: auto;
-    margin: 0 10px;
   }
 
   #overlay-info {
