@@ -32,11 +32,16 @@ function rasterProbe (p) {
         .html(p.data.description)
         .appendTo(div);
     });
+  if (p.data.layer != 'viewsheds' && mobile) {
+    $('<div>').attr('class', 'blue-button slider-toggle').html('<i class="icon-sliders"></i>').appendTo('#fixed-probe .content').click(function () {
+      $('.slider, .button.red', '#fixed-probe .content').toggle();
+    });
+  }
   $('<div>').attr('class', 'blue-button').html('More...').appendTo('#fixed-probe .content').click(function () {
     img.click();
   });
   if (p.data.layer != 'viewsheds') {
-    let slider = Slider('#fixed-probe .content').css('width', '100%').on('sliderchange', function(e, d){ 
+    let slider = Slider('#fixed-probe .content').on('sliderchange', function(e, d){ 
       Dispatch.call('setopacity', this, d);
     });
     $('<div>')

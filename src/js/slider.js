@@ -12,7 +12,10 @@ let Slider = function (container) {
     var max = baseMax;
 
     $(document).on('mousemove.slide touchmove.slide', function (e) {
-      var x = Math.min(Math.max(e.pageX, min), max);
+      let pageX;
+      if (e.touches && e.touches[0]) pageX = e.touches[0].pageX;
+      else pageX = e.pageX;
+      var x = Math.min(Math.max(pageX, min), max);
       thumb.css('left', x - baseX + 'px');
       thumb.parent().trigger('sliderchange', [thumb.position().left/track.width()]);
     }).on('mouseup.slide mouseleave.slide touchend.slide', function () {
