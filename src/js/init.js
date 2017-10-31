@@ -22,6 +22,13 @@ var names;
 
 // runtime stuff
 
+var mobile = window.innerWidth <= 600;
+
+if (mobile) {
+  $('.desktop').hide();
+  $('.mobile').show();
+}
+
 $.getJSON(server + 'timeline', function(yearsData) {
   years = yearsData;
   while (years[0] < eras[0].dates[0]) years.shift();  // force min year and first era to match

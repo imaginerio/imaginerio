@@ -144,9 +144,10 @@ let Timeline = (function($, dispatch) {
     stepper.append('<i class="icon-angle-left">')
       .append('<div class="year">' + year + '</div>')
       .append('<i class="icon-angle-right">');
+    let inner = $('<div>').attr('class', 'timeline-inner').appendTo(container);
     timeline = $('<div>')
       .attr('class', 'timeline')
-      .appendTo(container);
+      .appendTo(inner);
     timeline.append('<div class="timeline-track">')
       .append('<div class="timeline-slider">');
     timeline
