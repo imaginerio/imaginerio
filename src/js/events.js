@@ -1,5 +1,5 @@
 // events
-let Dispatch = d3.dispatch('changeyear', 'setyear', 'highlightfeature', 'removehighlight', 'addoverlay', 'removeoverlay', 'setlayers', 'viewshedclick', 'showresults', 'drawfeature', 'removeall');
+let Dispatch = d3.dispatch('changeyear', 'setyear', 'highlightfeature', 'removehighlight', 'addoverlay', 'removeoverlay', 'setopacity', 'setlayers', 'viewshedclick', 'showresults', 'drawfeature', 'removeall');
 
 Dispatch.on('changeyear', function (newYear) {
   year = newYear;
@@ -31,6 +31,10 @@ Dispatch.on('addoverlay', function (p) {
 Dispatch.on('removeoverlay', function () {
   Map.removeOverlay();
   $('#fixed-probe').hide();
+});
+
+Dispatch.on('setopacity', function (val) {
+  Map.setOverlayOpacity(val);
 });
 
 Dispatch.on('setlayers', function (list) {

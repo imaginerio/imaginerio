@@ -144,12 +144,17 @@ let Map = (function($, dispatch) {
 
   M.addOverlay = function (overlay) {
     if (overlayLayer && map.hasLayer(overlayLayer)) map.removeLayer(overlayLayer);
-    overlayLayer = overlay.layer().addTo(map);
+    overlayLayer = overlay.layer().setOpacity(1).addTo(map);
     return M;
   }
 
   M.removeOverlay = function () {
     if (overlayLayer && map.hasLayer(overlayLayer)) map.removeLayer(overlayLayer);
+    return M;
+  }
+
+  M.setOverlayOpacity = function (val) {
+    if (overlayLayer && map.hasLayer(overlayLayer)) overlayLayer.setOpacity(val)
     return M;
   }
 

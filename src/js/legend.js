@@ -29,7 +29,6 @@ let Legend = (function($, dispatch) {
     $('.legend-contents').empty();
     $.getJSON(server + 'layers/' + year, function(layersJson) {
       $.getJSON(server + 'plans/' + year, function(plansJson) {
-        console.log(layersJson)
         _.each(layersJson, function (category, categoryName) {
           let cat = $('<div>').attr('class', 'legend-category').appendTo('.legend-contents');
           $('<div>').attr('class', 'category-title').html(categoryName.toUpperCase()).appendTo(cat);
