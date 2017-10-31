@@ -72,7 +72,6 @@ function init_ui () {
 
   $('#fixed-probe .icon-times').click(function () {
     $('#fixed-probe').hide();
-    Dispatch.call('removeoverlay', this);
     Dispatch.call('removehighlight', this);
     Map.clearSelected();
   });
@@ -127,6 +126,10 @@ function init_ui () {
 
   $('#eras-button').click(function () {
     $('main').addClass('eras');
+  });
+
+  $('#overlay-info').click(function () {
+    rasterProbe($(this).data('p'));
   });
 }
 

@@ -26,11 +26,13 @@ Dispatch.on('removehighlight', function (json) {
 Dispatch.on('addoverlay', function (p) {
   Map.addOverlay(p.data.overlay);
   rasterProbe(p);
+  $('#overlay-info').data('p', p).show();
 });
 
 Dispatch.on('removeoverlay', function () {
   Map.removeOverlay();
   $('#fixed-probe').hide();
+  $('#overlay-info').hide();
 });
 
 Dispatch.on('setlayers', function (list) {
