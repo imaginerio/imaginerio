@@ -116,6 +116,7 @@ let Legend = (function($, dispatch) {
     if (!$(this).hasClass('highlighted')) {
       highlightFeature($(this).data('name'));
       $(this).toggleClass('highlighted');
+      if (mobile) legend.addClass('collapsed');
     } else {
       dispatch.call('removehighlight', this);
     }

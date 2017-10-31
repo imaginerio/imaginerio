@@ -30,6 +30,7 @@ let Search = (function($, dispatch) {
   S.showResults = function (results) {
     searchResults = results;
     if (_.size(searchResults)) {
+      if (mobile) $('header').addClass('search');
       let array = _.mapObject(results, function(r, k){ return _.extend(r, {name: k}); });
       let groups = _.groupBy(searchResults, 'layer');
       resultsContainer.empty().show();

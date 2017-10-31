@@ -243,9 +243,13 @@ header.search #controls-right .search-hide {
   padding: 0 30px;
 }
 
-.year-stepper, .timeline {
+.year-stepper, .timeline-inner {
   display: inline-block;
   vertical-align: middle;
+}
+
+.timeline-inner {
+  width: calc(100% - 160px);
 }
 
 .year-stepper {
@@ -286,7 +290,7 @@ header.search #controls-right .search-hide {
 
 .timeline {
   position: relative;
-  width: calc(100% - 160px);
+  width: 100%;
   cursor: pointer;
 }
 
@@ -700,6 +704,19 @@ header.search #controls-right .search-hide {
   color: #333;
 }
 
+#overlay-info {
+  display: none;
+  position: absolute;
+  right: 20px;
+  width: 15px;
+  border-radius: 5px;
+  top: 135px;
+  padding: 10px 15px;
+  z-index: 2500;
+  background-color: white;
+  cursor: pointer;
+}
+
 /* INTRO/ERAS VIEW */
 
 .eras #filmstrip {
@@ -746,6 +763,7 @@ header.search #controls-right .search-hide {
   font-weight: 100;
   color: #07407B;
   text-align: center;
+  line-height: 75px;
 }
 
 .go-button {
@@ -904,4 +922,369 @@ header.search #controls-right .search-hide {
 
 .thumb:hover {
   background-color: #666;
+}
+
+@media (max-width: 600px) {
+
+  .desktop {
+    display: none !important;
+  }
+
+  .mobile {
+    display: block;
+  }
+
+  .flex-column {
+    position: relative;
+  }
+  
+  /*HEADER*/
+
+  header {
+    position: absolute;
+    padding: 0;
+    width: 100%;
+  }
+
+  .eras header {
+    display: none;
+  }
+
+  #eras-button, #search-button {
+    font-size: 24px;
+    padding: 12px 5px;
+    line-height: 24px;
+    z-index: 2501;
+    position: absolute;
+  }
+
+  header > img {
+    display: none;
+  }
+
+  #top-right-buttons, #add-memory-button {
+    display: none;
+  }
+
+  #search-button {
+    right: 0;
+    top: 0;
+    margin-right: 0;
+  }
+
+  .mobile-header {
+    height: 50px;
+    width: 100%;
+    color: #07407B;
+    background-color: white;
+    font-size: 20px;
+    line-height: 50px;
+    box-sizing: border-box;
+    padding: 0 15px;
+  }
+
+  .mobile-header .icon-times {
+    color: #95989A;
+    float: right;
+  }
+
+  .mobile-header span {
+    font-weight: bold;
+  }
+
+  /* INTRO/ERAS */
+
+  .eras #intro {
+    top: 0;
+    height: 100%;
+  }
+
+  #intro h1 {
+    font-size: 56px;
+    line-height: 60px;
+  }
+
+  .era-description {
+    font-weight: 100;
+    width: 75%;
+  }
+
+  /*TIMELINE*/
+
+  .year-stepper, .timeline {
+    display: block;
+  }
+
+  #timeline {
+    padding: 0;
+    background-color: white;
+    position: absolute;
+    height: 50px;
+    width: 100%;
+    z-index: 2500;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .timeline-inner {
+    padding: 15px;
+    background-color: rgba(255, 255, 255, .8);
+    height: 50px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .timeline {
+    width: 100%;
+  }
+
+  .timeline-track {
+    height: 20px;
+  }
+
+  .timeline-slider {
+    height: 12px;
+  }
+
+  .year-stepper {
+    margin: auto;
+    height: 35px;
+    padding-top: 15px;
+  }
+
+  .ticks span{
+    display: none;
+  }
+
+  .year {
+    font-size: 20px;
+    margin: 0 10px;
+  }
+
+  /* SEARCH */
+
+  #search {
+    position: absolute;
+    z-index: 2600;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #eee;
+    display: none;
+  }
+
+  header.search {
+    height: 100%;
+  }
+
+  header.search #search{
+    display: block;
+  }
+
+  #search input {
+    width: 100%;
+    border-radius: 0;
+    border: none;
+    height: 50px;
+    padding-left: 50px;
+    box-sizing: border-box;
+  }
+
+  #search .icon-left-big {
+    font-size: 24px;
+    padding: 12px 5px;
+    line-height: 24px;
+    z-index: 2501;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  #search > .search-results {
+    top: 50px;
+    left: 0;
+    width: 100%;
+  }
+
+  .results-group > span {
+    border-radius: 0;
+  }
+
+  .search-result > span {
+    width: calc(100% - 80px);
+  }
+
+  /*LEGEND*/
+
+  #legend, #legend.collapsed {
+    width: 100%;
+    position: absolute;
+    z-index: 2600;
+  }
+
+  #legend.collapsed {
+    z-index: auto;
+  }
+
+  .eras #legend, .eras #legend.collapsed {
+    z-index: 0;
+  }
+
+  .legend-contents{
+    background-color: white;
+  }
+
+  #legend.collapsed .legend-contents, .legend-toggle {
+    display: none;
+  }
+
+  #legend.collapsed .mobile-header {
+    display: none !important;
+  }
+
+  #legend.collapsed .legend-toggle, #legend.subsequent.collapsed .legend-toggle {
+    display: block;
+    right: 15px;
+    width: 15px;
+    left: auto;
+    border-radius: 5px;
+    top: 110px;
+    padding: 10px 15px
+  }
+
+  /* FILMSTRIP */
+
+  .eras #filmstrip {
+    display: none !important;
+  }
+
+  #filmstrip, #filmstrip.collapsed {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 2600;
+  }
+
+  #filmstrip.collapsed {
+    z-index: auto;
+  }
+
+  .filmstrip-toggle {
+    width: 46px;
+    top: auto;
+    bottom: 50px;
+    right: 15px;
+    border-radius: 50%;
+    padding: 0;
+    height: 46px;
+    line-height: 15px;
+    text-align: center;
+    font-size: 24px;
+    background-color: #2361AA;
+    color: white;
+  }
+
+  .filmstrip-toggle i {
+    font-size: 24px;
+    line-height: 50px;
+    width: 46px;
+  }
+
+  #filmstrip .raster-type-labels, #filmstrip .raster-types {
+    display: none;
+  }
+
+  #filmstrip.partial .raster-types {
+    display: block;
+    position: absolute;
+    z-index: 2500;
+    right: 15px;
+    bottom: 115px;
+  }
+
+  #filmstrip.partial .raster-type-labels {
+    display: block;
+    position: absolute;
+    z-index: 2500;
+    right: 20px;
+    bottom: 135px;
+    margin-right: 50px;
+  }
+
+  .raster-type-labels span.disabled {
+    display: none;
+  }
+
+  .raster-types i.disabled {
+    display: none;
+  }
+
+  .raster-types i, .raster-types i.selected {
+    width: 46px;
+    border-radius: 50%;
+    padding: 0;
+    height: 46px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 24px;
+    background-color: white;
+    color: #666;
+    margin: 10px 0;
+  }
+
+  .raster-type-labels span {
+    display: block;
+    background: rgba(255,255,255,.8);
+    margin-top: 28px;
+    padding: 5px 8px;
+    border-radius: 3px;
+    text-align: right;
+  }
+
+  .filmstrip-thumbnail {
+    width: 90px;
+    height: 90px;
+    background-size: cover;
+  }
+
+  /* LIGHTBOX */
+  .lightbox .content {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  /* PROBE */
+  #fixed-probe {
+    position: relative;
+    min-height: 200px;
+    top: auto;
+    left: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  #fixed-probe .fixed-image {
+    height: 160px !important;
+    width: 160px !important;
+    margin: 0;
+    background-size: cover;
+    display: inline-block;
+    vertical-align: bottom;
+  }
+
+  #fixed-probe .blue-button {
+    float: none;
+    display: inline-block;
+    vertical-align: bottom;
+    margin-left: calc(100% - 270px);
+  }
+
+  #overlay-info {
+    top: 160px;
+    right: 15px;
+  }
 }

@@ -22,6 +22,8 @@ var names;
 
 // runtime stuff
 
+var mobile = window.innerWidth <= 600;
+
 $.getJSON(server + 'timeline', function(yearsData) {
   years = yearsData;
   while (years[0] < eras[0].dates[0]) years.shift();  // force min year and first era to match
@@ -43,6 +45,18 @@ function initialize () {
 }
 
 function init_ui () {
+  if (mobile) {
+    $('#legend .mobile-header .icon-times').click(function () {
+      $('#legend').toggleClass('collapsed');
+    });
+    $('#search .icon-left-big').click(function () {
+      Search.clear();
+      $('header').removeClass('search');
+    });
+    $('#filmstrip').addClass('collapsed').insertBefore('#map');
+  } else {
+    $('.mobile').hide();
+  }
   $('#search-button').click(function (e) {
     e.stopPropagation();
     $('header').addClass('search');
@@ -58,7 +72,6 @@ function init_ui () {
 
   $('#fixed-probe .icon-times').click(function () {
     $('#fixed-probe').hide();
-    Dispatch.call('removeoverlay', this);
     Dispatch.call('removehighlight', this);
     Map.clearSelected();
   });
@@ -83,7 +96,7 @@ function init_ui () {
     Filmstrip.setYear(e.dates[0], e.dates[1]);
     $('#intro h1').html(e.name);
     $('.era-description').html(e.description);
-    $('.go-button').html('Go to Map').addClass('era')
+    $('.go-button').html('Go to Map').toggleClass('era', !mobile)
       .off('click')
       .on('click', function () {
         $('main').removeClass('eras');
@@ -113,6 +126,10 @@ function init_ui () {
 
   $('#eras-button').click(function () {
     $('main').addClass('eras');
+  });
+
+  $('#overlay-info').click(function () {
+    rasterProbe($(this).data('p'));
   });
 }
 

@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'fontello';
-  src: url('../font/fontello.eot?45651880');
-  src: url('../font/fontello.eot?45651880#iefix') format('embedded-opentype'),
-       url('../font/fontello.woff2?45651880') format('woff2'),
-       url('../font/fontello.woff?45651880') format('woff'),
-       url('../font/fontello.ttf?45651880') format('truetype'),
-       url('../font/fontello.svg?45651880#fontello') format('svg');
+  src: url('../font/fontello.eot?32119448');
+  src: url('../font/fontello.eot?32119448#iefix') format('embedded-opentype'),
+       url('../font/fontello.woff2?32119448') format('woff2'),
+       url('../font/fontello.woff?32119448') format('woff'),
+       url('../font/fontello.ttf?32119448') format('truetype'),
+       url('../font/fontello.svg?32119448#fontello') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'fontello';
-    src: url('../font/fontello.svg?45651880#fontello') format('svg');
+    src: url('../font/fontello.svg?32119448#fontello') format('svg');
   }
 }
 */
@@ -36,7 +36,7 @@
   /* For safety - reset parent styles, that can break glyph codes*/
   font-variant: normal;
   text-transform: none;
-
+ 
  
   /* Animation center compensation - margins should be symmetric */
   /* remove if not needed */
@@ -67,11 +67,19 @@
 .icon-right-dir:before { content: '\e80b'; } /* '' */
 .icon-down-dir:before { content: '\e80c'; } /* '' */
 .icon-tsquare:before { content: '\e80d'; } /* '' */
+.icon-left-big:before { content: '\e80e'; } /* '' */
+.icon-th-large:before { content: '\e80f'; } /* '' */
+.icon-resize-full:before { content: '\e810'; } /* '' */
+.icon-angle-down:before { content: '\e811'; } /* '' */
 .icon-list-bullet:before { content: '\f0ca'; } /* '' */
 .icon-angle-double-left:before { content: '\f100'; } /* '' */
 .icon-angle-double-right:before { content: '\f101'; } /* '' */
 .icon-angle-double-up:before { content: '\f102'; } /* '' */
 .icon-angle-double-down:before { content: '\f103'; } /* '' */
+.icon-angle-up:before { content: '\f106'; } /* '' */
+.icon-spinner:before { content: '\f110'; } /* '' */
+.icon-info:before { content: '\f129'; } /* '' */
+.icon-sliders:before { content: '\f1de'; } /* '' */
 .icon-binoculars:before { content: '\f1e5'; } /* '' */
 .icon-map-o:before { content: '\f278'; } /* '' */
 .icon-twitter-circled:before { content: '\f30a'; } /* '' */
