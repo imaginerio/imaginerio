@@ -763,6 +763,7 @@ header.search #controls-right .search-hide {
   font-weight: 100;
   color: #07407B;
   text-align: center;
+  line-height: 75px;
 }
 
 .go-button {
@@ -1026,6 +1027,16 @@ header.search #controls-right .search-hide {
     height: 100%;
   }
 
+  #intro h1 {
+    font-size: 56px;
+    line-height: 60px;
+  }
+
+  .era-description {
+    font-weight: 100;
+    width: 75%;
+  }
+
   /*TIMELINE*/
 
   .year-stepper, .timeline {
@@ -1173,7 +1184,7 @@ header.search #controls-right .search-hide {
   /* FILMSTRIP */
 
   .eras #filmstrip {
-    display: none;
+    display: none !important;
   }
 
   #filmstrip, #filmstrip.collapsed {

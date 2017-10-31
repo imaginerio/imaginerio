@@ -96,7 +96,7 @@ function init_ui () {
     Filmstrip.setYear(e.dates[0], e.dates[1]);
     $('#intro h1').html(e.name);
     $('.era-description').html(e.description);
-    $('.go-button').html('Go to Map').addClass('era')
+    $('.go-button').html('Go to Map').toggleClass('era', !mobile)
       .off('click')
       .on('click', function () {
         $('main').removeClass('eras');
