@@ -103,7 +103,7 @@ let Map = (function($, dispatch) {
             mapProbe(e, '<strong>' + feature.properties.description + '</strong><br><em>Click for details</em>');
           }).on('mouseout', function () {
             $('#map-probe').hide();
-            if (map.hasLayer(feature.properties.cone)) map.removeLayer(feature.properties.cone);
+            if (map.hasLayer(feature.properties.cone) && selectedViewshed != this) map.removeLayer(feature.properties.cone);
           }).on('click', function () {
             Dispatch.call('viewshedclick', this, this.feature.properties.id);
           })
@@ -174,7 +174,10 @@ let Map = (function($, dispatch) {
   }
 
   M.clearSelected = function () {
-    if (selectedViewshed) selectedViewshed.setIcon(viewshedIcon).setZIndexOffset(99);
+    if (selectedViewshed) {
+      selectedViewshed.setIcon(viewshedIcon).setZIndexOffset(99);
+      map.removeLayer(selectedViewshed.feature.properties.cone);
+    }
     selectedViewshed = null;
     selectedViewshedData = null;
   }
@@ -187,6 +190,7 @@ let Map = (function($, dispatch) {
         map.setView(l.getLatLng());
         selectedViewshed = l;
         l.setIcon(viewshedActiveIcon).setZIndexOffset(100);
+        l.feature.properties.cone.addTo(map);
       }
     });
   }
