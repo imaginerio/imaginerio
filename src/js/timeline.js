@@ -11,16 +11,16 @@ let Timeline = (function($, dispatch) {
   let _ears;
 
   function init_events () {
-    $('.timeline-slider, .timeline-track', timeline).on('mousedown', function (e) {
+    $('.timeline-slider, .timeline-track', timeline).on('mousedown touchstart', function (e) {
       let y = getDataForMouseEvent(e).year;
       $(document)
-        .on('mousemove.timeslide', function (e) {
+        .on('mousemove.timeslide touchmove.timeslide', function (e) {
           let d = getDataForMouseEvent(e);
           $('.timeline-slider', timeline).css('left', d.pct * 100 + '%');
           y = d.year;
         })
-        .on('mouseup.timeslide mouseleave.timeslide', function (){
-          $(document).off('mousemove.timeslide mouseup.timeslide mouseleave.timeslide');
+        .on('mouseup.timeslide mouseleave.timeslide touchend.timeslide', function (){
+          $(document).off('mousemove.timeslide mouseup.timeslide mouseleave.timeslide touchmove.timeslide touchend.timeslide');
           changeYear(y);
         })
     });
