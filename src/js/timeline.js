@@ -51,8 +51,11 @@ let Timeline = (function($, dispatch) {
   }
 
   function getDataForMouseEvent (e) {
+    let pageX;
+    if (e.touches && e.touches[0]) pageX = e.touches[0].pageX;
+    else pageX = e.pageX;
     let t = $('.timeline-track', timeline);
-    let x = e.pageX - t.offset().left;
+    let x = pageX - t.offset().left;
     let pct = x / t.width();
     pct = Math.max(0, Math.min(pct, 1));
     let y = Math.round(pct * (yearRange[1] - yearRange[0]) + yearRange[0]);
