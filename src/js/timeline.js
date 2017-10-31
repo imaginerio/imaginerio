@@ -151,7 +151,7 @@ let Timeline = (function($, dispatch) {
     timeline.append('<div class="timeline-track">')
       .append('<div class="timeline-slider">');
     timeline
-      .append('<div class="timeline-probe">' + year + '<div>');
+      .append('<div class="timeline-probe desktop">' + year + '<div>');
 
     updateYear(year);
     addTicks();

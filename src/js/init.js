@@ -24,11 +24,6 @@ var names;
 
 var mobile = window.innerWidth <= 600;
 
-if (mobile) {
-  $('.desktop').hide();
-  $('.mobile').show();
-}
-
 $.getJSON(server + 'timeline', function(yearsData) {
   years = yearsData;
   while (years[0] < eras[0].dates[0]) years.shift();  // force min year and first era to match
@@ -50,6 +45,16 @@ function initialize () {
 }
 
 function init_ui () {
+  if (mobile) {
+    $('.mobile').show();
+    $('#legend .mobile-header .icon-times').click(function () {
+      $('#legend').toggleClass('collapsed');
+    });
+    $('#search .icon-left-big').click(function () {
+      Search.clear();
+      $('header').removeClass('search');
+    })
+  }
   $('#search-button').click(function (e) {
     e.stopPropagation();
     $('header').addClass('search');

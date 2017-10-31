@@ -18,9 +18,10 @@
     <div id='controls-right'>
       <div id='add-memory-button'><i class='icon-plus'></i>Add a memory</div>
       <div id='search'>
-        <input placeholder="Enter a building or place name" /><div class='search-go'><i class="icon-search"></i></div>
+        <input placeholder="Enter a building or place name" /><div class='search-go desktop'><i class="icon-search"></i></div>
+        <i class="icon-left-big mobile"></i>
       </div>
-      <div id='search-button' class='search-hide'><i class='icon-search'></i>Search...</div>
+      <div id='search-button' class='search-hide'><i class='icon-search'></i><span class="desktop">Search...</span></div>
       <div id='top-right-buttons' class='search-hide'><i class='icon-facebook-circled'></i><i class='icon-twitter-circled'></i><i class='icon-down-circle'></i><i class='icon-info-circled'></i></div>
     </div>
   </header>
@@ -38,7 +39,12 @@
   <section id='timeline'></section>
   <div class='flex-row right-side'>
     <aside id='legend' class='panel collapsed'>
-      <div class='panel-toggle legend-toggle'><i class='icon-list-bullet'></i><span>MAP LEGEND</span><i class='icon-angle-double-right open'></i><i class='icon-angle-double-left close'></i></div>
+      <div class='panel-toggle legend-toggle'><i class='icon-list-bullet mobile'></i><span class="desktop">MAP LEGEND</span><i class='icon-angle-double-right open desktop'></i><i class='icon-angle-double-left close desktop'></i></div>
+      <div class="mobile mobile-header">
+        <i class="icon-list-bullet"></i>
+        <span>Map Layers</span>
+        <i class="icon-times"></i>
+      </div>
       <div class='legend-contents'></div>
     </aside>
     <div class='flex-column'>
