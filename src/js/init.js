@@ -120,26 +120,7 @@ function showAddMemory () {
   $('.lightbox').show();
   $('.lightbox .content > div').remove();
   let div = $('<div>').attr('class', 'memory').appendTo('.lightbox .content');
-  div.append('<h2>Add a memory</h2>');
-  let inputRow = $('<div>').attr('class', 'input-row').appendTo(div);
-  inputRow.append('<div><h3>Name</h3><input type="text" placeholder="Enter name (optional)"/></div>');
-  inputRow.append('<div><h3>Graduation date</h3><select><option value="" selected>Year</option></select></div>');
-  let now = new Date().getFullYear();
-  for (let y = 1900; y <= now; y ++) {
-    $('select', inputRow).append('<option value="' + y + '">' + y + '</option>');
-  }
-  div
-    .append('<h3>Memory text</h3>')
-    .append('<p><i class="icon-picture"></i>Drag images (PNG or JPG) to this window to include with your memory.</p>')
-    .append('<textarea placeholder="Enter your memory...">');
-
-  $('<div>').attr('class', 'submit').html('Submit').appendTo(div);  // to do: submit handler
-  $('<div>').attr('class', 'cancel').html('Cancel').appendTo(div).click(function () { $('.lightbox').hide(); });
-
-  div
-    .on('drop', function (e){ e.preventDefault(); upload(e.originalEvent.dataTransfer.files);})
-    .on('dragover', function(e){ e.preventDefault(); div.addClass('dragover'); })
-    .on('dragleave', function(e){ e.preventDefault(); div.removeClass('dragover'); })
+  div.append('<iframe class="airtable-embed" src="https://airtable.com/embed/shra9blqc8Ab48RaN?backgroundColor=blue" frameborder="0" onmousewheel="" width="100%" height="100%" style="background: transparent;"></iframe>');
 }
 
 function upload(files) {
