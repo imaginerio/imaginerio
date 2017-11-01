@@ -93,6 +93,7 @@ let Filmstrip = (function($, _, dispatch) {
     let thumb = p.getImage([130])
       .attr('class', 'filmstrip-thumbnail')
       .click(function () {
+        if (!p.metadata.width) return;
         if ($('main').hasClass('eras')) dispatch.call('setyear', this, p.data.date);
         if (p.data.layer != 'viewsheds') {
           dispatch.call('addoverlay', this, p);

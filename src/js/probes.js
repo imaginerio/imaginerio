@@ -4,6 +4,7 @@ function rasterProbe (p) {
   $('#fixed-probe').show();
   $('<p>').attr('class', 'fixed-probe-title').html(p.data.description).appendTo('#fixed-probe .content');
   let size = p.getScaled([400, 300]);
+  $('#fixed-probe .content').css('width', size[0] + 'px');
   let img = p.getImage([400, 300], true)
     .attr('class', 'fixed-image')
     .css('width', size[0] + 'px')

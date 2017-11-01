@@ -666,7 +666,7 @@ header.search #controls-right .search-hide {
 }
 
 #fixed-probe .fixed-image {
-  margin: auto;
+  margin: 10px auto;
   display: block;
   background-repeat: no-repeat;
   cursor: pointer;
