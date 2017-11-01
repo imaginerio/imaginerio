@@ -2,6 +2,7 @@ function rasterProbe (p) {
   Dispatch.call('removeall', this);
   $('#fixed-probe .content').empty();
   $('#fixed-probe').show();
+  $('.search-results').hide();
   $('<p>').attr('class', 'fixed-probe-title').html(p.data.description).appendTo('#fixed-probe .content');
   let size = p.getScaled([400, 300]);
   $('#fixed-probe .content').css('width', size[0] + 'px');
@@ -88,6 +89,7 @@ function mapProbe (event, content) {
 function detailsProbe (name, content) {
   $('#fixed-probe .content').empty();
   $('#fixed-probe').show();
+  $('.search-results').hide();
   $('<p>').attr('class', 'fixed-probe-title').html(name).appendTo('#fixed-probe .content');
   if (content) $('#fixed-probe .content').append(content);
 }

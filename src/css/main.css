@@ -175,7 +175,7 @@ header.search #controls-right .search-hide {
 #search > .search-results {
   position: absolute;
   z-index: 700;
-  top: 122px;
+  top: 132px;
   right: 30px;
   background-color: white;
   width: 300px;
@@ -657,7 +657,7 @@ i.icon-circle-notch.animate-spin {
 
 #fixed-probe {
   top: 135px;
-  right: 20px;
+  right: 30px;
   background-color: white;
   border-radius: 5px;
   padding: 20px;
@@ -718,7 +718,7 @@ i.icon-circle-notch.animate-spin {
 #overlay-info {
   display: none;
   position: absolute;
-  right: 20px;
+  right: 30px;
   width: 15px;
   border-radius: 5px;
   top: 135px;

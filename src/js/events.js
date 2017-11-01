@@ -1,5 +1,5 @@
 // events
-let Dispatch = d3.dispatch('changeyear', 'setyear', 'highlightfeature', 'removehighlight', 'addoverlay', 'removeoverlay', 'setopacity', 'setlayers', 'viewshedclick', 'showresults', 'drawfeature', 'removeall');
+let Dispatch = d3.dispatch('changeyear', 'setyear', 'highlightfeature', 'removehighlight', 'addoverlay', 'removeoverlay', 'setopacity', 'setlayers', 'viewshedclick', 'showresults', 'removeprobe', 'drawfeature', 'removeall');
 
 Dispatch.on('changeyear', function (newYear) {
   year = newYear;
@@ -7,6 +7,7 @@ Dispatch.on('changeyear', function (newYear) {
   Legend.setYear(newYear);
   Filmstrip.setYear(newYear);
   Search.setYear(newYear);
+  Dispatch.call('removeoverlay', this);
 });
 
 Dispatch.on('setyear', function (newYear) {
@@ -52,6 +53,11 @@ Dispatch.on('showresults', function (results) {
   Search.showResults(results);
 });
 
+Dispatch.on('removeprobe', function () {
+    Map.clearSelected();
+  $('#fixed-probe').hide();
+});
+
 Dispatch.on('drawfeature', function (data) {
   Map.drawFeature(data.name);
   Search.clear();
@@ -70,4 +76,4 @@ Dispatch.on('removeall', function () {
   $('.lightbox').hide();
   $('main').removeClass('eras');
   Map.clearSelected();
-})
+});
