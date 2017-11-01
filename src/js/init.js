@@ -121,7 +121,8 @@ function init_ui () {
   });
 
   $('.go-button').on('click', function () {
-    $('.era-tag').first().click();
+    Filmstrip.setYear(year);
+    $('main').removeClass('eras');
   });
 
   $('#eras-button').click(function () {
