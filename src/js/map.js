@@ -72,8 +72,7 @@ let Map = (function($, dispatch) {
 
   M.setYear = function (newYear) {
     if (newYear == year) return;
-    selectedViewshed = null;
-    selectedViewshedData = null;
+    M.clearSelected();
     year = newYear;
     tileLayer.setUrl(tileserver + year + '/' + layers.join(',') + '/{z}/{x}/{y}.png');
     M.removeHighlight();
