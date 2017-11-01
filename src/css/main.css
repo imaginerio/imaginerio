@@ -184,6 +184,12 @@ header.search #controls-right .search-hide {
   border-radius: 5px;
 }
 
+.search-results .icon-times {
+  position: absolute;
+  right: 5px;
+  color: white;
+}
+
 .results-group > span, .results-group > div {
   padding: 0 15px;
 }

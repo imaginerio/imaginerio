@@ -131,6 +131,10 @@ function init_ui () {
   $('#overlay-info').click(function () {
     rasterProbe($(this).data('p'));
   });
+
+  $('.search-results .icon-times').click(function () {
+    Search.clear();
+  })
 }
 
 function showAddMemory () {

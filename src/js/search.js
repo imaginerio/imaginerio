@@ -35,7 +35,8 @@ let Search = (function($, dispatch) {
       if (mobile) $('header').addClass('search');
       let array = _.mapObject(results, function(r, k){ return _.extend(r, {name: k}); });
       let groups = _.groupBy(searchResults, 'layer');
-      resultsContainer.empty().show();
+      $('.results-group').remove();
+      resultsContainer.show();
       _.each(groups, function (g, gName) {
         let groupContainer = $('<div>')
           .attr('class', 'results-group')
@@ -74,7 +75,7 @@ let Search = (function($, dispatch) {
       });
       
     } else {
-      resultsContainer.empty().hide();
+      resultsContainer.hide();
     }
   }
 
@@ -82,6 +83,7 @@ let Search = (function($, dispatch) {
     container = $('#' + containerId);
     resultsContainer = $('<div>')
       .attr('class', 'search-results')
+      .append('<i class="icon-times">')
       .appendTo(container);
     init_events();
 
@@ -96,7 +98,7 @@ let Search = (function($, dispatch) {
 
   S.clear = function () {
     $('input', container).val(null);
-    if (resultsContainer) resultsContainer.empty().hide();
+    if (resultsContainer) resultsContainer.hide();
   }
 
   return S;
