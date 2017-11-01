@@ -446,6 +446,11 @@ header.search #controls-right .search-hide {
   height: 20px;
   overflow: hidden;
   margin: 0 3px;
+  background-color: #eee;
+}
+
+.mini-thumbs i {
+  display: none;
 }
 
 .filmstrip-contents {
@@ -459,9 +464,13 @@ header.search #controls-right .search-hide {
   border-radius: 50%;
   display: inline-block;
   vertical-align: top;
-  margin: 20px;
+  margin: 20px 10px;
   cursor: pointer;
   background-color: #eee;
+}
+
+#filmstrip .filmstrip-thumbnail:first-child {
+  margin-left: 20px;
 }
 
 i.icon-circle-notch.animate-spin {
