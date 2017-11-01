@@ -863,25 +863,27 @@ i.icon-circle-notch.animate-spin {
   top: 0;
   height: 100%;
   background-color: rgba(255,255,255,.9);
+  justify-content: center;
+  align-items: center;
   display: none;
 }
 
 .lightbox .content {
-  position: absolute;
-  left: calc(50% - 378px);
-  top: 65px;
-  width: 756px;
-  height: calc(100% - 170px);
   border-radius: 5px;
   background-color: white;
   box-shadow: 0 0 8px rgba(0,0,0,.25);
   padding: 20px;
   overflow: hidden;
+  position: relative;
 }
 
 .lightbox .content > div {
-  max-height: 100%;
+  max-height: 90%;
   overflow: auto;
+}
+
+.lightbox .content > div.all-thumbs {
+  width: 756px;
 }
 
 .lightbox .content .icon-times {

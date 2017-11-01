@@ -13,10 +13,10 @@ function rasterProbe (p) {
     .appendTo('#fixed-probe .content')
     .click(function () {
       Dispatch.call('removeall', this);
-      $('.lightbox').show();
+      $('.lightbox').css('display', 'flex');
       $('.lightbox .content > div').remove();
       let div = $('<div>').appendTo('.lightbox .content');
-      let w = $('.lightbox .content').width();
+      let w = window.innerWidth * .75;
       let h = window.innerHeight  - 300;
       let size = p.getScaled([w, h], true);
       p.getImage([w, h])

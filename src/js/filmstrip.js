@@ -113,7 +113,7 @@ let Filmstrip = (function($, _, dispatch) {
 
   function showAll () {
     filmstrip.removeClass('partial');
-    $('.lightbox').show();
+    $('.lightbox').css('display', 'flex');
     $('.lightbox .content > div').remove();
     let container = $('<div>').attr('class', 'all-thumbs').appendTo('.lightbox .content');
     let rast = _.chain(rasters)
