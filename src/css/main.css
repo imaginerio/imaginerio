@@ -175,7 +175,7 @@ header.search #controls-right .search-hide {
 #search > .search-results {
   position: absolute;
   z-index: 700;
-  top: 132px;
+  top: 135px;
   right: 30px;
   background-color: white;
   width: 300px;

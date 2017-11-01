@@ -50,8 +50,10 @@ function rasterProbe (p) {
       .click(function () {
       Dispatch.call('removeoverlay', this);
     });
+    $('#fixed-probe').css('margin-right', '0');
   } else {
     Map.zoomToView(p.data);
+    $('#fixed-probe').css('margin-right', $('#overlay-info').is(':visible') ? '65px' : 0);
   }
   $('<div>').attr('class', 'blue-button').html('More...').appendTo('#fixed-probe .content').click(function () {
     img.click();
