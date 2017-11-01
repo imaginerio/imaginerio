@@ -7,15 +7,13 @@ let Photo = function (data, thumbUrl) {
   P.data = data;
 
   let file = data.file.replace('SSID', '');
-  let _thumb = $('<div>')
-    .attr('class', 'filmstrip-thumbnail');
   let tempImages = [];
   P.metadata = {};
 
   let request = $.getJSON( 'http://www.sscommons.org/openlibrary/secure/imagefpx/' + data.id + '/7730355/5', function( json ){
     P.metadata = json[0];
     tempImages.forEach(function (img) {
-      img.div.css('background-image', 'url(' + getUrl(img.size) + ')');
+      img.div.empty().css('background-image', 'url(' + getUrl(img.size) + ')');
       if (img.setDimensions) {
         let s = P.getScaled(img.size);
         img.div.css('width', s[0] + 'px').css('height', s[1] + 'px');
@@ -36,14 +34,10 @@ let Photo = function (data, thumbUrl) {
     return P.metadata.imageServer + P.metadata.imageUrl + '&&wid=' + scaled[0] + '&hei=' + scaled[1] + '&rgnn=0,0,1,1&cvt=JPEG';
   }
 
-  P.thumb = function () {
-    return _thumb;
-  }
-
   P.getImage = function (size, setDimensionsOnLoad) {
-    let div = $('<div>').bind('destroyed', function(){ request.abort(); });
+    let div = $('<div>').bind('destroyed', function(){ request.abort(); }).append('<i class="icon-circle-notch animate-spin"></i>');
     if (!P.metadata.imageServer) tempImages.push({div: div, size: size, setDimensions: setDimensionsOnLoad});
-    else div.css('background-image', 'url(' + getUrl(size) + ')');
+    else div.empty().css('background-image', 'url(' + getUrl(size) + ')');
     return div;
   }
 

@@ -452,9 +452,19 @@ header.search #controls-right .search-hide {
   height: 130px;
   border-radius: 50%;
   display: inline-block;
+  vertical-align: top;
   margin: 20px;
   cursor: pointer;
   background-color: #eee;
+}
+
+i.icon-circle-notch.animate-spin {
+  position: relative;
+  left: 50%;
+  top: 50%;
+  margin: -8px 0 0 -12px;
+  font-size: 16px;
+  color: #999;
 }
 
 .filmstrip-thumbnails {

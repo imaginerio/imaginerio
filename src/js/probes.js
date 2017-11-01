@@ -38,9 +38,6 @@ function rasterProbe (p) {
       $('.slider, .button.red', '#fixed-probe .content').toggle();
     });
   }
-  $('<div>').attr('class', 'blue-button').html('More...').appendTo('#fixed-probe .content').click(function () {
-    img.click();
-  });
   if (p.data.layer != 'viewsheds') {
     let slider = Slider('#fixed-probe .content').on('sliderchange', function(e, d){ 
       Dispatch.call('setopacity', this, d);
@@ -55,6 +52,9 @@ function rasterProbe (p) {
   } else {
     Map.zoomToView(p.data);
   }
+  $('<div>').attr('class', 'blue-button').html('More...').appendTo('#fixed-probe .content').click(function () {
+    img.click();
+  });
 }
 
 function filmstripProbe (photo) {
