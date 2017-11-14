@@ -720,7 +720,7 @@ i.icon-circle-notch.animate-spin {
 }
 
 #map-probe {
-  background-color: white;
+  background-color: rgba(255,255,255,.8);
   border-radius: 5px;
   padding: 10px;
   max-width: 150px;
