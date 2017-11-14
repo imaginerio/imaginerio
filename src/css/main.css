@@ -90,7 +90,7 @@ header > img {
   margin-right: 30px;
 }
 
-#top-right-buttons {
+#top-right-buttons > * {
   color: #999;
   font-size: 20px;
 }
