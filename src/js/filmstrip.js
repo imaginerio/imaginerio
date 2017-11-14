@@ -147,7 +147,7 @@ let Filmstrip = (function($, _, dispatch) {
   }
 
   F.setYear = function (newYear, maxYear) {
-   // updateYear(newYear, maxYear);
+    updateYear(newYear, maxYear);
 
     return F;
   }
