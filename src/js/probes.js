@@ -90,7 +90,7 @@ function mapProbe (event, content) {
 
 function detailsProbe (name, content) {
   $('#fixed-probe .content').empty();
-  $('#fixed-probe').show();
+  $('#fixed-probe').css('margin-right', $('#overlay-info').is(':visible') ? '65px' : 0);
   $('.search-results').hide();
   $('<p>').attr('class', 'fixed-probe-title').html(name).appendTo('#fixed-probe .content');
   if (content) $('#fixed-probe .content').append(content);
