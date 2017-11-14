@@ -30,8 +30,10 @@ let Filmstrip = (function($, _, dispatch) {
       $('.mini-thumbs', filmstrip).empty();
       $('.filmstrip-thumbnails').empty();
       if (!rasters.length) {
-        $('.filmstrip-showall').hide();  // and show some message
+        $('.filmstrip-showall').hide();
         $('.raster-types i.selected').removeClass('selected');
+        $('.filmstrip-thumbnails').append('<p class="no-data">No views, maps, plans, or aerials are available for this year.</p>')
+        $('.filmstrip-toggle span', filmstrip).html('<em>NONE</em>');
       }
       else {
         $('.filmstrip-showall').show();
