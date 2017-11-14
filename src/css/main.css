@@ -953,6 +953,23 @@ i.icon-circle-notch.animate-spin {
   background-color: #666;
 }
 
+/* Buncha mouseover styles */
+
+#eras-button:hover,
+#add-memory-button:hover,
+#search-button:hover,
+#top-right-buttons i:hover,
+.year-stepper i:not(.disabled):hover,
+#era-stepper i:not(.disabled):hover,
+.panel-toggle:hover,
+.raster-types i:not(.disabled):not(.selected):hover {
+  color: #333;
+}
+
+.timeline-slider:hover {
+  border-color: #333;
+}
+
 @media (max-width: 600px) {
 
   .desktop {
