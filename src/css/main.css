@@ -676,7 +676,7 @@ i.icon-circle-notch.animate-spin {
   right: 30px;
   background-color: white;
   border-radius: 5px;
-  padding: 20px;
+  padding: 10px 40px 5px 20px;
   box-shadow: 0 0 8px rgba(0,0,0,.25);
 }
 
