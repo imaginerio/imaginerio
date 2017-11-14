@@ -10,6 +10,8 @@ var year;
 
 var names;
 
+var currentEra = eras[0];
+
 (function($){
   $.event.special.destroyed = {
     remove: function(o) {
@@ -91,25 +93,6 @@ function init_ui () {
     div.appendTo('#era-tags');
   });
 
-  function showEra (i) {
-    let e = eras[i];
-    Filmstrip.setYear(e.dates[0], e.dates[1]);
-    $('#intro h1').html(e.name);
-    $('.era-description').html(e.description);
-    $('.go-button').html('Go to Map').toggleClass('era', !mobile)
-      .off('click')
-      .on('click', function () {
-        $('main').removeClass('eras');
-        Dispatch.call('setyear', this, e.dates[0]);
-      });
-    $('#era-tags').hide();
-    $('#era-stepper').show();
-    $('.era-years').html(e.dates.join(' – '));
-    $('#intro').data('era', i);
-    $('#era-stepper .icon-angle-left').toggleClass('disabled', (i == 0));
-    $('#era-stepper .icon-angle-right').toggleClass('disabled', (i == eras.length-1));
-  }
-
   $('#era-stepper .icon-angle-left').click(function (){
     if ($(this).hasClass('disabled')) return;
     showEra(+$('#intro').data('era') - 1);
@@ -123,10 +106,12 @@ function init_ui () {
   $('.go-button').on('click', function () {
     Filmstrip.setYear(year);
     $('main').removeClass('eras');
+    updateEra();
   });
 
   $('#eras-button').click(function () {
     $('main').addClass('eras');
+    showEra(eras.indexOf(currentEra));
   });
 
   $('#overlay-info').click(function () {
@@ -136,6 +121,34 @@ function init_ui () {
   $('.search-results .icon-times').click(function () {
     Search.clear();
   })
+}
+
+function updateEra () {
+  eras.forEach(function (e) {
+    if (year >= e.dates[0] && year <= e.dates[1]) {
+      currentEra = e;
+      $('#eras-button div.desktop span').html(e.name);
+    }
+  });
+}
+
+function showEra (i) {
+  let e = eras[i];
+  Filmstrip.setYear(e.dates[0], e.dates[1]);
+  $('#intro h1').html(e.name);
+  $('.era-description').html(e.description);
+  $('.go-button').html('Go to Map').toggleClass('era', !mobile)
+    .off('click')
+    .on('click', function () {
+      $('main').removeClass('eras');
+      Dispatch.call('setyear', this, e.dates[0]);
+    });
+  $('#era-tags').hide();
+  $('#era-stepper').show();
+  $('.era-years').html(e.dates.join(' – '));
+  $('#intro').data('era', i);
+  $('#era-stepper .icon-angle-left').toggleClass('disabled', (i == 0));
+  $('#era-stepper .icon-angle-right').toggleClass('disabled', (i == eras.length-1));
 }
 
 function showAddMemory () {

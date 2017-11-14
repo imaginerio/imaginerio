@@ -8,6 +8,7 @@ Dispatch.on('changeyear', function (newYear) {
   Filmstrip.setYear(newYear);
   Search.setYear(newYear);
   Dispatch.call('removeoverlay', this);
+  updateEra();
 });
 
 Dispatch.on('setyear', function (newYear) {
