@@ -111,6 +111,8 @@ function init_ui () {
 
   $('#eras-button').click(function () {
     $('main').addClass('eras');
+    Dispatch.call('removeall', this);
+    $('#legend').addClass('collapsed');
     showEra(eras.indexOf(currentEra));
   });
 
@@ -135,6 +137,7 @@ function updateEra () {
 function showEra (i) {
   let e = eras[i];
   Filmstrip.setYear(e.dates[0], e.dates[1]);
+  Map.setYear(e.dates[0]);
   $('#intro h1').html(e.name);
   $('.era-description').html(e.description);
   $('.go-button').html('Go to Map').toggleClass('era', !mobile)
