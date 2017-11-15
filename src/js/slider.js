@@ -23,5 +23,10 @@ let Slider = function (container) {
     });
   });
 
+  slider.val = function (v) {
+    thumb.css('left', track.width() * v + 'px');
+    return slider;
+  }
+
   return slider;
 }

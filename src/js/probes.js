@@ -40,7 +40,7 @@ function rasterProbe (p) {
     });
   }
   if (p.data.layer != 'viewsheds') {
-    let slider = Slider('#fixed-probe .content').on('sliderchange', function(e, d){ 
+    let slider = Slider('#fixed-probe .content').val(p.data.overlay.opacity()).on('sliderchange', function(e, d){ 
       Dispatch.call('setopacity', this, d);
     });
     $('<div>')

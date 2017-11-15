@@ -143,12 +143,15 @@ let Map = (function($, dispatch) {
 
   M.addOverlay = function (overlay) {
     if (overlayLayer && map.hasLayer(overlayLayer)) map.removeLayer(overlayLayer);
-    overlayLayer = overlay.layer().setOpacity(1).addTo(map);
+    overlayLayer = overlay.layer().addTo(map);
     return M;
   }
 
   M.removeOverlay = function () {
-    if (overlayLayer && map.hasLayer(overlayLayer)) map.removeLayer(overlayLayer);
+    if (overlayLayer && map.hasLayer(overlayLayer)) {
+      overlayLayer.setOpacity(.9);
+      map.removeLayer(overlayLayer);
+    }
     return M;
   }
 
