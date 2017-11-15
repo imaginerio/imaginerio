@@ -109,6 +109,7 @@ header > img {
   cursor: pointer;
   line-height: 20px;
   font-weight: bold;
+  box-shadow: 4px 0 4px rgba(0,0,0,.1);
 }
 
 .panel-toggle > * {
@@ -182,6 +183,7 @@ header.search #controls-right .search-hide {
   display: none;
   line-height: 34px;
   border-radius: 5px;
+  box-shadow: 0 0 8px rgba(0,0,0,.25);
 }
 
 .search-results .icon-times {
@@ -247,6 +249,9 @@ header.search #controls-right .search-hide {
 #timeline {
   height: 50px;
   padding: 0 30px;
+  box-shadow: 0 4px 4px rgba(0,0,0,.1);
+  position: relative;
+  z-index: 1;
 }
 
 .year-stepper, .timeline-inner {
@@ -403,6 +408,7 @@ header.search #controls-right .search-hide {
 
 #map {
   flex: 1;
+  z-index: 0;
 }
 
 .leaflet-left .leaflet-control.leaflet-control-zoom {
@@ -421,6 +427,8 @@ header.search #controls-right .search-hide {
   transition: height .25s;
   background-color: white;
   display: none;
+  box-shadow: 4px -4px 4px 0px rgba(0,0,0,0.1);
+  z-index: 2;
 }
 
 #filmstrip.collapsed {
@@ -433,6 +441,7 @@ header.search #controls-right .search-hide {
   border-top-right-radius: 5px;
   transition: y .25s;
   padding-left: 0;
+  box-shadow: 4px -4px 4px rgba(0,0,0,.1)
 }
 
 .mini-thumbs {
@@ -545,6 +554,9 @@ i.icon-circle-notch.animate-spin {
   position: relative;
   transition: width .25s;
   height: 100%;
+  box-shadow: 4px 0 4px rgba(0,0,0,.1);
+  position: relative;
+  z-index: 1;
 }
 
 #legend.collapsed {
@@ -747,6 +759,7 @@ i.icon-circle-notch.animate-spin {
   z-index: 2500;
   background-color: white;
   cursor: pointer;
+  box-shadow: 0 0 8px rgba(0,0,0,.25);
 }
 
 /* INTRO/ERAS VIEW */
