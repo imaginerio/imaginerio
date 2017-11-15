@@ -55,7 +55,7 @@ Dispatch.on('showresults', function (results) {
 });
 
 Dispatch.on('removeprobe', function () {
-    Map.clearSelected();
+  Map.clearSelected();
   $('#fixed-probe').hide();
 });
 

@@ -182,6 +182,7 @@ let Map = (function($, dispatch) {
     }
     selectedViewshed = null;
     selectedViewshedData = null;
+    M.removeHighlight();
   }
 
   M.zoomToView = function (raster) {
