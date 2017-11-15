@@ -110,8 +110,8 @@ function init_ui () {
   });
 
   $('#eras-button').click(function () {
-    $('main').addClass('eras');
     Dispatch.call('removeall', this);
+    $('main').addClass('eras');
     $('#legend').addClass('collapsed');
     showEra(eras.indexOf(currentEra));
   });
