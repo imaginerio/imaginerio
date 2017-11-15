@@ -488,6 +488,11 @@ i.icon-circle-notch.animate-spin {
   white-space: nowrap;
 }
 
+.filmstrip-thumbnails p.no-data {
+  text-align: center;
+  line-height: 160px;
+}
+
 .filmstrip-showall {
   border: 1px solid #95989A;
   text-align: center;
