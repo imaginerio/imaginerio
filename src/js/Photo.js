@@ -47,14 +47,17 @@ let Photo = function (data, thumbUrl) {
       .append('<i class="icon-circle-notch animate-spin"></i>')
       .bind('destroyed', function(){ 
         divs.splice(divs.indexOf(div), 1);
-        if (!divs.length) {
+        if (!divs.length && request && request.readyState != 4) {
           request.abort();
+          request = null;
         }
       });
     divs.push(div);
     if (!P.metadata.imageServer) {
       tempImages.push({div: div, size: size, setDimensions: setDimensionsOnLoad});
-      if (request.readyState != 4) getMetadata();
+      if (!request) {
+        getMetadata();
+      }
     }
     else div.empty().css('background-image', 'url(' + getUrl(size) + ')');
     return div;
