@@ -10,24 +10,32 @@ let Photo = function (data, thumbUrl) {
   let tempImages = [];
   P.metadata = {};
 
-  let request = $.getJSON( 'http://www.sscommons.org/openlibrary/secure/imagefpx/' + data.id + '/7730355/5', function( json ){
-    P.metadata = json[0];
-    tempImages.forEach(function (img) {
-      img.div.empty().css('background-image', 'url(' + getUrl(img.size) + ')');
-      if (img.setDimensions) {
-        let s = P.getScaled(img.size);
-        img.div.css('width', s[0] + 'px').css('height', s[1] + 'px');
-      }
-    });
+  let divs = [];
 
-    request = $.ajax( 'http://www.sscommons.org/openlibrary/secure/metadata/' + data.id + '?_method=FpHtml',{
-      dataType : 'html',
-      success : function( html )
-      {
-        P.href  = $( html ).find( 'td' ).last().text().replace( /\s/gm, '' );
-      }
+  let request;
+
+  function getMetadata () {
+    request = $.getJSON( 'http://www.sscommons.org/openlibrary/secure/imagefpx/' + data.id + '/7730355/5', function( json ){
+      P.metadata = json[0];
+      tempImages.forEach(function (img) {
+        img.div.empty().css('background-image', 'url(' + getUrl(img.size) + ')');
+        if (img.setDimensions) {
+          let s = P.getScaled(img.size);
+          img.div.css('width', s[0] + 'px').css('height', s[1] + 'px');
+        }
+      });
+
+      request = $.ajax( 'http://www.sscommons.org/openlibrary/secure/metadata/' + data.id + '?_method=FpHtml',{
+        dataType : 'html',
+        success : function( html )
+        {
+          P.href  = $( html ).find( 'td' ).last().text().replace( /\s/gm, '' );
+        }
+      });
     });
-  });
+  }
+
+  getMetadata();
 
   function getUrl (size) {
     let scaled = P.getScaled(size);
@@ -35,8 +43,19 @@ let Photo = function (data, thumbUrl) {
   }
 
   P.getImage = function (size, setDimensionsOnLoad) {
-    let div = $('<div>').bind('destroyed', function(){ request.abort(); }).append('<i class="icon-circle-notch animate-spin"></i>');
-    if (!P.metadata.imageServer) tempImages.push({div: div, size: size, setDimensions: setDimensionsOnLoad});
+    let div = $('<div>')
+      .append('<i class="icon-circle-notch animate-spin"></i>')
+      .bind('destroyed', function(){ 
+        divs.splice(divs.indexOf(div), 1);
+        if (!divs.length) {
+          request.abort();
+        }
+      });
+    divs.push(div);
+    if (!P.metadata.imageServer) {
+      tempImages.push({div: div, size: size, setDimensions: setDimensionsOnLoad});
+      if (request.readyState != 4) getMetadata();
+    }
     else div.empty().css('background-image', 'url(' + getUrl(size) + ')');
     return div;
   }
