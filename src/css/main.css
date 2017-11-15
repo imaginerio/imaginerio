@@ -797,10 +797,11 @@ i.icon-circle-notch.animate-spin {
 
 .era-description {
   font-size: 20px;
-  font-weight: 100;
+  font-weight: 300;
   width: 50%;
   margin: 30px auto;
   line-height: 24px;
+  color: #666;
 }
 
 #intro h1 {
@@ -809,6 +810,7 @@ i.icon-circle-notch.animate-spin {
   color: #07407B;
   text-align: center;
   line-height: 75px;
+  margin: 20px auto;
 }
 
 .go-button {
@@ -822,6 +824,7 @@ i.icon-circle-notch.animate-spin {
   text-align: center;
   padding: 30px;
   cursor: pointer;
+  font-family: "HelveticaNeue-CondensedBold", "HelveticaNeueBoldCondensed", "HelveticaNeue-Bold-Condensed", "Helvetica Neue Bold Condensed", "HelveticaNeueBold", "HelveticaNeue-Bold", "Helvetica Neue Bold", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosCnBold', "Helvetica", "Arial Narrow", "Arial", sans-serif;
 }
 
 .go-button.era {
@@ -832,6 +835,8 @@ i.icon-circle-notch.animate-spin {
 
 #era-tags {
   text-align: center;
+  color: #333;
+  font-weight: 600;
 }
 
 .era-tag {
@@ -855,13 +860,13 @@ i.icon-circle-notch.animate-spin {
 #era-stepper {
   text-align: center;
   font-size: 30px;
-  font-weight: 100;
   display: none;
 }
 
 .era-years {
   color: #07407B;
   width: 40%;
+  font-weight: 300;
 }
 
 #era-stepper i {
