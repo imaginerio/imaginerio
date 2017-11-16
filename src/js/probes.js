@@ -4,9 +4,12 @@ function rasterProbe (p) {
   $('#fixed-probe').show().removeClass('map-feature');
   $('.search-results').hide();
   $('<p>').attr('class', 'fixed-probe-title').html(p.data.description).appendTo('#fixed-probe .content');
-  let size = p.getScaled([400, 300]);
-  $('#fixed-probe .content').css('width', size[0] + 'px');
-  let img = p.getImage([400, 300], true)
+  let dimensions = mobile ? [160,160] : [400, 300];
+  let size = p.getScaled(dimensions);
+  let slider;
+  if (!mobile) $('#fixed-probe .content').css('width', size[0] + 'px');
+  else $('#fixed-probe .content').css('width', 'auto');
+  let img = p.getImage(dimensions, true)
     .attr('class', 'fixed-image')
     .css('width', size[0] + 'px')
     .css('height', size[1] + 'px')
@@ -37,12 +40,18 @@ function rasterProbe (p) {
   if (p.data.layer != 'viewsheds' && mobile) {
     $('<div>').attr('class', 'blue-button slider-toggle').html('<i class="icon-sliders"></i>').appendTo('#fixed-probe .content').click(function () {
       $('.slider, .button.red', '#fixed-probe .content').toggle();
+      $('.blue-button.more').insertBefore('.slider');
+      slider.val(p.data.overlay.opacity())
     });
   }
   if (p.data.layer != 'viewsheds') {
-    let slider = Slider('#fixed-probe .content').val(p.data.overlay.opacity()).on('sliderchange', function(e, d){ 
+    slider = Slider('#fixed-probe .content').val(p.data.overlay.opacity()).on('sliderchange', function(e, d){ 
       Dispatch.call('setopacity', this, d);
     });
+    $('<div>').attr('class', 'blue-button more').html('More...').appendTo('#fixed-probe .content').click(function () {
+      img.click();
+    });
+    $('<hr>').appendTo('#fixed-probe .content');
     $('<div>')
       .attr('class', 'button red')
       .html('Remove Overlay')
@@ -55,9 +64,6 @@ function rasterProbe (p) {
     Map.zoomToView(p.data);
     $('#fixed-probe').css('margin-right', $('#overlay-info').is(':visible') ? '65px' : 0);
   }
-  $('<div>').attr('class', 'blue-button').html('More...').appendTo('#fixed-probe .content').click(function () {
-    img.click();
-  });
 }
 
 function filmstripProbe (photo) {

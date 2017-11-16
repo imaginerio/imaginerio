@@ -43,6 +43,7 @@ main {
 .button.red {
   background-color: #eee;
   color: #E02727;
+  margin-bottom: 0;
 }
 
 .blue-button {
@@ -54,8 +55,8 @@ main {
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-  width: 80px;
-  padding: 10px;
+  width: 60px;
+  padding: 5px;
   float: right;
 }
 
@@ -733,6 +734,14 @@ i.icon-circle-notch.animate-spin {
   cursor: pointer;
 }
 
+#fixed-probe hr {
+  margin: 15px 0;
+  background: transparent;
+  border-style: solid;
+  border: none;
+  border-top: 1px solid #ccc;
+}
+
 #filmstrip-probe .content {
   background-color: rgba(51, 51, 51, .9);
   border-radius: 5px;
@@ -966,10 +975,11 @@ i.icon-circle-notch.animate-spin {
 
 .slider {
   position: relative;
-  margin-top: 10px;
+  margin: 10px 0;
   height: 10px;
   user-select: none;
-  width: 100%;
+  width: calc(100% - 100px);
+  display: inline-block;
 }
 
 .slider > * {
@@ -1389,7 +1399,6 @@ i.icon-times:hover,
   /* PROBE */
   #fixed-probe {
     position: relative;
-    min-height: 200px;
     top: auto;
     left: 0;
     border-radius: 0;
@@ -1397,12 +1406,15 @@ i.icon-times:hover,
   }
 
   #fixed-probe .fixed-image {
-    height: 160px !important;
     width: 160px !important;
     margin: 0;
     background-size: cover;
     display: inline-block;
     vertical-align: bottom;
+  }
+
+  #fixed-probe hr {
+    display: none;
   }
 
   #fixed-probe .blue-button {
@@ -1423,5 +1435,10 @@ i.icon-times:hover,
 
   .slider, .button.red {
     display: none;
-  }]
+  }
+
+  .slider {
+    width: 100%;
+    margin: 20px 0;
+  }
 }
