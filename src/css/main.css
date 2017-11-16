@@ -865,11 +865,12 @@ i.icon-circle-notch.animate-spin {
   color: #2361AA;
   font-weight: 600;
   padding: 0 20px;
+  margin-bottom: 20px;
 }
 
 .era-tag {
   display: inline-block;
-  margin: 0 20px 10px 20px;
+  margin: 10px 20px;
   cursor: pointer;
 }
 
@@ -883,6 +884,7 @@ i.icon-circle-notch.animate-spin {
 .era-tag > * {
   display: inline-block;
   vertical-align: middle;
+  margin: 0;
 }
 
 #era-stepper {
