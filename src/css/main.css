@@ -308,10 +308,14 @@ header.search #controls-right .search-hide {
 
 .timeline-track {
   height: 30px;
-  background-color: #CCC;
   border-radius: 5px;
   position: relative;
   overflow: hidden;
+  background: #7ca2ce; /* Old browsers */
+  background: -moz-linear-gradient(left, #7ca2ce 0%, #2361aa 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, #7ca2ce 0%,#2361aa 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, #7ca2ce 0%,#2361aa 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7ca2ce', endColorstr='#2361aa',GradientType=1 ); /* IE6-9 */
 }
 
 .timeline-slider {
@@ -389,10 +393,20 @@ header.search #controls-right .search-hide {
 
 #timeline .era {
   position: absolute;
-  height: 100%;
+  width: 0; 
+  height: 0; 
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid white;
+  margin-top: 25px;
+  margin-left: -5px;
 }
 
-.era-0 {
+#timeline .era:first-child, #timeline .era:last-child {
+  display: none;
+}
+
+/*.era-0 {
   background-color: #7CA2CE;
 }
 
@@ -402,7 +416,7 @@ header.search #controls-right .search-hide {
 
 .era-2 {
   background-color: #2361AA;
-}
+}*/
 
 /* MAP */
 
@@ -839,13 +853,14 @@ i.icon-circle-notch.animate-spin {
 
 #era-tags {
   text-align: center;
-  color: #333;
+  color: #2361AA;
   font-weight: 600;
+  padding: 0 20px;
 }
 
 .era-tag {
   display: inline-block;
-  margin: 0 20px 20px 20px;
+  margin: 0 20px 10px 20px;
   cursor: pointer;
 }
 
@@ -1100,11 +1115,13 @@ i.icon-times:hover,
   #era-tags {
     text-align: left;
     margin-left: 12.5%;
+    margin-right: 12.5%;
+    padding: 0;
   }
 
   .era-tag {
     display: block;
-    margin: 0 0 5px 0;
+    margin: 0 0 10px 0;
     cursor: pointer;
   }
 
@@ -1152,6 +1169,10 @@ i.icon-times:hover,
 
   .timeline-slider {
     height: 12px;
+  }
+
+  #timeline .era {
+    margin-top: 15px;
   }
 
   .year-stepper {

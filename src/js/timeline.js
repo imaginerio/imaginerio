@@ -69,7 +69,6 @@ let Timeline = (function($, dispatch) {
       let era = $('<div>')
         .attr('class', 'era era-' + i)
         .css('left', pct0 * 100 + '%')
-        .css('width', pctW * 100 + '%')
         .prependTo($('.timeline-track', timeline));
     });
   }

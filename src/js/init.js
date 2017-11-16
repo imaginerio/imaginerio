@@ -39,7 +39,7 @@ $.getJSON(server + 'names/en', function(namesData) {
 function initialize () {
   year = 1910; // a year that actually has something
   Map.initialize('map').setYear(year);
-  Timeline.initialize(years, eras, 'timeline').setYear(year);
+  Timeline.initialize([eras[0].dates[0], eras[eras.length-1].dates[1]], eras, 'timeline').setYear(year);
   Filmstrip.initialize();//.setYear(year);
   Legend.initialize().setYear(year);
   Search.initialize('search').setYear(year);
@@ -88,7 +88,6 @@ function init_ui () {
       .click(function () {
         showEra(i);
       });
-    $('<div>').attr('class', 'era-' + i).appendTo(div);
     $('<p>').html(e.name + ' (' + e.dates.join(' – ') + ')').appendTo(div);
     div.appendTo('#era-tags');
   });
