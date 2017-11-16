@@ -900,7 +900,7 @@ i.icon-circle-notch.animate-spin {
 
 .lightbox {
   position: absolute;
-  z-index: 2999;
+  z-index: 3001;
   width: 100%;
   left: 0;
   top: 0;
@@ -921,8 +921,12 @@ i.icon-circle-notch.animate-spin {
 }
 
 .lightbox .content > div {
-  max-height: 90%;
+  max-height: 80%;
   overflow: auto;
+}
+
+.lightbox .content > div.memory {
+  width: 600px;
 }
 
 .lightbox .content > div.all-thumbs {

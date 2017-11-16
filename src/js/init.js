@@ -155,7 +155,8 @@ function showEra (i) {
 }
 
 function showAddMemory () {
-  $('.lightbox').show();
+
+  $('.lightbox').css('display', 'flex');
   $('.lightbox .content > div').remove();
   let div = $('<div>').attr('class', 'memory').appendTo('.lightbox .content');
   div.append('<iframe class="airtable-embed" src="https://airtable.com/embed/shra9blqc8Ab48RaN?backgroundColor=blue" frameborder="0" onmousewheel="" width="100%" height="100%" style="background: transparent;"></iframe>');
