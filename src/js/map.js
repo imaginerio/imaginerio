@@ -210,6 +210,10 @@ let Map = (function($, dispatch) {
     return M;
   }
 
+  M.getBounds = function () {
+    return map.getBounds();
+  }
+
   function removeViewsheds () {
     if (viewshedPoints && map.hasLayer(viewshedPoints)) map.removeLayer(viewshedPoints);
   }

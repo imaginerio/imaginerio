@@ -142,7 +142,9 @@ function init_ui () {
 
   $('.search-results .icon-times').click(function () {
     Search.clear();
-  })
+  });
+
+  $('i.icon-down-circle').click(export_map);
 }
 
 function updateEra () {
@@ -238,3 +240,13 @@ function update_hash () {
 
  // $( '.facebook-button a' ).attr('href', 'http://www.facebook.com/sharer/sharer.php?u=imaginerio.org/' + encodeURIComponent( window.location.hash ) + '&title=Imagine Rio');
 }
+
+// function export_map () {
+//   //$( "#export" ).addClass( "loading" );
+//   let layers = Legend.layers();
+//   let raster = $('#overlay-info').data('p') ? $('#overlay-info').data('p').data.file : 'null';
+//   var url = server + "export/en/" + year + "/" + layers + "/" + raster + "/" + Map.getBounds().toBBoxString() + "/";
+//   console.log(url)
+//   document.getElementById( 'download_iframe' ).src = url;
+//   //window.setTimeout( function(){ $( "#export" ).removeClass( "loading" ); }, 2000 );
+// }
