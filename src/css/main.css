@@ -1051,6 +1051,18 @@ i.icon-times:hover,
   background-color: #eee;
 }
 
+@media (max-height: 700px) {
+  #intro h1 {
+    font-size: 60px;
+    line-height: 60px;
+    margin: 0 auto 10px auto;
+  }
+
+  .era-description {
+    margin: 10px auto;
+  }
+}
+
 @media (max-width: 600px) {
 
   .desktop {
