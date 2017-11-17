@@ -11,6 +11,8 @@ let Filmstrip = (function($, _, dispatch) {
 
   let selectedType = 'viewsheds';
 
+  let tempRaster;
+
   function init_events () {
     $('.filmstrip-toggle').click(function () {
       if (!mobile)
@@ -26,12 +28,12 @@ let Filmstrip = (function($, _, dispatch) {
 
   function updateYear (y, max) {
     year = y;
+    rasters = [];
     $.getJSON(server + 'raster/' + year + (max ? ('?max=' + max) : ''), function(json) {
       filmstrip.show();
       json = _.reject(json, function(r){ return r.id === null });
       $('.mini-thumbs', filmstrip).empty();
       $('.filmstrip-thumbnails').empty();
-      rasters = [];
       if (!json.length) {
         $('.filmstrip-showall').hide();
         $('.raster-types i.selected').removeClass('selected');
@@ -61,6 +63,11 @@ let Filmstrip = (function($, _, dispatch) {
       $('.icon-map-o, .raster-type-labels span.maps', filmstrip).toggleClass('disabled', !_.some(rasters, function(r){ return r.layer === 'maps'}));
       
       if ($('.raster-types i.selected', filmstrip).hasClass('disabled') || !$('.raster-types i.selected', filmstrip).length) $('.raster-types i').not('.disabled').first().click();
+      if (tempRaster) {
+        F.setRaster(tempRaster);
+        tempRaster = null;
+        dispatch.call('statechange', this);
+      }
     });
   }
 
@@ -68,11 +75,7 @@ let Filmstrip = (function($, _, dispatch) {
     if ($(e.target).hasClass('disabled')) return;
     $('.raster-types i.selected').removeClass('selected');
     let c = $(e.target).attr('class');
-    let type;
-    if (c == 'icon-camera') type = 'viewsheds';
-    else if (c == 'icon-flight') type = 'aerials';
-    else if (c == 'icon-tsquare') type = 'plans';
-    else if (c == 'icon-map-o') type = 'maps';
+    let type = $(e.target).attr('data-layer');
     selectedType = type;
     if (e.originalEvent) {
       if (mobile) {
@@ -102,6 +105,8 @@ let Filmstrip = (function($, _, dispatch) {
   function addPhoto (p, container) {
     let thumb = p.getImage([130])
       .attr('class', 'filmstrip-thumbnail')
+      .attr('data-raster', p.data.id)
+      .data('p', p)
       .click(function () {
         if (!p.metadata.width) return;
         if ($('main').hasClass('eras')) dispatch.call('setyear', this, p.data.date);
@@ -162,6 +167,21 @@ let Filmstrip = (function($, _, dispatch) {
 
   F.getRasters = function () {
     return rasters;
+  }
+
+  F.setRaster = function (id) {
+    if (!rasters.length) {
+      // loaded in from URL before data exists
+      tempRaster = id;
+      return F;
+    }
+    let raster = _.find(rasters, function(rast){ return rast.id == id });
+    if (raster) {
+      if (!$('.raster-types i[data-layer="' + raster.layer + '"]').hasClass('selected')) {
+        $('.raster-types i[data-layer="' + raster.layer + '"]').click();
+        dispatch.call('addoverlay', this, $('.filmstrip-thumbnail[data-raster="' + raster.id + '"]').data('p'));
+      }
+    }
   }
 
   return F;

@@ -61,7 +61,10 @@ let Map = (function($, dispatch) {
         minZoom: 15
       })
       .setView([29.717, -95.402], 16)
-      .on('click', probe);
+      .on('click', probe)
+      .on('moveend zoomend', function () {
+        dispatch.call('statechange', this);
+      })
     L.control.zoom({position:'bottomleft'}).addTo(map);
     tileLayer = L.tileLayer(tileserver + year + '/' + layers.join(',') + '/{z}/{x}/{y}.png').addTo(map);
     $(window).on('transitionend', function () {
@@ -196,6 +199,15 @@ let Map = (function($, dispatch) {
         l.feature.properties.cone.addTo(map);
       }
     });
+  }
+
+  M.getView = function () {
+    return [map.getCenter(), map.getZoom()];
+  }
+
+  M.setView = function (center, zoom) {
+    map.setView(center, zoom);
+    return M;
   }
 
   function removeViewsheds () {

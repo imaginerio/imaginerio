@@ -12,6 +12,8 @@ var names;
 
 var currentEra = eras[0];
 
+let params = {};
+
 (function($){
   $.event.special.destroyed = {
     remove: function(o) {
@@ -37,13 +39,30 @@ $.getJSON(server + 'names/en', function(namesData) {
 });
 
 function initialize () {
-  year = 1910; // a year that actually has something
+  check_hash();
+  year = params.year || 1910; // a year that actually has something
   Map.initialize('map').setYear(year);
   Timeline.initialize([eras[0].dates[0], eras[eras.length-1].dates[1]], eras, 'timeline').setYear(year);
   Filmstrip.initialize();//.setYear(year);
   Legend.initialize().setYear(year);
   Search.initialize('search').setYear(year);
   init_ui();
+  updateEra();
+
+  if (params.year) {
+    Filmstrip.setYear(year);
+    $('main').removeClass('eras');
+  }
+
+  if (params.zoom) {
+    Map.setView(params.center, params.zoom);
+  }
+  if (params.layers) {
+    Legend.layers(params.layers);
+  }
+  if (params.raster) {
+    Filmstrip.setRaster(params.raster);
+  }
 }
 
 function init_ui () {
@@ -105,11 +124,13 @@ function init_ui () {
   $('.go-button').on('click', function () {
     Filmstrip.setYear(year);
     $('main').removeClass('eras');
+    update_hash();
     updateEra();
   });
 
   $('#eras-button').click(function () {
     Dispatch.call('removeall', this);
+    Dispatch.call('removeoverlay', this);
     $('main').addClass('eras');
     $('#legend').addClass('collapsed');
     showEra(eras.indexOf(currentEra));
@@ -144,6 +165,7 @@ function showEra (i) {
     .on('click', function () {
       $('main').removeClass('eras');
       Dispatch.call('setyear', this, e.dates[0]);
+      update_hash();
     });
   $('#era-tags').hide();
   $('#era-stepper').show();
@@ -182,3 +204,37 @@ function upload(files) {
 }
 
 $('#add-memory-button').click(showAddMemory);
+
+function gup (name) {
+  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexS = "[\\?&]"+name+"=([^&#]*)";
+  var regex = new RegExp( regexS );
+  var results = regex.exec( window.location.href );
+  if( results == null )
+    return "";
+  else
+    return results[1];
+}
+
+function check_hash () {
+  var hash = window.location.hash.replace( '#', '' ).split( '/' );
+  params.year = hash[ 0 ] ? parseInt( hash[ 0 ], 10 ) : '';
+  params.zoom = hash[ 1 ] ? parseInt( hash[ 1 ] ) : '';
+  params.center = hash[ 2 ] && hash[ 3 ] ? [ parseFloat( hash[ 2 ] ), parseFloat( hash[ 3 ] ) ] : '';
+  params.layers = hash[ 4 ] ? hash[ 4 ].split( '&' ) : [];
+  params.raster = hash[ 5 ] ? hash[ 5 ] : '';
+}
+
+function update_hash () {
+  let layers = Legend.layers().join('&');
+  let raster = $('#overlay-info').data('p') ? $('#overlay-info').data('p').data.id : '';
+
+  let mapView = Map.getView();
+
+  window.location.hash = year + "/" + mapView[1] + "/" + mapView[0].lat + "/" + mapView[0].lng + "/" + layers + "/" + raster;
+
+  // Update Social Media links
+  //$( '.twitter-button a' ).attr( 'href', 'https://twitter.com/intent/tweet?url=' + encodeURIComponent( window.location.href ) );
+
+ // $( '.facebook-button a' ).attr('href', 'http://www.facebook.com/sharer/sharer.php?u=imaginerio.org/' + encodeURIComponent( window.location.hash ) + '&title=Imagine Rio');
+}

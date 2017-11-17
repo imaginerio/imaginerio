@@ -6,21 +6,16 @@ let Legend = (function($, dispatch) {
 
   let year = 2015;
 
+  let tempLayers;
+
   function init_events () {
     $('.legend-toggle').click(function () {
       legend.toggleClass('collapsed').addClass('subsequent');
     });
     $('.legend-contents').on('change', function (){
       // checkbox clicks
-      let list = [];
-      $('.legend-contents input').each(function () {
-        if (!$(this).is(':checked')) {
-          list.push($(this).parent().parent().parent().attr('data-group'));
-        }
-      });
-      if (!list.length) list = ['all'];
-      dispatch.call('setlayers', this, list);
-    })
+      dispatch.call('setlayers', this, Lg.layers());
+    });
   }
 
   function updateYear (y) {
@@ -38,7 +33,7 @@ let Legend = (function($, dispatch) {
               let groupTitle = $('<div>').attr('class', 'group-title').appendTo(gr);
               $('<label>')
                 .html(names[groupName.toLowerCase()] || groupName)
-                .prepend('<input type="checkbox" checked>')
+                .prepend('<input type="checkbox" value="' + groupName + '"checked>')
                 .appendTo(groupTitle);
               _.each(group.features, function (feature) {
                 let layer = $('<div>').attr('class', 'layer').appendTo(gr);
@@ -82,7 +77,14 @@ let Legend = (function($, dispatch) {
           })
         });
 
+        dispatch.call('statechange', this);
 
+        if (tempLayers) {
+          Lg.layers(tempLayers);
+          tempLayers = null;
+          dispatch.call('setlayers', this, Lg.layers());
+          dispatch.call('statechange', this);
+        }
       });
     });
   }
@@ -146,6 +148,35 @@ let Legend = (function($, dispatch) {
     if( style.fill || style.stroke ) swatch.css( style );
 
     return swatch;
+  }
+
+  Lg.layers = function (list) {
+    if (!list) {
+      let layers = [];
+      $('.legend-contents input').each(function () {
+        if (!$(this).is(':checked')) {
+          layers.push($(this).parent().parent().parent().attr('data-group'));
+        }
+      });
+      if (!layers.length) layers = ['all'];
+      return layers;
+    }
+
+    if (!$('.legend-contents input').length) {
+      // loaded in from URL before checkboxes exist
+      tempLayers = list;
+      return Lg;
+    }
+
+    if (list[0] == 'all') {
+      $('.legend-contents input').attr('checked', 'checked');
+    } else {
+      list.forEach(function (l) {
+        $('.legend-group[data-group="' + l + '"] input').attr('checked', null);
+      });
+    }
+    return Lg;
+    
   }
 
   Lg.initialize = function () {

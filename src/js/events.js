@@ -1,5 +1,5 @@
 // events
-let Dispatch = d3.dispatch('changeyear', 'setyear', 'highlightfeature', 'removehighlight', 'addoverlay', 'removeoverlay', 'setopacity', 'setlayers', 'viewshedclick', 'showresults', 'removeprobe', 'drawfeature', 'removeall');
+let Dispatch = d3.dispatch('changeyear', 'setyear', 'highlightfeature', 'removehighlight', 'addoverlay', 'removeoverlay', 'setopacity', 'setlayers', 'viewshedclick', 'showresults', 'removeprobe', 'drawfeature', 'removeall', 'statechange');
 
 Dispatch.on('changeyear', function (newYear) {
   year = newYear;
@@ -9,6 +9,7 @@ Dispatch.on('changeyear', function (newYear) {
   Search.setYear(newYear);
   Dispatch.call('removeoverlay', this);
   updateEra();
+  update_hash();
 });
 
 Dispatch.on('setyear', function (newYear) {
@@ -29,12 +30,14 @@ Dispatch.on('addoverlay', function (p) {
   Map.addOverlay(p.data.overlay);
   rasterProbe(p);
   $('#overlay-info').data('p', p).show();
+  update_hash();
 });
 
 Dispatch.on('removeoverlay', function () {
   Map.removeOverlay();
   $('#fixed-probe').hide();
-  $('#overlay-info').hide();
+  $('#overlay-info').data('p', null).hide();
+  update_hash();
 });
 
 Dispatch.on('setopacity', function (val) {
@@ -43,6 +46,7 @@ Dispatch.on('setopacity', function (val) {
 
 Dispatch.on('setlayers', function (list) {
   Map.setLayers(list);
+  update_hash();
 });
 
 Dispatch.on('viewshedclick', function (id) {
@@ -77,4 +81,8 @@ Dispatch.on('removeall', function () {
   $('.lightbox').hide();
   $('main').removeClass('eras');
   Map.clearSelected();
+});
+
+Dispatch.on('statechange', function () {
+  update_hash();
 });
