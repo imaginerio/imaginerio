@@ -144,7 +144,7 @@ function init_ui () {
     Search.clear();
   });
 
-  $('i.icon-down-circle').click(export_map);
+  $('#export').click(export_map);
 }
 
 function updateEra () {
@@ -185,26 +185,6 @@ function showAddMemory () {
   div.append('<iframe class="airtable-embed" src="https://airtable.com/embed/shra9blqc8Ab48RaN?backgroundColor=blue" frameborder="0" onmousewheel="" width="100%" height="100%" style="background: transparent;"></iframe>');
 }
 
-function upload(files) {
-  $('.memory').removeClass('dragover');
-  var f = files[0];
-
-  // Only process image files.
-  if (!f.type.match('image/jpeg') && !f.type.match('image/png')) {
-       alert('The file must be a jpeg or png image') ;
-       return false ;
-  }
-  var reader = new FileReader();
-
-  // When the image is loaded,
-  // run handleReaderLoad function
-  reader.onload = function(e){
-    $('<img>').attr('src', e.target.result).insertAfter('.memory p').attr('class', 'memory-image');
-  }
-  // Read in the image file as a data URL.
-  reader.readAsDataURL(f);            
-}
-
 $('#add-memory-button').click(showAddMemory);
 
 function gup (name) {
@@ -241,12 +221,12 @@ function update_hash () {
  // $( '.facebook-button a' ).attr('href', 'http://www.facebook.com/sharer/sharer.php?u=imaginerio.org/' + encodeURIComponent( window.location.hash ) + '&title=Imagine Rio');
 }
 
-// function export_map () {
-//   //$( "#export" ).addClass( "loading" );
-//   let layers = Legend.layers();
-//   let raster = $('#overlay-info').data('p') ? $('#overlay-info').data('p').data.file : 'null';
-//   var url = server + "export/en/" + year + "/" + layers + "/" + raster + "/" + Map.getBounds().toBBoxString() + "/";
-//   console.log(url)
-//   document.getElementById( 'download_iframe' ).src = url;
-//   //window.setTimeout( function(){ $( "#export" ).removeClass( "loading" ); }, 2000 );
-// }
+function export_map () {
+  $( '#export' ).attr('class', 'icon-circle-notch animate-spin');
+  let layers = Legend.layers().sort().join( ',' );
+  let raster = $('#overlay-info').data('p') ? $('#overlay-info').data('p').data.file : 'null';
+  var url = server + 'export/en/' + year + '/' + layers + '/' + raster + '/' + Map.getBounds().toBBoxString() + '/';
+  console.log(url)
+  document.getElementById( 'download_iframe' ).src = url;
+  window.setTimeout( function(){ $( '#export' ).attr('class', 'icon-down-circle'); }, 2000 );
+}

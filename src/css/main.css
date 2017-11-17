@@ -497,7 +497,7 @@ header.search #controls-right .search-hide {
   margin-left: 20px;
 }
 
-i.icon-circle-notch.animate-spin {
+#filmstrip i.icon-circle-notch.animate-spin, .probe i.icon-circle-notch.animate-spin {
   position: relative;
   left: 50%;
   top: 50%;

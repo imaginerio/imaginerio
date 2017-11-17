@@ -77,6 +77,7 @@ let Legend = (function($, dispatch) {
           })
         });
 
+        dispatch.call('setlayers', this, Lg.layers());
         dispatch.call('statechange', this);
 
         if (tempLayers) {
