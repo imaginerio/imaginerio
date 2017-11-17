@@ -94,7 +94,6 @@ let Map = (function($, dispatch) {
           ),
           geometry: {type: 'Point', coordinates: f.geometry.geometries[1].coordinates[0][0]}}
       });
-      dispatch.call('addviews', this);
       viewshedPoints = L.geoJSON({type:'FeatureCollection', features: points}, {
         pointToLayer: function (pt, latlng) {
           return L.marker(latlng, viewshedStyle);
@@ -111,7 +110,8 @@ let Map = (function($, dispatch) {
             Dispatch.call('viewshedclick', this, this.feature.properties.id);
           })
         }
-      }).addTo(map);
+      })
+      if (M.hasViews) viewshedPoints.addTo(map);
       if (selectedViewshedData) { // was set after year change & before json load
         M.zoomToView(selectedViewshedData);
       }
@@ -224,12 +224,16 @@ let Map = (function($, dispatch) {
     return map.getBounds();
   }
 
+  M.hasViews = true;
+
   M.showViews = function () {
     addViewsheds();
+    M.hasViews = true;
   }
 
   M.hideViews = function () {
     removeViewsheds();
+    M.hasViews = false;
   }
 
   function removeViewsheds () {

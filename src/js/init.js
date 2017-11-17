@@ -58,7 +58,18 @@ function initialize () {
     Map.setView(params.center, params.zoom);
   }
   if (params.layers) {
+    let v = false;
+    if (params.layers.indexOf('views') != -1) {
+      v = true;
+      params.layers.splice(params.layers.indexOf('views'), 1);
+      if (!params.layers.length) params.layers = ['all'];
+    }
     Legend.layers(params.layers);
+    if (v) {
+      $('input[value="views"]').attr('checked', null);
+      Legend.hasViews = false;
+      Map.hideViews();
+    }
   }
   if (params.raster) {
     Filmstrip.setRaster(params.raster);
@@ -208,7 +219,12 @@ function check_hash () {
 }
 
 function update_hash () {
-  let layers = Legend.layers().join('&');
+  let layers = Legend.layers();
+  if (!$('input[value="views"]').is(':checked')) {
+    if (layers[0] == 'all') layers = ['views'];
+    else layers.push('views');
+  }
+  layers = layers.join('&');
   let raster = $('#overlay-info').data('p') ? $('#overlay-info').data('p').data.id : '';
 
   let mapView = Map.getView();

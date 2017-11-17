@@ -8,6 +8,8 @@ let Legend = (function($, dispatch) {
 
   let tempLayers;
 
+  Lg.hasViews = true;
+
   function init_events () {
     $('.legend-toggle').click(function () {
       legend.toggleClass('collapsed').addClass('subsequent');
@@ -159,12 +161,13 @@ let Legend = (function($, dispatch) {
     let label = $('<label>')
       .html('Cones of vision')
       .appendTo(groupTitle);
-    $('<input type="checkbox" value="views" checked>')
+    $('<input type="checkbox" value="views">')
+      .attr('checked', Lg.hasViews ? 'checked' : null)
       .on('change', function () {
         if ($(this).is(':checked')) dispatch.call('showviews', this);
         else dispatch.call('hideviews', this);
       })
-      .prependTo(label)
+      .prependTo(label);
     add_swatch({shape:'viewshed.png'}).appendTo(groupTitle);
   }
 
@@ -188,6 +191,7 @@ let Legend = (function($, dispatch) {
 
     if (list[0] == 'all') {
       $('.legend-contents input').attr('checked', 'checked');
+      if (!Lg.hasViews) $('input[value="views"]').attr('checked', null);
     } else {
       list.forEach(function (l) {
         $('.legend-group[data-group="' + l + '"] input').attr('checked', null);
