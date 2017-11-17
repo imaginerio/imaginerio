@@ -43,6 +43,7 @@ main {
 .button.red {
   background-color: #eee;
   color: #E02727;
+  margin-bottom: 0;
 }
 
 .blue-button {
@@ -54,8 +55,8 @@ main {
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-  width: 80px;
-  padding: 10px;
+  width: 60px;
+  padding: 5px;
   float: right;
 }
 
@@ -90,7 +91,7 @@ header > img {
   margin-right: 30px;
 }
 
-#top-right-buttons {
+#top-right-buttons > * {
   color: #999;
   font-size: 20px;
 }
@@ -109,6 +110,7 @@ header > img {
   cursor: pointer;
   line-height: 20px;
   font-weight: bold;
+  box-shadow: 4px 0 4px rgba(0,0,0,.1);
 }
 
 .panel-toggle > * {
@@ -182,6 +184,7 @@ header.search #controls-right .search-hide {
   display: none;
   line-height: 34px;
   border-radius: 5px;
+  box-shadow: 0 0 8px rgba(0,0,0,.25);
 }
 
 .search-results .icon-times {
@@ -247,6 +250,9 @@ header.search #controls-right .search-hide {
 #timeline {
   height: 50px;
   padding: 0 30px;
+  box-shadow: 0 4px 4px rgba(0,0,0,.1);
+  position: relative;
+  z-index: 1;
 }
 
 .year-stepper, .timeline-inner {
@@ -303,10 +309,14 @@ header.search #controls-right .search-hide {
 
 .timeline-track {
   height: 30px;
-  background-color: #CCC;
   border-radius: 5px;
   position: relative;
   overflow: hidden;
+  background: #7ca2ce; /* Old browsers */
+  background: -moz-linear-gradient(left, #7ca2ce 0%, #2361aa 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, #7ca2ce 0%,#2361aa 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, #7ca2ce 0%,#2361aa 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7ca2ce', endColorstr='#2361aa',GradientType=1 ); /* IE6-9 */
 }
 
 .timeline-slider {
@@ -384,10 +394,20 @@ header.search #controls-right .search-hide {
 
 #timeline .era {
   position: absolute;
-  height: 100%;
+  width: 0; 
+  height: 0; 
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid white;
+  margin-top: 25px;
+  margin-left: -5px;
 }
 
-.era-0 {
+#timeline .era:first-child, #timeline .era:last-child {
+  display: none;
+}
+
+/*.era-0 {
   background-color: #7CA2CE;
 }
 
@@ -397,12 +417,13 @@ header.search #controls-right .search-hide {
 
 .era-2 {
   background-color: #2361AA;
-}
+}*/
 
 /* MAP */
 
 #map {
   flex: 1;
+  z-index: 0;
 }
 
 .leaflet-left .leaflet-control.leaflet-control-zoom {
@@ -421,6 +442,8 @@ header.search #controls-right .search-hide {
   transition: height .25s;
   background-color: white;
   display: none;
+  box-shadow: 4px -4px 4px 0px rgba(0,0,0,0.1);
+  z-index: 2;
 }
 
 #filmstrip.collapsed {
@@ -433,6 +456,7 @@ header.search #controls-right .search-hide {
   border-top-right-radius: 5px;
   transition: y .25s;
   padding-left: 0;
+  box-shadow: 4px -4px 4px rgba(0,0,0,.1)
 }
 
 .mini-thumbs {
@@ -446,6 +470,11 @@ header.search #controls-right .search-hide {
   height: 20px;
   overflow: hidden;
   margin: 0 3px;
+  background-color: #eee;
+}
+
+.mini-thumbs i {
+  display: none;
 }
 
 .filmstrip-contents {
@@ -459,9 +488,13 @@ header.search #controls-right .search-hide {
   border-radius: 50%;
   display: inline-block;
   vertical-align: top;
-  margin: 20px;
+  margin: 20px 10px;
   cursor: pointer;
   background-color: #eee;
+}
+
+#filmstrip .filmstrip-thumbnail:first-child {
+  margin-left: 20px;
 }
 
 i.icon-circle-notch.animate-spin {
@@ -477,6 +510,11 @@ i.icon-circle-notch.animate-spin {
   flex: 1;
   overflow: auto;
   white-space: nowrap;
+}
+
+.filmstrip-thumbnails p.no-data {
+  text-align: center;
+  line-height: 160px;
 }
 
 .filmstrip-showall {
@@ -531,6 +569,9 @@ i.icon-circle-notch.animate-spin {
   position: relative;
   transition: width .25s;
   height: 100%;
+  box-shadow: 4px 0 4px rgba(0,0,0,.1);
+  position: relative;
+  z-index: 1;
 }
 
 #legend.collapsed {
@@ -581,6 +622,7 @@ i.icon-circle-notch.animate-spin {
   color: white;
   padding: 0 10px;
   font-size: 12px;
+  font-weight: bold;
   line-height: 34px;
 }
 
@@ -670,6 +712,10 @@ i.icon-circle-notch.animate-spin {
   box-shadow: 0 0 8px rgba(0,0,0,.25);
 }
 
+#fixed-probe.map-feature {
+  padding: 10px 40px 5px 20px;
+}
+
 #fixed-probe .icon-times {
   position: absolute;
   top: 5px;
@@ -686,6 +732,14 @@ i.icon-circle-notch.animate-spin {
   display: block;
   background-repeat: no-repeat;
   cursor: pointer;
+}
+
+#fixed-probe hr {
+  margin: 15px 0;
+  background: transparent;
+  border-style: solid;
+  border: none;
+  border-top: 1px solid #ccc;
 }
 
 #filmstrip-probe .content {
@@ -711,7 +765,7 @@ i.icon-circle-notch.animate-spin {
 }
 
 #map-probe {
-  background-color: white;
+  background-color: rgba(255,255,255,.8);
   border-radius: 5px;
   padding: 10px;
   max-width: 150px;
@@ -732,6 +786,7 @@ i.icon-circle-notch.animate-spin {
   z-index: 2500;
   background-color: white;
   cursor: pointer;
+  box-shadow: 0 0 8px rgba(0,0,0,.25);
 }
 
 /* INTRO/ERAS VIEW */
@@ -769,10 +824,11 @@ i.icon-circle-notch.animate-spin {
 
 .era-description {
   font-size: 20px;
-  font-weight: 100;
+  font-weight: 300;
   width: 50%;
   margin: 30px auto;
   line-height: 24px;
+  color: #666;
 }
 
 #intro h1 {
@@ -781,6 +837,7 @@ i.icon-circle-notch.animate-spin {
   color: #07407B;
   text-align: center;
   line-height: 75px;
+  margin: 20px auto;
 }
 
 .go-button {
@@ -794,6 +851,7 @@ i.icon-circle-notch.animate-spin {
   text-align: center;
   padding: 30px;
   cursor: pointer;
+  font-family: "HelveticaNeue-CondensedBold", "HelveticaNeueBoldCondensed", "HelveticaNeue-Bold-Condensed", "Helvetica Neue Bold Condensed", "HelveticaNeueBold", "HelveticaNeue-Bold", "Helvetica Neue Bold", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosCnBold', "Helvetica", "Arial Narrow", "Arial", sans-serif;
 }
 
 .go-button.era {
@@ -804,11 +862,15 @@ i.icon-circle-notch.animate-spin {
 
 #era-tags {
   text-align: center;
+  color: #2361AA;
+  font-weight: 600;
+  padding: 0 20px;
+  margin-bottom: 20px;
 }
 
 .era-tag {
   display: inline-block;
-  margin: 0 20px 20px 20px;
+  margin: 10px 20px;
   cursor: pointer;
 }
 
@@ -822,18 +884,19 @@ i.icon-circle-notch.animate-spin {
 .era-tag > * {
   display: inline-block;
   vertical-align: middle;
+  margin: 0;
 }
 
 #era-stepper {
   text-align: center;
   font-size: 30px;
-  font-weight: 100;
   display: none;
 }
 
 .era-years {
   color: #07407B;
   width: 40%;
+  font-weight: 300;
 }
 
 #era-stepper i {
@@ -863,7 +926,7 @@ i.icon-circle-notch.animate-spin {
 
 .lightbox {
   position: absolute;
-  z-index: 2999;
+  z-index: 3001;
   width: 100%;
   left: 0;
   top: 0;
@@ -884,8 +947,12 @@ i.icon-circle-notch.animate-spin {
 }
 
 .lightbox .content > div {
-  max-height: 90%;
+  max-height: 80%;
   overflow: auto;
+}
+
+.lightbox .content > div.memory {
+  width: 600px;
 }
 
 .lightbox .content > div.all-thumbs {
@@ -910,10 +977,11 @@ i.icon-circle-notch.animate-spin {
 
 .slider {
   position: relative;
-  margin-top: 10px;
+  margin: 10px 0;
   height: 10px;
   user-select: none;
-  width: 100%;
+  width: calc(100% - 100px);
+  display: inline-block;
 }
 
 .slider > * {
@@ -941,6 +1009,34 @@ i.icon-circle-notch.animate-spin {
 
 .thumb:hover {
   background-color: #666;
+}
+
+/* Buncha mouseover styles */
+
+#eras-button:hover,
+#add-memory-button:hover,
+#search-button:hover,
+#top-right-buttons i:hover,
+.year-stepper i:not(.disabled):hover,
+#era-stepper i:not(.disabled):hover,
+.panel-toggle:hover,
+.filmstrip-showall:hover,
+i.icon-times:hover,
+#overlay-info:hover,
+.raster-types i:not(.disabled):not(.selected):hover {
+  color: #333;
+}
+
+.timeline-slider:hover, .filmstrip-showall:hover {
+  border-color: #333;
+}
+
+.button.red:hover {
+  background-color: #ccc;
+}
+
+.blue-button:hover {
+  background-color: #eee;
 }
 
 @media (max-width: 600px) {
@@ -1031,11 +1127,13 @@ i.icon-circle-notch.animate-spin {
   #era-tags {
     text-align: left;
     margin-left: 12.5%;
+    margin-right: 12.5%;
+    padding: 0;
   }
 
   .era-tag {
     display: block;
-    margin: 0 0 5px 0;
+    margin: 0 0 10px 0;
     cursor: pointer;
   }
 
@@ -1083,6 +1181,10 @@ i.icon-circle-notch.animate-spin {
 
   .timeline-slider {
     height: 12px;
+  }
+
+  #timeline .era {
+    margin-top: 15px;
   }
 
   .year-stepper {
@@ -1299,7 +1401,6 @@ i.icon-circle-notch.animate-spin {
   /* PROBE */
   #fixed-probe {
     position: relative;
-    min-height: 200px;
     top: auto;
     left: 0;
     border-radius: 0;
@@ -1307,12 +1408,15 @@ i.icon-circle-notch.animate-spin {
   }
 
   #fixed-probe .fixed-image {
-    height: 160px !important;
     width: 160px !important;
     margin: 0;
     background-size: cover;
     display: inline-block;
     vertical-align: bottom;
+  }
+
+  #fixed-probe hr {
+    display: none;
   }
 
   #fixed-probe .blue-button {
@@ -1333,5 +1437,10 @@ i.icon-circle-notch.animate-spin {
 
   .slider, .button.red {
     display: none;
-  }]
+  }
+
+  .slider {
+    width: 100%;
+    margin: 20px 0;
+  }
 }

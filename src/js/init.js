@@ -10,6 +10,8 @@ var year;
 
 var names;
 
+var currentEra = eras[0];
+
 (function($){
   $.event.special.destroyed = {
     remove: function(o) {
@@ -37,7 +39,7 @@ $.getJSON(server + 'names/en', function(namesData) {
 function initialize () {
   year = 1910; // a year that actually has something
   Map.initialize('map').setYear(year);
-  Timeline.initialize(years, eras, 'timeline').setYear(year);
+  Timeline.initialize([eras[0].dates[0], eras[eras.length-1].dates[1]], eras, 'timeline').setYear(year);
   Filmstrip.initialize();//.setYear(year);
   Legend.initialize().setYear(year);
   Search.initialize('search').setYear(year);
@@ -86,29 +88,9 @@ function init_ui () {
       .click(function () {
         showEra(i);
       });
-    $('<div>').attr('class', 'era-' + i).appendTo(div);
     $('<p>').html(e.name + ' (' + e.dates.join(' – ') + ')').appendTo(div);
     div.appendTo('#era-tags');
   });
-
-  function showEra (i) {
-    let e = eras[i];
-    Filmstrip.setYear(e.dates[0], e.dates[1]);
-    $('#intro h1').html(e.name);
-    $('.era-description').html(e.description);
-    $('.go-button').html('Go to Map').toggleClass('era', !mobile)
-      .off('click')
-      .on('click', function () {
-        $('main').removeClass('eras');
-        Dispatch.call('setyear', this, e.dates[0]);
-      });
-    $('#era-tags').hide();
-    $('#era-stepper').show();
-    $('.era-years').html(e.dates.join(' – '));
-    $('#intro').data('era', i);
-    $('#era-stepper .icon-angle-left').toggleClass('disabled', (i == 0));
-    $('#era-stepper .icon-angle-right').toggleClass('disabled', (i == eras.length-1));
-  }
 
   $('#era-stepper .icon-angle-left').click(function (){
     if ($(this).hasClass('disabled')) return;
@@ -121,11 +103,16 @@ function init_ui () {
   });
 
   $('.go-button').on('click', function () {
-    $('.era-tag').first().click();
+    Filmstrip.setYear(year);
+    $('main').removeClass('eras');
+    updateEra();
   });
 
   $('#eras-button').click(function () {
+    Dispatch.call('removeall', this);
     $('main').addClass('eras');
+    $('#legend').addClass('collapsed');
+    showEra(eras.indexOf(currentEra));
   });
 
   $('#overlay-info').click(function () {
@@ -137,8 +124,38 @@ function init_ui () {
   })
 }
 
+function updateEra () {
+  eras.forEach(function (e) {
+    if (year >= e.dates[0] && year <= e.dates[1]) {
+      currentEra = e;
+      $('#eras-button div.desktop span').html(e.name);
+    }
+  });
+}
+
+function showEra (i) {
+  let e = eras[i];
+  Filmstrip.setYear(e.dates[0], e.dates[1]);
+  Map.setYear(e.dates[0]);
+  $('#intro h1').html(e.name);
+  $('.era-description').html(e.description);
+  $('.go-button').html('Go to Map').toggleClass('era', !mobile)
+    .off('click')
+    .on('click', function () {
+      $('main').removeClass('eras');
+      Dispatch.call('setyear', this, e.dates[0]);
+    });
+  $('#era-tags').hide();
+  $('#era-stepper').show();
+  $('.era-years').html(e.dates.join(' – '));
+  $('#intro').data('era', i);
+  $('#era-stepper .icon-angle-left').toggleClass('disabled', (i == 0));
+  $('#era-stepper .icon-angle-right').toggleClass('disabled', (i == eras.length-1));
+}
+
 function showAddMemory () {
-  $('.lightbox').show();
+
+  $('.lightbox').css('display', 'flex');
   $('.lightbox .content > div').remove();
   let div = $('<div>').attr('class', 'memory').appendTo('.lightbox .content');
   div.append('<iframe class="airtable-embed" src="https://airtable.com/embed/shra9blqc8Ab48RaN?backgroundColor=blue" frameborder="0" onmousewheel="" width="100%" height="100%" style="background: transparent;"></iframe>');

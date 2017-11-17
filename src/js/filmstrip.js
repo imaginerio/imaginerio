@@ -7,6 +7,8 @@ let Filmstrip = (function($, _, dispatch) {
   let photos = [];
   let year = 2015;
 
+  let allRasters = {};
+
   let selectedType = 'viewsheds';
 
   function init_events () {
@@ -26,30 +28,38 @@ let Filmstrip = (function($, _, dispatch) {
     year = y;
     $.getJSON(server + 'raster/' + year + (max ? ('?max=' + max) : ''), function(json) {
       filmstrip.show();
-      rasters = _.reject(json, function(r){ return r.id === null });
+      json = _.reject(json, function(r){ return r.id === null });
       $('.mini-thumbs', filmstrip).empty();
       $('.filmstrip-thumbnails').empty();
-      if (!rasters.length) {
-        $('.filmstrip-showall').hide();  // and show some message
+      rasters = [];
+      if (!json.length) {
+        $('.filmstrip-showall').hide();
         $('.raster-types i.selected').removeClass('selected');
+        $('.filmstrip-thumbnails').append('<p class="no-data">No views, maps, plans, or aerials are available for this year.</p>')
+        $('.filmstrip-toggle span', filmstrip).html('<em>NONE</em>');
       }
       else {
         $('.filmstrip-showall').show();
-        _.each(rasters, function (r) {
-          r.photo = Photo(r, thumbnaillUrl);
-          r.overlay = Overlay(r);
+        _.each(json, function (r) {
+          if (!allRasters[r.id]) {
+            allRasters[r.id] = r;
+            r.photo = Photo(r, thumbnaillUrl);
+            r.overlay = Overlay(r);
+          }
+          rasters.push(allRasters[r.id]);
         });
         let minis = rasters.slice(0, Math.min(3, rasters.length));
         _.each(minis, function (m) {
           m.photo.getImage([20])
             .appendTo($('.mini-thumbs', filmstrip));
-        })
+        });
+        showThumbs();
       }
       $('.icon-camera, .raster-type-labels span.views', filmstrip).toggleClass('disabled', !_.some(rasters, function(r){ return r.layer === 'viewsheds'}));
       $('.icon-flight, .raster-type-labels span.aerials', filmstrip).toggleClass('disabled', !_.some(rasters, function(r){ return r.layer === 'aerials'}));
       $('.icon-tsquare, .raster-type-labels span.plans', filmstrip).toggleClass('disabled', !_.some(rasters, function(r){ return r.layer === 'plans'}));
       $('.icon-map-o, .raster-type-labels span.maps', filmstrip).toggleClass('disabled', !_.some(rasters, function(r){ return r.layer === 'maps'}));
-      showThumbs();
+      
       if ($('.raster-types i.selected', filmstrip).hasClass('disabled') || !$('.raster-types i.selected', filmstrip).length) $('.raster-types i').not('.disabled').first().click();
     });
   }
