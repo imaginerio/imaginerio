@@ -1,5 +1,5 @@
 // events
-let Dispatch = d3.dispatch('changeyear', 'setyear', 'highlightfeature', 'removehighlight', 'addoverlay', 'removeoverlay', 'setopacity', 'setlayers', 'viewshedclick', 'showresults', 'removeprobe', 'drawfeature', 'removeall', 'statechange');
+let Dispatch = d3.dispatch('changeyear', 'setyear', 'highlightfeature', 'removehighlight', 'addoverlay', 'removeoverlay', 'addviews', 'showviews', 'hideviews', 'setopacity', 'setlayers', 'viewshedclick', 'showresults', 'removeprobe', 'drawfeature', 'removeall', 'statechange');
 
 Dispatch.on('changeyear', function (newYear) {
   year = newYear;
@@ -85,4 +85,16 @@ Dispatch.on('removeall', function () {
 
 Dispatch.on('statechange', function () {
   update_hash();
+});
+
+Dispatch.on('addviews', function () {
+  Legend.addViews();
+});
+
+Dispatch.on('showviews', function () {
+  Map.showViews();
+});
+
+Dispatch.on('hideviews', function () {
+  Map.hideViews();
 });

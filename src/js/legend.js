@@ -134,7 +134,7 @@ let Legend = (function($, dispatch) {
 
   function add_swatch( style )
   {
-    var swatch = $( document.createElement( 'div' ) ).addClass( "swatch" );
+    var swatch = $( document.createElement( 'div' ) ).addClass( "swatch" ).addClass(style.shape.slice(0, style.shape.indexOf('.')));
     if( style.shape.match( /svg$/ ) )
     {
       swatch.load( "img/legend/" + style.shape );
@@ -151,12 +151,29 @@ let Legend = (function($, dispatch) {
     return swatch;
   }
 
+  Lg.addViews = function () {
+    let cat = $('<div>').attr('class', 'legend-category').prependTo('.legend-contents');
+    $('<div>').attr('class', 'category-title').html('VIEWS').appendTo(cat);
+    let gr = $('<div>').attr('class', 'legend-group').attr('data-group', 'views').appendTo(cat);
+    let groupTitle = $('<div>').attr('class', 'group-title').appendTo(gr);
+    let label = $('<label>')
+      .html('Cones of vision')
+      .appendTo(groupTitle);
+    $('<input type="checkbox" value="views" checked>')
+      .on('change', function () {
+        if ($(this).is(':checked')) dispatch.call('showviews', this);
+        else dispatch.call('hideviews', this);
+      })
+      .prependTo(label)
+    add_swatch({shape:'viewshed.png'}).appendTo(groupTitle);
+  }
+
   Lg.layers = function (list) {
     if (!list) {
       let layers = [];
       $('.legend-contents input').each(function () {
-        if (!$(this).is(':checked')) {
-          layers.push($(this).parent().parent().parent().attr('data-group'));
+        if (!$(this).is(':checked') && $(this).attr('value') != 'views') {
+          layers.push($(this).attr('value'));
         }
       });
       if (!layers.length) layers = ['all'];

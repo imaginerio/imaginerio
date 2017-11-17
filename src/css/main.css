@@ -657,6 +657,14 @@ header.search #controls-right .search-hide {
 .group-title .swatch {
   float: right;
   margin-top: 10px;
+  width: 60px;
+  height: 20px;
+  text-align: center;
+}
+
+.group-title .swatch.viewshed {
+  margin-top: 0;
+  height: 40px;
 }
 
 .layer {

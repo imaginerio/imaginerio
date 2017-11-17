@@ -94,6 +94,7 @@ let Map = (function($, dispatch) {
           ),
           geometry: {type: 'Point', coordinates: f.geometry.geometries[1].coordinates[0][0]}}
       });
+      dispatch.call('addviews', this);
       viewshedPoints = L.geoJSON({type:'FeatureCollection', features: points}, {
         pointToLayer: function (pt, latlng) {
           return L.marker(latlng, viewshedStyle);
@@ -119,6 +120,15 @@ let Map = (function($, dispatch) {
   }
 
   M.setLayers = function (list) {
+    // don't do things if layer list hasn't changed
+    let skip = true;
+    list.forEach(function (l) {
+      if (layers.indexOf(l) == -1) skip = false;
+    });
+    layers.forEach(function (l) {
+      if (list.indexOf(l) == -1) skip = false;
+    });
+    if (skip) return M;
     layers = list;
     tileLayer.setUrl(tileserver + year + '/' + layers.join(',') + '/{z}/{x}/{y}.png');
     return M;
@@ -214,8 +224,20 @@ let Map = (function($, dispatch) {
     return map.getBounds();
   }
 
+  M.showViews = function () {
+    addViewsheds();
+  }
+
+  M.hideViews = function () {
+    removeViewsheds();
+  }
+
   function removeViewsheds () {
     if (viewshedPoints && map.hasLayer(viewshedPoints)) map.removeLayer(viewshedPoints);
+  }
+
+  function addViewsheds () {
+    if (viewshedPoints && !map.hasLayer(viewshedPoints)) map.addLayer(viewshedPoints);
   }
 
   function probe (e) {
