@@ -281,13 +281,16 @@ header.search #controls-right .search-hide {
   color: #07407B;
 }
 
+.year-stepper i {
+  cursor: pointer;
+}
+
 .year-stepper i:before {
   color: #666;
   border-radius: 50%;
   border: 1px solid #666;
   width: 25px;
   line-height: 25px;
-  cursor: pointer;
   margin: 0 5px;
   font-size: 18px;
 }
