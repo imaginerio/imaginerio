@@ -237,8 +237,9 @@ header.search #controls-right .search-hide {
 }
 
 .result-details p {
-  margin: 0;
+  margin: 10px 0;
   font-weight: bold;
+  line-height: 18px;
 }
 
 .result-details p span {
