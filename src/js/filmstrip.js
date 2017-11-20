@@ -6,6 +6,7 @@ let Filmstrip = (function($, _, dispatch) {
   let rasters = [];
   let photos = [];
   let year = 2015;
+  let maxYear;
 
   let allRasters = {};
 
@@ -28,6 +29,7 @@ let Filmstrip = (function($, _, dispatch) {
 
   function updateYear (y, max) {
     year = y;
+    maxYear = max;
     rasters = [];
     $.getJSON(server + 'raster/' + year + (max ? ('?max=' + max) : ''), function(json) {
       filmstrip.show();
@@ -95,7 +97,7 @@ let Filmstrip = (function($, _, dispatch) {
   function showThumbs () {
     $('.filmstrip-thumbnails').empty();
     let title = selectedType == 'viewsheds' ? 'views' : selectedType;
-    $('.filmstrip-toggle span', filmstrip).html(title.toUpperCase());
+    $('.filmstrip-toggle span', filmstrip).html(title.toUpperCase() + (maxYear ? (' (' + year + ' – ' + maxYear + ')') : ''));
     let photos = _.chain(rasters)
       .filter(function(r){ return r.layer === selectedType })
       .sortBy('date')

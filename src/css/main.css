@@ -455,7 +455,7 @@ header.search #controls-right .search-hide {
 }
 
 .filmstrip-toggle {
-  width: 230px;
+  min-width: 230px;
   top: -40px;
   border-top-right-radius: 5px;
   transition: y .25s;
