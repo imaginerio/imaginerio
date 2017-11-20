@@ -196,13 +196,13 @@ function showEra (i, noTransition) {
     $('#intro h1').html(e.name)
       .css('margin-left', '0%');
   } else {
-    let dur = 700;
+    let dur = 500;
     let endOld = i < $('#intro').data('era') ? '100%' : '-100%';
     let startNew = i < $('#intro').data('era') ? '-100%' : '0%';
     let newDesc = $('<div class="era-description-inner">')
        .append('<p class="era-description">' + e.description + '<p>')
        .css('margin-left', startNew);
-    let newYear = $('<div class="era-years">')
+    let newYear = $('<p class="era-years">')
        .html(e.dates.join(' – '))
        .css('margin-left', startNew);
     let newTitle = $('<h1>' + e.name + '</h1>')
@@ -236,13 +236,13 @@ function showEra (i, noTransition) {
       $('.era-years').last()
         .animate({
           'margin-left': endOld
-        }, 1000, function () {
+        }, dur, function () {
           $(this).remove();
         });
       $('.title-container h1').last()
         .animate({
           'margin-left': endOld
-        }, 1000, function () {
+        }, dur, function () {
           $(this).remove();
         });
       newDesc.appendTo('.era-description-container');
@@ -298,6 +298,10 @@ function check_hash () {
 }
 
 function update_hash () {
+  if ($('main').hasClass('eras')) {
+    window.location.hash = '';
+    return;
+  }
   let layers = Legend.layers();
   if (!$('input[value="views"]').is(':checked')) {
     if (layers[0] == 'all') layers = ['views'];

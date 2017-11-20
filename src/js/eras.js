@@ -1,6 +1,6 @@
 const eras = [
  {
-   name: "Planning/Construction/Inauguration",
+   name: "Planning / Construction / Inauguration",
    dates: [1898,1912],
    description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna wirl aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisinuli.",
    key_buildings: "Administration, Power House, Residential Group",

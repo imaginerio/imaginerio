@@ -1178,10 +1178,34 @@ i.icon-times:hover,
     height: 100%;
   }
 
+  .title-container {
+    height: 250px;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .start .title-container {
+    height: auto;
+  }
+
+  .title-container div {
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+  }
+
+  .start .title-container div {
+    display: none;
+  }
+
   #intro h1 {
-    font-size: 56px;
+    font-size: 46px;
     line-height: 60px;
     white-space: normal;
+  }
+
+  .era-years {
+    font-size: 22px;
   }
 
   .era-description {
@@ -1209,6 +1233,11 @@ i.icon-times:hover,
   .go-button {
     padding: 15px 30px;
     margin-top: 25px;
+    position: absolute;
+    left: 5%;
+    width: 90%;
+    box-sizing: border-box;
+    bottom: 20px;
   }
 
   /*TIMELINE*/
