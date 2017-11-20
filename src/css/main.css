@@ -855,6 +855,21 @@ header.search #controls-right .search-hide {
   color: #666;
 }
 
+.era-description-inner {
+  width: 100%;
+  display: inline-block;
+  white-space: normal;
+}
+
+.era-description-container {
+  white-space: nowrap;
+}
+
+.title-container {
+  width: 100%;
+  white-space: nowrap;
+}
+
 #intro h1 {
   font-size: 65px;
   font-weight: 100;
@@ -862,6 +877,10 @@ header.search #controls-right .search-hide {
   text-align: center;
   line-height: 75px;
   margin: 20px auto;
+  width: 100%;
+  display: inline-block;
+  vertical-align: middle;
+  white-space: normal;
 }
 
 .go-button {
@@ -916,10 +935,19 @@ header.search #controls-right .search-hide {
   font-size: 30px;
 }
 
+.era-years-container {
+  width: 40%;
+  white-space: nowrap;
+  overflow: hidden;
+  position: relative;
+}
+
 .era-years {
   color: #07407B;
-  width: 40%;
   font-weight: 300;
+  display: inline-block;
+  width: 100%;
+  line-height: 34px;
 }
 
 #era-stepper i {
@@ -943,6 +971,7 @@ header.search #controls-right .search-hide {
 
 #era-stepper > * {
   display: inline-block;
+  vertical-align: middle;
 }
 
 /* LIGHTBOX */
@@ -1152,6 +1181,7 @@ i.icon-times:hover,
   #intro h1 {
     font-size: 56px;
     line-height: 60px;
+    white-space: normal;
   }
 
   .era-description {

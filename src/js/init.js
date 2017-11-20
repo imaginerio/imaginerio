@@ -116,7 +116,7 @@ function init_ui () {
   eras.forEach(function (e, i) {
     let div = $('<div>').attr('class', 'era-tag')
       .click(function () {
-        showEra(i);
+        showEra(i, true);
       });
     $('<p>').html(e.name + ' (' + e.dates.join(' – ') + ')').appendTo(div);
     div.appendTo('#era-tags');
@@ -148,7 +148,7 @@ function init_ui () {
     Dispatch.call('removeoverlay', this);
     $('main').addClass('eras');
     $('#legend').addClass('collapsed');
-    showEra(eras.indexOf(currentEra));
+    showEra(eras.indexOf(currentEra), true);
   });
 
   $('#overlay-info').click(function () {
@@ -178,20 +178,84 @@ function updateEra () {
   });
 }
 
-function showEra (i) {
+function showEra (i, noTransition) {
   $('main').removeClass('start');
   $('#eras-button div.desktop span').html('start');
   let e = eras[i];
   Filmstrip.setYear(e.dates[0], e.dates[1]);
   Map.setYear(e.dates[0]);
-  $('#intro h1').html(e.name);
-  $('.era-description').html(e.description);
+  
+  if (noTransition) {
+    $('.era-intro .era-description-inner').remove();
+    $('<div class="era-description-inner">')
+      .append('<p class="era-description">' + e.description + '<p>')
+      .appendTo('.era-description-container')
+      .css('margin-left', '0%');
+    $('.era-years').html(e.dates.join(' – '))
+      .css('margin-left', '0%');
+    $('#intro h1').html(e.name)
+      .css('margin-left', '0%');
+  } else {
+    let dur = 700;
+    let endOld = i < $('#intro').data('era') ? '100%' : '-100%';
+    let startNew = i < $('#intro').data('era') ? '-100%' : '0%';
+    let newDesc = $('<div class="era-description-inner">')
+       .append('<p class="era-description">' + e.description + '<p>')
+       .css('margin-left', startNew);
+    let newYear = $('<div class="era-years">')
+       .html(e.dates.join(' – '))
+       .css('margin-left', startNew);
+    let newTitle = $('<h1>' + e.name + '</h1>')
+      .css('margin-left', startNew);
+    if (startNew == '-100%') {
+      newDesc.prependTo('.era-description-container')
+        .animate({
+           'margin-left': '0%'
+        }, dur, function () {
+          $('.era-description-inner').last().remove();
+        });
+      newYear.prependTo('.era-years-container')
+        .animate({
+           'margin-left': '0%'
+        }, dur, function () {
+          $('.era-years').last().remove()
+        });
+      newTitle.prependTo('.title-container')
+        .animate({
+           'margin-left': '0%'
+        }, dur, function () {
+          $('.title-container h1').last().remove()
+        });
+    } else {
+      $('.era-description-inner').last()
+        .animate({
+          'margin-left': endOld
+        }, dur, function () {
+          $(this).remove();
+        });
+      $('.era-years').last()
+        .animate({
+          'margin-left': endOld
+        }, 1000, function () {
+          $(this).remove();
+        });
+      $('.title-container h1').last()
+        .animate({
+          'margin-left': endOld
+        }, 1000, function () {
+          $(this).remove();
+        });
+      newDesc.appendTo('.era-description-container');
+      newYear.appendTo('.era-years-container');
+      newTitle.appendTo('.title-container');
+    }
+  }
+  
   $('.go-button').html('Go to Map').toggleClass('era', !mobile)
     .off('click')
     .on('click', function () {
       goToEra(e);
     });
-  $('.era-years').html(e.dates.join(' – '));
   $('#intro').data('era', i);
   $('#era-stepper .icon-angle-left').toggleClass('disabled', (i == 0));
   $('#era-stepper .icon-angle-right').toggleClass('disabled', (i == eras.length-1));
