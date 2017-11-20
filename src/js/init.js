@@ -132,14 +132,18 @@ function init_ui () {
     showEra(+$('#intro').data('era') + 1);
   });
 
-  $('.go-button').on('click', function () {
-    Filmstrip.setYear(year);
-    $('main').removeClass('eras');
-    update_hash();
-    updateEra();
-  });
+  $('.go-button').on('click', goToMap);
 
   $('#eras-button').click(function () {
+    if ($('main').hasClass('eras')) {
+      $('main').addClass('start');
+      $('.go-button')
+        .html('Begin Exploring')
+        .removeClass('era')
+        .off('click')
+        .on('click', goToMap);
+      return;
+    }
     Dispatch.call('removeall', this);
     Dispatch.call('removeoverlay', this);
     $('main').addClass('eras');
@@ -158,6 +162,13 @@ function init_ui () {
   $('#export').click(export_map);
 }
 
+function goToMap () {
+  Filmstrip.setYear(year);
+  $('main').removeClass('eras');
+  update_hash();
+  updateEra();
+}
+
 function updateEra () {
   eras.forEach(function (e) {
     if (year >= e.dates[0] && year <= e.dates[1]) {
@@ -168,6 +179,8 @@ function updateEra () {
 }
 
 function showEra (i) {
+  $('main').removeClass('start');
+  $('#eras-button div.desktop span').html('start');
   let e = eras[i];
   Filmstrip.setYear(e.dates[0], e.dates[1]);
   Map.setYear(e.dates[0]);
@@ -176,16 +189,18 @@ function showEra (i) {
   $('.go-button').html('Go to Map').toggleClass('era', !mobile)
     .off('click')
     .on('click', function () {
-      $('main').removeClass('eras');
-      Dispatch.call('setyear', this, e.dates[0]);
-      update_hash();
+      goToEra(e);
     });
-  $('#era-tags').hide();
-  $('#era-stepper').show();
   $('.era-years').html(e.dates.join(' – '));
   $('#intro').data('era', i);
   $('#era-stepper .icon-angle-left').toggleClass('disabled', (i == 0));
   $('#era-stepper .icon-angle-right').toggleClass('disabled', (i == eras.length-1));
+}
+
+function goToEra (e) {
+  $('main').removeClass('eras');
+  Dispatch.call('setyear', this, e.dates[0]);
+  update_hash();
 }
 
 function showAddMemory () {
