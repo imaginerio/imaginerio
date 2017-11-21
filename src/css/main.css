@@ -624,10 +624,9 @@ header.search #controls-right .search-hide {
 .category-title {
   background-color: #666;
   color: white;
-  padding: 0 10px;
+  padding: 10px;
   font-size: 12px;
   font-weight: bold;
-  line-height: 34px;
 }
 
 .legend-contents {

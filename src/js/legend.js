@@ -50,35 +50,28 @@ let Legend = (function($, dispatch) {
                   addLayerPlanned(feature, layer, plan);
                 }
               });
-              // plans for layers not currently existing
-              // if (plansJson['Planned' + groupName]) {
-              //   _.each(plansJson['Planned' + groupName], function (plan) {
-              //     if (_.contains(group.features, plan.featuretyp.replace('Planned', ''))) return;
-              //     let layer = $('<div>').attr('class', 'layer').appendTo(gr);
-              //     addLayerExisting(plan.featuretyp, layer, true);
-              //     addLayerPlanned(plan.featuretyp, layer);
-              //   }); 
-              // }
+
               let swatch = add_swatch(group.style).appendTo(groupTitle);
             });
           });
         });
 
-        // plans for groups not currently existing
-        // _.each(plansJson, function (planLayer, key) {
-        //   if ($('.legend-group[data-group="' + key.replace('Planned', '') + '"]').length) return;
-        //   let gr = $('<div>').attr('class', 'legend-group planned').attr('data-group', key).appendTo('.legend-contents');
-        //   let groupTitle = $('<div>').attr('class', 'group-title').appendTo(gr);
-        //   $('<label>')
-        //     .html(names[key.toLowerCase()] || key)
-        //     .prepend('<input type="checkbox" checked>')
-        //     .appendTo(groupTitle);
-        //   _.each(planLayer, function (plan) {
-        //     let layer = $('<div>').attr('class', 'layer').appendTo(gr);
-        //     addLayerExisting(plan.featuretyp, layer, true);
-        //     addLayerPlanned(plan.featuretyp, layer);
-        //   })
-        // });
+        plans.forEach(function (plan) {
+          let features = [];
+          plan.features.forEach(function (feature) {
+            if (!$('.layer-existing[data-name="' + feature + '"]').length) features.push(feature);
+          });
+          if (features.length) {
+            let cat = $('<div>').attr('class', 'legend-category').appendTo('.legend-contents');
+            $('<div>').attr('class', 'category-title').html(plan.name.toUpperCase()).appendTo(cat);
+            let gr = $('<div>').attr('class', 'legend-group planned').appendTo('.legend-contents');
+            let layer = $('<div>').attr('class', 'layer').appendTo(gr);
+            features.forEach(function (feature) {
+              addLayerExisting(feature, layer, true);
+              addLayerPlanned(feature, layer, [plan], true);
+            });
+          }
+        })
 
         dispatch.call('setlayers', this, Lg.layers());
         dispatch.call('statechange', this);
@@ -108,6 +101,7 @@ let Legend = (function($, dispatch) {
   function addLayerExisting (name, container, notpresent) {
     let l = $('<div>')
       .attr('class', 'layer-existing')
+      .attr('data-name', name)
       .data('name', name)
       .html(name.replace('Planned', ''))
       .appendTo(container);
@@ -120,7 +114,7 @@ let Legend = (function($, dispatch) {
       }
   }
 
-  function addLayerPlanned (name, container, planArray) {
+  function addLayerPlanned (name, container, planArray, onlyPlan) {
     let div = $('<div>')
       .attr('class', 'layer-plans')
       .data('name', name)
@@ -135,6 +129,7 @@ let Legend = (function($, dispatch) {
           $('body').off('click.plans');
           return;
         }
+        $('.plans-dropdown').remove();
         let menu = $('<div>')
           .attr('class', 'plans-dropdown')
           .data('layer', name)
@@ -175,9 +170,13 @@ let Legend = (function($, dispatch) {
           }
         
         $('body').on('click.plans', function () {
-          menu.remove();
+          $('.plans-dropdown').remove();
           $('body').off('click.plans');
         });
+
+        if (onlyPlan) {
+          $('p', menu).first().click();
+        }
       });
   }
 
