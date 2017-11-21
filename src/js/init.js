@@ -303,7 +303,7 @@ function update_hash () {
     return;
   }
   let layers = Legend.layers();
-  if (!$('input[value="views"]').is(':checked')) {
+  if (!Legend.hasViews) {
     if (layers[0] == 'all') layers = ['views'];
     else layers.push('views');
   }

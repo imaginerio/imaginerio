@@ -237,6 +237,8 @@ let Legend = (function($, dispatch) {
       .on('change', function () {
         if ($(this).is(':checked')) dispatch.call('showviews', this);
         else dispatch.call('hideviews', this);
+        Lg.hasViews = $(this).is(':checked');
+        dispatch.call('statechange', this);
       })
       .prependTo(label);
     add_swatch({shape:'viewshed.png'}).appendTo(groupTitle);
