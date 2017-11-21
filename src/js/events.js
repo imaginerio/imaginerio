@@ -24,6 +24,7 @@ Dispatch.on('highlightfeature', function (json) {
 Dispatch.on('removehighlight', function (json) {
   Map.removeHighlight();
   $('.layer-existing.highlighted, .layer-plans.highlighted').removeClass('highlighted');
+  $('.layer-plans').data('selected-plan', null);
 });
 
 Dispatch.on('addoverlay', function (p) {
