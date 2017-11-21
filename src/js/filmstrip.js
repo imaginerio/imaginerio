@@ -41,6 +41,7 @@ let Filmstrip = (function($, _, dispatch) {
         $('.raster-types i.selected').removeClass('selected');
         $('.filmstrip-thumbnails').append('<p class="no-data">No views, maps, plans, or aerials are available for this year.</p>')
         $('.filmstrip-toggle span', filmstrip).html('<em>NONE</em>');
+        filmstrip.addClass('collapsed');
       }
       else {
         $('.filmstrip-showall').show();
