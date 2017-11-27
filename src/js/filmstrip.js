@@ -41,7 +41,7 @@ let Filmstrip = (function($, _, dispatch) {
         $('.raster-types i.selected').removeClass('selected');
         $('.filmstrip-thumbnails').append('<p class="no-data">No views, maps, plans, or aerials are available for this year.</p>')
         $('.filmstrip-toggle span', filmstrip).html('<em>NONE</em>');
-        filmstrip.addClass('collapsed');
+        filmstrip.addClass('collapsed')
       }
       else {
         $('.filmstrip-showall').show();
@@ -98,7 +98,7 @@ let Filmstrip = (function($, _, dispatch) {
   function showThumbs () {
     $('.filmstrip-thumbnails').empty();
     let title = selectedType == 'viewsheds' ? 'views' : selectedType;
-    $('.filmstrip-toggle span', filmstrip).html(title.toUpperCase() + (maxYear ? (' (' + year + ' – ' + maxYear + ')') : ''));
+    $('.filmstrip-toggle span', filmstrip).html(title.toUpperCase() + ' (' + year + (maxYear ? (' – ' + maxYear) : '') + ')');
     let photos = _.chain(rasters)
       .filter(function(r){ return r.layer === selectedType })
       .sortBy('date')
