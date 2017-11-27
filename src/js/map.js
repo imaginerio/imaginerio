@@ -168,6 +168,10 @@ let Map = (function($, dispatch) {
   M.addOverlay = function (overlay) {
     if (overlayLayer && map.hasLayer(overlayLayer)) map.removeLayer(overlayLayer);
     overlayLayer = overlay.layer().addTo(map);
+    if (overlay.bbox) {
+      map.fitBounds(overlay.bbox);
+    }
+    
     return M;
   }
 
