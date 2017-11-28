@@ -894,7 +894,7 @@ header.search #controls-right .search-hide {
 
 #intro h1 {
   font-size: 65px;
-  font-weight: 100;
+  font-weight: 200;
   color: #07407B;
   text-align: center;
   line-height: 75px;
@@ -903,6 +903,8 @@ header.search #controls-right .search-hide {
   display: inline-block;
   vertical-align: middle;
   white-space: normal;
+  font-family: 'Helvetica Neue', Helvetica, coolvetica, Arial, sans-serif;;
+  font-style: normal;
 }
 
 .go-button {
