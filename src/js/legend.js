@@ -56,6 +56,18 @@ let Legend = (function($, dispatch) {
           });
         });
 
+        if (plans.length) {
+          let cat = $('<div>').attr('class', 'legend-category');
+          if ($('.legend-category[data-category="views"')[0]) {
+            cat.insertAfter('.legend-category[data-category="views"');
+          } else {
+            cat.prependTo('.legend-contents');
+          }
+          $('<div>').attr('class', 'category-title').html('PLANS').appendTo(cat);
+          let gr = $('<div>').attr('class', 'legend-group').attr('data-group', 'views').appendTo(cat);
+          addLayerPlanned('Plans', gr, plans, false, true).html('<i class="icon-tsquare"></i>Plans (' + year + ')')
+        }
+
         plans.forEach(function (plan) {
           let features = [];
           plan.features.forEach(function (feature) {
@@ -114,7 +126,7 @@ let Legend = (function($, dispatch) {
       }
   }
 
-  function addLayerPlanned (name, container, planArray, onlyPlan) {
+  function addLayerPlanned (name, container, planArray, onlyPlan, wholePlan) {
     let div = $('<div>')
       .attr('class', 'layer-plans')
       .data('name', name)
@@ -144,7 +156,7 @@ let Legend = (function($, dispatch) {
                 div.data('selected-plan', null);
                 dispatch.call('removehighlight', this);
               } else {
-                highlightPlan(p.name, name);
+                highlightPlan(p.name, wholePlan ? undefined : name);
                 div.addClass('highlighted');
                 div.data('selected-plan', p.name);
               }
@@ -162,8 +174,12 @@ let Legend = (function($, dispatch) {
         }
         if (!mobile) {
           menu
-            .css('left', $(this).offset().left + $(this).outerWidth() + 5 + 'px')
-            .css('bottom', window.innerHeight - ($(this).offset().top + $(this).outerHeight()));
+            .css('left', $(this).offset().left + $(this).outerWidth() + 5 + 'px');
+            if ($(this).offset().top < 300 ) {
+              menu.css('top', $(this).offset().top);
+            } else {
+              menu.css('bottom', window.innerHeight - ($(this).offset().top + $(this).outerHeight()));
+            }
           } else {
             menu
               .css('top', window.innerHeight / 2 - menu.outerHeight() / 2 + 'px');
@@ -178,6 +194,8 @@ let Legend = (function($, dispatch) {
           $('p', menu).first().click();
         }
       });
+
+      return div;
   }
 
   function layerClick () {
@@ -199,7 +217,9 @@ let Legend = (function($, dispatch) {
 
   function highlightPlan (planName, feature) {
     dispatch.call('removehighlight', this);
-    $.getJSON(server + 'plan?name=' + encodeURIComponent(planName) + '&feature=' + feature, function (json) {
+    let url = server + 'plan?name=' + encodeURIComponent(planName);
+    if (feature) url += '&feature=' + feature;
+    $.getJSON(url, function (json) {
       dispatch.call('highlightfeature', this, json);
       if (mobile) legend.addClass('collapsed');
     });
@@ -225,7 +245,7 @@ let Legend = (function($, dispatch) {
   }
 
   Lg.addViews = function () {
-    let cat = $('<div>').attr('class', 'legend-category').prependTo('.legend-contents');
+    let cat = $('<div>').attr('class', 'legend-category').attr('data-category', 'views').prependTo('.legend-contents');
     $('<div>').attr('class', 'category-title').html('VIEWS').appendTo(cat);
     let gr = $('<div>').attr('class', 'legend-group').attr('data-group', 'views').appendTo(cat);
     let groupTitle = $('<div>').attr('class', 'group-title').appendTo(gr);
