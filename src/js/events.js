@@ -1,5 +1,5 @@
 // events
-let Dispatch = d3.dispatch('changeyear', 'setyear', 'highlightfeature', 'removehighlight', 'addoverlay', 'removeoverlay', 'addviews', 'showviews', 'hideviews', 'resetviews', 'setopacity', 'setlayers', 'viewshedclick', 'showresults', 'removeprobe', 'drawfeature', 'removeall', 'statechange');
+let Dispatch = d3.dispatch('changeyear', 'setyear', 'highlightfeature', 'removehighlight', 'addoverlay', 'removeoverlay', 'addviews', 'showviews', 'hideviews', 'resetviews', 'setopacity', 'setlayers', 'viewshedclick', 'showresults', 'removeprobe', 'drawfeature', 'removeall', 'statechange', 'cancelmemory', 'showaddmemory');
 
 Dispatch.on('changeyear', function (newYear) {
   year = newYear;
@@ -103,4 +103,12 @@ Dispatch.on('hideviews', function () {
 Dispatch.on('resetviews', function () {
   Map.showViews();
   Legend.hasViews = true;
+});
+
+Dispatch.on('cancelmemory', function () {
+  $('.memory-icon').hide();
+});
+
+Dispatch.on('showaddmemory', function (lat, lng) {
+  showAddMemory(lat, lng);
 });

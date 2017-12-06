@@ -109,6 +109,32 @@
 
   </main>
 
+  <div class="add-memory">
+    <h3 title="This field is required">Your Story <span>*</span></h3>
+    <p>Tell us what you remember about the Rice Campus</p>
+    <textarea class="memory-story"></textarea>
+
+    <h3 title="This field is required">Your Name <span>*</span></h3>
+    <input type="text" class="memory-name"/>
+
+    <h3 title="This field is required">Your Email <span>*</span></h3>
+    <input type="text" class="memory-email"/>
+
+    <h3>Class</h3>
+    <input type="text" class="memory-class"/>
+
+    <button class="memory-submit disabled">Submit</button>
+  </div>
+
+  <div class="memory-icon">
+    <p>Move the map to the location of your memory.</p>
+    <div class="icon"></div>
+    <i class="icon-times"></i>
+    <div class='ok-cancel'>
+      <i class="cancel icon-times" title="Cancel"></i><i class="ok icon-ok" title="Set memory location"></i>
+    </div>
+  </div>
+
   <iframe id="download_iframe" style="display:none;"></iframe>
 
   <!-- build:js js/{{site}}.js -->

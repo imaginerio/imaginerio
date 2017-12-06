@@ -74,6 +74,23 @@ let Map = (function($, dispatch) {
     $(window).on('transitionend', function () {
       map.invalidateSize();
     });
+
+   // L.marker([29.717, -95.402]).addTo(map);
+
+    $('.memory-icon').appendTo('#' + container);
+    $('.memory-icon .cancel').click(function () {
+      dispatch.call('cancelmemory', this);
+    });
+    $('.memory-icon .ok').click(function () {
+      let pos = $('.memory-icon .icon').offset();
+      pos.left += 13;
+      pos.top += 42;
+      let containerPos = $('#' + container).offset();
+      pos.left -= containerPos.left;
+      pos.top -= containerPos.top;
+      let ll = map.containerPointToLatLng([pos.left, pos.top]);
+      dispatch.call('showaddmemory', this, ll.lat, ll.lng);
+    });
     return M;
   }
 

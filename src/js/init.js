@@ -110,7 +110,10 @@ function init_ui () {
 
   $('.lightbox').click(function (e) {
     // close on background click except when uploading memory (too easy/annoying to close by accident)
-    if ((e.target == this && !$('.memory')[0]) || $(e.target).hasClass('icon-times')) $('.lightbox').hide();
+    if ((e.target == this && !$('.lightbox .add-memory')[0]) || $(e.target).hasClass('icon-times')) {
+      $('.lightbox').hide();
+      Dispatch.call('cancelmemory', this);
+    } 
   });
 
   eras.forEach(function (e, i) {
@@ -267,15 +270,44 @@ function goToEra (e) {
   update_hash();
 }
 
-function showAddMemory () {
+function showAddMemory (lat, lng) {
 
   $('.lightbox').css('display', 'flex');
   $('.lightbox .content > div').remove();
-  let div = $('<div>').attr('class', 'memory').appendTo('.lightbox .content');
-  div.append('<iframe class="airtable-embed" src="https://airtable.com/embed/shra9blqc8Ab48RaN?backgroundColor=blue" frameborder="0" onmousewheel="" width="100%" height="100%" style="background: transparent;"></iframe>');
+  let div = $('.add-memory').clone().appendTo('.lightbox .content');
+  div.data('latlng', [lat,lng]);
+  let data;
+  $('textarea, input', div).on('keyup', function () {
+    data = {
+      story: $('.lightbox .memory-story').val(),
+      name: $('.lightbox .memory-name').val(),
+      email: $('.lightbox .memory-email').val(),
+      year: $('.lightbox .memory-class').val(),
+      lat: lat,
+      lng: lng
+    }
+    $('.memory-submit', div).toggleClass('disabled', !data.story || !data.name || !data.email);
+  });
+  $('.memory-submit', div).click(function () {
+    if ($(this).hasClass('disabled')) return;
+    // submit form
+    let data = {
+      story: $('.lightbox .memory-story').val(),
+      name: $('.lightbox .memory-name').val(),
+      email: $('.lightbox .memory-email').val(),
+      year: $('.lightbox .memory-class').val(),
+      lat: lat,
+      lng: lng
+    }
+    $.post(server + 'memory', data);
+    Dispatch.call('cancelmemory', this);
+  });
+  //div.append('<iframe class="airtable-embed" src="https://airtable.com/embed/shra9blqc8Ab48RaN?backgroundColor=blue" frameborder="0" onmousewheel="" width="100%" height="100%" style="background: transparent;"></iframe>');
 }
 
-$('#add-memory-button').click(showAddMemory);
+$('#add-memory-button').click(function () {
+  $('.memory-icon').show();
+});
 
 function gup (name) {
   name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
