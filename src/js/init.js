@@ -299,8 +299,10 @@ function showAddMemory (lat, lng) {
       lat: lat,
       lng: lng
     }
-    $.post(server + 'memory', data);
-    Dispatch.call('cancelmemory', this);
+    $.post(server + 'memory', data, function (response) {
+      $('.lightbox').hide();
+      Dispatch.call('cancelmemory', this);
+    });
   });
   //div.append('<iframe class="airtable-embed" src="https://airtable.com/embed/shra9blqc8Ab48RaN?backgroundColor=blue" frameborder="0" onmousewheel="" width="100%" height="100%" style="background: transparent;"></iframe>');
 }
