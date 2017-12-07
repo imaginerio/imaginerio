@@ -18,7 +18,6 @@ Dispatch.on('setyear', function (newYear) {
 });
 
 Dispatch.on('highlightfeature', function (json) {
-  Dispatch.call('removeprobe', this);
   Map.highlightFeature(json);
 });
 
@@ -68,14 +67,14 @@ Dispatch.on('removeprobe', function () {
 
 Dispatch.on('drawfeature', function (data) {
   Map.drawFeature(data.name);
-  Search.clear();
+  //Search.clear();
   $.getJSON(server + 'details/' + data.id[0], function(response) {
     let content = '';
     if (response.length) {
       if (response[0].creator) content += '<p>Creator: <span>' + response[0].creator + '</span></p>';
       if (response[0].year) content += '<p>Mapped: <span>' + response[0].year + '</span></p>';
     }
-    detailsProbe(data.name, content);
+    //detailsProbe(data.name, content);
   });
 });
 

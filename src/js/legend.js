@@ -210,6 +210,7 @@ let Legend = (function($, dispatch) {
 
   function highlightFeature (feature) {
     dispatch.call('removehighlight', this);
+    Dispatch.call('removeprobe', this);
     $.getJSON(server + 'feature/' + year + '/' + feature, function (json) {
       dispatch.call('highlightfeature', this, json);
     })
@@ -217,6 +218,7 @@ let Legend = (function($, dispatch) {
 
   function highlightPlan (planName, feature) {
     dispatch.call('removehighlight', this);
+    Dispatch.call('removeprobe', this);
     let url = server + 'plan?name=' + encodeURIComponent(planName);
     if (feature) url += '&feature=' + feature;
     $.getJSON(url, function (json) {

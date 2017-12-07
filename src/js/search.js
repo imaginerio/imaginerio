@@ -51,8 +51,18 @@ let Search = (function($, dispatch) {
           let span = $('<span>' + r.name + '</span>')
             .appendTo(row)
             .on('click', function () {
-              $('header').removeClass('search');
-              Dispatch.call('drawfeature', this, r);
+              //$('header').removeClass('search');
+              if (!row.hasClass('selected')) {
+                $('.search-result.selected').removeClass('selected');
+                row.addClass('selected');
+                if (!row.hasClass('expanded')) $(this).prev().click();
+                Dispatch.call('drawfeature', this, r);
+              } else {
+                row.removeClass('selected');
+                if (row.hasClass('expanded')) $(this).prev().click();
+                Dispatch.call('removehighlight', this);
+              }
+              
             })
             .prepend('<i class="icon-binoculars">');
           $('i.icon-right-dir, i.icon-down-dir', row).on('click', function () {
@@ -98,6 +108,8 @@ let Search = (function($, dispatch) {
   }
 
   S.clear = function () {
+    Dispatch.call('removehighlight', this);
+    $('.search-result.selected').removeClass('selected');
     $('input', container).val(null);
     if (resultsContainer) resultsContainer.hide();
   }

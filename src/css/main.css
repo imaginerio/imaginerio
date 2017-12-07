@@ -185,6 +185,8 @@ header.search #controls-right .search-hide {
   line-height: 34px;
   border-radius: 5px;
   box-shadow: 0 0 8px rgba(0,0,0,.25);
+  max-height: calc(100% - 200px);
+  overflow: auto;
 }
 
 .search-results .icon-times {
@@ -218,6 +220,15 @@ header.search #controls-right .search-hide {
   line-height: 20px;
   text-indent: -20px;
   vertical-align: middle;
+}
+
+.search-result > span:hover {
+  background-color: #ccc;
+}
+
+.search-result.selected > span {
+  background-color: #666;
+  color: white;
 }
 
 .search-result .icon-down-dir, .search-result.expanded .icon-right-dir, .search-result .result-details {
