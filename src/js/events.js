@@ -18,6 +18,7 @@ Dispatch.on('setyear', function (newYear) {
 });
 
 Dispatch.on('highlightfeature', function (json) {
+  Dispatch.call('removeprobe', this);
   Map.highlightFeature(json);
 });
 
@@ -60,6 +61,7 @@ Dispatch.on('showresults', function (results) {
 });
 
 Dispatch.on('removeprobe', function () {
+  Search.clear();
   Map.clearSelected();
   $('#fixed-probe').hide();
 });

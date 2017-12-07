@@ -32,6 +32,7 @@ let Search = (function($, dispatch) {
     if (_.size(searchResults)) {
       resultsContainer.css('margin-right', $('#overlay-info').is(':visible') ? '65px' : 0);
       dispatch.call('removeprobe', this);
+      dispatch.call('removehighlight', this);
       if (mobile) $('header').addClass('search');
       let array = _.mapObject(results, function(r, k){ return _.extend(r, {name: k}); });
       let groups = _.groupBy(searchResults, 'layer');
