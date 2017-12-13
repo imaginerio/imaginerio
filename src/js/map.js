@@ -58,6 +58,8 @@ let Map = (function($, dispatch) {
     attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
   });
 
+  let locationMarker;
+
   M.initialize = function (container) {
     map = L.map(container, {
         zoomControl: false,
@@ -69,11 +71,48 @@ let Map = (function($, dispatch) {
       .on('moveend zoomend', function () {
         dispatch.call('statechange', this);
       })
+      .on('locationfound', function (e) {
+        showLocation(e.latlng);
+      })
+      .on('locationerror', function (e) {
+        alert('Your location could not be found');
+        $('.geolocate-control').removeClass('locating');
+      })
     L.control.zoom({position:'bottomleft'}).addTo(map);
     tileLayer = L.tileLayer(tileserver + year + '/' + layers.join(',') + '/{z}/{x}/{y}.png').addTo(map);
     $(window).on('transitionend', function () {
       map.invalidateSize();
     });
+
+    function showLocation (latlng) {
+      if (locationMarker && map.hasLayer(locationMarker)) map.removeLayer(locationMarker);
+      locationMarker = L.circleMarker(latlng, {
+        radius: 7,
+        color: 'white',
+        fillColor: '#3358ff',
+        fillOpacity: 1,
+        opacity: 1
+      }).addTo(map);
+      $('.geolocate-control').removeClass('locating');
+    }
+
+    let LocationControl = L.Control.extend({
+      options: {
+        position: 'bottomleft'
+      },
+
+      onAdd: function (map) {
+        let div = L.DomUtil.create('div', 'leaflet-bar leaflet-control geolocate-control');
+        div.innerHTML = '<a><i class="icon-direction"></i><i class="icon-spinner animate-spin"></i></a>';
+        div.onclick = function () {
+          map.locate({setView: true, watch: true});
+          $(div).addClass('locating');
+        }
+        return div;
+      }
+    });
+
+    map.addControl(new LocationControl());
 
    // L.marker([29.717, -95.402]).addTo(map);
 
