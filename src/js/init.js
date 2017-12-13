@@ -297,7 +297,8 @@ function showAddMemory (lat, lng) {
       email: $('.lightbox .memory-email').val(),
       year: $('.lightbox .memory-class').val(),
       lat: lat,
-      lng: lng
+      lng: lng,
+      year: year
     }
     $.post(server + 'memory', data, function (response) {
       $('.lightbox').hide();
