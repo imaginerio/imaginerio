@@ -1280,9 +1280,6 @@ i.icon-ok:hover,
     width: 100%;
   }
 
-  .eras header {
-    display: none;
-  }
 
   #eras-button, #search-button {
     font-size: 24px;
@@ -1700,5 +1697,20 @@ i.icon-ok:hover,
   .slider {
     width: 100%;
     margin: 20px 0;
+  }
+
+  @media (max-height: 600px) {
+    .title-container {
+      padding: 10px;
+    }
+    #intro h1 {
+      font-size: 50px;
+      line-height: 50px;
+    }
+
+    .era-description {
+      font-size: 18px;
+      line-height: 22px;
+    }
   }
 }

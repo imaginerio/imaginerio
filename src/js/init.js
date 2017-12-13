@@ -82,6 +82,10 @@ function init_ui () {
       $('#legend').toggleClass('collapsed');
     });
     $('#search .icon-left-big').click(function () {
+      if ($('main').hasClass('eras')) {
+        goToStart();
+        return;
+      }
       Search.clear();
       $('header').removeClass('search');
     });
@@ -139,12 +143,7 @@ function init_ui () {
 
   $('#eras-button').click(function () {
     if ($('main').hasClass('eras')) {
-      $('main').addClass('start');
-      $('.go-button')
-        .html('Begin Exploring')
-        .removeClass('era')
-        .off('click')
-        .on('click', goToMap);
+      goToStart();
       return;
     }
     Dispatch.call('removeall', this);
@@ -163,6 +162,17 @@ function init_ui () {
   });
 
   $('#export').click(export_map);
+}
+
+function goToStart () {
+  $('main').addClass('start');
+  $('.title-container h1').html('instituteRice');
+  $('.go-button')
+    .html('Begin Exploring')
+    .removeClass('era')
+    .off('click')
+    .on('click', goToMap);
+  window.location.hash = '';
 }
 
 function goToMap () {
