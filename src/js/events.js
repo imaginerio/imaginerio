@@ -31,6 +31,7 @@ Dispatch.on('addoverlay', function (p) {
   Map.addOverlay(p.data.overlay);
   rasterProbe(p);
   $('#overlay-info').data('p', p).show();
+  $('.probe-hint').css('margin-right', '65px');
   update_hash();
 });
 
@@ -38,6 +39,7 @@ Dispatch.on('removeoverlay', function () {
   Map.removeOverlay();
   $('#fixed-probe').hide();
   $('#overlay-info').data('p', null).hide();
+  $('.probe-hint').css('margin-right', '0');
   update_hash();
 });
 
@@ -55,8 +57,8 @@ Dispatch.on('viewshedclick', function (id) {
   if (raster) rasterProbe(raster.photo);
 });
 
-Dispatch.on('showresults', function (results) {
-  Search.showResults(results);
+Dispatch.on('showresults', function (results, clicked) {
+  Search.showResults(results, clicked);
 });
 
 Dispatch.on('removeprobe', function () {
@@ -67,14 +69,14 @@ Dispatch.on('removeprobe', function () {
 
 Dispatch.on('drawfeature', function (data) {
   Map.drawFeature(data.name);
-  //Search.clear();
+  if (mobile) $('#search .icon-left-big').click();
   $.getJSON(server + 'details/' + data.id[0], function(response) {
     let content = '';
     if (response.length) {
       if (response[0].creator) content += '<p>Creator: <span>' + response[0].creator + '</span></p>';
       if (response[0].year) content += '<p>Mapped: <span>' + response[0].year + '</span></p>';
     }
-    //detailsProbe(data.name, content);
+    if (mobile) detailsProbe(data.name, content);
   });
 });
 

@@ -754,6 +754,22 @@ header.search #controls-right .search-hide {
 
 /* Probes */
 
+.probe-hint {
+  position: absolute;
+  right: 30px;
+  border-radius: 5px;
+  top: 135px;
+  padding: 10px 15px;
+  z-index: 699;
+  background-color: #666;
+  color: white;
+  box-shadow: 0 0 8px rgba(0,0,0,.25);
+}
+
+.eras .probe-hint {
+  display: none;
+}
+
 .probe {
   display: none;
   position: absolute;
@@ -836,7 +852,6 @@ header.search #controls-right .search-hide {
   display: none;
   position: absolute;
   right: 30px;
-  width: 15px;
   border-radius: 5px;
   top: 135px;
   padding: 10px 15px;
@@ -1512,6 +1527,12 @@ i.icon-ok:hover,
     top: 50px;
     left: 0;
     width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .search-results .icon-times {
+    display: none;
   }
 
   .results-group > span {
@@ -1708,6 +1729,12 @@ i.icon-ok:hover,
   #overlay-info {
     top: 160px;
     right: 15px;
+  }
+
+  .probe-hint {
+    left: 30px;
+    right: auto;
+    top: 110px;
   }
 
   .slider, .button.red {

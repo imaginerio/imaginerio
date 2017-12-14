@@ -27,7 +27,7 @@ let Search = (function($, dispatch) {
     }
   }
 
-  S.showResults = function (results) {
+  S.showResults = function (results, clicked) {
     searchResults = results;
     if (_.size(searchResults)) {
       resultsContainer.css('margin-right', $('#overlay-info').is(':visible') ? '65px' : 0);
@@ -84,6 +84,11 @@ let Search = (function($, dispatch) {
             });
         });
       });
+
+      if ($('.search-result').length == 1 && clicked) {
+        // if only one result from map click, select it
+        $('.search-result span').first().click();
+      }
       
     } else {
       resultsContainer.hide();

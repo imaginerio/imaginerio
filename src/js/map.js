@@ -338,7 +338,8 @@ let Map = (function($, dispatch) {
     }
     let off = layers[0] == 'all' ? '' : layers.join(',');
     $.getJSON(server + 'probe/' + year + '/' + probeZoom + '/' + e.latlng.lng + ',' + e.latlng.lat + '/' + off, function (json) {
-      Dispatch.call('showresults', this, _.indexBy(json, 'name'));
+      if (_.size(json)) $('.probe-hint').hide();
+      Dispatch.call('showresults', this, _.indexBy(json, 'name'), true);
     });
   }
 
