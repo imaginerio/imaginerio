@@ -894,10 +894,15 @@ header.search #controls-right .search-hide {
 .era-description {
   font-size: 20px;
   font-weight: 300;
-  width: 50%;
+  width: 75%;
   margin: 30px auto;
   line-height: 24px;
   color: #666;
+}
+
+.era-description .disclaimer {
+  font-size: 14px;
+  line-height: 16px;
 }
 
 .era-description-inner {
@@ -1301,7 +1306,7 @@ i.icon-ok:hover,
     position: absolute;
   }
 
-  header > img {
+  header > a {
     display: none;
   }
 
@@ -1346,6 +1351,7 @@ i.icon-ok:hover,
     height: 250px;
     padding: 20px;
     box-sizing: border-box;
+    padding: 10px;
   }
 
   .start .title-container {
@@ -1375,6 +1381,8 @@ i.icon-ok:hover,
   .era-description {
     font-weight: 100;
     width: 75%;
+    font-size: 16px;
+    line-height: 18px;
   }
 
   #era-tags {
@@ -1712,9 +1720,6 @@ i.icon-ok:hover,
   }
 
   @media (max-height: 600px) {
-    .title-container {
-      padding: 10px;
-    }
     #intro h1 {
       font-size: 50px;
       line-height: 50px;
