@@ -441,6 +441,10 @@ header.search #controls-right .search-hide {
   z-index: 0;
 }
 
+.leaflet-grab {
+  cursor: pointer;
+}
+
 .geolocate-control {
   cursor: pointer;
 }
