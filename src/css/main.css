@@ -923,9 +923,24 @@ header.search #controls-right .search-hide {
   color: #666;
 }
 
-.era-description .disclaimer {
-  font-size: 14px;
-  line-height: 16px;
+.disclaimer {
+  font-size: 12px;
+  line-height: 14px;
+  padding: 20px;
+  position: absolute;
+  bottom: 0px;
+}
+
+.eras .disclaimer {
+  display: none;
+}
+
+.eras.start .disclaimer {
+  display: block;
+}
+
+.eras.start.second .disclaimer {
+  display: none;
 }
 
 .era-description-inner {
@@ -1433,11 +1448,9 @@ i.icon-ok:hover,
   .go-button {
     padding: 15px 30px;
     margin-top: 25px;
-    position: absolute;
     left: 5%;
     width: 90%;
     box-sizing: border-box;
-    bottom: 20px;
   }
 
   /*TIMELINE*/
