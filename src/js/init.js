@@ -90,6 +90,7 @@ function init_ui () {
       $('header').removeClass('search');
     });
     $('#filmstrip').addClass('collapsed').insertBefore('#map');
+    $('#era-tags').appendTo('.start-intro-second');
   } else {
     $('.mobile').hide();
   }
@@ -139,7 +140,7 @@ function init_ui () {
     showEra(+$('#intro').data('era') + 1);
   });
 
-  $('.go-button').on('click', goToMap);
+  $('.go-button').on('click', goButtonClick);
 
   $('#eras-button').click(function () {
     if ($('main').hasClass('eras')) {
@@ -164,20 +165,28 @@ function init_ui () {
   $('#export').click(export_map);
 }
 
+function goButtonClick () {
+  if ($('main').hasClass('second') || !mobile) goToMap();
+  else {
+    $('main').addClass('second');
+    $('.go-button').html('Go to Map');
+  }
+}
+
 function goToStart () {
-  $('main').addClass('start');
+  $('main').addClass('start').removeClass('second');
   $('.title-container h1').html('instituteRice');
   $('.go-button')
     .html('Begin Exploring')
     .removeClass('era')
     .off('click')
-    .on('click', goToMap);
+    .on('click', goButtonClick);
   window.location.hash = '';
 }
 
 function goToMap () {
   Filmstrip.setYear(year);
-  $('main').removeClass('eras');
+  $('main').removeClass('eras').removeClass('start');
   update_hash();
   updateEra();
 }

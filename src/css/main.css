@@ -890,11 +890,11 @@ header.search #controls-right .search-hide {
   background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(255,255,255,0.9) 60%,rgba(255,255,255,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 }
 
-.eras .start-intro, .eras.start .era-intro {
+.eras .start-intro, .eras.start .era-intro, .eras .start-intro-second, .eras.start.second .start-intro {
   display: none;
 }
 
-.eras.start .start-intro {
+.eras.start .start-intro, .eras.start.second .start-intro-second {
   display: block;
 }
 
@@ -908,6 +908,10 @@ header.search #controls-right .search-hide {
 
 .eras.start #eras-button {
   visibility: hidden;
+}
+
+.eras.start.second #eras-button {
+  visibility: visible;
 }
 
 .era-description {
@@ -1292,6 +1296,10 @@ i.icon-ok:hover,
   .era-description {
     margin: 10px auto;
   }
+
+  .era-tag {
+    margin: 5px 20px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -1409,11 +1417,12 @@ i.icon-ok:hover,
     margin-left: 12.5%;
     margin-right: 12.5%;
     padding: 0;
+    margin-top: 20px;
   }
 
   .era-tag {
     display: block;
-    margin: 0 0 10px 0;
+    margin: 15px;
     cursor: pointer;
   }
 
