@@ -1007,6 +1007,10 @@ header.search #controls-right .search-hide {
   cursor: pointer;
 }
 
+.era-tag:hover {
+  color: black;
+}
+
 .era-tag div {
   width: 12px;
   height: 16px;
