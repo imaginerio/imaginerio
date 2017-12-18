@@ -777,7 +777,7 @@ header.search #controls-right .search-hide {
 .probe {
   display: none;
   position: absolute;
-  z-index: 3000;
+  z-index: 3001;
 }
 
 #fixed-probe {
@@ -1072,7 +1072,7 @@ header.search #controls-right .search-hide {
 
 .lightbox {
   position: absolute;
-  z-index: 3001;
+  z-index: 3000;
   width: 100%;
   left: 0;
   top: 0;
