@@ -59,6 +59,7 @@ let Map = (function($, dispatch) {
   });
 
   let locationMarker;
+  let locationBounds = L.latLngBounds([[29.737327534583837, -95.35141468048097], [29.699311299216795, -95.44454097747804]]);
 
   M.initialize = function (container) {
     map = L.map(container, {
@@ -86,13 +87,20 @@ let Map = (function($, dispatch) {
 
     function showLocation (latlng) {
       if (locationMarker && map.hasLayer(locationMarker)) map.removeLayer(locationMarker);
-      locationMarker = L.circleMarker(latlng, {
-        radius: 7,
-        color: 'white',
-        fillColor: '#3358ff',
-        fillOpacity: 1,
-        opacity: 1
-      }).addTo(map);
+      if (!locationBounds.contains(latlng)) {
+        alert('Geolocation is only supported in the Rice campus area.');
+        map.stopLocate();
+      } else {
+        locationMarker = L.circleMarker(latlng, {
+          radius: 7,
+          color: 'white',
+          fillColor: '#3358ff',
+          fillOpacity: 1,
+          opacity: 1
+        }).addTo(map);
+        map.panTo(latlng);
+      }
+      
       $('.geolocate-control').removeClass('locating');
     }
 
@@ -104,8 +112,9 @@ let Map = (function($, dispatch) {
       onAdd: function (map) {
         let div = L.DomUtil.create('div', 'leaflet-bar leaflet-control geolocate-control');
         div.innerHTML = '<a><i class="icon-direction"></i><i class="icon-spinner animate-spin"></i></a>';
-        div.onclick = function () {
-          map.locate({setView: true, watch: true});
+        div.onclick = function (e) {
+          e.stopPropagation();
+          map.locate({watch: true});
           $(div).addClass('locating');
         }
         return div;
