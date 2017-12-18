@@ -602,7 +602,7 @@ header.search #controls-right .search-hide {
   height: 100%;
   box-shadow: 4px 0 4px rgba(0,0,0,.1);
   position: relative;
-  z-index: 1;
+  z-index: 3;
 }
 
 #legend.collapsed {
