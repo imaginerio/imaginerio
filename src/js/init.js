@@ -1,6 +1,6 @@
-const server = 'http://159.203.91.52:3000/';
-const tileserver = 'http://159.203.91.52:3001/tiles/';
-const rasterserver = 'http://159.203.91.52:3001/raster/';
+const server = 'http://instituterice.axismaps.io/';
+const tileserver = 'http://instituterice.axismaps.io/tiles/';
+const rasterserver = 'http://instituterice.axismaps.io/raster/';
 
 const thumbnaillUrl = 'http://mdxdv.artstor.org/thumb/imgstor/size1/sslps/c7730355/';
 const imageUrl = 'http://mdxdv.artstor.org/thumb/imgstor/size2/sslps/c7730355/';
