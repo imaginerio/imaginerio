@@ -1,0 +1,229 @@
+/* imagineRio Cone Collector */
+
+html,
+body {
+  font-family: 'Roboto';
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.wrapper {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+main {
+  flex-grow: 1;
+  height: 100%;
+}
+
+/* Slider */
+.slider-wrapper {
+  box-sizing: border-box;
+  height: 150px;
+  padding: 60px 5%;
+  width: 100%;
+}
+
+.slider {
+  width: 100%;
+}
+
+.noUi-value-horizontal {
+  transform: translate3d(-50%, 100%, 0);
+}
+
+/* Map */
+.map {
+  height: calc(100% - 150px); /* 100% - slider-wrapper height */
+  width: 100%;
+}
+
+.loading{
+	background: rgba( 255,255,255, 0.75 ) url(../img/loading.gif) center center no-repeat;
+	height: 100%;
+  position: relative;
+	width: 100%;
+	z-index: 9999;
+}
+
+.loading:before{
+  color: #333;
+	content: "Loading...";
+  display: block;
+  font-size: 36px;
+  font-weight: 200;
+  position: relative;
+  text-align: center;
+	top: 55%;
+}
+
+/* Cones */
+.cone-point {
+  background-color: #03A9F4;
+  border-radius: 50%;
+  border: 3px solid #fff;
+}
+
+.cone-guidepoint {
+  background-color: rgba(244,67,54,0.8);
+  border-radius: 50%;
+}
+
+.cone-guideline {
+  stroke: rgba(244,67,54,0.8);
+  stroke-dasharray: 5, 5;
+}
+
+.cone-guideline--invisible {
+  stroke: none;
+}
+
+.cone-guidepolygon {
+  fill: #212121;
+  fill-opacity: 0.4;
+  stroke: none;
+}
+
+.cone--error {
+  fill: #d50000;
+}
+
+/* Sidebar */
+sidebar {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  height: 100%;
+  min-width: 250px;
+  padding: 25px;
+  width: 25%;
+}
+
+.sidebar--title {
+  color: #333;
+  font-family: "Roboto";
+  font-size: 28px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.sidebar--input-wrapper {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.sidebar--label {
+  color: #999;
+  font-family: 'Roboto';
+  font-size: 14px;
+  font-weight: bold;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.sidebar--input {
+  border: 1px solid #ccc;
+  flex-shrink: 0;
+  line-height: 1.5;
+  margin-left: 10px;
+  width: 70%;
+}
+
+.sidebar--textarea {
+  border: 1px solid #ccc;
+  margin-left: 10px;
+  padding: 0;
+  width: 70%;
+}
+
+.sidebar--buttons-wrapper {
+  justify-content: flex-start;
+  margin-left: auto;
+  width: 70%;
+}
+
+.button {
+  background-color: #ccc;
+  border: none;
+  border-radius: 3px;
+  color: #333;
+  cursor: pointer;
+  font-weight: bold;
+  line-height: 1.5;
+  margin-right: 10px;
+  padding: 7px 12px;
+  text-transform: uppercase;
+}
+
+.button:hover {
+  background-color: #aaa;
+}
+
+.sidebar--submit {
+  background-color: #4CAF50;
+}
+
+.sidebar--submit:hover {
+  background-color: #388E3C;
+}
+
+.sidebar--submit.disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.sidebar--submit:hover {
+  background-color: #ccc;
+}
+
+.hidden-input {
+  display: none;
+}
+
+/* Messages */
+.message {
+  background-color: #fff;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  color: #333;
+  left: calc(50% - 170px);
+  max-width: 400px;
+  padding: 16px;
+  position: absolute;
+  top: 0;
+  transform: translateY(-150px);
+  transition: transform 400ms ease-in;
+}
+
+.message.show {
+  transform: translateY(-1px);
+}
+
+.error-message {
+  background-color: #d50000;
+}
+
+.success-message {
+  background-color: #4CAF50;
+}
+
+.message-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.message-response {
+  margin: 0;
+  margin-top: 10px;
+}

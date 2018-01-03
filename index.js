@@ -15,6 +15,10 @@ app.get('/', (req, res) => {
   res.render('./src/index.html');
 });
 
+app.get('/collector', (req, res) => {
+  res.render('./src/collector/index.html');
+});
+
 app.listen(port, function () {
   console.log('App is running on:' + port);
 });
