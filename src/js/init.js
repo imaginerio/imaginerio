@@ -39,6 +39,7 @@ $.getJSON(server + 'names/en', function(namesData) {
 });
 
 function initialize () {
+  eras[eras.length-1].dates[1] = new Date().getFullYear();
   check_hash();
   year = params.year || 1910; // a year that actually has something
   Map.initialize('map').setYear(year);
