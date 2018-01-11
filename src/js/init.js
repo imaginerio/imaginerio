@@ -186,7 +186,7 @@ function goToStart () {
 }
 
 function goToMap () {
-  Filmstrip.setYear(year);
+  Dispatch.call('setyear', this, year);
   $('main').removeClass('eras').removeClass('start');
   update_hash();
   updateEra();
