@@ -29,7 +29,7 @@ function rasterProbe (p) {
         .appendTo(div);
       $('<a>')
         .attr('class', 'image blue-button')
-        .attr('href', 'http://www.sscommons.org/openlibrary/' + p.href + '&fs=true')
+        .attr('href', 'https://www.sscommons.org/openlibrary/' + p.href + '&fs=true')
         .attr('target', 'blank')
         .html('View image on SharedShelf Commons')
         .appendTo(div);

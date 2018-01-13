@@ -15,7 +15,7 @@ let Photo = function (data, thumbUrl) {
   let request;
 
   function getMetadata () {
-    request = $.getJSON( 'http://www.sscommons.org/openlibrary/secure/imagefpx/' + data.id + '/7730355/5', function( json ){
+    request = $.getJSON( 'https://www.sscommons.org/openlibrary/secure/imagefpx/' + data.id + '/7730355/5', function( json ){
       P.metadata = json[0];
       tempImages.forEach(function (img) {
         img.div.empty().css('background-image', 'url(' + getUrl(img.size) + ')');
@@ -25,7 +25,7 @@ let Photo = function (data, thumbUrl) {
         }
       });
 
-      request = $.ajax( 'http://www.sscommons.org/openlibrary/secure/metadata/' + data.id + '?_method=FpHtml',{
+      request = $.ajax( 'https://www.sscommons.org/openlibrary/secure/metadata/' + data.id + '?_method=FpHtml',{
         dataType : 'html',
         success : function( html )
         {
