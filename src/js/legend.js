@@ -59,7 +59,7 @@ let Legend = (function($, dispatch) {
         if (plans.length) {
           let cat = $('<div>').attr('class', 'legend-category');
           if ($('.legend-category[data-category="views"]')[0]) {
-            cat.insertAfter('.legend-category[data-category="views"');
+            cat.insertAfter('.legend-category[data-category="views"]');
           } else {
             cat.prependTo('.legend-contents');
           }
