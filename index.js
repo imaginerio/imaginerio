@@ -1,8 +1,10 @@
 const path = require('path');
 const express = require('express');
 const compression = require('compression');
+const enforce = require('express-sslify');
 
 let app = express();
+app.use(enforce.HTTPS());
 app.use(compression());
 
 let port = process.env.PORT || 8080;
