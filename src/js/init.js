@@ -2,8 +2,8 @@ const server = 'https://instituterice.axismaps.io/';
 const tileserver = 'https://instituterice.axismaps.io/tiles/';
 const rasterserver = 'https://instituterice.axismaps.io/raster/';
 
-const thumbnaillUrl = 'http://mdxdv.artstor.org/thumb/imgstor/size1/sslps/c7730355/';
-const imageUrl = 'http://mdxdv.artstor.org/thumb/imgstor/size2/sslps/c7730355/';
+const thumbnaillUrl = 'https://mdxdv.artstor.org/thumb/imgstor/size1/sslps/c7730355/';
+const imageUrl = 'https://mdxdv.artstor.org/thumb/imgstor/size2/sslps/c7730355/';
 
 var years;
 var year;
