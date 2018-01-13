@@ -20,8 +20,8 @@ let tooltips = {
 /* Vars and Intialization */
 /* -------------------------*/
 
-let metaserver = 'http://instituterice.axismaps.io';
-let tileserver = 'http://instituterice.axismaps.io/tiles/';
+let metaserver = 'https://instituterice.axismaps.io';
+let tileserver = 'https://instituterice.axismaps.io/tiles/';
 let year;
 let maxYear = 2017;
 let tiles = {};
@@ -104,12 +104,12 @@ for (let i = 0; i < requiredInputs.length; i++) {
 
 // Submit Event
 document.querySelector('.sidebar--submit').addEventListener('click', function (e) {
-  e.preventDefault();
+  //e.preventDefault();
 
   let formEl = document.querySelector('.sidebar--form');
 
   let request = new XMLHttpRequest();
-  request.open('POST', '/my/url', true);
+  request.open('POST', metaserver + '/collector/', true);
 
   // Success
   request.addEventListener('load', function () {
@@ -141,7 +141,13 @@ document.querySelector('.sidebar--submit').addEventListener('click', function (e
     }, 3000);
   });
 
-  request.send(new FormData(formEl));
+  
+  var formData = new FormData(formEl);
+  var object = {};
+    formData.forEach(function(value, key){
+    object[key] = value;
+  });
+  request.send(JSON.stringify(object));
 });
 
 // Cancel event
