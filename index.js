@@ -3,9 +3,14 @@ const express = require('express');
 const compression = require('compression');
 const enforce = require('express-sslify');
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 let app = express();
-app.use(enforce.HTTPS());
-app.use(compression());
+
+if (isProduction) {
+  app.use(compression());
+  app.use(enforce.HTTPS({ trustProtoHeader: true }));
+}
 
 let port = process.env.PORT || 8080;
 
