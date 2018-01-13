@@ -302,7 +302,7 @@ function showAddMemory (lat, lng) {
       story: $('.lightbox .memory-story').val(),
       name: $('.lightbox .memory-name').val(),
       email: $('.lightbox .memory-email').val(),
-      year: $('.lightbox .memory-class').val(),
+      class: $('.lightbox .memory-class').val(),
       lat: lat,
       lng: lng
     }
@@ -315,7 +315,7 @@ function showAddMemory (lat, lng) {
       story: $('.lightbox .memory-story').val(),
       name: $('.lightbox .memory-name').val(),
       email: $('.lightbox .memory-email').val(),
-      year: $('.lightbox .memory-class').val(),
+      class: $('.lightbox .memory-class').val(),
       lat: lat,
       lng: lng,
       year: year
