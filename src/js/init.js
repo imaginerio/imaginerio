@@ -26,7 +26,7 @@ let params = {};
 
 // runtime stuff
 
-var mobile = window.innerWidth <= 600;
+var mobile = window.innerWidth <= 700;
 
 $.getJSON(server + 'timeline', function(yearsData) {
   years = yearsData;

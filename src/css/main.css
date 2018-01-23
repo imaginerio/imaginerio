@@ -1321,7 +1321,27 @@ i.icon-ok:hover,
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1000px) {
+  .era-description {
+    width: 90%;
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .disclaimer {
+    font-size: 10px;
+    line-height: 12px;
+  }
+}
+
+@media (max-width: 900px) {
+  .era-description {
+    font-size: 16px;
+    line-height: 18px;
+  }
+}
+
+@media (max-width: 700px) {
 
   .desktop {
     display: none !important;
@@ -1425,8 +1445,7 @@ i.icon-ok:hover,
   }
 
   .era-description {
-    font-weight: 100;
-    width: 75%;
+    width: 90%;
     font-size: 16px;
     line-height: 18px;
   }
@@ -1780,11 +1799,6 @@ i.icon-ok:hover,
     #intro h1 {
       font-size: 50px;
       line-height: 50px;
-    }
-
-    .era-description {
-      font-size: 18px;
-      line-height: 22px;
     }
   }
 }
