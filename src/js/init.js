@@ -7,6 +7,7 @@ const imageUrl = 'https://mdxdv.artstor.org/thumb/imgstor/size2/sslps/c7730355/'
 
 var years;
 var year;
+var minYear = 1831;
 
 var names;
 
@@ -30,7 +31,7 @@ var mobile = window.innerWidth <= 700;
 
 $.getJSON(server + 'timeline', function(yearsData) {
   years = yearsData;
-  while (years[0] < eras[0].dates[0]) years.shift();  // force min year and first era to match
+  //while (years[0] < eras[0].dates[0]) years.shift();  // force min year and first era to match
   if (names) initialize();
 });
 $.getJSON(server + 'names/en', function(namesData) {
@@ -43,7 +44,7 @@ function initialize () {
   check_hash();
   year = params.year || 1910; // a year that actually has something
   Map.initialize('map').setYear(year);
-  Timeline.initialize([eras[0].dates[0], eras[eras.length-1].dates[1]], eras, 'timeline').setYear(year);
+  Timeline.initialize([minYear, years[years.length - 1]], eras, years.slice(0, years.indexOf(minYear)), 'timeline').setYear(year);
   Filmstrip.initialize();//.setYear(year);
   Legend.initialize().setYear(year);
   Search.initialize('search').setYear(year);

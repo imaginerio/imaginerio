@@ -28,9 +28,9 @@ let Legend = (function($, dispatch) {
     year = y;
     $('.legend-contents').empty();
     $.getJSON(server + 'layers/' + year, function(layersJson) {
-      $.getJSON(server + 'plans/' + year, function(plansJson) {
+      //$.getJSON(server + 'plans/' + year, function(plansJson) {
         layers = layersJson;
-        plans = plansJson;
+        //plans = plansJson;
         _.each(layersJson, function (category, categoryName) {
           let cat = $('<div>').attr('class', 'legend-category').appendTo('.legend-contents');
           $('<div>').attr('class', 'category-title').html(categoryName.toUpperCase()).appendTo(cat);
@@ -45,45 +45,45 @@ let Legend = (function($, dispatch) {
               _.each(group.features, function (feature) {
                 let layer = $('<div>').attr('class', 'layer').appendTo(gr);
                 addLayerExisting(feature, layer);
-                let plan = getPlansForLayer(feature);
-                if (plan) {
-                  addLayerPlanned(feature, layer, plan);
-                }
+                // let plan = getPlansForLayer(feature);
+                // if (plan) {
+                //   addLayerPlanned(feature, layer, plan);
+                // }
               });
 
               let swatch = add_swatch(group.style).appendTo(groupTitle);
             });
-          });
+          //});
         });
 
-        if (plans.length) {
-          let cat = $('<div>').attr('class', 'legend-category');
-          if ($('.legend-category[data-category="views"]')[0]) {
-            cat.insertAfter('.legend-category[data-category="views"]');
-          } else {
-            cat.prependTo('.legend-contents');
-          }
-          $('<div>').attr('class', 'category-title').html('PLANS').appendTo(cat);
-          let gr = $('<div>').attr('class', 'legend-group').attr('data-group', 'views').appendTo(cat);
-          addLayerPlanned('Plans', gr, plans, false, true).html('<i class="icon-tsquare"></i>Plans (' + year + ')')
-        }
+        // if (plans.length) {
+        //   let cat = $('<div>').attr('class', 'legend-category');
+        //   if ($('.legend-category[data-category="views"]')[0]) {
+        //     cat.insertAfter('.legend-category[data-category="views"]');
+        //   } else {
+        //     cat.prependTo('.legend-contents');
+        //   }
+        //   $('<div>').attr('class', 'category-title').html('PLANS').appendTo(cat);
+        //   let gr = $('<div>').attr('class', 'legend-group').attr('data-group', 'views').appendTo(cat);
+        //   addLayerPlanned('Plans', gr, plans, false, true).html('<i class="icon-tsquare"></i>Plans (' + year + ')')
+        // }
 
-        plans.forEach(function (plan) {
-          let features = [];
-          plan.features.forEach(function (feature) {
-            if (!$('.layer-existing[data-name="' + feature + '"]').length) features.push(feature);
-          });
-          if (features.length) {
-            let cat = $('<div>').attr('class', 'legend-category').appendTo('.legend-contents');
-            $('<div>').attr('class', 'category-title').html(plan.name.toUpperCase()).appendTo(cat);
-            let gr = $('<div>').attr('class', 'legend-group planned').appendTo('.legend-contents');
-            let layer = $('<div>').attr('class', 'layer').appendTo(gr);
-            features.forEach(function (feature) {
-              addLayerExisting(feature, layer, true);
-              addLayerPlanned(feature, layer, [plan], true);
-            });
-          }
-        })
+        // plans.forEach(function (plan) {
+        //   let features = [];
+        //   plan.features.forEach(function (feature) {
+        //     if (!$('.layer-existing[data-name="' + feature + '"]').length) features.push(feature);
+        //   });
+        //   if (features.length) {
+        //     let cat = $('<div>').attr('class', 'legend-category').appendTo('.legend-contents');
+        //     $('<div>').attr('class', 'category-title').html(plan.name.toUpperCase()).appendTo(cat);
+        //     let gr = $('<div>').attr('class', 'legend-group planned').appendTo('.legend-contents');
+        //     let layer = $('<div>').attr('class', 'layer').appendTo(gr);
+        //     features.forEach(function (feature) {
+        //       addLayerExisting(feature, layer, true);
+        //       addLayerPlanned(feature, layer, [plan], true);
+        //     });
+        //   }
+        // })
 
         dispatch.call('setlayers', this, Lg.layers());
         dispatch.call('statechange', this);
