@@ -59,7 +59,7 @@ let Map = (function($, dispatch) {
   });
 
   let locationMarker;
-  let locationBounds = L.latLngBounds([[29.737327534583837, -95.35141468048097], [29.699311299216795, -95.44454097747804]]);
+  let locationBounds = L.latLngBounds([[33.8297, 35.4142], [33.9509, 35.593]]);
 
   M.initialize = function (container) {
     map = L.map(container, {
@@ -67,7 +67,7 @@ let Map = (function($, dispatch) {
         maxZoom: 18,
         minZoom: 15
       })
-      .setView([29.717, -95.402], 16)
+      .setView([33.9, 35.5], 16)
       .on('click', probe)
       .on('moveend zoomend', function () {
         dispatch.call('statechange', this);

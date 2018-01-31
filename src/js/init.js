@@ -1,6 +1,6 @@
-const server = 'https://instituterice.axismaps.io/';
-const tileserver = 'https://instituterice.axismaps.io/tiles/';
-const rasterserver = 'https://instituterice.axismaps.io/raster/';
+const server = 'https://beirut.axismaps.io/';
+const tileserver = 'https://beirut.axismaps.io/tiles/';
+const rasterserver = 'https://beirut.axismaps.io/raster/';
 
 const thumbnaillUrl = 'https://mdxdv.artstor.org/thumb/imgstor/size1/sslps/c7730355/';
 const imageUrl = 'https://mdxdv.artstor.org/thumb/imgstor/size2/sslps/c7730355/';

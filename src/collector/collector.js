@@ -20,8 +20,8 @@ let tooltips = {
 /* Vars and Intialization */
 /* -------------------------*/
 
-let metaserver = 'https://instituterice.axismaps.io';
-let tileserver = 'https://instituterice.axismaps.io/tiles/';
+let metaserver = 'https://beirut.axismaps.io';
+let tileserver = 'https://beirut.axismaps.io/tiles/';
 let year;
 let maxYear = 2017;
 let tiles = {};
