@@ -393,8 +393,12 @@ header.search #controls-right .search-hide {
   top: 7px;
 }
 
-.tick:first-child, .tick:last-child {
+.tick:first-child, .ticks-main .tick:last-child {
   border: none;
+}
+
+.ticks-early + .ticks-main .tick-major:first-child {
+  border-left: 1px solid white;
 }
 
 .tick-major:first-child span {
@@ -402,7 +406,12 @@ header.search #controls-right .search-hide {
   margin-left: 5px;
 }
 
-.tick-major:last-child span {
+.ticks-early + .ticks-main .tick-major:first-child span {
+  text-align: center;
+  margin-left: -20px;
+}
+
+.ticks-main .tick-major:last-child span {
   text-align: right;
   margin-left: -45px;
 }

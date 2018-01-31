@@ -7,7 +7,7 @@ const imageUrl = 'https://mdxdv.artstor.org/thumb/imgstor/size2/sslps/c7730355/'
 
 var years;
 var year;
-var minYear = 1831;
+var minYear = 1830;
 
 var names;
 
@@ -43,8 +43,8 @@ function initialize () {
   eras[eras.length-1].dates[1] = new Date().getFullYear();
   check_hash();
   year = params.year || 1910; // a year that actually has something
-  Map.initialize('map').setYear(year);
-  Timeline.initialize([minYear, years[years.length - 1]], eras, years.slice(0, years.indexOf(minYear)), 'timeline').setYear(year);
+  Map.initialize('map').setYear(year); 
+  Timeline.initialize([minYear, years[years.length - 1]], eras, years.filter(function (y){ return y < minYear}), 'timeline').setYear(year);
   Filmstrip.initialize();//.setYear(year);
   Legend.initialize().setYear(year);
   Search.initialize('search').setYear(year);
