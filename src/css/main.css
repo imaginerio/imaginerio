@@ -393,12 +393,22 @@ header.search #controls-right .search-hide {
   top: 7px;
 }
 
+.ticks-early {
+  background-color: #999;
+  height: 100%;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-right: 10px solid white;
+  box-sizing: border-box;
+}
+
 .tick:first-child, .ticks-main .tick:last-child {
   border: none;
 }
 
 .ticks-early + .ticks-main .tick-major:first-child {
   border-left: 1px solid white;
+  text-shadow: 0px 0px 2px #6a95c7, 0px 0px 1px #4a75a7
 }
 
 .tick-major:first-child span {

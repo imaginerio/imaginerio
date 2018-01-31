@@ -10,6 +10,7 @@ let Timeline = (function($, dispatch) {
   let year = 2015;
   let earlyYears;
   let _ears;
+  let earlyWidth = 20;  // %
 
   function init_events () {
     $('.timeline-slider, .timeline-track', timeline).on('mousedown touchstart', function (e) {
@@ -39,19 +40,38 @@ let Timeline = (function($, dispatch) {
       });
 
     $('.icon-angle-left', stepper).click(function () {
-      changeYear(year - 1);
+      if (earlyYears) {
+        if (year == yearRange[0])
+          changeYear(earlyYears[earlyYears.length-1]);
+        else if (year < yearRange[0])
+          changeYear(earlyYears[earlyYears.indexOf(year) - 1]);
+        else
+          changeYear(year - 1);
+      } else {
+        changeYear(year - 1);
+      }
+      
     });
 
     $('.icon-angle-right', stepper).click(function () {
-      changeYear(year + 1);
+      if (earlyYears) {
+        if (year == earlyYears[earlyYears.length-1])
+          changeYear(yearRange[0]);
+        else if (year < yearRange[0]) 
+          changeYear(earlyYears[earlyYears.indexOf(year) + 1]);
+        else
+          changeYear(year + 1);
+      } else {
+        changeYear(year + 1);
+      }
     });
 
     $(window).resize(function () {
       let mainTicks = addTicks(yearRange);
       if (earlyYears) {
-        addEarlyTicks(earlyYears).css('width', '20%');
-        mainTicks.css('width', '80%')
-          .css('left', '20%')
+        addEarlyTicks(earlyYears).css('width', earlyWidth + '%');
+        mainTicks.css('width', (100 - earlyWidth) + '%')
+          .css('left', earlyWidth + '%')
       }
     });
   }
@@ -64,7 +84,22 @@ let Timeline = (function($, dispatch) {
     let x = pageX - t.offset().left;
     let pct = x / t.width();
     pct = Math.max(0, Math.min(pct, 1));
-    let y = Math.round(pct * (yearRange[1] - yearRange[0]) + yearRange[0]);
+    let y;
+    if (earlyYears) {
+      var earlyPct = earlyWidth / 100;
+      var mainPct = (100-earlyWidth)/100;
+      if (pct > earlyPct) {
+        y = Math.round((pct - earlyPct) / mainPct * (yearRange[1] - yearRange[0]) + yearRange[0]);
+      } else {
+        var interval = earlyPct / earlyYears.length;
+        var nearest = Math.min(Math.round(pct/interval), earlyYears.length-1);
+        y = earlyYears[nearest];//Math.round(pct * earlyPct * (yearRange[1] - yearRange[0]) + yearRange[0]);
+      }
+
+    } else {
+      y = Math.round(pct * (yearRange[1] - yearRange[0]) + yearRange[0]);
+    }
+    
     return {pct: pct, year: y};
   }
 
@@ -140,12 +175,21 @@ let Timeline = (function($, dispatch) {
   }
 
   function updateYear (y) {
-    y = Math.max(yearRange[0], Math.min(+y, yearRange[1]));
+    //y = Math.max(yearRange[0], Math.min(+y, yearRange[1]));
     year = y;
+    var pct;
     $('.year', stepper).html(year);
-    var pct = (year - yearRange[0]) / (yearRange[1] - yearRange[0]);
+    if (earlyYears) {
+      if (y < yearRange[0]) {
+        pct = (earlyWidth/100) * earlyYears.indexOf(y) / earlyYears.length;
+      } else {
+        pct = (year - yearRange[0]) / (yearRange[1] - yearRange[0]) * (100 - earlyWidth)/100 + earlyWidth/100;
+      }
+    } else {
+      pct = (year - yearRange[0]) / (yearRange[1] - yearRange[0]);
+    }
     $('.timeline-slider', timeline).css('left', pct * 100 + '%');
-    $('.icon-angle-left', stepper).toggleClass('disabled', year == yearRange[0]);
+    $('.icon-angle-left', stepper).toggleClass('disabled', earlyYears ? (year == earlyYears[0]) : (year == yearRange[0]));
     $('.icon-angle-right', stepper).toggleClass('disabled', year == yearRange[1]);
   }
 
@@ -175,9 +219,9 @@ let Timeline = (function($, dispatch) {
     updateYear(year);
     let mainTicks = addTicks(yearRange);
     if (earlyYears) {
-      addEarlyTicks(earlyYears).css('width', '20%');
-      mainTicks.css('width', '80%')
-        .css('left', '20%')
+      addEarlyTicks(earlyYears).css('width', earlyWidth + '%');
+      mainTicks.css('width', (100 - earlyWidth) + '%')
+        .css('left', earlyWidth + '%')
     }
 
     addEras();
