@@ -61,7 +61,7 @@ let Filmstrip = (function($, _, dispatch) {
         showThumbs();
       }
       $('.icon-camera, .raster-type-labels span.views', filmstrip).toggleClass('disabled', !_.some(rasters, function(r){ return r.layer === 'viewsheds'}));
-      $('.icon-flight, .raster-type-labels span.aerials', filmstrip).toggleClass('disabled', !_.some(rasters, function(r){ return r.layer === 'aerials'}));
+      $('.icon-flight, .raster-type-labels span.aerials', filmstrip).toggleClass('disabled', !_.some(rasters, function(r){ return r.layer === 'surveys'}));
       $('.icon-tsquare, .raster-type-labels span.plans', filmstrip).toggleClass('disabled', !_.some(rasters, function(r){ return r.layer === 'plans'}));
       $('.icon-map-o, .raster-type-labels span.maps', filmstrip).toggleClass('disabled', !_.some(rasters, function(r){ return r.layer === 'maps'}));
       
@@ -145,7 +145,7 @@ let Filmstrip = (function($, _, dispatch) {
     if (groups.viewsheds) addThumbSection(groups.viewsheds, 'Views', 'icon-camera', container);
     if (groups.maps) addThumbSection(groups.maps, 'Maps', 'icon-map-o', container);
     if (groups.plans) addThumbSection(groups.plans, 'Plans', 'icon-tsquare', container);
-    if (groups.aerials) addThumbSection(groups.aerials, 'Aerials', 'icon-flight', container);
+    if (groups.surveys) addThumbSection(groups.surveys, 'Surveys', 'icon-survey', container);
   }
 
   function addThumbSection (group, title, icon, container) {

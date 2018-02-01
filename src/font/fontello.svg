@@ -1,7 +1,7 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg">
-<metadata>Copyright (C) 2017 by original authors @ fontello.com</metadata>
+<metadata>Copyright (C) 2018 by original authors @ fontello.com</metadata>
 <defs>
 <font id="fontello" horiz-adv-x="1000" >
 <font-face font-family="fontello" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
@@ -43,6 +43,8 @@
 <glyph glyph-name="angle-down" unicode="&#xe811;" d="M600 439q0-7-6-12l-260-261q-5-5-13-5t-12 5l-260 261q-6 5-6 12t6 13l28 28q5 6 12 6t13-6l219-219 220 219q5 6 13 6t12-6l28-28q6-5 6-13z" horiz-adv-x="642.9" />
 
 <glyph glyph-name="ok" unicode="&#xe812;" d="M933 534q0-22-16-38l-404-404-76-76q-16-15-38-15t-38 15l-76 76-202 202q-15 16-15 38t15 38l76 76q16 16 38 16t38-16l164-165 366 367q16 16 38 16t38-16l76-76q16-15 16-38z" horiz-adv-x="1000" />
+
+<glyph glyph-name="sextant" unicode="&#xe813;" d="M383 443c-81 0-146 66-146 147s65 146 146 146 145-66 145-146-64-147-145-147z m0 185c-22 0-42-17-42-41s18-42 42-42 42 18 42 42-19 41-42 41z m0 0c-28 0-52 24-52 53v100c0 29 24 53 52 53 29 0 53-24 53-53v-99c0-30-24-54-53-54z m-248-736c-6 0-11 1-17 3-27 9-42 39-33 66l192 566c9 27 39 42 66 33 27-9 42-39 33-66l-192-566c-7-23-27-36-49-36z m497 0c-23 0-42 13-50 36l-191 564c-9 27 6 57 33 66 27 9 57-6 66-33l191-566c9-27-6-57-33-66-6 0-10-1-16-1z m-249 244c-115 0-230 28-344 82-18 9-27 32-18 50 9 18 31 27 49 18 210-102 415-102 625 0 18 9 40 1 49-18 9-18 2-41-18-50-112-55-227-82-343-82z m0-79c-21 0-37 16-37 37v159c0 21 16 37 37 37s38-16 38-37v-159c0-21-17-37-38-37z" horiz-adv-x="753" />
 
 <glyph glyph-name="list-bullet" unicode="&#xf0ca;" d="M214 64q0-44-31-76t-76-31-76 31-31 76 31 76 76 31 76-31 31-76z m0 286q0-45-31-76t-76-31-76 31-31 76 31 76 76 31 76-31 31-76z m786-232v-107q0-7-5-13t-13-5h-678q-8 0-13 5t-5 13v107q0 7 5 12t13 6h678q7 0 13-6t5-12z m-786 518q0-45-31-76t-76-31-76 31-31 76 31 76 76 31 76-31 31-76z m786-232v-108q0-7-5-12t-13-5h-678q-8 0-13 5t-5 12v108q0 7 5 12t13 5h678q7 0 13-5t5-12z m0 285v-107q0-7-5-12t-13-6h-678q-8 0-13 6t-5 12v107q0 8 5 13t13 5h678q7 0 13-5t5-13z" horiz-adv-x="1000" />
 
