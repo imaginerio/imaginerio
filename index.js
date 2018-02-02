@@ -2,14 +2,21 @@ const path = require('path');
 const express = require('express');
 const compression = require('compression');
 const enforce = require('express-sslify');
+const preAuth = require('http-auth');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
 let app = express();
 
+const basic = preAuth.basic({ realm: "Restricted Access! Please login to proceed"}, function (username, password, callback) { 
+   callback(username === "rice" && password === "errancy-nicotine-selfish");
+  }
+);
+
 if (isProduction) {
   app.use(compression());
   app.use(enforce.HTTPS({ trustProtoHeader: true }));
+  app.use(preAuth.connect(basic));
 }
 
 let port = process.env.PORT || 8080;
