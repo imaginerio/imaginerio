@@ -361,7 +361,8 @@ header.search #controls-right .search-hide {
 }
 
 .ticks {
-  position: absolute;
+  display: inline-block;
+  height: 100%;
   top: 0;
   left: 0;
   width: 100%;

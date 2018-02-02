@@ -44,7 +44,7 @@ function initialize () {
   check_hash();
   year = params.year || 1910; // a year that actually has something
   Map.initialize('map').setYear(year); 
-  Timeline.initialize([minYear, years[years.length - 1]], eras, years.filter(function (y){ return y < minYear}), 'timeline').setYear(year);
+  Timeline.initialize(eras, 'timeline').setYear(year);
   Filmstrip.initialize();//.setYear(year);
   Legend.initialize().setYear(year);
   Search.initialize('search').setYear(year);
