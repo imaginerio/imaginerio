@@ -15,7 +15,7 @@ let Photo = function (data, thumbUrl) {
   let request;
 
   function getMetadata () {
-    request = $.getJSON( 'https://www.sscommons.org/openlibrary/secure/imagefpx/' + data.id + '/7730355/5', function( json ){
+    request = $.getJSON( 'https://www.sscommons.org/openlibrary/secure/imagefpx/' + data.id + '/7731849/5', function( json ){
       P.metadata = json[0];
       P.metadata.imageServer = P.metadata.imageServer.replace(/^http/, 'https');
       tempImages.forEach(function (img) {

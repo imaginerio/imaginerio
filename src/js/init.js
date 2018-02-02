@@ -2,8 +2,8 @@ const server = 'https://beirut.axismaps.io/';
 const tileserver = 'https://beirut.axismaps.io/tiles/';
 const rasterserver = 'https://beirut.axismaps.io/raster/';
 
-const thumbnaillUrl = 'https://mdxdv.artstor.org/thumb/imgstor/size1/sslps/c7730355/';
-const imageUrl = 'https://mdxdv.artstor.org/thumb/imgstor/size2/sslps/c7730355/';
+const thumbnaillUrl = 'https://mdxdv.artstor.org/thumb/imgstor/size1/sslps/c7731849/';
+const imageUrl = 'https://mdxdv.artstor.org/thumb/imgstor/size2/sslps/c7731849/';
 
 var years;
 var year;

@@ -48,8 +48,8 @@ main {
 
 .blue-button {
   background-color: transparent;
-  border: 1px solid #2361AA;
-  color: #2361AA;
+  border: 1px solid #A63755;
+  color: #A63755;
   border-radius: 5px;
   margin: auto;
   text-align: center;
@@ -92,8 +92,18 @@ header > img {
 }
 
 #top-right-buttons > * {
-  color: #999;
-  font-size: 20px;
+  color: white;
+  font-size: 12px;
+  line-height: 20px;
+  height: 20px;
+  background-color: #999;
+  border-radius: 3px;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+#top-right-buttons > i:before, #top-right-buttons > a i:before {
+  width: 16px;
 }
 
 .eras #top-right-buttons, .eras #search-button {
@@ -289,7 +299,7 @@ header.search #controls-right .search-hide {
 .year {
   font-size: 34px;
   font-weight: bold;
-  color: #07407B;
+  color: #A63755;
 }
 
 .year-stepper i {
@@ -298,7 +308,7 @@ header.search #controls-right .search-hide {
 
 .year-stepper i:before {
   color: #666;
-  border-radius: 50%;
+  border-radius: 5px;
   border: 1px solid #666;
   width: 25px;
   line-height: 25px;
@@ -328,10 +338,10 @@ header.search #controls-right .search-hide {
   position: relative;
   overflow: hidden;
   background: #7ca2ce; /* Old browsers */
-  background: -moz-linear-gradient(left, #7ca2ce 0%, #2361aa 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(left, #7ca2ce 0%,#2361aa 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to right, #7ca2ce 0%,#2361aa 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7ca2ce', endColorstr='#2361aa',GradientType=1 ); /* IE6-9 */
+  background: -moz-linear-gradient(left, #E09BAE 0%, #A63755 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, #E09BAE 0%,#A63755 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, #E09BAE 0%,#A63755 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#E09BAE', endColorstr='#A63755',GradientType=1 ); /* IE6-9 */
 }
 
 .timeline-slider {
@@ -451,7 +461,7 @@ header.search #controls-right .search-hide {
 }
 
 .era-2 {
-  background-color: #2361AA;
+  background-color: #A63755;
 }*/
 
 /* MAP */
@@ -516,7 +526,7 @@ header.search #controls-right .search-hide {
 
 .mini-thumbs div {
   display: inline-block;
-  border-radius: 50%;
+  border-radius: 3px;
   width: 20px; 
   height: 20px;
   overflow: hidden;
@@ -536,7 +546,7 @@ header.search #controls-right .search-hide {
 .filmstrip-thumbnail, .filmstrip-showall {
   width: 130px;
   height: 130px;
-  border-radius: 50%;
+  border-radius: 10px;
   display: inline-block;
   vertical-align: top;
   margin: 20px 10px;
@@ -580,10 +590,12 @@ header.search #controls-right .search-hide {
   font-size: 20px;
   padding: 12px 10px;
   cursor: pointer;
+  width: 1.5em;
+  text-align: center;
 }
 
 .raster-types i.selected {
-  background-color: #2361AA;
+  background-color: #A63755;
   color: white;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -611,6 +623,11 @@ header.search #controls-right .search-hide {
   font-size: 20px;
   color: #07407B;
   margin: 0 0 20px 0;
+}
+
+.thumbs-title i {
+  width: 1.5em;
+  text-align: center;
 }
 
 /* LEGEND */
@@ -994,7 +1011,7 @@ header.search #controls-right .search-hide {
 }
 
 .go-button {
-  background-color: #2361AA;
+  background-color: #A63755;
   border-radius: 5px;
   color: white;
   font-size: 27px;
@@ -1009,13 +1026,13 @@ header.search #controls-right .search-hide {
 
 .go-button.era {
   background-color: transparent;
-  border: 2px solid #2361AA;
-  color: #2361AA;
+  border: 2px solid #A63755;
+  color: #A63755;
 }
 
 #era-tags {
   text-align: center;
-  color: #2361AA;
+  color: #A63755;
   font-weight: 600;
   padding: 0 20px;
   margin-bottom: 20px;
@@ -1171,7 +1188,7 @@ header.search #controls-right .search-hide {
   appearance: none;
   font-size: 18px;
   color: white;
-  background-color: #2361AA;
+  background-color: #A63755;
   border-radius: 6px;
   padding: .5rem 1rem;
   margin-top: 30px;
@@ -1244,7 +1261,7 @@ header.search #controls-right .search-hide {
 }
 
 .memory-icon .ok {
-  color: #2361AA;
+  color: #A63755;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
@@ -1687,7 +1704,7 @@ i.icon-ok:hover,
     line-height: 15px;
     text-align: center;
     font-size: 24px;
-    background-color: #2361AA;
+    background-color: #A63755;
     color: white;
   }
 
