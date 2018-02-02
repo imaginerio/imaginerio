@@ -85,30 +85,6 @@
       "src": "fontawesome"
     },
     {
-      "uid": "7e4164950ffa4990961958b2d6318658",
-      "css": "info-circled",
-      "code": 59396,
-      "src": "entypo"
-    },
-    {
-      "uid": "524f670504958d3e32ef887b99d8aca2",
-      "css": "down-circle",
-      "code": 59398,
-      "src": "iconic"
-    },
-    {
-      "uid": "0419da6446cb4f31093e2022793571ca",
-      "css": "twitter-circled",
-      "code": 62218,
-      "src": "entypo"
-    },
-    {
-      "uid": "ce1d525f3f31024c6a6b38f5e9a88953",
-      "css": "facebook-circled",
-      "code": 62221,
-      "src": "entypo"
-    },
-    {
       "uid": "3def559c3c39b8500882e02892b7daa8",
       "css": "picture",
       "code": 59400,
@@ -229,8 +205,32 @@
         "width": 753
       },
       "search": [
-        "survey"
+        "sextant"
       ]
+    },
+    {
+      "uid": "bc50457410acf467b8b5721240768742",
+      "css": "facebook",
+      "code": 62220,
+      "src": "entypo"
+    },
+    {
+      "uid": "d090355c31f497b61d676416c1fd39fb",
+      "css": "twitter",
+      "code": 62217,
+      "src": "entypo"
+    },
+    {
+      "uid": "63b86fedd4ee9ad2105f54f4888e7088",
+      "css": "info-1",
+      "code": 59412,
+      "src": "entypo"
+    },
+    {
+      "uid": "9a76bc135eac17d2c8b8ad4a5774fc87",
+      "css": "download",
+      "code": 59396,
+      "src": "fontawesome"
     }
   ]
 }

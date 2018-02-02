@@ -92,8 +92,18 @@ header > img {
 }
 
 #top-right-buttons > * {
-  color: #999;
-  font-size: 20px;
+  color: white;
+  font-size: 12px;
+  line-height: 20px;
+  height: 20px;
+  background-color: #999;
+  border-radius: 3px;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+#top-right-buttons > i:before, #top-right-buttons > a i:before {
+  width: 16px;
 }
 
 .eras #top-right-buttons, .eras #search-button {
