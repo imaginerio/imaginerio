@@ -4,6 +4,7 @@ let Timeline = (function($, dispatch) {
   let T = {};
 
   let timeline;
+  let ticksOuter;
   let stepper;
   let years;
   let yearRange = [];
@@ -19,7 +20,7 @@ let Timeline = (function($, dispatch) {
       $(document)
         .on('mousemove.timeslide touchmove.timeslide', function (e) {
           let d = getDataForMouseEvent(e);
-          $('.timeline-slider', timeline).css('left', d.pct * 100 + '%');
+          $('.timeline-slider', timeline).css('left', d.x + 'px');
           y = d.year;
         })
         .on('mouseup.timeslide mouseleave.timeslide touchend.timeslide', function (){
@@ -28,12 +29,12 @@ let Timeline = (function($, dispatch) {
         })
     });
 
-    $('.timeline-track, .timeline-slider', timeline)
+    $('.timeline-track, .timeline-slider, .ticks', timeline)
       .on('mousemove.timeline', function (e) {
         let d = getDataForMouseEvent(e);
         $('.timeline-probe', timeline)
           .show()
-          .css('left', d.pct * 100 + '%')
+          .css('left', d.x + 'px')
           .html(d.year);
       })
       .on('mouseleave', function () {
@@ -84,25 +85,34 @@ let Timeline = (function($, dispatch) {
     else pageX = e.pageX;
     let t = $('.timeline-track', timeline);
     let x = pageX - t.offset().left;
-    let pct = x / t.width();
-    pct = Math.max(0, Math.min(pct, 1));
-    let y;
-    if (earlyYears) {
-      var earlyPct = earlyWidth / 100;
-      var mainPct = (100-earlyWidth)/100;
-      if (pct > earlyPct) {
-        y = Math.round((pct - earlyPct) / mainPct * (yearRange[1] - yearRange[0]) + yearRange[0]);
-      } else {
-        var interval = earlyPct / earlyYears.length;
-        var nearest = Math.min(Math.round(pct/interval), earlyYears.length-1);
-        y = earlyYears[nearest];//Math.round(pct * earlyPct * (yearRange[1] - yearRange[0]) + yearRange[0]);
+    let tickContainers = $('.ticks', timeline);
+    let era;
+    let localX;
+    for (let i = 0; i < eras.length; i ++) {
+      let nextX = i < eras.length - 1 ? tickContainers.eq(i + 1).position().left : timeline.width() + 5;
+      if (x < nextX) {
+        era = eras[i];
+        localX = x - tickContainers.eq(i).position().left;
+        break;
       }
-
-    } else {
-      y = Math.round(pct * (yearRange[1] - yearRange[0]) + yearRange[0]);
     }
-    
-    return {pct: pct, year: y};
+    let stepWidth = timeline.width() / (_totalSteps);
+    let eraSteps = Math.ceil((era.dates[1] - era.dates[0])/era.increment);
+    let roundedStep = Math.min(Math.floor(localX / stepWidth), eraSteps - 1);
+    if ((era.dates[1] - era.dates[0]) % era.increment != 0 ) eraSteps++;
+    let year = roundedStep == eraSteps - 1 ? era.dates[1] : era.dates[0] + era.increment * roundedStep;
+
+    return {x: x, year: year}
+  }
+
+  function getXForYear (y) {
+    let tick;
+    $('.tick').each(function () {
+      if (y == $(this).data('value')) {
+        tick = $(this);
+      }
+    })
+    if (tick) return tick.position().left + tick.parent().position().left;
   }
 
   function addEras () {
@@ -118,21 +128,22 @@ let Timeline = (function($, dispatch) {
 
   function addTicks () {
     $('.ticks', timeline).remove();
-    _eras.forEach(function (era) {
+    let width = timeline.width();
+    let stepWidth = width / (_totalSteps);
+    _eras.forEach(function (era, index) {
       let steps = Math.ceil((era.dates[1] - era.dates[0])/era.increment);
       if ((era.dates[1] - era.dates[0]) % era.increment != 0 ) steps++;
-      console.log(steps)
-      let percentWidth = steps / _totalSteps;
-      let ticksContainer = $('<div class="ticks ticks-main">').insertBefore($('.timeline-slider'), timeline);
-      ticksContainer.css('width', percentWidth * 100 + '%');
-      let tickPct = (1 / _totalSteps) / percentWidth;
-      let tickVal = era.dates[0];
+      
+      let ticksContainer = $('<div class="ticks ticks-main">').appendTo(ticksOuter);
+      ticksContainer.css('width', (stepWidth * (steps)) + 'px');
       let i = 0;
+      let tickVal = era.dates[0];
       while (tickVal < era.dates[1]) {
-        appendTick('minor', tickVal, tickPct * i, ticksContainer)
+        appendTick('minor', tickVal, stepWidth * i, ticksContainer)
         tickVal += era.increment;
         i++;
       }
+      appendTick('minor', era.dates[1], stepWidth * i, ticksContainer)
 
     });
     // let major = (window.innerWidth >= 800 ? 10 : 20);
@@ -156,18 +167,11 @@ let Timeline = (function($, dispatch) {
     //return ticksContainer;
   }
 
-  function addEarlyTicks (earlyYears) {
-    let ticksContainer = $('<div class="ticks ticks-early">').insertBefore($('.ticks'), timeline);
-    earlyYears.forEach(function(y, i) {
-      appendTick('major', y, ticksContainer, i / (earlyYears.length));
-    });
-    return ticksContainer;
-  }
-
-  function appendTick (type, value, pct, container) {
+  function appendTick (type, value, x, container) {
     var t = $('<div>')
       .attr('class', 'tick tick-' + type)
-      .css('left', pct * 100 + '%')
+      .css('left', x + 'px')
+      .data('value', value)
       .appendTo(container);
     if (type == 'major') t.append('<span>' + value + '</span>');
   }
@@ -196,7 +200,7 @@ let Timeline = (function($, dispatch) {
     //y = Math.max(yearRange[0], Math.min(+y, yearRange[1]));
     year = y;
     // var pct;
-    // $('.year', stepper).html(year);
+     $('.year', stepper).html(year);
     // if (earlyYears) {
     //   if (y < yearRange[0]) {
     //     pct = (earlyWidth/100) * earlyYears.indexOf(y) / earlyYears.length;
@@ -206,9 +210,9 @@ let Timeline = (function($, dispatch) {
     // } else {
     //   pct = (year - yearRange[0]) / (yearRange[1] - yearRange[0]);
     // }
-    // $('.timeline-slider', timeline).css('left', pct * 100 + '%');
+     $('.timeline-slider', timeline).css('left', getXForYear(y) + 'px');
     // $('.icon-angle-left', stepper).toggleClass('disabled', earlyYears ? (year == earlyYears[0]) : (year == yearRange[0]));
-    // $('.icon-angle-right', stepper).toggleClass('disabled', year == yearRange[1]);
+     //$('.icon-angle-right', stepper).toggleClass('disabled', year == yearRange[1]);
   }
 
   T.initialize = function (eras, containerId) {
@@ -218,6 +222,7 @@ let Timeline = (function($, dispatch) {
     _totalSteps = _.reduce(eras, function (m, e) {
       let steps = Math.ceil((e.dates[1] - e.dates[0])/e.increment);
       if ((e.dates[1] - e.dates[0]) % e.increment != 0 ) steps++; // unless it divides perfectly, add an extra step for end year
+      e.steps = steps;
       return m + steps;
     }, 0);
     year = eras[0].dates[0];
@@ -233,7 +238,10 @@ let Timeline = (function($, dispatch) {
       .attr('class', 'timeline')
       .appendTo(inner);
     timeline.append('<div class="timeline-track">')
-      .append('<div class="timeline-slider">');
+    ticksOuter = $('<div>')
+      .attr('class', 'ticks-container')
+      .appendTo(timeline);
+    timeline.append('<div class="timeline-slider">');
     timeline
       .append('<div class="timeline-probe desktop">' + year + '<div>');
 
