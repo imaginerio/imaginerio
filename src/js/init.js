@@ -177,7 +177,7 @@ function goButtonClick () {
 
 function goToStart () {
   $('main').addClass('start').removeClass('second');
-  $('.title-container h1').html('instituteRice');
+  $('.title-container h1').html('diverseLevant');
   $('.go-button')
     .html('Begin Exploring')
     .removeClass('era')
