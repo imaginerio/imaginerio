@@ -83,6 +83,10 @@ header > img {
   margin-right: 90px;
 }
 
+.logo {
+  height: 50px;
+}
+
 #controls-right {
   float: right;
 }
@@ -398,6 +402,11 @@ header.search #controls-right .search-hide {
 
 .ticks:first-child .tick:first-child, .ticks:last-child .tick:last-child {
   border: none;
+}
+
+.ticks:first-child .tick:first-child span {
+  text-align: left;
+  margin-left: 0;
 }
 
 .tick-minor {
@@ -1086,37 +1095,6 @@ header.search #controls-right .search-hide {
   transform: rotate(180deg);
 }
 
-#era-tags {
-  text-align: center;
-  color: #A63755;
-  font-weight: 600;
-  padding: 0 20px;
-  margin-bottom: 20px;
-}
-
-.era-tag {
-  display: inline-block;
-  margin: 10px 20px;
-  cursor: pointer;
-}
-
-.era-tag:hover {
-  color: black;
-}
-
-.era-tag div {
-  width: 12px;
-  height: 16px;
-  border-radius: 3px;
-  margin-right: 10px;
-}
-
-.era-tag > * {
-  display: inline-block;
-  vertical-align: middle;
-  margin: 0;
-}
-
 #era-stepper {
   text-align: center;
   font-size: 30px;
@@ -1456,7 +1434,6 @@ i.icon-ok:hover,
     width: 100%;
   }
 
-
   #eras-button, #search-button {
     font-size: 24px;
     padding: 12px 5px;
@@ -1541,24 +1518,6 @@ i.icon-ok:hover,
     width: 90%;
     font-size: 16px;
     line-height: 18px;
-  }
-
-  #era-tags {
-    text-align: left;
-    margin-left: 12.5%;
-    margin-right: 12.5%;
-    padding: 0;
-    margin-top: 20px;
-  }
-
-  .era-tag {
-    display: block;
-    margin: 15px;
-    cursor: pointer;
-  }
-
-  .era-tag p {
-    margin: 0;
   }
 
   .go-button {

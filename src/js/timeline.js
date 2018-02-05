@@ -135,12 +135,18 @@ let Timeline = (function($, dispatch) {
       ticksContainer.css('width', (stepWidth * (steps)) + 'px');
       let i = 0;
       let tickVal = era.dates[0];
+      let mainInterval = window.innerWidth > 840 ? 10 : 20;
+      let otherIntervalTest = (index == 0 || index == 4 || index == 7 || index == 10);
+      if (window.innerWidth < 1090) otherIntervalTest = (index == 0 || index == 7 || index == 10);
+      if (window.innerWidth < 900) otherIntervalTest = (index == 0 || index == 10);
+
       while (tickVal < era.dates[1]) {
         let type;
-        if (era.increment == 1 && tickVal % 10 == 0) type = 'major';
+        if (era.increment == 1 && tickVal % mainInterval == 0) type = 'major';
         else if (era.increment == 1 && tickVal % 5 == 0) type = 'minor';
         else if (era.increment != 1) {
-          if (tickVal == era.dates[0] && index % 2 == 0) type = 'major';
+          if (tickVal == era.dates[0] && otherIntervalTest) type = 'major';
+          // hard-coded index values that 
         }
         if (!type) type = 'hidden';
         appendTick(type, tickVal, stepWidth * i, ticksContainer)
