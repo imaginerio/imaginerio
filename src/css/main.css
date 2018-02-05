@@ -404,6 +404,10 @@ header.search #controls-right .search-hide {
   height: 10px;
 }
 
+.tick-hidden {
+  visibility: hidden;
+}
+
 .tick span {
   font-weight: bold;
   position: absolute;
@@ -425,7 +429,7 @@ header.search #controls-right .search-hide {
 }
 
 
-.tick-major:first-child span {
+/*.tick-major:first-child span {
   text-align: left;
   margin-left: 5px;
 }
@@ -434,7 +438,7 @@ header.search #controls-right .search-hide {
 .tick-major:last-child span {
   text-align: right;
   margin-left: -45px;
-}
+}*/
 
 #timeline .era {
   position: absolute;

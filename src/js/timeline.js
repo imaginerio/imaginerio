@@ -42,40 +42,37 @@ let Timeline = (function($, dispatch) {
       });
 
     $('.icon-angle-left', stepper).click(function () {
-      if (earlyYears) {
-        if (year == yearRange[0])
-          changeYear(earlyYears[earlyYears.length-1]);
-        else if (year < yearRange[0])
-          changeYear(earlyYears[earlyYears.indexOf(year) - 1]);
-        else
-          changeYear(year - 1);
-      } else {
-        changeYear(year - 1);
+      let era = getEraForYear(year);
+      let i = eras.indexOf(era);
+      if (era != eras[0] || year != era.dates[0]) {
+        if (year == era.dates[0]) changeYear(eras[i-1].dates[1])
+        else if (year == era.dates[1]) {
+          let y = era.dates[0];
+          while (y < era.dates[1]) {
+            if (y + era.increment > year) {
+              changeYear(y);
+              return;
+            }
+            y += era.increment;
+          }
+        } else {
+          changeYear(year - era.increment);
+        }
       }
-      
     });
 
     $('.icon-angle-right', stepper).click(function () {
-      if (earlyYears) {
-        if (year == earlyYears[earlyYears.length-1])
-          changeYear(yearRange[0]);
-        else if (year < yearRange[0]) 
-          changeYear(earlyYears[earlyYears.indexOf(year) + 1]);
-        else
-          changeYear(year + 1);
-      } else {
-        changeYear(year + 1);
+      let era = getEraForYear(year);
+      let i = eras.indexOf(era);
+      if (era != eras[eras.length - 1] || year != era.dates[1]) {
+        if (year == era.dates[1]) changeYear(eras[i+1].dates[0])
+        else if (year + era.increment > era.dates[1]) changeYear(era.dates[1]);
+        else changeYear(year + era.increment);
       }
     });
 
     $(window).resize(function () {
       addTicks();
-      // let mainTicks = addTicks(yearRange);
-      // if (earlyYears) {
-      //   addEarlyTicks(earlyYears).css('width', earlyWidth + '%');
-      //   mainTicks.css('width', (100 - earlyWidth) + '%')
-      //     .css('left', earlyWidth + '%')
-      // }
     });
   }
 
@@ -139,32 +136,19 @@ let Timeline = (function($, dispatch) {
       let i = 0;
       let tickVal = era.dates[0];
       while (tickVal < era.dates[1]) {
-        appendTick('minor', tickVal, stepWidth * i, ticksContainer)
+        let type;
+        if (era.increment == 1 && tickVal % 10 == 0) type = 'major';
+        else if (era.increment == 1 && tickVal % 5 == 0) type = 'minor';
+        else if (era.increment != 1) {
+          if (tickVal == era.dates[0] && index % 2 == 0) type = 'major';
+        }
+        if (!type) type = 'hidden';
+        appendTick(type, tickVal, stepWidth * i, ticksContainer)
         tickVal += era.increment;
         i++;
       }
-      appendTick('minor', era.dates[1], stepWidth * i, ticksContainer)
 
     });
-    // let major = (window.innerWidth >= 800 ? 10 : 20);
-    // let minor = major / 2;
-    // let ticksContainer = $('<div class="ticks ticks-main">').insertBefore($('.timeline-slider'), timeline);
-    // appendTick('major', range[0], ticksContainer);
-    // let next = Math.ceil(range[0] / minor) * minor;
-    // if (next === range[0]) next += minor;
-    // while (next < range[1]) {
-    //   appendTick(next % major === 0 ? 'major' : 'minor', next, ticksContainer);
-    //   next += minor;
-    // }
-    // let last = $('.tick-major', ticksContainer).last();
-    // if (last.position().left > $('.timeline-track', timeline).width() - 55)
-    //   $('span', last).remove();
-    // let first = $('.tick-major', ticksContainer).eq(1);
-    // // console.log(first.position().left)
-    // // if (first.position().left < 55)
-    // //   $('span', first).remove();
-    // appendTick('major', range[1], ticksContainer);
-    //return ticksContainer;
   }
 
   function appendTick (type, value, x, container) {
@@ -175,44 +159,26 @@ let Timeline = (function($, dispatch) {
       .appendTo(container);
     if (type == 'major') t.append('<span>' + value + '</span>');
   }
-/*
-  function snapToYear (y) {
-    if (years.indexOf(y) !== -1) updateYear(y);
-    else if (y <= yearRange[0]) updateYear(yearRange[0]);
-    else if (y >= yearRange[1]) updateYear(yearRange[1]);
-    else {
-      for (let i=0; i<years.length -1; i++) {
-        if (years[i] < y && years[i+1] > y) {
-          +y - years[i] > years[i+1] - +y ?
-            updateYear(years[i+1]) :
-            updateYear(years[i]);
-        }
-      }
-    }
-  }
-*/
+
   function changeYear (y) {
     updateYear(y);
     dispatch.call('changeyear', this, year);
   }
 
   function updateYear (y) {
-    //y = Math.max(yearRange[0], Math.min(+y, yearRange[1]));
     year = y;
-    // var pct;
-     $('.year', stepper).html(year);
-    // if (earlyYears) {
-    //   if (y < yearRange[0]) {
-    //     pct = (earlyWidth/100) * earlyYears.indexOf(y) / earlyYears.length;
-    //   } else {
-    //     pct = (year - yearRange[0]) / (yearRange[1] - yearRange[0]) * (100 - earlyWidth)/100 + earlyWidth/100;
-    //   }
-    // } else {
-    //   pct = (year - yearRange[0]) / (yearRange[1] - yearRange[0]);
-    // }
-     $('.timeline-slider', timeline).css('left', getXForYear(y) + 'px');
-    // $('.icon-angle-left', stepper).toggleClass('disabled', earlyYears ? (year == earlyYears[0]) : (year == yearRange[0]));
-     //$('.icon-angle-right', stepper).toggleClass('disabled', year == yearRange[1]);
+    $('.year', stepper).html(year);
+    $('.timeline-slider', timeline).css('left', getXForYear(y) + 'px');
+    $('.icon-angle-left', stepper).toggleClass('disabled', year == eras[0].dates[0])
+    $('.icon-angle-right', stepper).toggleClass('disabled', year == eras[eras.length-1].dates[1])
+  }
+
+  function getEraForYear (y) {
+    let era;
+    eras.forEach(function (e) {
+      if (y >= e.dates[0] && y <= e.dates[1]) era = e;
+    });
+    return era;
   }
 
   T.initialize = function (eras, containerId) {
@@ -248,13 +214,7 @@ let Timeline = (function($, dispatch) {
     updateYear(year);
     
     let mainTicks = addTicks();
-    // if (earlyYears) {
-    //   addEarlyTicks(earlyYears).css('width', earlyWidth + '%');
-    //   mainTicks.css('width', (100 - earlyWidth) + '%')
-    //     .css('left', earlyWidth + '%')
-    // }
 
-    // addEras();
     init_events();
 
     return T;
