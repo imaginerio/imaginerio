@@ -781,6 +781,7 @@ header.search #controls-right .search-hide {
 }
 
 #fixed-probe {
+  z-index: 2999;
   top: 135px;
   right: 30px;
   background-color: white;
