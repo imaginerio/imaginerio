@@ -32,7 +32,7 @@ let Map = (function($, dispatch) {
   let highlightLayerTop;
   let highlightBottomStyle = {
     weight: 8,
-    color: '#07407B',
+    color: '#A63755',
     opacity: .5
   };
   let highlightTopStyle = {
@@ -41,7 +41,7 @@ let Map = (function($, dispatch) {
     opacity: 1
   };
   let highlightMarkerBottomStyle = {
-    color: '#07407B',
+    color: '#A63755',
     weight: 3,
     fill: false,
     radius: 3
