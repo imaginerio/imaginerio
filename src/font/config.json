@@ -61,12 +61,6 @@
       "src": "fontawesome"
     },
     {
-      "uid": "297fe6c2ef08198b03d706ba52f51b7f",
-      "css": "flight",
-      "code": 59395,
-      "src": "fontawesome"
-    },
-    {
       "uid": "a2a74f5e7b7d9ba054897d8c795a326a",
       "css": "list-bullet",
       "code": 61642,
@@ -230,6 +224,12 @@
       "uid": "9a76bc135eac17d2c8b8ad4a5774fc87",
       "css": "download",
       "code": 59396,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "56a21935a5d4d79b2e91ec00f760b369",
+      "css": "sort",
+      "code": 61660,
       "src": "fontawesome"
     }
   ]

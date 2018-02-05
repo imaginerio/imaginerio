@@ -1001,7 +1001,7 @@ header.search #controls-right .search-hide {
 #intro h1 {
   font-size: 65px;
   font-weight: 200;
-  color: #07407B;
+  color: #A63755;
   text-align: center;
   line-height: 75px;
   margin: 20px auto;
@@ -1013,24 +1013,77 @@ header.search #controls-right .search-hide {
   font-style: normal;
 }
 
+.intro-buttons {
+  text-align: center;
+}
+
+.intro-buttons > * {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.era-dropdown {
+  position: relative;
+  width: 275px;
+  height: 60px;
+  display: none;
+}
+
+.eras.start .era-dropdown {
+  display: inline-block;
+}
+
+.era-dropdown select, .era-dropdown div {
+  position: absolute;
+  left: 0;
+  width: 165px;
+  height: 54px;
+  padding: 0 0 0 32px;
+  -webkit-appearance: none;
+  background: transparent;
+  line-height: 30px;
+  color: #A63755;
+  border: none;
+  outline: none;
+}
+
+.era-dropdown select {
+  line-height: 0;
+}
+
+.era-dropdown div {
+  font-size: 20px;
+  pointer-events: none;
+  border: 2px solid #A63755;
+  border-radius: 5px;
+  text-align: left;
+  line-height: 54px;
+}
+
+.era-dropdown select option {
+  font-size: 14px;
+}
+
 .go-button {
   background-color: #A63755;
   border-radius: 5px;
   color: white;
-  font-size: 27px;
+  font-size: 20px;
   font-weight: 500;
-  width: 275px;
+  width: 165px;
   margin: auto;
   text-align: center;
-  padding: 30px;
+  padding: 20px 30px;
   cursor: pointer;
   font-family: "HelveticaNeue-CondensedBold", "HelveticaNeueBoldCondensed", "HelveticaNeue-Bold-Condensed", "Helvetica Neue Bold Condensed", "HelveticaNeueBold", "HelveticaNeue-Bold", "Helvetica Neue Bold", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosCnBold', "Helvetica", "Arial Narrow", "Arial", sans-serif;
 }
 
 .go-button.era {
-  background-color: transparent;
-  border: 2px solid #A63755;
-  color: #A63755;
+  width: 120px;
+}
+
+.go-button.era i:before {
+  transform: rotate(180deg);
 }
 
 #era-tags {
@@ -1077,7 +1130,7 @@ header.search #controls-right .search-hide {
 }
 
 .era-years {
-  color: #07407B;
+  color: #A63755;
   font-weight: 300;
   display: inline-block;
   width: 100%;
@@ -1086,7 +1139,7 @@ header.search #controls-right .search-hide {
 
 #era-stepper i {
   color: #666666;
-  border-radius: 50%;
+  border-radius: 5px;
   border: 1px solid #666666;
   line-height: 50px;
   width: 50px;

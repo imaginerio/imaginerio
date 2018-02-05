@@ -124,12 +124,14 @@ function init_ui () {
   });
 
   eras.forEach(function (e, i) {
-    let div = $('<div>').attr('class', 'era-tag')
-      .click(function () {
-        showEra(i, true);
-      });
-    $('<p>').html(e.name + ' (' + e.dates.join(' – ') + ')').appendTo(div);
-    div.appendTo('#era-tags');
+    $('<option>')
+      .attr('value', i)
+      .html(e.name + ' (' + e.dates.join(' – ') + ')')
+      .appendTo('.era-dropdown select');
+  });
+
+  $('.era-dropdown select').on('change', function () {
+    showEra($(this).val());
   });
 
   $('#era-stepper .icon-angle-left').click(function (){
@@ -171,7 +173,7 @@ function goButtonClick () {
   if ($('main').hasClass('second') || !mobile) goToMap();
   else {
     $('main').addClass('second');
-    $('.go-button').html('Go to Map');
+    $('.go-button').html('Go to Map <i class="icon-left-big"></i>');
   }
 }
 
@@ -179,7 +181,7 @@ function goToStart () {
   $('main').addClass('start').removeClass('second');
   $('.title-container h1').html('diverseLevant');
   $('.go-button')
-    .html('Begin Exploring')
+    .html('<i class="icon-binoculars"></i> Begin Exploring')
     .removeClass('era')
     .off('click')
     .on('click', goButtonClick);
@@ -275,7 +277,7 @@ function showEra (i, noTransition) {
     }
   }
   
-  $('.go-button').html('Go to Map').toggleClass('era', !mobile)
+  $('.go-button').html('Go to Map <i class="icon-left-big"></i>').toggleClass('era', !mobile)
     .off('click')
     .on('click', function () {
       goToEra(e);
