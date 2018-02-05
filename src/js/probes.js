@@ -15,6 +15,7 @@ function rasterProbe (p) {
     .css('height', size[1] + 'px')
     .appendTo('#fixed-probe .content')
     .click(function () {
+      console.log(p)
       Dispatch.call('removeall', this);
       $('.lightbox').css('display', 'flex');
       $('.lightbox .content > div').remove();
@@ -33,6 +34,11 @@ function rasterProbe (p) {
         .attr('target', 'blank')
         .html('View image on SharedShelf Commons')
         .appendTo(div);
+      let text = '';
+      if (p.creator) text += p.creator + '<br>';
+      if (p.description) text += p.description + '<br>';
+      if (p.date) text += p.date + '<br>';
+  
       $('<p>')
         .html(p.data.description)
         .appendTo(div);
