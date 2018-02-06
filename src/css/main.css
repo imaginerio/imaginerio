@@ -854,6 +854,39 @@ header.search #controls-right .search-hide {
   margin: 5px 0;
 }
 
+.fixed-probe-title.stepper {
+  padding-left: 63px;
+  text-indent: -63px;
+}
+
+.fixed-probe-title i:before {
+  color: #666;
+  border-radius: 5px;
+  border: 1px solid #666;
+  width: 25px;
+  line-height: 25px;
+  margin: 0;
+  font-size: 14px;
+  cursor: pointer;
+  text-indent: 0;
+}
+
+.fixed-probe-title i:hover:before {
+  color: #333;
+}
+
+.fixed-probe-title i.icon-left-big:before {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: none;
+}
+
+.fixed-probe-title i.icon-right-big:before {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-right: 10px;
+}
+
 #fixed-probe .fixed-image {
   margin: 10px auto;
   display: block;
@@ -940,11 +973,11 @@ header.search #controls-right .search-hide {
   background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(255,255,255,0.9) 60%,rgba(255,255,255,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 }
 
-.eras .start-intro, .eras.start .era-intro, .eras .start-intro-second, .eras.start.second .start-intro {
+.eras .start-intro, .eras.start .era-intro {
   display: none;
 }
 
-.eras.start .start-intro, .eras.start.second .start-intro-second {
+.eras.start .start-intro {
   display: block;
 }
 
@@ -958,10 +991,6 @@ header.search #controls-right .search-hide {
 
 .eras.start #eras-button {
   visibility: hidden;
-}
-
-.eras.start.second #eras-button {
-  visibility: visible;
 }
 
 .era-description {
@@ -987,10 +1016,6 @@ header.search #controls-right .search-hide {
 
 .eras.start .disclaimer {
   display: block;
-}
-
-.eras.start.second .disclaimer {
-  display: none;
 }
 
 .era-description-inner {
@@ -1034,7 +1059,7 @@ header.search #controls-right .search-hide {
 
 .era-dropdown {
   position: relative;
-  width: 275px;
+  width: 197px;
   height: 60px;
   display: none;
 }
@@ -1090,10 +1115,6 @@ header.search #controls-right .search-hide {
 
 .go-button.era {
   width: 120px;
-}
-
-.go-button.era i:before {
-  transform: rotate(180deg);
 }
 
 #era-stepper {
@@ -1527,6 +1548,10 @@ i.icon-ok:hover,
     left: 5%;
     width: 90%;
     box-sizing: border-box;
+  }
+
+  .era-dropdown {
+    margin: 20px auto;
   }
 
   /*TIMELINE*/

@@ -92,7 +92,6 @@ function init_ui () {
       $('header').removeClass('search');
     });
     $('#filmstrip').addClass('collapsed').insertBefore('#map');
-    $('#era-tags').appendTo('.start-intro-second');
   } else {
     $('.mobile').hide();
   }
@@ -170,15 +169,11 @@ function init_ui () {
 }
 
 function goButtonClick () {
-  if ($('main').hasClass('second') || !mobile) goToMap();
-  else {
-    $('main').addClass('second');
-    $('.go-button').html('Go to Map <i class="icon-left-big"></i>');
-  }
+  goToMap();
 }
 
 function goToStart () {
-  $('main').addClass('start').removeClass('second');
+  $('main').addClass('start');
   $('.title-container h1').html('diverseLevant');
   $('.go-button')
     .html('<i class="icon-binoculars"></i> Begin Exploring')
@@ -277,7 +272,7 @@ function showEra (i, noTransition) {
     }
   }
   
-  $('.go-button').html('Go to Map <i class="icon-left-big"></i>').toggleClass('era', !mobile)
+  $('.go-button').html('Go to Map <i class="icon-right-big"></i>').toggleClass('era', !mobile)
     .off('click')
     .on('click', function () {
       goToEra(e);
