@@ -3,7 +3,24 @@ function rasterProbe (p) {
   $('#fixed-probe .content').empty();
   $('#fixed-probe').show().removeClass('map-feature');
   $('.search-results').hide();
-  $('<p>').attr('class', 'fixed-probe-title').html(p.data.description).appendTo('#fixed-probe .content');
+  let title = $('<p>').attr('class', 'fixed-probe-title').html(p.data.description).appendTo('#fixed-probe .content');
+  console.log(p)
+  if (p.data.layer == 'viewsheds') {
+    console.log(Filmstrip.getRasters())
+    let photos = _.filter(Filmstrip.getRasters(), function (r) { return r.layer == 'viewsheds'} );
+    if (photos.length) {
+      title.prepend('<i class="icon-right-big">').prepend('<i class="icon-left-big">').addClass('stepper');
+      let i = photos.indexOf(p.data);
+      $('i.icon-left-big', title).click(function (){
+        if (i == 0) rasterProbe(photos[photos.length - 1].photo);
+        else rasterProbe(photos[i - 1].photo);
+      });
+      $('i.icon-right-big', title).click(function (){
+        if (i == photos.length - 1) rasterProbe(photos[0].photo);
+        else rasterProbe(photos[i + 1].photo);
+      });
+    }
+  }
   let dimensions = mobile ? [160,160] : [400, 300];
   let size = p.getScaled(dimensions);
   let slider;
@@ -38,7 +55,7 @@ function rasterProbe (p) {
       if (p.creator) text += p.creator + '<br>';
       if (p.description) text += p.description + '<br>';
       if (p.date) text += p.date + '<br>';
-  
+
       $('<p>')
         .html(p.data.description)
         .appendTo(div);
