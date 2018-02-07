@@ -35,7 +35,7 @@ let Timeline = (function($, dispatch) {
         $('.timeline-probe', timeline)
           .show()
           .css('left', d.x + 'px')
-          .html(d.year);
+          .html(formatYear(d.year));
       })
       .on('mouseleave', function () {
         $('.timeline-probe', timeline).hide();
