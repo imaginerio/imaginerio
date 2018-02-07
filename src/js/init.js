@@ -125,7 +125,7 @@ function init_ui () {
   eras.forEach(function (e, i) {
     $('<option>')
       .attr('value', i)
-      .html(e.name + ' (' + e.dates.join(' – ') + ')')
+      .html(e.name + ' (' + e.dates.map(formatYear).join(' – ') + ')')
       .appendTo('.era-dropdown select');
   });
 
@@ -212,7 +212,7 @@ function showEra (i, noTransition) {
       .append('<p class="era-description">' + e.description + '<p>')
       .appendTo('.era-description-container')
       .css('margin-left', '0%');
-    $('.era-years').html(e.dates.join(' – '))
+    $('.era-years').html(e.dates.map(formatYear).join(' – '))
       .css('margin-left', '0%');
     $('#intro h1').html(e.name)
       .css('margin-left', '0%');
@@ -224,7 +224,7 @@ function showEra (i, noTransition) {
        .append('<p class="era-description">' + e.description + '<p>')
        .css('margin-left', startNew);
     let newYear = $('<p class="era-years">')
-       .html(e.dates.join(' – '))
+       .html(e.dates.map(formatYear).join(' – '))
        .css('margin-left', startNew);
     let newTitle = $('<h1>' + e.name + '</h1>')
       .css('margin-left', startNew);
@@ -329,6 +329,11 @@ function showAddMemory (lat, lng) {
 $('#add-memory-button').click(function () {
   $('.memory-icon').show();
 });
+
+function formatYear (y) {
+  if (y < 0) return -y + ' BC';
+  return y;
+}
 
 function gup (name) {
   name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");

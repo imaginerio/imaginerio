@@ -287,11 +287,11 @@ header.search #controls-right .search-hide {
 }
 
 .timeline-inner {
-  width: calc(100% - 180px);
+  width: calc(100% - 230px);
 }
 
 .year-stepper {
-  width: 160px;
+  width: 210px;
   margin-right: 20px;
 }
 
@@ -422,9 +422,9 @@ header.search #controls-right .search-hide {
   position: absolute;
   display: block;
   color: white;
-  width: 40px;
+  width: 50px;
   text-align: center;
-  margin-left: -20px;
+  margin-left: -25px;
   top: 7px;
 }
 

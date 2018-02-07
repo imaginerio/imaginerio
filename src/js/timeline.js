@@ -163,7 +163,7 @@ let Timeline = (function($, dispatch) {
       .css('left', x + 'px')
       .data('value', value)
       .appendTo(container);
-    if (type == 'major') t.append('<span>' + value + '</span>');
+    if (type == 'major') t.append('<span>' + formatYear(value) + '</span>');
   }
 
   function changeYear (y) {
@@ -173,7 +173,7 @@ let Timeline = (function($, dispatch) {
 
   function updateYear (y) {
     year = y;
-    $('.year', stepper).html(year);
+    $('.year', stepper).html(formatYear(year));
     $('.timeline-slider', timeline).css('left', getXForYear(y) + 'px');
     $('.icon-angle-left', stepper).toggleClass('disabled', year == eras[0].dates[0])
     $('.icon-angle-right', stepper).toggleClass('disabled', year == eras[eras.length-1].dates[1])
