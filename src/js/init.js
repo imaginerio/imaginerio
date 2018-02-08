@@ -115,10 +115,9 @@ function init_ui () {
   });
 
   $('.lightbox').click(function (e) {
-    // close on background click except when uploading memory (too easy/annoying to close by accident)
-    if ((e.target == this && !$('.lightbox .add-memory')[0]) || $(e.target).hasClass('icon-times')) {
+    // close on background click 
+    if (e.target == this || $(e.target).hasClass('icon-times')) {
       $('.lightbox').hide();
-      Dispatch.call('cancelmemory', this);
     } 
   });
 
@@ -287,48 +286,6 @@ function goToEra (e) {
   Dispatch.call('setyear', this, e.dates[0]);
   update_hash();
 }
-
-function showAddMemory (lat, lng) {
-
-  $('.lightbox').css('display', 'flex');
-  $('.lightbox .content > div').remove();
-  let div = $('.add-memory').clone().appendTo('.lightbox .content');
-  div.data('latlng', [lat,lng]);
-  let data;
-  $('textarea, input', div).on('keyup', function () {
-    data = {
-      story: $('.lightbox .memory-story').val(),
-      name: $('.lightbox .memory-name').val(),
-      email: $('.lightbox .memory-email').val(),
-      class: $('.lightbox .memory-class').val(),
-      lat: lat,
-      lng: lng
-    }
-    $('.memory-submit', div).toggleClass('disabled', !data.story || !data.name || !data.email);
-  });
-  $('.memory-submit', div).click(function () {
-    if ($(this).hasClass('disabled')) return;
-    // submit form
-    let data = {
-      story: $('.lightbox .memory-story').val(),
-      name: $('.lightbox .memory-name').val(),
-      email: $('.lightbox .memory-email').val(),
-      class: $('.lightbox .memory-class').val(),
-      lat: lat,
-      lng: lng,
-      year: year
-    }
-    $.post(server + 'memory', data, function (response) {
-      $('.lightbox').hide();
-      Dispatch.call('cancelmemory', this);
-    });
-  });
-  //div.append('<iframe class="airtable-embed" src="https://airtable.com/embed/shra9blqc8Ab48RaN?backgroundColor=blue" frameborder="0" onmousewheel="" width="100%" height="100%" style="background: transparent;"></iframe>');
-}
-
-$('#add-memory-button').click(function () {
-  $('.memory-icon').show();
-});
 
 function formatYear (y) {
   if (y < 0) return -y + ' BC';
