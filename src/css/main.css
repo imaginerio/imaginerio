@@ -995,6 +995,7 @@ header.search #controls-right .search-hide {
 
 .era-description {
   font-size: 20px;
+  text-align: center;
   font-weight: 300;
   width: 75%;
   margin: 30px auto;
