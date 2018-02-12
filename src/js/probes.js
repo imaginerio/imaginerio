@@ -52,12 +52,12 @@ function rasterProbe (p) {
         .html('View image on SharedShelf Commons')
         .appendTo(div);
       let text = '';
-      if (p.creator) text += p.creator + '<br>';
-      if (p.description) text += p.description + '<br>';
-      if (p.date) text += p.date + '<br>';
+      if (p.data.creator) text += p.data.creator + '<br>';
+      if (p.data.description) text += p.data.description + '<br>';
+      if (p.data.date) text += p.data.date + '<br>';
 
       $('<p>')
-        .html(p.data.description)
+        .html(text)
         .appendTo(div);
     });
   if (p.data.layer != 'viewsheds' && mobile) {
