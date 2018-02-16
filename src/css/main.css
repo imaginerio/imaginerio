@@ -321,7 +321,7 @@ header.search #controls-right .search-hide {
   cursor: pointer;
 }
 
-.year-stepper i:before {
+.year-stepper i:before, .stepper i:before {
   color: #666;
   border-radius: 5px;
   border: 1px solid #666;
@@ -866,36 +866,20 @@ header.search #controls-right .search-hide {
 }
 
 .fixed-probe-title.stepper {
-  padding-left: 63px;
-  text-indent: -63px;
+  min-height: 25px;
 }
 
-.fixed-probe-title i:before {
-  color: #666;
-  border-radius: 5px;
-  border: 1px solid #666;
-  width: 25px;
-  line-height: 25px;
-  margin: 0;
-  font-size: 14px;
+.fixed-probe-title.stepper i {
+  float: right;
   cursor: pointer;
-  text-indent: 0;
 }
 
-.fixed-probe-title i:hover:before {
+.fixed-probe-title.stepper i:hover:before {
   color: #333;
 }
 
-.fixed-probe-title i.icon-left-big:before {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  border-right: none;
-}
-
-.fixed-probe-title i.icon-right-big:before {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  margin-right: 10px;
+.fixed-probe-title i.icon-angle-right:before {
+  margin-right: 0;
 }
 
 #fixed-probe .fixed-image {

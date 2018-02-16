@@ -9,13 +9,13 @@ function rasterProbe (p) {
     console.log(Filmstrip.getRasters())
     let photos = _.filter(Filmstrip.getRasters(), function (r) { return r.layer == 'viewsheds'} );
     if (photos.length) {
-      title.prepend('<i class="icon-right-big">').prepend('<i class="icon-left-big">').addClass('stepper');
+      title.prepend('<i class="icon-angle-left">').prepend('<i class="icon-angle-right">').addClass('stepper');
       let i = photos.indexOf(p.data);
-      $('i.icon-left-big', title).click(function (){
+      $('i.icon-angle-left', title).click(function (){
         if (i == 0) rasterProbe(photos[photos.length - 1].photo);
         else rasterProbe(photos[i - 1].photo);
       });
-      $('i.icon-right-big', title).click(function (){
+      $('i.icon-angle-right', title).click(function (){
         if (i == photos.length - 1) rasterProbe(photos[0].photo);
         else rasterProbe(photos[i + 1].photo);
       });
