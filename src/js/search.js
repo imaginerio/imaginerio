@@ -13,6 +13,8 @@ let Search = (function($, dispatch) {
       let val = $(this).val();
       if (val.length > 2) {
         doSearch(val);
+      } else {
+        S.clear();
       }
     });
   }
@@ -92,6 +94,7 @@ let Search = (function($, dispatch) {
       
     } else {
       resultsContainer.hide();
+      dispatch.call('removehighlight', this);
     }
   }
 
@@ -115,7 +118,7 @@ let Search = (function($, dispatch) {
   S.clear = function () {
     Dispatch.call('removehighlight', this);
     $('.search-result.selected').removeClass('selected');
-    $('input', container).val(null);
+    //$('input', container).val(null);
     if (resultsContainer) resultsContainer.hide();
   }
 
