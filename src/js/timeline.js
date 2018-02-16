@@ -85,6 +85,7 @@ let Timeline = (function($, dispatch) {
     let tickContainers = $('.ticks', timeline);
     let era;
     let localX;
+    x = Math.max(0, Math.min(t.width(), x));
     for (let i = 0; i < eras.length; i ++) {
       let nextX = i < eras.length - 1 ? tickContainers.eq(i + 1).position().left : timeline.width() + 5;
       if (x < nextX) {
