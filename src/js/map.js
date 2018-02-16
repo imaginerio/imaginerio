@@ -66,7 +66,7 @@ let Map = (function($, dispatch) {
         zoomControl: false,
         maxZoom: 18,
         minZoom: 14,
-        maxBounds: [[33.8297,35.4142],[33.9509,35.593]]
+        maxBounds: [[33.8297,35.4142],[33.9509,35.56]]
       })
       .setView([33.9, 35.5], 16)
       .on('click', probe)
