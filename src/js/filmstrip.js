@@ -61,7 +61,7 @@ let Filmstrip = (function($, _, dispatch) {
         showThumbs();
       }
       $('.icon-camera, .raster-type-labels span.views', filmstrip).toggleClass('disabled', !_.some(rasters, function(r){ return r.layer === 'viewsheds'}));
-      $('.icon-flight, .raster-type-labels span.aerials', filmstrip).toggleClass('disabled', !_.some(rasters, function(r){ return r.layer === 'surveys'}));
+      $('.icon-survey, .raster-type-labels span.surveys', filmstrip).toggleClass('disabled', !_.some(rasters, function(r){ return r.layer === 'surveys'}));
       $('.icon-tsquare, .raster-type-labels span.plans', filmstrip).toggleClass('disabled', !_.some(rasters, function(r){ return r.layer === 'plans'}));
       $('.icon-map-o, .raster-type-labels span.maps', filmstrip).toggleClass('disabled', !_.some(rasters, function(r){ return r.layer === 'maps'}));
       
