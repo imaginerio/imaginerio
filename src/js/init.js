@@ -342,5 +342,5 @@ function export_map () {
   var url = server + 'export/en/' + year + '/' + layers + '/' + raster + '/' + Map.getBounds().toBBoxString() + '/';
   console.log(url)
   document.getElementById( 'download_iframe' ).src = url;
-  window.setTimeout( function(){ $( '#export' ).attr('class', 'icon-down-circle'); }, 2000 );
+  window.setTimeout( function(){ $( '#export' ).attr('class', 'icon-download'); }, 2000 );
 }

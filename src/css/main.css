@@ -110,6 +110,11 @@ header > img {
   width: 16px;
 }
 
+#top-right-buttons > i.icon-circle-notch {
+  color: #999;
+  background-color: white;
+}
+
 .eras #top-right-buttons, .eras #search-button {
   display: none;
 }
