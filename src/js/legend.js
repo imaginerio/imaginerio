@@ -229,6 +229,7 @@ let Legend = (function($, dispatch) {
 
   function add_swatch( style )
   {
+    if (!style) return $('<div>');
     var swatch = $( document.createElement( 'div' ) ).addClass( "swatch" ).addClass(style.shape.slice(0, style.shape.indexOf('.')));
     if( style.shape.match( /svg$/ ) )
     {

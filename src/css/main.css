@@ -304,6 +304,8 @@ header.search #controls-right .search-hide {
   font-size: 34px;
   font-weight: bold;
   color: #A63755;
+  width: 135px;
+  text-align: center;
 }
 
 .year-stepper i {

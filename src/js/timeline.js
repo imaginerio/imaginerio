@@ -46,17 +46,14 @@ let Timeline = (function($, dispatch) {
       let i = eras.indexOf(era);
       if (era != eras[0] || year != era.dates[0]) {
         if (year == era.dates[0]) changeYear(eras[i-1].dates[1])
-        else if (year == era.dates[1]) {
+        else {
           let y = era.dates[0];
-          while (y < era.dates[1]) {
-            if (y + era.increment > year) {
-              changeYear(y);
-              return;
-            }
+          let newYear = y;
+          while (y < year) {
+            newYear = y;
             y += era.increment;
           }
-        } else {
-          changeYear(year - era.increment);
+          changeYear(newYear);
         }
       }
     });
@@ -66,8 +63,14 @@ let Timeline = (function($, dispatch) {
       let i = eras.indexOf(era);
       if (era != eras[eras.length - 1] || year != era.dates[1]) {
         if (year == era.dates[1]) changeYear(eras[i+1].dates[0])
-        else if (year + era.increment > era.dates[1]) changeYear(era.dates[1]);
-        else changeYear(year + era.increment);
+        else {
+          let y = era.dates[0];
+          while (y <= year) {
+            y += era.increment;
+          }
+          if (y > era.dates[1]) y = era.dates[1];
+          changeYear(y);
+        }
       }
     });
 
@@ -105,12 +108,25 @@ let Timeline = (function($, dispatch) {
 
   function getXForYear (y) {
     let tick;
+    let tickBefore;
+    let tickAfter;
     $('.tick').each(function () {
-      if (y == $(this).data('value')) {
+      let val = $(this).data('value');
+      if (y == val) {
         tick = $(this);
+      } else if (y > val) {
+        tickBefore = $(this);
+      } else if (!tickAfter) {
+        tickAfter = $(this);
       }
-    })
+    });
     if (tick) return tick.position().left + tick.parent().position().left;
+    else {
+      let valBefore = tickBefore.data('value');
+      let valAfter = tickAfter.data('value');
+      let dist = tickAfter.offset().left - tickBefore.offset().left;
+      return tickBefore.position().left + tickBefore.parent().position().left + ((y - valBefore) / (valAfter - valBefore)) * dist;
+    }
   }
 
   function addEras () {
@@ -162,6 +178,7 @@ let Timeline = (function($, dispatch) {
     var t = $('<div>')
       .attr('class', 'tick tick-' + type)
       .css('left', x + 'px')
+      .attr('data-value', value)
       .data('value', value)
       .appendTo(container);
     if (type == 'major') t.append('<span>' + formatYear(value) + '</span>');
@@ -217,12 +234,12 @@ let Timeline = (function($, dispatch) {
     timeline.append('<div class="timeline-slider">');
     timeline
       .append('<div class="timeline-probe desktop">' + year + '<div>');
-
-    updateYear(year);
     
     let mainTicks = addTicks();
 
     init_events();
+
+    updateYear(year);
 
     return T;
   }
