@@ -1076,6 +1076,7 @@ header.search #controls-right .search-hide {
   color: #A63755;
   border: none;
   outline: none;
+  cursor: pointer;
 }
 
 .era-dropdown select {
