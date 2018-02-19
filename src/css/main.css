@@ -1211,6 +1211,7 @@ header.search #controls-right .search-hide {
 
 .lightbox a.image {
   width: 150px;
+  margin: 0 0 10px 10px;
 }
 
 .image-title {
@@ -1286,7 +1287,7 @@ i.icon-ok:hover,
 }
 
 .blue-button:hover {
-  background-color: #eee;
+  background-color: #fceff2;
 }
 
 @media (max-height: 700px) {
