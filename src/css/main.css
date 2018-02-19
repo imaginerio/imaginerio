@@ -1242,6 +1242,7 @@ header.search #controls-right .search-hide {
   height: 5px;
   background-color: #eee;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .thumb {
