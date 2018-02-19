@@ -67,9 +67,13 @@ main {
 /* HEADER */
 
 header {
-  height: 65px;
+  height: 70px;
   padding: 0 30px;
   font-size: 15px;
+}
+
+.eras header {
+  height: 85px;
 }
 
 header > *, #controls-right > *, #search > * {
@@ -79,12 +83,16 @@ header > *, #controls-right > *, #search > * {
   cursor: pointer;
 }
 
-header > img {
-  margin-right: 90px;
+header > #eras-button {
+  margin-left: 20px;
 }
 
 .logo {
   height: 50px;
+}
+
+.eras .logo {
+  height: 80px;
 }
 
 #controls-right {
@@ -226,6 +234,9 @@ header.search #controls-right .search-hide {
   color: white;
   background-color: #666;
   display: block;
+}
+
+.results-group:nth-of-type(1) > span {
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
 }
@@ -239,7 +250,7 @@ header.search #controls-right .search-hide {
   background-color: #EEEEEE;
   width: 190px;
   border-radius: 5px;
-  padding: 10px 10px 10px 40px;
+  padding: 10px 10px 10px 50px;
   line-height: 20px;
   text-indent: -20px;
   vertical-align: middle;
@@ -250,7 +261,7 @@ header.search #controls-right .search-hide {
 }
 
 .search-result.selected > span {
-  background-color: #666;
+  background-color: #A63755;
   color: white;
 }
 
@@ -761,15 +772,17 @@ header.search #controls-right .search-hide {
   margin-left: 20px;
 }
 
-.layer-existing, .layer-plans {
+.layer-existing {
   line-height: 30px;
   padding: 0 5px;
   background-color: #eee;
   display: inline-block;
   margin: 3px 0px;
   border-radius: 5px;
-  width: 140px;
+  width: 170px;
   cursor: pointer;
+  padding-left: 30px;
+  text-indent: -12px;
 }
 
 .plans-dropdown {
@@ -791,11 +804,11 @@ header.search #controls-right .search-hide {
   background-color: #ccc;
 }
 
-.layer-existing:hover, .layer-plans:hover {
+.layer-existing:hover {
   background-color: #ccc;
 }
 
-.layer-existing.highlighted, .layer-plans.highlighted, .plan-menu-item.highlighted {
+.layer-existing.highlighted {
   background-color: #666;
   color: white;
 }
@@ -806,13 +819,7 @@ header.search #controls-right .search-hide {
   cursor: default;
 }
 
-.layer-plans {
-  width: auto;
-  margin-left: 10px;
-  padding-right: 10px;
-}
-
-.layer-existing i, .layer-plans i {
+.layer-existing i {
   margin-right: 5px;
 }
 
@@ -960,8 +967,8 @@ header.search #controls-right .search-hide {
   display: block;
   position: absolute;
   z-index: 1999;
-  height: calc(100% - 65px);
-  top: 65px;
+  height: calc(100% - 70px);
+  top: 70px;
   width: 100%;
   background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.9) 60%, rgba(255,255,255,0) 100%); /* FF3.6-15 */
   background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,0.9) 60%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
@@ -1051,6 +1058,7 @@ header.search #controls-right .search-hide {
 .intro-buttons > * {
   display: inline-block;
   vertical-align: middle;
+  margin: 0 10px;
 }
 
 .era-dropdown {
@@ -1104,7 +1112,6 @@ header.search #controls-right .search-hide {
   font-size: 20px;
   font-weight: 500;
   width: 165px;
-  margin: auto;
   text-align: center;
   padding: 20px 30px;
   cursor: pointer;
@@ -1345,6 +1352,10 @@ i.icon-ok:hover,
     line-height: 24px;
     z-index: 2501;
     position: absolute;
+  }
+
+  header > #eras-button {
+    margin-left: 15px;
   }
 
   header > a {
