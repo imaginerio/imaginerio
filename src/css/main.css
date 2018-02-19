@@ -1080,6 +1080,7 @@ header.search #controls-right .search-hide {
 
 .era-dropdown select {
   line-height: 0;
+  box-sizing: content-box;
 }
 
 .era-dropdown div {
