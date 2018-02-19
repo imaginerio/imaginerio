@@ -121,6 +121,8 @@ let Timeline = (function($, dispatch) {
       }
     });
     if (tick) return tick.position().left + tick.parent().position().left;
+    else if (!tickBefore) return 0;
+    else if (!tickAfter) return $('.timeline-track', timeline).width();
     else {
       let valBefore = tickBefore.data('value');
       let valAfter = tickAfter.data('value');
