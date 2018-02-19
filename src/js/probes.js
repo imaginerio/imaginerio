@@ -53,8 +53,9 @@ function rasterProbe (p) {
         .appendTo(div);
       let text = '';
       if (p.data.creator) text += p.data.creator + '<br>';
-      if (p.data.description) text += p.data.description + '<br>';
-      if (p.data.date) text += p.data.date + '<br>';
+      if (p.data.description) text += '<span class="image-title">' + p.data.description + '</span><br>';
+      if (p.data.date) text += formatYear(p.data.date) + '<br>';
+      if (p.data.credits) text += '<span class="image-credit">' + p.data.credits + '</span>';
 
       $('<p>')
         .html(text)

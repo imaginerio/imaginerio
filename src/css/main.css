@@ -1206,6 +1206,14 @@ header.search #controls-right .search-hide {
   width: 150px;
 }
 
+.image-title {
+  font-weight: bold;
+}
+
+.image-credit {
+  font-style: italic;
+}
+
 /* SLIDER */
 
 .slider {
