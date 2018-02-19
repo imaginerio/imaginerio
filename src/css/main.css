@@ -119,6 +119,10 @@ header > img {
   display: none;
 }
 
+#search {
+  margin-top: 15px;
+}
+
 /* GENERAL LAYOUTS */
 .panel-toggle {
   position: absolute;
