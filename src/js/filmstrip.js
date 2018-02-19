@@ -151,7 +151,7 @@ let Filmstrip = (function($, _, dispatch) {
   function addThumbSection (group, title, icon, container) {
     let section = $('<div>').attr('class', 'thumbs-section').appendTo(container);
       $('<p>').attr('class', 'thumbs-title')
-        .html(' ' + title)
+        .html(' ' + title + ' (' + year + ')')
         .prepend('<i class="' + icon + '"></i>')
         .appendTo(section)
       let photos = _.pluck(group, 'photo');
