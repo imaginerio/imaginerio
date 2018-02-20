@@ -76,6 +76,7 @@ let Timeline = (function($, dispatch) {
 
     $(window).resize(function () {
       addTicks();
+      updateYear(year);
     });
   }
 
