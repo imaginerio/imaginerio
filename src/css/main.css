@@ -42,7 +42,7 @@ main {
 
 .button.red {
   background-color: #eee;
-  color: #E02727;
+  color: #A63755;
   margin-bottom: 0;
 }
 
@@ -1195,6 +1195,10 @@ header.search #controls-right .search-hide {
   overflow: auto;
 }
 
+/*.lightbox .content p {
+  margin: 10px 0;
+}*/
+
 .lightbox .content > div.all-thumbs {
   width: 756px;
 }
@@ -1283,7 +1287,7 @@ i.icon-ok:hover,
 }
 
 .button.red:hover {
-  background-color: #ccc;
+  background-color: #fceff2;
 }
 
 .blue-button:hover {
@@ -1504,6 +1508,7 @@ i.icon-ok:hover,
   .year {
     font-size: 20px;
     margin: 0 10px;
+    width: 80px;
   }
 
   /* SEARCH */
