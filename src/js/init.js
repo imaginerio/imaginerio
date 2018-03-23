@@ -30,7 +30,7 @@ let params = {};
 var mobile = window.innerWidth <= 700;
 
 if( gup( 'dev' ) == 'true' ){
-  server = "http://beirut-dev.axismaps.io";
+  server = "http://beirut-dev.axismaps.io/";
   tileserver = "http://beirut-dev.axismaps.io/tiles/";
   rasterserver = "http://beirut-dev.axismaps.io/raster/";
 }
