@@ -29,7 +29,7 @@ let params = {};
 var mobile = window.innerWidth <= 700;
 
 if( gup( 'dev' ) == 'true' ){
-  server = "http://instituterice-dev.axismaps.io";
+  server = "http://instituterice-dev.axismaps.io/";
   tileserver = "http://instituterice-dev.axismaps.io/tiles/";
   rasterserver = "http://instituterice-dev.axismaps.io/raster/";
 }
