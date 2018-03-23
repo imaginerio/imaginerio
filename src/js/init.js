@@ -1,6 +1,6 @@
-const server = 'https://instituterice.axismaps.io/';
-const tileserver = 'https://instituterice.axismaps.io/tiles/';
-const rasterserver = 'https://instituterice.axismaps.io/raster/';
+let server = 'https://instituterice.axismaps.io/';
+let tileserver = 'https://instituterice.axismaps.io/tiles/';
+let rasterserver = 'https://instituterice.axismaps.io/raster/';
 
 const thumbnaillUrl = 'https://mdxdv.artstor.org/thumb/imgstor/size1/sslps/c7730355/';
 const imageUrl = 'https://mdxdv.artstor.org/thumb/imgstor/size2/sslps/c7730355/';
@@ -27,6 +27,12 @@ let params = {};
 // runtime stuff
 
 var mobile = window.innerWidth <= 700;
+
+if( gup( 'dev' ) == 'true' ){
+  server = "http://instituterice-dev.axismaps.io";
+  tileserver = "http://instituterice-dev.axismaps.io/tiles/";
+  rasterserver = "http://instituterice-dev.axismaps.io/raster/";
+}
 
 $.getJSON(server + 'timeline', function(yearsData) {
   years = yearsData;
