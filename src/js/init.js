@@ -1,6 +1,6 @@
-const server = 'https://beirut.axismaps.io/';
-const tileserver = 'https://beirut.axismaps.io/tiles/';
-const rasterserver = 'https://beirut.axismaps.io/raster/';
+let server = 'https://beirut.axismaps.io/';
+let tileserver = 'https://beirut.axismaps.io/tiles/';
+let rasterserver = 'https://beirut.axismaps.io/raster/';
 
 const thumbnaillUrl = 'https://mdxdv.artstor.org/thumb/imgstor/size1/sslps/c7731849/';
 const imageUrl = 'https://mdxdv.artstor.org/thumb/imgstor/size2/sslps/c7731849/';
@@ -28,6 +28,12 @@ let params = {};
 // runtime stuff
 
 var mobile = window.innerWidth <= 700;
+
+if( gup( 'dev' ) == 'true' ){
+  server = "http://beirut-dev.axismaps.io";
+  tileserver = "http://beirut-dev.axismaps.io/tiles/";
+  rasterserver = "http://beirut-dev.axismaps.io/raster/";
+}
 
 $.getJSON(server + 'timeline', function(yearsData) {
   years = yearsData;
