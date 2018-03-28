@@ -48,7 +48,7 @@ $.getJSON(server + 'names/en', function(namesData) {
 function initialize () {
   eras[eras.length-1].dates[1] = new Date().getFullYear();
   check_hash();
-  year = params.year || 1910; // a year that actually has something
+  year = params.year || 1943; // a year that actually has something
   Map.initialize('map').setYear(year); 
   Timeline.initialize(eras, 'timeline').setYear(year);
   Filmstrip.initialize();//.setYear(year);
