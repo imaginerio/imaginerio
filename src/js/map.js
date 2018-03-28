@@ -89,7 +89,7 @@ let Map = (function($, dispatch) {
     function showLocation (latlng) {
       if (locationMarker && map.hasLayer(locationMarker)) map.removeLayer(locationMarker);
       if (!locationBounds.contains(latlng)) {
-        alert('Geolocation is only supported in the Rice campus area.');
+        alert('Geolocation is only supported in Beirut.');
         map.stopLocate();
       } else {
         locationMarker = L.circleMarker(latlng, {
