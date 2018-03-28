@@ -98,7 +98,7 @@ let Filmstrip = (function($, _, dispatch) {
   function showThumbs () {
     $('.filmstrip-thumbnails').empty();
     let title = selectedType == 'viewsheds' ? 'views' : selectedType;
-    $('.filmstrip-toggle span', filmstrip).html(title[0].toUpperCase() + title.slice(1) + ' (' + formatYear(year) + (maxYear !== undefined ? (' – ' + formatYear(maxYear)) : '') + ')');
+    $('.filmstrip-toggle span', filmstrip).html('Historical Overlays (' + formatYear(year) + (maxYear !== undefined ? (' – ' + formatYear(maxYear)) : '') + ')');
     let photos = _.chain(rasters)
       .filter(function(r){ return r.layer === selectedType })
       .sortBy('date')
