@@ -91,6 +91,19 @@ header > #eras-button {
   height: 50px;
 }
 
+header > a{
+  display: none;
+}
+
+header > a:first-child{
+  display: inline-block;
+}
+
+.eras.start header > a{
+  display: inline-block;
+  margin-right: 20px;
+}
+
 .eras .logo {
   height: 80px;
 }
