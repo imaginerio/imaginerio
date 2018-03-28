@@ -290,6 +290,7 @@ function showEra (i, noTransition) {
 function goToEra (e) {
   $('main').removeClass('eras');
   Dispatch.call('setyear', this, e.dates[0]);
+  Map.setView(e.center, e.zoom);
   update_hash();
 }
 
