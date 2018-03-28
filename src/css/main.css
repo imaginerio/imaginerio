@@ -83,20 +83,8 @@ header > *, #controls-right > *, #search > * {
   cursor: pointer;
 }
 
-header > #eras-button {
-  margin-left: 20px;
-}
-
-.logo {
-  height: 50px;
-}
-
 header > a{
   display: none;
-}
-
-header > a:first-child{
-  display: inline-block;
 }
 
 .eras.start header > a{
