@@ -16,7 +16,7 @@ const basic = preAuth.basic({ realm: "Restricted Access! Please login to proceed
 if (isProduction) {
   app.use(compression());
   app.use(enforce.HTTPS({ trustProtoHeader: true }));
-  app.use(preAuth.connect(basic));
+  //app.use(preAuth.connect(basic));
 }
 
 let port = process.env.PORT || 8080;
