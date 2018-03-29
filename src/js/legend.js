@@ -45,45 +45,11 @@ let Legend = (function($, dispatch) {
               _.each(group.features, function (feature) {
                 let layer = $('<div>').attr('class', 'layer').appendTo(gr);
                 addLayerExisting(feature, layer);
-                // let plan = getPlansForLayer(feature);
-                // if (plan) {
-                //   addLayerPlanned(feature, layer, plan);
-                // }
               });
 
               let swatch = add_swatch(group.style).appendTo(groupTitle);
             });
-          //});
         });
-
-        // if (plans.length) {
-        //   let cat = $('<div>').attr('class', 'legend-category');
-        //   if ($('.legend-category[data-category="views"]')[0]) {
-        //     cat.insertAfter('.legend-category[data-category="views"]');
-        //   } else {
-        //     cat.prependTo('.legend-contents');
-        //   }
-        //   $('<div>').attr('class', 'category-title').html('PLANS').appendTo(cat);
-        //   let gr = $('<div>').attr('class', 'legend-group').attr('data-group', 'views').appendTo(cat);
-        //   addLayerPlanned('Plans', gr, plans, false, true).html('<i class="icon-tsquare"></i>Plans (' + year + ')')
-        // }
-
-        // plans.forEach(function (plan) {
-        //   let features = [];
-        //   plan.features.forEach(function (feature) {
-        //     if (!$('.layer-existing[data-name="' + feature + '"]').length) features.push(feature);
-        //   });
-        //   if (features.length) {
-        //     let cat = $('<div>').attr('class', 'legend-category').appendTo('.legend-contents');
-        //     $('<div>').attr('class', 'category-title').html(plan.name.toUpperCase()).appendTo(cat);
-        //     let gr = $('<div>').attr('class', 'legend-group planned').appendTo('.legend-contents');
-        //     let layer = $('<div>').attr('class', 'layer').appendTo(gr);
-        //     features.forEach(function (feature) {
-        //       addLayerExisting(feature, layer, true);
-        //       addLayerPlanned(feature, layer, [plan], true);
-        //     });
-        //   }
-        // })
 
         dispatch.call('setlayers', this, Lg.layers());
         dispatch.call('statechange', this);
@@ -110,12 +76,12 @@ let Legend = (function($, dispatch) {
     return planArray;
   }
 
-  function addLayerExisting (name, container, notpresent) {
+  function addLayerExisting (feature, container, notpresent) {
     let l = $('<div>')
       .attr('class', 'layer-existing')
-      .attr('data-name', name)
-      .data('name', name)
-      .html(name.replace('Planned', ''))
+      .attr('data-name', feature.name || feature)
+      .data('name', feature.name || feature)
+      .html(feature.name || feature)
       .appendTo(container);
     if (!notpresent) {
       l
@@ -124,78 +90,6 @@ let Legend = (function($, dispatch) {
       } else {
         l.addClass('not-present');
       }
-  }
-
-  function addLayerPlanned (name, container, planArray, onlyPlan, wholePlan) {
-    let div = $('<div>')
-      .attr('class', 'layer-plans')
-      .data('name', name)
-      .data('plans', _.pluck(planArray, 'name'))
-      .html('Plans')
-      .prepend('<i class="icon-tsquare">')
-      .appendTo(container)
-      .click(function(e) {
-        e.stopPropagation();
-        if ($('.plans-dropdown')[0] && $('.plans-dropdown').data('layer') == name) {
-          $('.plans-dropdown').remove();
-          $('body').off('click.plans');
-          return;
-        }
-        $('.plans-dropdown').remove();
-        let menu = $('<div>')
-          .attr('class', 'plans-dropdown')
-          .data('layer', name)
-          .appendTo('main')
-        planArray.forEach(function (p) {
-          $('<p>')
-            .attr('class', 'plan-menu-item' + (div.data('selected-plan') == p.name ? ' highlighted' : ''))
-            .html(p.name)
-            .appendTo(menu)
-            .click(function (e) {
-              if (div.data('selected-plan') == p.name) {
-                div.data('selected-plan', null);
-                dispatch.call('removehighlight', this);
-              } else {
-                highlightPlan(p.name, wholePlan ? undefined : name);
-                div.addClass('highlighted');
-                div.data('selected-plan', p.name);
-              }
-            });
-        });
-        if (div.data('selected-plan')) {
-          $('<p>')
-            .attr('class', 'plan-menu-item')
-            .html('<i class="icon-times"></i> Remove plans from map')
-            .prependTo(menu)
-            .click(function () {
-              div.data('selected-plan', null);
-              dispatch.call('removehighlight', this);
-            })
-        }
-        if (!mobile) {
-          menu
-            .css('left', $(this).offset().left + $(this).outerWidth() + 5 + 'px');
-            if ($(this).offset().top < 300 ) {
-              menu.css('top', $(this).offset().top);
-            } else {
-              menu.css('bottom', window.innerHeight - ($(this).offset().top + $(this).outerHeight()));
-            }
-          } else {
-            menu
-              .css('top', window.innerHeight / 2 - menu.outerHeight() / 2 + 'px');
-          }
-        
-        $('body').on('click.plans', function () {
-          $('.plans-dropdown').remove();
-          $('body').off('click.plans');
-        });
-
-        if (onlyPlan) {
-          $('p', menu).first().click();
-        }
-      });
-
-      return div;
   }
 
   function layerClick () {
@@ -214,17 +108,6 @@ let Legend = (function($, dispatch) {
     $.getJSON(server + 'feature/' + year + '/' + feature, function (json) {
       dispatch.call('highlightfeature', this, json);
     })
-  }
-
-  function highlightPlan (planName, feature) {
-    dispatch.call('removehighlight', this);
-    Dispatch.call('removeprobe', this);
-    let url = server + 'plan?name=' + encodeURIComponent(planName);
-    if (feature) url += '&feature=' + feature;
-    $.getJSON(url, function (json) {
-      dispatch.call('highlightfeature', this, json);
-      if (mobile) legend.addClass('collapsed');
-    });
   }
 
   function add_swatch( style )
