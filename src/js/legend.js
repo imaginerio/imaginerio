@@ -134,6 +134,7 @@ let Legend = (function($, dispatch) {
   }
 
   Lg.addViews = function () {
+    $('.legend-category[data-category="views"]').remove();
     let cat = $('<div>').attr('class', 'legend-category').attr('data-category', 'views').prependTo('.legend-contents');
     $('<div>').attr('class', 'category-title').html('VIEWS').appendTo(cat);
     let gr = $('<div>').attr('class', 'legend-group').attr('data-group', 'views').appendTo(cat);
