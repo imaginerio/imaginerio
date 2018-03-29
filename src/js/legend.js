@@ -46,9 +46,13 @@ let Legend = (function($, dispatch) {
             .html(names[groupName.toLowerCase()] || groupName)
             .prepend('<input type="checkbox" value="' + groupName + '"checked>')
             .appendTo(groupTitle);
-          _.each(group.features, function (feature) {
+          _.each(group.features, function (feature, key) {
             let layer = $('<div>').attr('class', 'layer').appendTo(gr);
-            addLayerExisting(feature, layer);
+            addLayerExisting(feature, key, layer);
+            if (feature.style) {
+              add_swatch(feature.style).appendTo(layer);
+              layer.addClass('styled');
+            }
           });
 
           let swatch = add_swatch(group.style).appendTo(groupTitle);
@@ -79,20 +83,16 @@ let Legend = (function($, dispatch) {
     return planArray;
   }
 
-  function addLayerExisting (feature, container, notpresent) {
+  function addLayerExisting (feature, key, container, notpresent) {
+    let name = feature.id ? key : feature;
     let l = $('<div>')
       .attr('class', 'layer-existing')
-      .attr('data-name', feature.name || feature)
-      .data('name', feature.name || feature)
-      .html(feature.name || feature)
-      .appendTo(container);
-    if (!notpresent) {
-      l
-        .prepend('<i class="icon-binoculars">')
-        .click(layerClick);
-      } else {
-        l.addClass('not-present');
-      }
+      .attr('data-name',name)
+      .data('name', name)
+      .html(name)
+      .appendTo(container)
+      .prepend('<i class="icon-binoculars">')
+      .click(layerClick);
   }
 
   function layerClick () {
@@ -115,7 +115,7 @@ let Legend = (function($, dispatch) {
 
   function add_swatch( style )
   {
-    if (!style) return $('<div>');
+    if (!style || !style.shape) return $('<div>');
     var swatch = $( document.createElement( 'div' ) ).addClass( "swatch" ).addClass(style.shape.slice(0, style.shape.indexOf('.')));
     if( style.shape.match( /svg$/ ) )
     {
