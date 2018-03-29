@@ -34,33 +34,36 @@ let Legend = (function($, dispatch) {
         _.each(layersJson, function (category, categoryName) {
           let cat = $('<div>').attr('class', 'legend-category').appendTo('.legend-contents');
           $('<div>').attr('class', 'category-title').html(categoryName.toUpperCase()).appendTo(cat);
-          _.each(category, function (obj) { // there's an extra level here
-            _.each(obj, function (group, groupName) {
-              let gr = $('<div>').attr('class', 'legend-group').attr('data-group', groupName).appendTo(cat);
-              let groupTitle = $('<div>').attr('class', 'group-title').appendTo(gr);
-              $('<label>')
-                .html(names[groupName.toLowerCase()] || groupName)
-                .prepend('<input type="checkbox" value="' + groupName + '"checked>')
-                .appendTo(groupTitle);
-              _.each(group.features, function (feature) {
-                let layer = $('<div>').attr('class', 'layer').appendTo(gr);
-                addLayerExisting(feature, layer);
-              });
-
-              let swatch = add_swatch(group.style).appendTo(groupTitle);
-            });
+          _.each(category, function (obj, objName) { // there's an extra level here
+            if (obj.features) addLayerGroup (obj, objName);
+            else _.each(obj, addLayerGroup);
         });
 
+        function addLayerGroup (group, groupName) {
+          let gr = $('<div>').attr('class', 'legend-group').attr('data-group', groupName).appendTo(cat);
+          let groupTitle = $('<div>').attr('class', 'group-title').appendTo(gr);
+          $('<label>')
+            .html(names[groupName.toLowerCase()] || groupName)
+            .prepend('<input type="checkbox" value="' + groupName + '"checked>')
+            .appendTo(groupTitle);
+          _.each(group.features, function (feature) {
+            let layer = $('<div>').attr('class', 'layer').appendTo(gr);
+            addLayerExisting(feature, layer);
+          });
+
+          let swatch = add_swatch(group.style).appendTo(groupTitle);
+        }
+
+      });
+      dispatch.call('setlayers', this, Lg.layers());
+      dispatch.call('statechange', this);
+
+      if (tempLayers) {
+        Lg.layers(tempLayers);
+        tempLayers = null;
         dispatch.call('setlayers', this, Lg.layers());
         dispatch.call('statechange', this);
-
-        if (tempLayers) {
-          Lg.layers(tempLayers);
-          tempLayers = null;
-          dispatch.call('setlayers', this, Lg.layers());
-          dispatch.call('statechange', this);
-        }
-      });
+      }
     });
   }
 
