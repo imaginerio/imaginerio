@@ -83,6 +83,19 @@ header > img {
   margin-right: 90px;
 }
 
+header > a{
+  display: none;
+}
+
+.eras.start header > a{
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.eras .logo {
+  height: 60px;
+}
+
 #controls-right {
   float: right;
 }
