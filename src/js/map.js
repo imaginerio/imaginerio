@@ -1,5 +1,5 @@
 // map
-let Map = (function($, dispatch) {
+const getMap = (components) => {
   
   let M = {};
 
@@ -10,83 +10,62 @@ let Map = (function($, dispatch) {
   let viewshedPoints;
   let selectedViewshed;
   let selectedViewshedData;
-  let viewshedIcon = L.icon({
+  const viewshedIcon = L.icon({
     iconUrl: 'img/viewshed.png',
     iconSize: [33, 37.25],
-    iconAnchor: [16.5, 27.25]
+    iconAnchor: [16.5, 27.25],
   });
-  let viewshedActiveIcon = L.icon({
+  const viewshedActiveIcon = L.icon({
     iconUrl: 'img/viewshed_active.png',
     iconSize: [33, 37.25],
-    iconAnchor: [16.5, 27.25]
+    iconAnchor: [16.5, 27.25],
   });
-  let viewshedStyle = {
-    icon: viewshedIcon
+  const viewshedStyle = {
+    icon: viewshedIcon,
   };
-  let viewshedConeStyle = {
+  const viewshedConeStyle = {
     stroke: false,
     fillColor: '#1a1a1a',
-    fillOpacity: .6
+    fillOpacity: 0.6,
   }
   let highlightLayerBottom;
   let highlightLayerTop;
-  let highlightBottomStyle = {
+  const highlightBottomStyle = {
     weight: 8,
     color: '#A63755',
-    opacity: .5
+    opacity: 0.5,
   };
-  let highlightTopStyle = {
+  const highlightTopStyle = {
     weight: 2,
     color: '#1a1a1a',
-    opacity: 1
+    opacity: 1,
   };
-  let highlightMarkerBottomStyle = {
+  const highlightMarkerBottomStyle = {
     color: '#A63755',
     weight: 3,
     fill: false,
-    radius: 3
-  }
-  let highlightMarkerTopStyle = {
+    radius: 3,
+  };
+  const highlightMarkerTopStyle = {
     color: '#1a1a1a',
     weight: 1,
     fill: false,
-    radius: 3
-  }
+    radius: 3,
+  };
   let layers = ['all']; // either 'all' or a list of DISABLED layers
 
-  let aerialLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+  const aerialLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
   });
 
   let locationMarker;
-  let locationBounds = L.latLngBounds([[33.8297, 35.4142], [33.9509, 35.593]]);
+  const locationBounds = L.latLngBounds([[33.8297, 35.4142], [33.9509, 35.593]]);
 
-  M.initialize = function (container) {
-    map = L.map(container, {
-        zoomControl: false,
-        maxZoom: 18,
-        minZoom: 14,
-        maxBounds: [[33.8297,35.4142],[33.9509,35.56]]
-      })
-      .setView([33.9, 35.5], 16)
-      .on('click', probe)
-      .on('moveend zoomend', function () {
-        dispatch.call('statechange', this);
-      })
-      .on('locationfound', function (e) {
-        showLocation(e.latlng);
-      })
-      .on('locationerror', function (e) {
-        alert('Your location could not be found');
-        $('.geolocate-control').removeClass('locating');
-      })
-    L.control.zoom({position:'bottomleft'}).addTo(map);
-    tileLayer = L.tileLayer(tileserver + year + '/' + layers.join(',') + '/{z}/{x}/{y}.png').addTo(map);
-    $(window).on('transitionend', function () {
-      map.invalidateSize();
-    });
-
-    function showLocation (latlng) {
+  M.initialize = (container) => {
+    const { init, dispatch } = components;
+    const { tileserver } = init;
+    
+    function showLocation(latlng) {
       if (locationMarker && map.hasLayer(locationMarker)) map.removeLayer(locationMarker);
       if (!locationBounds.contains(latlng)) {
         alert('Geolocation is only supported in Beirut.');
@@ -97,7 +76,7 @@ let Map = (function($, dispatch) {
           color: 'white',
           fillColor: '#3358ff',
           fillOpacity: 1,
-          opacity: 1
+          opacity: 1.
         }).addTo(map);
         map.panTo(latlng);
       }
@@ -105,7 +84,33 @@ let Map = (function($, dispatch) {
       $('.geolocate-control').removeClass('locating');
     }
 
-    let LocationControl = L.Control.extend({
+    map = L.map(container, {
+      zoomControl: false,
+      maxZoom: 18,
+      minZoom: 14,
+      maxBounds: [[33.8297, 35.4142], [33.9509, 35.56]],
+    })
+      .setView([33.9, 35.5], 16)
+      .on('click', probe)
+      .on('moveend zoomend', () => {
+        dispatch.call('statechange', this);
+      })
+      .on('locationfound', (e) => {
+        showLocation(e.latlng);
+      })
+      .on('locationerror', (e) => {
+        alert('Your location could not be found');
+        $('.geolocate-control').removeClass('locating');
+      });
+    L.control.zoom({position:'bottomleft'}).addTo(map);
+    tileLayer = L.tileLayer(tileserver + year + '/' + layers.join(',') + '/{z}/{x}/{y}.png').addTo(map);
+    $(window).on('transitionend', () => {
+      map.invalidateSize();
+    });
+
+    
+
+    const LocationControl = L.Control.extend({
       options: {
         position: 'bottomleft'
       },
@@ -143,7 +148,12 @@ let Map = (function($, dispatch) {
     return M;
   }
 
-  M.setYear = function (newYear) {
+  M.setYear = (newYear) => {
+    const { init } = components;
+    const {
+      tileserver,
+      server,
+    } = init;
     if (newYear == year) return;
     M.clearSelected();
     year = newYear;
@@ -280,10 +290,10 @@ let Map = (function($, dispatch) {
     M.removeHighlight();
   }
 
-  M.zoomToView = function (raster) {
+  M.zoomToView = (raster) => {
     M.clearSelected();
     selectedViewshedData = raster;
-    viewshedPoints.eachLayer(function(l){
+    viewshedPoints.eachLayer((l) => {
       if (l.feature.properties.id == raster.id) {
         map.setView(l.getLatLng());
         selectedViewshed = l;
@@ -291,42 +301,42 @@ let Map = (function($, dispatch) {
         l.feature.properties.cone.addTo(map);
       }
     });
-  }
+  };
 
-  M.getView = function () {
+  M.getView = () => {
     return [map.getCenter(), map.getZoom()];
-  }
+  };
 
-  M.setView = function (center, zoom) {
+  M.setView = (center, zoom) => {
     map.setView(center, zoom);
     return M;
-  }
+  };
 
-  M.getBounds = function () {
+  M.getBounds = () => {
     return map.getBounds();
-  }
+  };
 
   M.hasViews = true;
 
-  M.showViews = function () {
+  M.showViews = () => {
     addViewsheds();
     M.hasViews = true;
-  }
+  };
 
-  M.hideViews = function () {
+  M.hideViews = () => {
     removeViewsheds();
     M.hasViews = false;
-  }
+  };
 
-  function removeViewsheds () {
+  function removeViewsheds() {
     if (viewshedPoints && map.hasLayer(viewshedPoints)) map.removeLayer(viewshedPoints);
   }
 
-  function addViewsheds () {
+  function addViewsheds() {
     if (viewshedPoints && !map.hasLayer(viewshedPoints)) map.addLayer(viewshedPoints);
   }
 
-  function probe (e) {
+  function probe(e) {
     let zoom = map.getZoom();
     let probeZoom;
     switch ( zoom ){
@@ -354,4 +364,5 @@ let Map = (function($, dispatch) {
   }
 
   return M;
-})(jQuery, Dispatch);
+};
+export default getMap;

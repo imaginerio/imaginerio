@@ -5,11 +5,13 @@
     "L": false,
     "Image": false,
     "window": false,
-    "$": false
+    "$": false,
+    "_": false
   },
   "rules": {
     "max-lines": "warn",
     "no-console":"off",
-    "no-unused-vars": "warn"
+    "no-unused-vars": "warn",
+    "no-param-reassign": "off"
   }
 }

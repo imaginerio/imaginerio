@@ -178,4 +178,6 @@ eras[eras.length-1].dates[1] = new Date().getFullYear();
 
 _.reduce(eras, function (m, e) {
   return m + Math.round((e.dates[1] - e.dates[0])/e.increment)
-}, 0)
+}, 0);
+
+export default eras;

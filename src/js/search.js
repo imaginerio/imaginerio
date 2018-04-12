@@ -1,4 +1,4 @@
-let Search = (function($, dispatch) {
+const getSearch = (components) => {
   let S = {};
 
   let container;
@@ -123,4 +123,6 @@ let Search = (function($, dispatch) {
   }
 
   return S;
-})(jQuery, Dispatch);
+};
+
+export default getSearch;

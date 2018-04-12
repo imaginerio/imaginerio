@@ -1,4 +1,4 @@
-let Filmstrip = (function($, _, dispatch) {
+const getFilmstrip = (components) => {
   
   let F = {};
 
@@ -28,6 +28,11 @@ let Filmstrip = (function($, _, dispatch) {
   }
 
   function updateYear (y, max) {
+    const { init } = components;
+    const {
+      server,
+      thumbnaillUrl,
+    } = init;
     year = y;
     maxYear = max;
     rasters = [];
@@ -192,4 +197,6 @@ let Filmstrip = (function($, _, dispatch) {
   }
 
   return F;
-})(jQuery, _, Dispatch);
+};
+
+export default getFilmstrip;

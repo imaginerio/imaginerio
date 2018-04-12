@@ -1,6 +1,5 @@
 // timeline 
-let Timeline = (function($, dispatch) {
-  
+const getTimeline = (components) => {
   let T = {};
 
   let timeline;
@@ -15,6 +14,8 @@ let Timeline = (function($, dispatch) {
   let earlyWidth = 20;  // %
 
   function init_events () {
+    const { init } = components;
+    const { formatYear } = init;
     $('.timeline-slider, .timeline-track', timeline).on('mousedown touchstart', function (e) {
       let y = getDataForMouseEvent(e).year;
       $(document)
@@ -81,6 +82,7 @@ let Timeline = (function($, dispatch) {
   }
 
   function getDataForMouseEvent (e) {
+    const { eras } = components;
     let pageX;
     if (e.touches && e.touches[0]) pageX = e.touches[0].pageX;
     else pageX = e.pageX;
@@ -178,6 +180,8 @@ let Timeline = (function($, dispatch) {
   }
 
   function appendTick (type, value, x, container) {
+    const { init } = components;
+    const { formatYear } = init;
     var t = $('<div>')
       .attr('class', 'tick tick-' + type)
       .css('left', x + 'px')
@@ -193,6 +197,8 @@ let Timeline = (function($, dispatch) {
   }
 
   function updateYear (y) {
+    const { init, eras } = components;
+    const { formatYear } = init;
     year = y;
     $('.year', stepper).html(formatYear(year));
     $('.timeline-slider', timeline).css('left', getXForYear(y) + 'px');
@@ -254,4 +260,5 @@ let Timeline = (function($, dispatch) {
   }
 
   return T;
-})(jQuery, Dispatch);
+};
+export default getTimeline;

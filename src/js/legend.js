@@ -1,4 +1,4 @@
-let Legend = (function($, dispatch) {
+const getLegend = (components) => {
   
   let Lg = {};
 
@@ -24,22 +24,32 @@ let Legend = (function($, dispatch) {
   }
 
   function updateYear (y) {
+    const {
+      init,
+    } = components;
+    const {
+      server,
+    } = init;
+
     if (y == year) return;
     year = y;
     $('.legend-contents').empty();
-    $.getJSON(server + 'layers/' + year, function(layersJson) {
-      //$.getJSON(server + 'plans/' + year, function(plansJson) {
-        layers = layersJson;
-        //plans = plansJson;
-        _.each(layersJson, function (category, categoryName) {
-          let cat = $('<div>').attr('class', 'legend-category').appendTo('.legend-contents');
-          $('<div>').attr('class', 'category-title').html(categoryName.toUpperCase()).appendTo(cat);
-          _.each(category, function (obj, objName) { // there's an extra level here
-            if (obj.features) addLayerGroup (obj, objName);
-            else _.each(obj, addLayerGroup);
-        });
+    $.getJSON(server + 'layers/' + year, (layersJson) => {
+      const { dispatch } = components;
+      
+      layers = layersJson;
+      //plans = plansJson;
+      _.each(layersJson, (category, categoryName) => {
+        let cat = $('<div>').attr('class', 'legend-category').appendTo('.legend-contents');
+        $('<div>').attr('class', 'category-title').html(categoryName.toUpperCase()).appendTo(cat);
+        _.each(category, (obj, objName) => { // there's an extra level here
+          if (obj.features) addLayerGroup (obj, objName);
+          else _.each(obj, addLayerGroup);
+      });
 
         function addLayerGroup (group, groupName) {
+          const { names } = init;
+
           let gr = $('<div>').attr('class', 'legend-group').attr('data-group', groupName).appendTo(cat);
           let groupTitle = $('<div>').attr('class', 'group-title').appendTo(gr);
           $('<label>')
@@ -197,4 +207,6 @@ let Legend = (function($, dispatch) {
   }
 
   return Lg;
-})(jQuery, Dispatch);
+};
+
+export default getLegend;

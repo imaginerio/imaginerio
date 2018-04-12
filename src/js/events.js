@@ -1,117 +1,168 @@
 // events
-let Dispatch = d3.dispatch('changeyear', 'setyear', 'highlightfeature', 'removehighlight', 'addoverlay', 'removeoverlay', 'addviews', 'showviews', 'hideviews', 'resetviews', 'setopacity', 'setlayers', 'viewshedclick', 'showresults', 'removeprobe', 'drawfeature', 'removeall', 'statechange', 'cancelmemory', 'showaddmemory');
+const getDispatch = (components) => {
+  const Dispatch = d3.dispatch('changeyear', 'setyear', 'highlightfeature', 'removehighlight', 'addoverlay', 'removeoverlay', 'addviews', 'showviews', 'hideviews', 'resetviews', 'setopacity', 'setlayers', 'viewshedclick', 'showresults', 'removeprobe', 'drawfeature', 'removeall', 'statechange', 'cancelmemory', 'showaddmemory');
 
-Dispatch.on('changeyear', function (newYear) {
-  year = newYear;
-  Map.setYear(newYear);
-  Legend.setYear(newYear);
-  Filmstrip.setYear(newYear);
-  Search.setYear(newYear);
-  Dispatch.call('removeoverlay', this);
-  updateEra();
-  update_hash();
-});
+  Dispatch.on('changeyear', (newYear) => {
+    const {
+      Legend,
+      Search,
+      Filmstrip,
+      init,
+      Map,
+    } = components;
 
-Dispatch.on('setyear', function (newYear) {
-  Timeline.setYear(newYear);
-  Dispatch.call('changeyear', this, newYear);
-});
+    const {
+      updateEra,
+      updateHash,
+    } = init;
 
-Dispatch.on('highlightfeature', function (json) {
-  Map.highlightFeature(json);
-});
-
-Dispatch.on('removehighlight', function (json) {
-  Map.removeHighlight();
-  $('.layer-existing.highlighted, .layer-plans.highlighted').removeClass('highlighted');
-  $('.layer-plans').data('selected-plan', null);
-});
-
-Dispatch.on('addoverlay', function (p) {
-  Map.addOverlay(p.data.overlay);
-  rasterProbe(p);
-  $('#overlay-info').data('p', p).show();
-  $('.probe-hint').css('margin-right', '65px');
-  update_hash();
-});
-
-Dispatch.on('removeoverlay', function () {
-  Map.removeOverlay();
-  $('#fixed-probe').hide();
-  $('#overlay-info').data('p', null).hide();
-  $('.probe-hint').css('margin-right', '0');
-  update_hash();
-});
-
-Dispatch.on('setopacity', function (val) {
-  Map.setOverlayOpacity(val);
-});
-
-Dispatch.on('setlayers', function (list) {
-  Map.setLayers(list);
-  update_hash();
-});
-
-Dispatch.on('viewshedclick', function (id) {
-  let raster = _.find(Filmstrip.getRasters(), function (r) { return r.id == id });
-  if (raster) rasterProbe(raster.photo);
-});
-
-Dispatch.on('showresults', function (results, clicked) {
-  Search.showResults(results, clicked);
-});
-
-Dispatch.on('removeprobe', function () {
-  Search.clear();
-  Map.clearSelected();
-  $('#fixed-probe').hide();
-});
-
-Dispatch.on('drawfeature', function (data) {
-  Map.drawFeature(data.name);
-  if (mobile) $('#search .icon-left-big').click();
-  $.getJSON(server + 'details/' + data.id[0], function(response) {
-    let content = '';
-    if (response.length) {
-      if (response[0].creator) content += '<p>Creator: <span>' + response[0].creator + '</span></p>';
-      if (response[0].year) content += '<p>Mapped: <span>' + response[0].year + '</span></p>';
-    }
-    if (mobile) detailsProbe(data.name, content);
+    components.year = newYear;
+    Map.setYear(newYear);
+    Legend.setYear(newYear);
+    Filmstrip.setYear(newYear);
+    Search.setYear(newYear);
+    Dispatch.call('removeoverlay', this);
+    updateEra();
+    updateHash();
   });
-});
 
-Dispatch.on('removeall', function () {
-  $('.probe').hide();
-  $('.lightbox').hide();
-  $('main').removeClass('eras');
-  Map.clearSelected();
-});
+  Dispatch.on('setyear', (newYear) => {
+    const { Timeline } = components;
 
-Dispatch.on('statechange', function () {
-  update_hash();
-});
+    Timeline.setYear(newYear);
+    Dispatch.call('changeyear', this, newYear);
+  });
 
-Dispatch.on('addviews', function () {
-  Legend.addViews();
-});
+  Dispatch.on('highlightfeature', (json) => {
+    const { Map } = components;
 
-Dispatch.on('showviews', function () {
-  Map.showViews();
-});
+    Map.highlightFeature(json);
+  });
 
-Dispatch.on('hideviews', function () {
-  Map.hideViews();
-});
+  Dispatch.on('removehighlight', () => {
+    const { Map } = components;
 
-Dispatch.on('resetviews', function () {
-  Map.showViews();
-  Legend.hasViews = true;
-});
+    Map.removeHighlight();
+    $('.layer-existing.highlighted, .layer-plans.highlighted').removeClass('highlighted');
+    $('.layer-plans').data('selected-plan', null);
+  });
 
-Dispatch.on('cancelmemory', function () {
-  $('.memory-icon').hide();
-});
+  Dispatch.on('addoverlay', (p) => {
+    const {
+      Map,
+      init,
+      probes,
+    } = components;
+    const { updateHash } = init;
+    const { rasterProbe } = probes;
+    Map.addOverlay(p.data.overlay);
+    rasterProbe(p);
+    $('#overlay-info').data('p', p).show();
+    $('.probe-hint').css('margin-right', '65px');
+    updateHash();
+  });
 
-Dispatch.on('showaddmemory', function (lat, lng) {
-  showAddMemory(lat, lng);
-});
+  Dispatch.on('removeoverlay', () => {
+    const { Map, init } = components;
+    const { updateHash } = init;
+    Map.removeOverlay();
+    $('#fixed-probe').hide();
+    $('#overlay-info').data('p', null).hide();
+    $('.probe-hint').css('margin-right', '0');
+    updateHash();
+  });
+
+  Dispatch.on('setopacity', (val) => {
+    const { Map } = components;
+    Map.setOverlayOpacity(val);
+  });
+
+  Dispatch.on('setlayers', (list) => {
+    const { Map, init } = components;
+    const { updateHash } = init;
+    Map.setLayers(list);
+    updateHash();
+  });
+
+  Dispatch.on('viewshedclick', (id) => {
+    const { Filmstrip, probes } = components;
+    const { rasterProbe } = probes;
+    const raster = _.find(Filmstrip.getRasters(), r => r.id == id);
+    if (raster) rasterProbe(raster.photo);
+  });
+
+  Dispatch.on('showresults', (results, clicked) => {
+    const { Search } = components;
+    Search.showResults(results, clicked);
+  });
+
+  Dispatch.on('removeprobe', () => {
+    const { Search, Map } = components;
+    Search.clear();
+    Map.clearSelected();
+    $('#fixed-probe').hide();
+  });
+
+  Dispatch.on('drawfeature', (data) => {
+    const { Map, init, probes } = components;
+    const { mobile, server } = init;
+    const { detailsProbe } = probes;
+    Map.drawFeature(data.name);
+    if (mobile) $('#search .icon-left-big').click();
+    $.getJSON(server + 'details/' + data.id[0], (response) => {
+      let content = '';
+      if (response.length) {
+        if (response[0].creator) content += '<p>Creator: <span>' + response[0].creator + '</span></p>';
+        if (response[0].year) content += '<p>Mapped: <span>' + response[0].year + '</span></p>';
+      }
+      if (mobile) detailsProbe(data.name, content);
+    });
+  });
+
+  Dispatch.on('removeall', () => {
+    const { Map } = components;
+    $('.probe').hide();
+    $('.lightbox').hide();
+    $('main').removeClass('eras');
+    Map.clearSelected();
+  });
+
+  Dispatch.on('statechange', () => {
+    const { init } = components;
+    const { updateHash } = init;
+    updateHash();
+  });
+
+  Dispatch.on('addviews', () => {
+    const { Legend } = components;
+    Legend.addViews();
+  });
+
+  Dispatch.on('showviews', () => {
+    const { Map } = components;
+    Map.showViews();
+  });
+
+  Dispatch.on('hideviews', () => {
+    const { Map } = components;
+    Map.hideViews();
+  });
+
+  Dispatch.on('resetviews', () => {
+    const { Map, Legend } = components;
+    Map.showViews();
+    Legend.hasViews = true;
+  });
+
+  Dispatch.on('cancelmemory', () => {
+    $('.memory-icon').hide();
+  });
+
+  Dispatch.on('showaddmemory', (lat, lng) => {
+    // this doesn't exist anywhere???
+    showAddMemory(lat, lng);
+  });
+  return Dispatch;
+};
+
+export default getDispatch;
