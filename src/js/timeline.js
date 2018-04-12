@@ -10,7 +10,7 @@ let Timeline = (function($, dispatch) {
   let yearRange = [];
   let year = 2015;
   let earlyYears;
-  let _ears;
+  let _eras;
   let _totalSteps;
   let earlyWidth = 20;  // %
 

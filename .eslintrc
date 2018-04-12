@@ -1,0 +1,15 @@
+{ 
+  "extends": ["airbnb"],
+  "globals": {
+    "d3": false,
+    "L": false,
+    "Image": false,
+    "window": false,
+    "$": false
+  },
+  "rules": {
+    "max-lines": "warn",
+    "no-console":"off",
+    "no-unused-vars": "warn"
+  }
+}
