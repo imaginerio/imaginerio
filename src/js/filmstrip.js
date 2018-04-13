@@ -1,5 +1,4 @@
 const getFilmstrip = (components) => {
-  
   let F = {};
 
   let filmstrip = $('#filmstrip');
@@ -37,6 +36,7 @@ const getFilmstrip = (components) => {
     maxYear = max;
     rasters = [];
     $.getJSON(server + 'raster/' + year + (max ? ('?max=' + max) : ''), function(json) {
+      const { Photo } = components;
       filmstrip.show();
       json = _.reject(json, function(r){ return r.id === null });
       $('.mini-thumbs', filmstrip).empty();
