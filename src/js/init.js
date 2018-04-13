@@ -44,7 +44,7 @@ const getInit = (components) => {
   // runtime stuff
   
   var mobile = window.innerWidth <= 700;
-  
+
   if( gup( 'dev' ) == 'true' ){
     server = "http://beirut-dev.axismaps.io/";
     tileserver = "http://beirut-dev.axismaps.io/tiles/";
@@ -54,14 +54,15 @@ const getInit = (components) => {
   $.getJSON(server + 'timeline', function(yearsData) {
     years = yearsData;
     //while (years[0] < eras[0].dates[0]) years.shift();  // force min year and first era to match
-    if (names) initialize();
-  });
-  $.getJSON(server + 'names/en', function(namesData) {
-    Init.names = namesData;
-    if (years) initialize();
+    $.getJSON(server + 'names/en', function(namesData) {
+      Init.names = namesData;
+      initialize();
+    });
   });
   
+  
   function initialize () {
+    console.log('init initialize');
     eras[eras.length-1].dates[1] = new Date().getFullYear();
     check_hash();
     year = params.year || 1943; // a year that actually has something
