@@ -8,6 +8,8 @@ import getLegend from './legend';
 import getSearch from './search';
 import getPhoto from './Photo';
 import getOverlay from './Overlay';
+import getProbes from './probes';
+import getSlider from './slider';
 
 const components = {};
 
@@ -20,6 +22,8 @@ components.Legend = getLegend(components);
 components.Search = getSearch(components);
 components.Photo = getPhoto(components);
 components.Overlay = getOverlay(components);
+components.probes = getProbes(components);
+components.Slider = getSlider(components);
 components.init = getInit(components);
 
 

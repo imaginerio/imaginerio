@@ -381,6 +381,7 @@ const getInit = (components) => {
     mobile,
     server,
     tileserver,
+    rasterserver,
     names,
     thumbnaillUrl,
   });

@@ -192,6 +192,7 @@ const getTimeline = (components) => {
   }
 
   function changeYear (y) {
+    const { dispatch } = components;
     updateYear(y);
     dispatch.call('changeyear', this, year);
   }

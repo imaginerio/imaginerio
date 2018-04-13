@@ -168,26 +168,34 @@ const getMap = (components) => {
     M.removeHighlight();
     removeViewsheds();
     viewshedPoints = null;
-    $.getJSON(server + 'visual/' + year, function(json) {
+    $.getJSON(server + 'visual/' + year, (json) => {
+      const { probes, dispatch } = components;
+      const Dispatch = dispatch;
+      const { mapProbe } = probes;
       if (!json.features.length) return;
-      let points = _.map(json.features, function (f) {
-        return {type:'Feature', 
+      const points = _.map(json.features, (f) => {
+        return {
+          type: 'Feature',
           properties: _.extend(
-            f.properties, 
+            f.properties,
             {
-              cone: L.geoJSON({type:'Feature', geometry: f.geometry.geometries[1]}, {
-                style: function () { return viewshedConeStyle; }
-              })
-            }
+              cone: L.geoJSON(
+                {
+                  type: 'Feature',
+                  geometry: f.geometry.geometries[1],
+                },
+                { style() { return viewshedConeStyle; }},
+              ),
+            },
           ),
           geometry: {type: 'Point', coordinates: f.geometry.geometries[1].coordinates[0][0]}}
       });
-      viewshedPoints = L.geoJSON({type:'FeatureCollection', features: points}, {
+      viewshedPoints = L.geoJSON({ type: 'FeatureCollection', features: points }, {
         pointToLayer: function (pt, latlng) {
           return L.marker(latlng, viewshedStyle);
         },
 
-        onEachFeature: function(feature, layer) {
+        onEachFeature: (feature, layer) => {
           layer.on('mouseover', function (e) {
             feature.properties.cone.addTo(map);
             mapProbe(e, '<strong>' + feature.properties.description + '</strong><br><em>Click for details</em>');

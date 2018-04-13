@@ -12,6 +12,8 @@
     "max-lines": "warn",
     "no-console":"off",
     "no-unused-vars": "warn",
-    "no-param-reassign": "off"
+    "no-param-reassign": "off",
+    "no-use-before-define": "warn",
+    "no-underscore-dangle": "warn"
   }
 }
