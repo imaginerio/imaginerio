@@ -20,6 +20,8 @@ const getSearch = (components) => {
   }
 
   function doSearch (val) {
+    const { init } = components;
+    const { server } = init;
     if (val != searchVal) {
       searchVal = val;
       if (request && request.readyState != 4) request.abort();
@@ -30,28 +32,30 @@ const getSearch = (components) => {
   }
 
   S.showResults = function showResults(results, clicked) {
-    const { dispatch } = components;
+    const { dispatch, init } = components;
+    const { mobile, names, server } = init;
+
     searchResults = results;
     if (_.size(searchResults)) {
       resultsContainer.css('margin-right', $('#overlay-info').is(':visible') ? '65px' : 0);
       dispatch.call('removeprobe', this);
       dispatch.call('removehighlight', this);
       if (mobile) $('header').addClass('search');
-      let array = _.mapObject(results, function(r, k){ return _.extend(r, {name: k}); });
-      let groups = _.groupBy(searchResults, 'layer');
+      const array = _.mapObject(results, (r, k) => _.extend(r, { name: k }));
+      const groups = _.groupBy(searchResults, 'layer');
       $('.results-group').remove();
       resultsContainer.show();
       _.each(groups, (g, gName) => {
-        let groupContainer = $('<div>')
+        const groupContainer = $('<div>')
           .attr('class', 'results-group')
           .append('<span>' + names[gName.toLowerCase()] || gName + '</span>')
           .appendTo(resultsContainer);
-        _.each(g, function (r) {
-          let row = $('<div>').attr('class', 'search-result')
+        _.each(g, (r) => {
+          const row = $('<div>').attr('class', 'search-result')
             .append('<i class="icon-right-dir"></i>')
             .append('<i class="icon-down-dir"></i>')
             .appendTo(groupContainer);
-          let span = $('<span>' + r.name + '</span>')
+          $('<span>' + r.name + '</span>')
             .appendTo(row)
             .on('click', function () {
               //$('header').removeClass('search');
@@ -59,11 +63,11 @@ const getSearch = (components) => {
                 $('.search-result.selected').removeClass('selected');
                 row.addClass('selected');
                 if (!row.hasClass('expanded')) $(this).prev().click();
-                Dispatch.call('drawfeature', this, r);
+                dispatch.call('drawfeature', this, r);
               } else {
                 row.removeClass('selected');
                 if (row.hasClass('expanded')) $(this).prev().click();
-                Dispatch.call('removehighlight', this);
+                dispatch.call('removehighlight', this);
               }
               
             })

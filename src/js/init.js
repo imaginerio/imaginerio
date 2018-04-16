@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 const getInit = (components) => {
   const {
     eras,
@@ -24,15 +22,13 @@ const getInit = (components) => {
   const thumbnaillUrl = 'https://mdxdv.artstor.org/thumb/imgstor/size1/sslps/c7731849/';
   const imageUrl = 'https://mdxdv.artstor.org/thumb/imgstor/size2/sslps/c7731849/';
   
-  var years;
-  var year;
-  var minYear = 1830;
+  let years;
+  let year;
+  const minYear = 1830;
+  let names;
+  let currentEra = eras[0];
   
-  var names;
-  
-  var currentEra = eras[0];
-  
-  let params = {};
+  const params = {};
   
   (function($){
     $.event.special.destroyed = {
@@ -46,36 +42,32 @@ const getInit = (components) => {
   
   // runtime stuff
   
-  var mobile = window.innerWidth <= 700;
+  let mobile = window.innerWidth <= 700;
 
-  // if( gup( 'dev' ) == 'true' ){
-  //   server = "http://beirut-dev.axismaps.io/";
-  //   tileserver = "http://beirut-dev.axismaps.io/tiles/";
-  //   rasterserver = "http://beirut-dev.axismaps.io/raster/";
-  // }
-  if( gup( 'dev' ) == 'true' ){
-    server = "http://imaginerio.axismaps.io:3000/";
-    tileserver = "http://imaginerio.axismaps.io:3000/tiles/";
-    rasterserver = "http://imaginerio.axismaps.io:3000/raster/";
+  if ( gup( 'dev' ) == 'true' ) {
+    server = 'http://imaginerio-dev.axismaps.io:3000';
+    tileserver = 'http://imaginerio-dev.axismaps.io:3001/tiles/';
+    rasterserver = 'http://imaginerio-dev.axismaps.io:3001/raster/';
   }
-  
-  $.getJSON(server + 'timeline', function(yearsData) {
+
+  $.getJSON(server + 'timeline', (yearsData) => {
     years = yearsData;
     //while (years[0] < eras[0].dates[0]) years.shift();  // force min year and first era to match
-    $.getJSON(server + 'names/en', function(namesData) {
+    $.getJSON(server + 'names/en', (namesData) => {
       Init.names = namesData;
       initialize();
     });
   });
   
   
-  function initialize () {
-    eras[eras.length-1].dates[1] = new Date().getFullYear();
+  function initialize() {
+    console.log('eras', eras);
+    eras[eras.length - 1].dates[1] = new Date().getFullYear();
     check_hash();
     year = params.year || 1943; // a year that actually has something
     Map.initialize('map').setYear(year); 
     Timeline.initialize(eras, 'timeline').setYear(year);
-    Filmstrip.initialize();//.setYear(year);
+    Filmstrip.initialize();
     Legend.initialize().setYear(year);
     Search.initialize('search').setYear(year);
     init_ui();

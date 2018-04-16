@@ -42,7 +42,6 @@ const getFilmstrip = (components) => {
     maxYear = max;
     rasters = [];
     $.getJSON(server + 'raster/' + year + (max ? ('?max=' + max) : ''), (json) => {
-      console.log('json', json);
       const {
         Photo,
         Overlay,

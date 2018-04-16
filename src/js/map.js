@@ -1,11 +1,12 @@
 // map
 const getMap = (components) => {
   
-  let M = {};
+  const M = {};
 
   let map;
   let year = 2015;
   let tileLayer;
+  let baseTileLayer;
   let overlayLayer;
   let viewshedPoints;
   let selectedViewshed;
@@ -27,7 +28,7 @@ const getMap = (components) => {
     stroke: false,
     fillColor: '#1a1a1a',
     fillOpacity: 0.6,
-  }
+  };
   let highlightLayerBottom;
   let highlightLayerTop;
   const highlightBottomStyle = {
@@ -80,7 +81,7 @@ const getMap = (components) => {
           opacity: 1,
         }).addTo(map);
         map.panTo(latlng);
-      }  
+      }
       $('.geolocate-control').removeClass('locating');
     }
 
@@ -102,29 +103,33 @@ const getMap = (components) => {
         alert('Your location could not be found');
         $('.geolocate-control').removeClass('locating');
       });
-    L.control.zoom({position:'bottomleft'}).addTo(map);
-    tileLayer = L.tileLayer(tileserver + year + '/' + layers.join(',') + '/{z}/{x}/{y}.png').addTo(map);
+    L.control.zoom({ position: 'bottomleft' }).addTo(map);
+
+    const tileUrl = `${tileserver}${year}/${layers.join(',')}/{z}/{x}/{y}.png`;
+    const baseTileUrl = `${tileserver}${year}/base/{z}/{x}/{y}.png`;
+
+    baseTileLayer = L.tileLayer(baseTileUrl).addTo(map);
+    tileLayer = L.tileLayer(tileUrl).addTo(map);
+
     $(window).on('transitionend', () => {
       map.invalidateSize();
     });
-
-    
 
     const LocationControl = L.Control.extend({
       options: {
         position: 'bottomleft'
       },
 
-      onAdd: function (map) {
+      onAdd(innerMap) {
         let div = L.DomUtil.create('div', 'leaflet-bar leaflet-control geolocate-control');
         div.innerHTML = '<a><i class="icon-direction"></i><i class="icon-spinner animate-spin"></i></a>';
-        div.onclick = function (e) {
+        div.onclick = function onClick(e) {
           e.stopPropagation();
-          map.locate({watch: true});
+          innerMap.locate({ watch: true });
           $(div).addClass('locating');
-        }
+        };
         return div;
-      }
+      },
     });
 
     map.addControl(new LocationControl());
@@ -349,7 +354,7 @@ const getMap = (components) => {
   }
 
   function probe(e) {
-    const { init } = components;
+    const { init, dispatch } = components;
     const { server } = init;
     let zoom = map.getZoom();
     let probeZoom;
@@ -373,7 +378,7 @@ const getMap = (components) => {
     let off = layers[0] == 'all' ? '' : layers.join(',');
     $.getJSON(server + 'probe/' + year + '/' + probeZoom + '/' + e.latlng.lng + ',' + e.latlng.lat + '/' + off, function (json) {
       if (_.size(json)) $('.probe-hint').hide();
-      Dispatch.call('showresults', this, _.indexBy(json, 'name'), true);
+      dispatch.call('showresults', this, _.indexBy(json, 'name'), true);
     });
   }
 

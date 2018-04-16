@@ -1,7 +1,8 @@
+import eras from './eras';
+import config from './config';
 import getDispatch from './events';
 import getInit from './init';
 import getMap from './map';
-import eras from './eras';
 import getTimeline from './timeline';
 import getFilmstrip from './filmstrip';
 import getLegend from './legend';
@@ -14,6 +15,7 @@ import getSlider from './slider';
 const components = {};
 
 components.eras = eras;
+components.config = config;
 components.dispatch = getDispatch(components);
 components.Map = getMap(components);
 components.Timeline = getTimeline(components);

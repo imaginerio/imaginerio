@@ -1,5 +1,4 @@
 const getLegend = (components) => {
-  
   const Lg = {};
 
   const legend = $('#legend');
