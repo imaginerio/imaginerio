@@ -13,12 +13,15 @@ const getFilmstrip = (components) => {
 
   let tempRaster;
 
-  function initEvents () {
-    $('.filmstrip-toggle').click(function () {
-      if (!mobile)
+  function initEvents() {
+    const { init } = components;
+    const { mobile } = init;
+    $('.filmstrip-toggle').click(() => {
+      if (!mobile) {
         filmstrip.toggleClass('collapsed');
-      else 
+      } else {
         filmstrip.toggleClass('partial');
+      }
     });
 
     $('.raster-types i').click(filterTypes);

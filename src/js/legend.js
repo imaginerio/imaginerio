@@ -142,30 +142,31 @@ const getLegend = (components) => {
       );
     }
 
-    if( style.fill || style.stroke ) swatch.css( style );
+    if ( style.fill || style.stroke ) swatch.css( style );
 
     return swatch;
   }
 
-  Lg.addViews = function () {
+  Lg.addViews = () => {
+    const { dispatch } = components;
     $('.legend-category[data-category="views"]').remove();
-    let cat = $('<div>').attr('class', 'legend-category').attr('data-category', 'views').prependTo('.legend-contents');
+    const cat = $('<div>').attr('class', 'legend-category').attr('data-category', 'views').prependTo('.legend-contents');
     $('<div>').attr('class', 'category-title').html('VIEWS').appendTo(cat);
-    let gr = $('<div>').attr('class', 'legend-group').attr('data-group', 'views').appendTo(cat);
-    let groupTitle = $('<div>').attr('class', 'group-title').appendTo(gr);
-    let label = $('<label>')
+    const gr = $('<div>').attr('class', 'legend-group').attr('data-group', 'views').appendTo(cat);
+    const groupTitle = $('<div>').attr('class', 'group-title').appendTo(gr);
+    const label = $('<label>')
       .html('Cones of vision')
       .appendTo(groupTitle);
     $('<input type="checkbox" value="views">')
       .attr('checked', Lg.hasViews ? 'checked' : null)
-      .on('change', function () {
+      .on('change', function onChange() {
         if ($(this).is(':checked')) dispatch.call('showviews', this);
         else dispatch.call('hideviews', this);
         Lg.hasViews = $(this).is(':checked');
         dispatch.call('statechange', this);
       })
       .prependTo(label);
-    add_swatch({shape:'viewshed.png'}).appendTo(groupTitle);
+    add_swatch({ shape: 'viewshed.png' }).appendTo(groupTitle);
   }
 
   Lg.layers = function (list) {

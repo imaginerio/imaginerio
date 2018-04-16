@@ -88,7 +88,7 @@ const getMap = (components) => {
       zoomControl: false,
       maxZoom: 18,
       minZoom: 14,
-      maxBounds: [[33.8297, 35.4142],[33.9509, 35.56]]
+      maxBounds: [[33.8297, 35.4142], [33.9509, 35.56]]
     })
       .setView([33.9, 35.5], 16)
       .on('click', probe)
@@ -191,18 +191,18 @@ const getMap = (components) => {
           geometry: {type: 'Point', coordinates: f.geometry.geometries[1].coordinates[0][0]}}
       });
       viewshedPoints = L.geoJSON({ type: 'FeatureCollection', features: points }, {
-        pointToLayer: function (pt, latlng) {
+        pointToLayer(pt, latlng) {
           return L.marker(latlng, viewshedStyle);
         },
 
-        onEachFeature: (feature, layer) => {
-          layer.on('mouseover', function (e) {
+        onEachFeature(feature, layer) {
+          layer.on('mouseover', (e) => {
             feature.properties.cone.addTo(map);
             mapProbe(e, '<strong>' + feature.properties.description + '</strong><br><em>Click for details</em>');
-          }).on('mouseout', function () {
+          }).on('mouseout', function onMouseout() {
             $('#map-probe').hide();
             if (map.hasLayer(feature.properties.cone) && selectedViewshed != this) map.removeLayer(feature.properties.cone);
-          }).on('click', function () {
+          }).on('click', function onClick() {
             Dispatch.call('viewshedclick', this, this.feature.properties.id);
           })
         }
@@ -213,15 +213,17 @@ const getMap = (components) => {
       }
     });
     return M;
-  }
+  };
 
   M.setLayers = function setLayers(list) {
+    const { init } = components;
+    const { tileserver } = init;
     // don't do things if layer list hasn't changed
     let skip = true;
-    list.forEach(function (l) {
+    list.forEach((l) => {
       if (layers.indexOf(l) == -1) skip = false;
     });
-    layers.forEach(function (l) {
+    layers.forEach((l) => {
       if (list.indexOf(l) == -1) skip = false;
     });
     if (skip) return M;
@@ -274,15 +276,17 @@ const getMap = (components) => {
   }
 
   M.drawFeature = function (name) {
+    const { init } = components;
+    const { server } = init;
     M.removeHighlight();
-    $.getJSON(server + 'draw/' + year + '/' + encodeURIComponent(name), function (json) {
+    $.getJSON(server + 'draw/' + year + '/' + encodeURIComponent(name), (json) => {
       highlightLayerBottom = L.geoJson(json, {
         style: () => highlightBottomStyle,
         pointToLayer: (pt, latlng) => L.circleMarker(latlng, highlightMarkerBottomStyle)
       }).addTo(map);
       highlightLayerTop = L.geoJson(json, {
         style: () => highlightTopStyle,
-        pointToLayer: (pt, latlng) => L.circleMarker(latlng, highlightMarkerTopStyle)
+        pointToLayer: (pt, latlng) => L.circleMarker(latlng, highlightMarkerTopStyle),
       }).addTo(map);
       map.fitBounds(highlightLayerBottom.getBounds());
     });
