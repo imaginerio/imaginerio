@@ -60,7 +60,7 @@ const getMap = (components) => {
 
   // -22.9046, -43.1919
   let locationMarker;
-  const locationBounds = L.latLngBounds([[33.8297, 35.4142], [33.9509, 35.593]]);
+  const locationBounds = L.latLngBounds([[-23.10243406, -44.04944719 ], [-22.63003187, -42.65988214]]);
 
   M.initialize = (container) => {
     const { init, dispatch } = components;
@@ -88,9 +88,9 @@ const getMap = (components) => {
       zoomControl: false,
       maxZoom: 18,
       minZoom: 14,
-      maxBounds: [[33.8297, 35.4142], [33.9509, 35.56]]
+      maxBounds: [[ -23.10243406, -44.04944719  ], [ -22.63003187, -42.65988214 ]],
     })
-      .setView([33.9, 35.5], 16)
+      .setView([-22.9046, -43.1919], 16)
       .on('click', probe)
       .on('moveend zoomend', () => {
         dispatch.call('statechange', this);
