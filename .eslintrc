@@ -6,7 +6,8 @@
     "Image": false,
     "window": false,
     "$": false,
-    "_": false
+    "_": false,
+    "docuemnt": false
   },
   "rules": {
     "max-lines": "warn",

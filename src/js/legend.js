@@ -1,8 +1,8 @@
 const getLegend = (components) => {
   
-  let Lg = {};
+  const Lg = {};
 
-  let legend = $('#legend');
+  const legend = $('#legend');
 
   let year = 2015;
 
@@ -13,17 +13,18 @@ const getLegend = (components) => {
   let layers;
   let plans;
 
-  function init_events () {
-    $('.legend-toggle').click(function () {
+  function initEvents() {
+    const { dispatch } = components;
+    $('.legend-toggle').click(() => {
       legend.toggleClass('collapsed').addClass('subsequent');
     });
-    $('.legend-contents').on('change', function (){
+    $('.legend-contents').on('change', function onChange() {
       // checkbox clicks
       dispatch.call('setlayers', this, Lg.layers());
     });
   }
 
-  function updateYear (y) {
+  function updateYear(y) {
     const {
       init,
     } = components;
@@ -38,25 +39,25 @@ const getLegend = (components) => {
       const { dispatch } = components;
       
       layers = layersJson;
-      //plans = plansJson;
+      // plans = plansJson;
       _.each(layersJson, (category, categoryName) => {
-        let cat = $('<div>').attr('class', 'legend-category').appendTo('.legend-contents');
+        const cat = $('<div>').attr('class', 'legend-category').appendTo('.legend-contents');
         $('<div>').attr('class', 'category-title').html(categoryName.toUpperCase()).appendTo(cat);
         _.each(category, (obj, objName) => { // there's an extra level here
-          if (obj.features) addLayerGroup (obj, objName);
+          if (obj.features) addLayerGroup(obj, objName);
           else _.each(obj, addLayerGroup);
       });
 
-        function addLayerGroup (group, groupName) {
+        function addLayerGroup(group, groupName) {
           const { names } = init;
 
-          let gr = $('<div>').attr('class', 'legend-group').attr('data-group', groupName).appendTo(cat);
-          let groupTitle = $('<div>').attr('class', 'group-title').appendTo(gr);
+          const gr = $('<div>').attr('class', 'legend-group').attr('data-group', groupName).appendTo(cat);
+          const groupTitle = $('<div>').attr('class', 'group-title').appendTo(gr);
           $('<label>')
             .html(names[groupName.toLowerCase()] || groupName)
             .prepend('<input type="checkbox" value="' + groupName + '"checked>')
             .appendTo(groupTitle);
-          _.each(group.features, function (feature, key) {
+          _.each(group.features, (feature, key) => {
             let layer = $('<div>').attr('class', 'layer').appendTo(gr);
             addLayerExisting(feature, key, layer);
             if (feature.style) {
@@ -67,7 +68,6 @@ const getLegend = (components) => {
 
           let swatch = add_swatch(group.style).appendTo(groupTitle);
         }
-
       });
       dispatch.call('setlayers', this, Lg.layers());
       dispatch.call('statechange', this);
@@ -84,7 +84,7 @@ const getLegend = (components) => {
   function getPlansForLayer (layer) {
     if (!plans) return;
     let planArray;
-    plans.forEach(function (plan) {
+    plans.forEach((plan) => {
       if (plan.features.indexOf(layer) !== -1) {
         if (!planArray) planArray = [];
         planArray.push(plan);
@@ -93,9 +93,9 @@ const getLegend = (components) => {
     return planArray;
   }
 
-  function addLayerExisting (feature, key, container, notpresent) {
-    let name = feature.id ? key : feature;
-    let l = $('<div>')
+  function addLayerExisting(feature, key, container, notpresent) {
+    const name = feature.id ? key : feature;
+    const l = $('<div>')
       .attr('class', 'layer-existing')
       .attr('data-name',name)
       .data('name', name)
@@ -105,7 +105,9 @@ const getLegend = (components) => {
       .click(layerClick);
   }
 
-  function layerClick () {
+  function layerClick() {
+    const { dispatch, init } = components;
+    const { mobile } = init;
     if (!$(this).hasClass('highlighted')) {
       highlightFeature($(this).data('name'));
       $(this).toggleClass('highlighted');
@@ -115,12 +117,14 @@ const getLegend = (components) => {
     }
   }
 
-  function highlightFeature (feature) {
+  function highlightFeature(feature) {
+    const { dispatch, init } = components;
+    const { server } = init;
     dispatch.call('removehighlight', this);
-    Dispatch.call('removeprobe', this);
-    $.getJSON(server + 'feature/' + year + '/' + encodeURIComponent(feature), function (json) {
+    dispatch.call('removeprobe', this);
+    $.getJSON(server + 'feature/' + year + '/' + encodeURIComponent(feature), function highlight(json) {
       dispatch.call('highlightfeature', this, json);
-    })
+    });
   }
 
   function add_swatch( style )
@@ -195,7 +199,7 @@ const getLegend = (components) => {
   }
 
   Lg.initialize = function () {
-    init_events();
+    initEvents();
 
     return Lg;
   }

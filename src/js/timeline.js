@@ -13,18 +13,18 @@ const getTimeline = (components) => {
   let _totalSteps;
   let earlyWidth = 20;  // %
 
-  function init_events () {
-    const { init } = components;
+  function initEvents() {
+    const { init, eras } = components;
     const { formatYear } = init;
-    $('.timeline-slider, .timeline-track', timeline).on('mousedown touchstart', function (e) {
+    $('.timeline-slider, .timeline-track', timeline).on('mousedown touchstart', (e) => {
       let y = getDataForMouseEvent(e).year;
       $(document)
-        .on('mousemove.timeslide touchmove.timeslide', function (e) {
-          let d = getDataForMouseEvent(e);
+        .on('mousemove.timeslide touchmove.timeslide', (ee) => {
+          const d = getDataForMouseEvent(ee);
           $('.timeline-slider', timeline).css('left', d.x + 'px');
           y = d.year;
         })
-        .on('mouseup.timeslide mouseleave.timeslide touchend.timeslide', function (){
+        .on('mouseup.timeslide mouseleave.timeslide touchend.timeslide', () => {
           $(document).off('mousemove.timeslide mouseup.timeslide mouseleave.timeslide touchmove.timeslide touchend.timeslide');
           changeYear(y);
         })
@@ -59,9 +59,9 @@ const getTimeline = (components) => {
       }
     });
 
-    $('.icon-angle-right', stepper).click(function () {
-      let era = getEraForYear(year);
-      let i = eras.indexOf(era);
+    $('.icon-angle-right', stepper).click(() => {
+      const era = getEraForYear(year);
+      const i = eras.indexOf(era);
       if (era != eras[eras.length - 1] || year != era.dates[1]) {
         if (year == era.dates[1]) changeYear(eras[i+1].dates[0])
         else {
@@ -75,41 +75,41 @@ const getTimeline = (components) => {
       }
     });
 
-    $(window).resize(function () {
+    $(window).resize(() => {
       addTicks();
       updateYear(year);
     });
   }
 
-  function getDataForMouseEvent (e) {
+  function getDataForMouseEvent(e) {
     const { eras } = components;
     let pageX;
     if (e.touches && e.touches[0]) pageX = e.touches[0].pageX;
     else pageX = e.pageX;
-    let t = $('.timeline-track', timeline);
+    const t = $('.timeline-track', timeline);
     let x = pageX - t.offset().left;
-    let tickContainers = $('.ticks', timeline);
+    const tickContainers = $('.ticks', timeline);
     let era;
     let localX;
     x = Math.max(0, Math.min(t.width(), x));
-    for (let i = 0; i < eras.length; i ++) {
-      let nextX = i < eras.length - 1 ? tickContainers.eq(i + 1).position().left : timeline.width() + 5;
+    for (let i = 0; i < eras.length; i++) {
+      const nextX = i < eras.length - 1 ? tickContainers.eq(i + 1).position().left : timeline.width() + 5;
       if (x < nextX) {
         era = eras[i];
         localX = x - tickContainers.eq(i).position().left;
         break;
       }
     }
-    let stepWidth = timeline.width() / (_totalSteps);
-    let eraSteps = Math.ceil((era.dates[1] - era.dates[0])/era.increment);
-    let roundedStep = Math.min(Math.floor(localX / stepWidth), eraSteps - 1);
+    const stepWidth = timeline.width() / (_totalSteps);
+    let eraSteps = Math.ceil((era.dates[1] - era.dates[0]) / era.increment);
+    const roundedStep = Math.min(Math.floor(localX / stepWidth), eraSteps - 1);
     if ((era.dates[1] - era.dates[0]) % era.increment != 0 ) eraSteps++;
-    let year = roundedStep == eraSteps - 1 ? era.dates[1] : era.dates[0] + era.increment * roundedStep;
+    const innerYear = roundedStep == eraSteps - 1 ? era.dates[1] : era.dates[0] + era.increment * roundedStep;
 
-    return {x: x, year: year}
+    return { x, year: innerYear };
   }
 
-  function getXForYear (y) {
+  function getXForYear(y) {
     let tick;
     let tickBefore;
     let tickAfter;
@@ -126,38 +126,37 @@ const getTimeline = (components) => {
     if (tick) return tick.position().left + tick.parent().position().left;
     else if (!tickBefore) return 0;
     else if (!tickAfter) return $('.timeline-track', timeline).width();
-    else {
-      let valBefore = tickBefore.data('value');
-      let valAfter = tickAfter.data('value');
-      let dist = tickAfter.offset().left - tickBefore.offset().left;
-      return tickBefore.position().left + tickBefore.parent().position().left + ((y - valBefore) / (valAfter - valBefore)) * dist;
-    }
+    
+    const valBefore = tickBefore.data('value');
+    const valAfter = tickAfter.data('value');
+    const dist = tickAfter.offset().left - tickBefore.offset().left;
+    return tickBefore.position().left + tickBefore.parent().position().left + ((y - valBefore) / (valAfter - valBefore)) * dist;
   }
 
-  function addEras () {
-    _eras.forEach(function (e, i) {
-      let pct0 = (e.dates[0] - yearRange[0]) / (yearRange[1] - yearRange[0]);
-      let pctW = (e.dates[1] - e.dates[0] + 1) / (yearRange[1] - yearRange[0]);
-      let era = $('<div>')
+  function addEras() {
+    _eras.forEach((e, i) => {
+      const pct0 = (e.dates[0] - yearRange[0]) / (yearRange[1] - yearRange[0]);
+      const pctW = (e.dates[1] - e.dates[0] + 1) / (yearRange[1] - yearRange[0]);
+      const era = $('<div>')
         .attr('class', 'era era-' + i)
         .css('left', pct0 * 100 + '%')
         .prependTo($('.timeline-track', timeline));
     });
   }
 
-  function addTicks () {
+  function addTicks() {
     $('.ticks', timeline).remove();
-    let width = timeline.width();
-    let stepWidth = width / (_totalSteps);
-    _eras.forEach(function (era, index) {
+    const width = timeline.width();
+    const stepWidth = width / (_totalSteps);
+    _eras.forEach((era, index) => {
       let steps = Math.ceil((era.dates[1] - era.dates[0])/era.increment);
       if ((era.dates[1] - era.dates[0]) % era.increment != 0 ) steps++;
       
-      let ticksContainer = $('<div class="ticks ticks-main">').appendTo(ticksOuter);
+      const ticksContainer = $('<div class="ticks ticks-main">').appendTo(ticksOuter);
       ticksContainer.css('width', (stepWidth * (steps)) + 'px');
       let i = 0;
       let tickVal = era.dates[0];
-      let mainInterval = window.innerWidth > 840 ? 10 : 20;
+      const mainInterval = window.innerWidth > 840 ? 10 : 20;
       let otherIntervalTest = (index == 0 || index == 4 || index == 7 || index == 10);
       if (window.innerWidth < 1090) otherIntervalTest = (index == 0 || index == 7 || index == 10);
       if (window.innerWidth < 900) otherIntervalTest = (index == 0 || index == 10);
@@ -179,10 +178,10 @@ const getTimeline = (components) => {
     });
   }
 
-  function appendTick (type, value, x, container) {
+  function appendTick(type, value, x, container) {
     const { init } = components;
     const { formatYear } = init;
-    var t = $('<div>')
+    const t = $('<div>')
       .attr('class', 'tick tick-' + type)
       .css('left', x + 'px')
       .attr('data-value', value)
@@ -191,13 +190,13 @@ const getTimeline = (components) => {
     if (type == 'major') t.append('<span>' + formatYear(value) + '</span>');
   }
 
-  function changeYear (y) {
+  function changeYear(y) {
     const { dispatch } = components;
     updateYear(y);
     dispatch.call('changeyear', this, year);
   }
 
-  function updateYear (y) {
+  function updateYear(y) {
     const { init, eras } = components;
     const { formatYear } = init;
     year = y;
@@ -207,9 +206,10 @@ const getTimeline = (components) => {
     $('.icon-angle-right', stepper).toggleClass('disabled', year == eras[eras.length-1].dates[1])
   }
 
-  function getEraForYear (y) {
+  function getEraForYear(y) {
+    const { eras } = components;
     let era;
-    eras.forEach(function (e) {
+    eras.forEach((e) => {
       if (y >= e.dates[0] && y <= e.dates[1]) era = e;
     });
     return era;
@@ -247,7 +247,7 @@ const getTimeline = (components) => {
     
     let mainTicks = addTicks();
 
-    init_events();
+    initEvents();
 
     updateYear(year);
 

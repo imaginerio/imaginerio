@@ -8,9 +8,9 @@ const getSearch = (components) => {
   let searchResults = {};
   let searchVal;
 
-  function init_events () {
-    $('input', container).on('keyup', function(e){ 
-      let val = $(this).val();
+  function initEvents() {
+    $('input', container).on('keyup', function keyup(e) { 
+      const val = $(this).val();
       if (val.length > 2) {
         doSearch(val);
       } else {
@@ -29,7 +29,8 @@ const getSearch = (components) => {
     }
   }
 
-  S.showResults = function (results, clicked) {
+  S.showResults = function showResults(results, clicked) {
+    const { dispatch } = components;
     searchResults = results;
     if (_.size(searchResults)) {
       resultsContainer.css('margin-right', $('#overlay-info').is(':visible') ? '65px' : 0);
@@ -40,7 +41,7 @@ const getSearch = (components) => {
       let groups = _.groupBy(searchResults, 'layer');
       $('.results-group').remove();
       resultsContainer.show();
-      _.each(groups, function (g, gName) {
+      _.each(groups, (g, gName) => {
         let groupContainer = $('<div>')
           .attr('class', 'results-group')
           .append('<span>' + names[gName.toLowerCase()] || gName + '</span>')
@@ -104,7 +105,7 @@ const getSearch = (components) => {
       .attr('class', 'search-results')
       .append('<i class="icon-times">')
       .appendTo(container);
-    init_events();
+    initEvents();
 
     return S;
   }
@@ -116,7 +117,8 @@ const getSearch = (components) => {
   }
 
   S.clear = function () {
-    Dispatch.call('removehighlight', this);
+    const { dispatch } = components;
+    dispatch.call('removehighlight', this);
     $('.search-result.selected').removeClass('selected');
     //$('input', container).val(null);
     if (resultsContainer) resultsContainer.hide();

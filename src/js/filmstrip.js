@@ -13,7 +13,7 @@ const getFilmstrip = (components) => {
 
   let tempRaster;
 
-  function init_events () {
+  function initEvents () {
     $('.filmstrip-toggle').click(function () {
       if (!mobile)
         filmstrip.toggleClass('collapsed');
@@ -184,7 +184,7 @@ const getFilmstrip = (components) => {
   }
 
   F.initialize = () => {
-    init_events();
+    initEvents();
 
     return F;
   };

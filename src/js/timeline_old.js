@@ -12,7 +12,7 @@ let Timeline = (function($, dispatch) {
   let _ears;
   let earlyWidth = 20;  // %
 
-  function init_events () {
+  function initEvents () {
     $('.timeline-slider, .timeline-track', timeline).on('mousedown touchstart', function (e) {
       let y = getDataForMouseEvent(e).year;
       $(document)
@@ -225,7 +225,7 @@ let Timeline = (function($, dispatch) {
     }
 
     addEras();
-    init_events();
+    initEvents();
 
     return T;
   }

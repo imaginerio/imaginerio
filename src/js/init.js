@@ -62,7 +62,6 @@ const getInit = (components) => {
   
   
   function initialize () {
-    console.log('init initialize');
     eras[eras.length-1].dates[1] = new Date().getFullYear();
     check_hash();
     year = params.year || 1943; // a year that actually has something
