@@ -6,7 +6,7 @@ const getOverlay = (components) => {
     const O = {};
   
     O.data = data;
-    console.log('data', data);
+
     if (Object.prototype.hasOwnProperty.call(data, 'bbox')) {
       const coordString = data.bbox.match(/\(\((.+)\)\)/);
       if (coordString && coordString[1]) {
