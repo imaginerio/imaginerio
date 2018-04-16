@@ -58,8 +58,9 @@ const getMap = (components) => {
     attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
   });
 
+  // -22.9046, -43.1919
   let locationMarker;
-  const locationBounds = L.latLngBounds([[33.8297, 35.4142], [33.9509, 35.593]]);
+  const locationBounds = L.latLngBounds([[-23.10243406, -44.04944719 ], [-22.63003187, -42.65988214]]);
 
   M.initialize = (container) => {
     const { init, dispatch } = components;
@@ -76,11 +77,10 @@ const getMap = (components) => {
           color: 'white',
           fillColor: '#3358ff',
           fillOpacity: 1,
-          opacity: 1.
+          opacity: 1,
         }).addTo(map);
         map.panTo(latlng);
-      }
-      
+      }  
       $('.geolocate-control').removeClass('locating');
     }
 
@@ -88,9 +88,9 @@ const getMap = (components) => {
       zoomControl: false,
       maxZoom: 18,
       minZoom: 14,
-      maxBounds: [[33.8297, 35.4142], [33.9509, 35.56]],
+      maxBounds: [[ -23.10243406, -44.04944719  ], [ -22.63003187, -42.65988214 ]],
     })
-      .setView([33.9, 35.5], 16)
+      .setView([-22.9046, -43.1919], 16)
       .on('click', probe)
       .on('moveend zoomend', () => {
         dispatch.call('statechange', this);
@@ -215,7 +215,7 @@ const getMap = (components) => {
     return M;
   }
 
-  M.setLayers = function (list) {
+  M.setLayers = function setLayers(list) {
     // don't do things if layer list hasn't changed
     let skip = true;
     list.forEach(function (l) {
@@ -228,7 +228,7 @@ const getMap = (components) => {
     layers = list;
     tileLayer.setUrl(tileserver + year + '/' + layers.join(',') + '/{z}/{x}/{y}.png');
     return M;
-  }
+  };
 
   M.highlightFeature = function (geojson) {
     M.removeHighlight();
@@ -345,6 +345,8 @@ const getMap = (components) => {
   }
 
   function probe(e) {
+    const { init } = components;
+    const { server } = init;
     let zoom = map.getZoom();
     let probeZoom;
     switch ( zoom ){

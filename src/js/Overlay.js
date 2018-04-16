@@ -6,22 +6,24 @@ const getOverlay = (components) => {
     const O = {};
   
     O.data = data;
-
-    const coordString = data.bbox.match(/\(\((.+)\)\)/);
-    if (coordString && coordString[1]) {
-      const coords = _.map(coordString[1].split(','), (pair) => {
-        return _.map(pair.split(' '), (d) => {
-          return +d;
+    console.log('data', data);
+    if (Object.prototype.hasOwnProperty.call(data, 'bbox')) {
+      const coordString = data.bbox.match(/\(\((.+)\)\)/);
+      if (coordString && coordString[1]) {
+        const coords = _.map(coordString[1].split(','), (pair) => {
+          return _.map(pair.split(' '), (d) => {
+            return +d;
+          });
         });
-      });
-      const f = {
-        type: 'Feature',
-        geometry: {
-          type: 'Polygon',
-          coordinates: [coords],
-        },
-      };
-      O.bbox = L.geoJson(f).getBounds();
+        const f = {
+          type: 'Feature',
+          geometry: {
+            type: 'Polygon',
+            coordinates: [coords],
+          },
+        };
+        O.bbox = L.geoJson(f).getBounds();
+      }
     }
 
     const _layer = L.tileLayer(rasterserver + data.file + '/{z}/{x}/{y}.png', { opacity: 0.9 });

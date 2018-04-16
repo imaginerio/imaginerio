@@ -14,9 +14,12 @@ const getInit = (components) => {
 
   const Init = {};
 
-  let server = 'https://beirut.axismaps.io/';
-  let tileserver = 'https://beirut.axismaps.io/tiles/';
-  let rasterserver = 'https://beirut.axismaps.io/raster/';
+  // let server = 'https://beirut.axismaps.io/';
+  // let tileserver = 'https://beirut.axismaps.io/tiles/';
+  // let rasterserver = 'https://beirut.axismaps.io/raster/';
+  let server = 'http://imaginerio.axismaps.io:3000/';
+  let tileserver = 'http://imaginerio.axismaps.io:3001/tiles/';
+  let rasterserver = 'http://imaginerio.axismaps.io:3001/raster/';
   
   const thumbnaillUrl = 'https://mdxdv.artstor.org/thumb/imgstor/size1/sslps/c7731849/';
   const imageUrl = 'https://mdxdv.artstor.org/thumb/imgstor/size2/sslps/c7731849/';
@@ -45,10 +48,15 @@ const getInit = (components) => {
   
   var mobile = window.innerWidth <= 700;
 
+  // if( gup( 'dev' ) == 'true' ){
+  //   server = "http://beirut-dev.axismaps.io/";
+  //   tileserver = "http://beirut-dev.axismaps.io/tiles/";
+  //   rasterserver = "http://beirut-dev.axismaps.io/raster/";
+  // }
   if( gup( 'dev' ) == 'true' ){
-    server = "http://beirut-dev.axismaps.io/";
-    tileserver = "http://beirut-dev.axismaps.io/tiles/";
-    rasterserver = "http://beirut-dev.axismaps.io/raster/";
+    server = "http://imaginerio.axismaps.io:3000/";
+    tileserver = "http://imaginerio.axismaps.io:3000/tiles/";
+    rasterserver = "http://imaginerio.axismaps.io:3000/raster/";
   }
   
   $.getJSON(server + 'timeline', function(yearsData) {

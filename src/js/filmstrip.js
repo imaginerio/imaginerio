@@ -39,6 +39,7 @@ const getFilmstrip = (components) => {
     maxYear = max;
     rasters = [];
     $.getJSON(server + 'raster/' + year + (max ? ('?max=' + max) : ''), (json) => {
+      console.log('json', json);
       const {
         Photo,
         Overlay,
@@ -56,7 +57,7 @@ const getFilmstrip = (components) => {
       }
       else {
         $('.filmstrip-showall').show();
-        _.each(json, function (r) {
+        _.each(json, (r) => {
           if (!allRasters[r.id]) {
             allRasters[r.id] = r;
             r.photo = Photo(r, thumbnaillUrl);
