@@ -962,6 +962,20 @@ header.search #controls-right .search-hide {
 
 /* INTRO/ERAS VIEW */
 
+.intro-pattern {
+  position: absolute;
+  width: 100%;
+  height: 85px;
+  background-image: url('../img/pattern.png');
+  background-size: cover;
+  z-index: -100;
+  display: none;
+}
+
+.eras .intro-pattern {
+  display: block;
+}
+
 .eras #filmstrip {
   position: absolute;
   bottom: 0;

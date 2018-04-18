@@ -49,7 +49,7 @@ const getFilmstrip = (components) => {
       } = components;
       filmstrip.show();
       json = _.reject(json, r => r.id === null);
-      console.log(json);
+
       $('.mini-thumbs', filmstrip).empty();
       $('.filmstrip-thumbnails').empty();
       if (!json.length) {
