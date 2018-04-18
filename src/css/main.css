@@ -581,7 +581,7 @@ header.search #controls-right .search-hide {
 .filmstrip-thumbnail, .filmstrip-showall {
   width: 130px;
   height: 130px;
-  border-radius: 10px;
+  border-radius: 65px;
   display: inline-block;
   vertical-align: top;
   margin: 20px 10px;
