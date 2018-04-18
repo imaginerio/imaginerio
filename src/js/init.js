@@ -42,9 +42,9 @@ const getInit = (components) => {
   
   // runtime stuff
   
-  let mobile = window.innerWidth <= 700;
+  const mobile = window.innerWidth <= 700;
 
-  if ( gup( 'dev' ) == 'true' ) {
+  if (gup( 'dev' ) == 'true') {
     server = 'http://imaginerio-dev.axismaps.io:3000';
     tileserver = 'http://imaginerio-dev.axismaps.io:3001/tiles/';
     rasterserver = 'http://imaginerio-dev.axismaps.io:3001/raster/';
@@ -52,7 +52,7 @@ const getInit = (components) => {
 
   $.getJSON(server + 'timeline', (yearsData) => {
     years = yearsData;
-    //while (years[0] < eras[0].dates[0]) years.shift();  // force min year and first era to match
+    // while (years[0] < eras[0].dates[0]) years.shift();  // force min year and first era to match
     $.getJSON(server + 'names/en', (namesData) => {
       Init.names = namesData;
       initialize();
@@ -61,17 +61,17 @@ const getInit = (components) => {
   
   
   function initialize() {
-    console.log('eras', eras);
     eras[eras.length - 1].dates[1] = new Date().getFullYear();
     check_hash();
     year = params.year || 1943; // a year that actually has something
-    Map.initialize('map').setYear(year); 
+    Map.initialize('map').setYear(year);
     Timeline.initialize(eras, 'timeline').setYear(year);
     Filmstrip.initialize();
     Legend.initialize().setYear(year);
     Search.initialize('search').setYear(year);
     init_ui();
     updateEra();
+
   
     if (params.year) {
       Filmstrip.setYear(year);
@@ -83,7 +83,7 @@ const getInit = (components) => {
     }
     if (params.layers) {
       let v = false;
-      if (params.layers.indexOf('views') != -1) {
+      if (params.layers.indexOf('views') !== -1) {
         v = true;
         params.layers.splice(params.layers.indexOf('views'), 1);
         if (!params.layers.length) params.layers = ['all'];
@@ -100,12 +100,12 @@ const getInit = (components) => {
     }
   }
   
-  function init_ui () {
+  function init_ui() {
     if (mobile) {
-      $('#legend .mobile-header .icon-times').click(function () {
+      $('#legend .mobile-header .icon-times').click(() => {
         $('#legend').toggleClass('collapsed');
       });
-      $('#search .icon-left-big').click(function () {
+      $('#search .icon-left-big').click(() => {
         if ($('main').hasClass('eras')) {
           goToStart();
           return;
@@ -117,12 +117,12 @@ const getInit = (components) => {
     } else {
       $('.mobile').hide();
     }
-    $('#search-button').click(function (e) {
+    $('#search-button').click((e) => {
       e.stopPropagation();
       $('header').addClass('search');
       $('#search input').focus();
-      $(document).on('click.search', function (e) {
-        if (!$.contains(document.getElementById('search'), e.target)) {
+      $(document).on('click.search', (ee) => {
+        if (!$.contains(document.getElementById('search'), ee.target)) {
           Search.clear();
           $('header').removeClass('search');
           $(document).off('click.search');
@@ -130,17 +130,17 @@ const getInit = (components) => {
       });
     });
   
-    $('#fixed-probe .icon-times').click(function () {
+    $('#fixed-probe .icon-times').click(function onClick() {
       $('#fixed-probe').hide();
       Dispatch.call('removehighlight', this);
       Map.clearSelected();
     });
   
-    $('.lightbox').click(function (e) {
-      // close on background click 
+    $('.lightbox').click(function onClick(e) {
+      // close on background click
       if (e.target == this || $(e.target).hasClass('icon-times')) {
         $('.lightbox').hide();
-      } 
+      }
     });
   
     eras.forEach(function (e, i) {
@@ -189,11 +189,11 @@ const getInit = (components) => {
     $('#export').click(export_map);
   }
   
-  function goButtonClick () {
+  function goButtonClick() {
     goToMap();
   }
   
-  function goToStart () {
+  function goToStart() {
     $('main').addClass('start');
     $('.title-container h1').html('diverseLevant');
     $('.go-button')
@@ -204,9 +204,8 @@ const getInit = (components) => {
     window.location.hash = '';
   }
   
-  function goToMap () {
-    console.log('go to map');
-    console.log('dispatch', Dispatch);
+  function goToMap() {
+
 
     Dispatch.call('setyear', this, year);
     $('main').removeClass('eras').removeClass('start');
@@ -214,8 +213,8 @@ const getInit = (components) => {
     updateEra();
   }
   
-  function updateEra () {
-    eras.forEach(function (e) {
+  function updateEra() {
+    eras.forEach((e) => {
       if (year >= e.dates[0] && year <= e.dates[1]) {
         currentEra = e;
         $('#eras-button div.desktop span').html(e.name);
@@ -223,7 +222,7 @@ const getInit = (components) => {
     });
   }
   
-  function showEra (i, noTransition) {
+  function showEra(i, noTransition) {
     $('main').removeClass('start');
     $('#eras-button div.desktop span').html('start');
     let e = eras[i];
@@ -363,12 +362,12 @@ const getInit = (components) => {
    // $( '.facebook-button a' ).attr('href', 'http://www.facebook.com/sharer/sharer.php?u=imaginerio.org/' + encodeURIComponent( window.location.hash ) + '&title=Imagine Rio');
   }
   
-  function export_map () {
+  function export_map() {
     $( '#export' ).attr('class', 'icon-circle-notch animate-spin');
     let layers = Legend.layers().sort().join( ',' );
     let raster = $('#overlay-info').data('p') ? $('#overlay-info').data('p').data.file : 'null';
     var url = server + 'export/en/' + year + '/' + layers + '/' + raster + '/' + Map.getBounds().toBBoxString() + '/';
-    console.log(url)
+
     document.getElementById( 'download_iframe' ).src = url;
     window.setTimeout( function(){ $( '#export' ).attr('class', 'icon-download'); }, 2000 );
   }

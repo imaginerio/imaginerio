@@ -42,14 +42,14 @@ main {
 
 .button.red {
   background-color: #eee;
-  color: #A63755;
+  color: #337164;
   margin-bottom: 0;
 }
 
 .blue-button {
   background-color: transparent;
-  border: 1px solid #A63755;
-  color: #A63755;
+  border: 1px solid #337164;
+  color: #337164;
   border-radius: 5px;
   margin: auto;
   text-align: center;
@@ -262,7 +262,7 @@ header.search #controls-right .search-hide {
 }
 
 .search-result.selected > span {
-  background-color: #A63755;
+  background-color: #337164;
   color: white;
 }
 
@@ -324,7 +324,7 @@ header.search #controls-right .search-hide {
 .year {
   font-size: 34px;
   font-weight: bold;
-  color: #A63755;
+  color: #337164;
   width: 135px;
   text-align: center;
 }
@@ -367,10 +367,10 @@ header.search #controls-right .search-hide {
   position: absolute;
   overflow: hidden;
   background: #7ca2ce; /* Old browsers */
-  background: -moz-linear-gradient(left, #E09BAE 0%, #A63755 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(left, #E09BAE 0%,#A63755 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to right, #E09BAE 0%,#A63755 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#E09BAE', endColorstr='#A63755',GradientType=1 ); /* IE6-9 */
+  background: -moz-linear-gradient(left, #92BEB4 0%, #337164 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, #92BEB4 0%,#337164 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, #92BEB4 0%,#337164 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#92BEB4', endColorstr='#337164',GradientType=1 ); /* IE6-9 */
 }
 
 .timeline-slider {
@@ -496,7 +496,7 @@ header.search #controls-right .search-hide {
 }
 
 .era-2 {
-  background-color: #A63755;
+  background-color: #337164;
 }*/
 
 /* MAP */
@@ -630,7 +630,7 @@ header.search #controls-right .search-hide {
 }
 
 .raster-types i.selected {
-  background-color: #A63755;
+  background-color: #337164;
   color: white;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -656,7 +656,7 @@ header.search #controls-right .search-hide {
 
 .thumbs-title {
   font-size: 20px;
-  color: #A63755;
+  color: #337164;
   margin: 0 0 20px 0;
 }
 
@@ -819,7 +819,7 @@ header.search #controls-right .search-hide {
 }
 
 .layer-existing.highlighted {
-  background-color: #A63755;
+  background-color: #337164;
   color: white;
 }
 
@@ -1049,7 +1049,7 @@ header.search #controls-right .search-hide {
 #intro h1 {
   font-size: 65px;
   font-weight: 200;
-  color: #A63755;
+  color: #337164;
   text-align: center;
   line-height: 75px;
   margin: 20px auto;
@@ -1091,7 +1091,7 @@ header.search #controls-right .search-hide {
   -webkit-appearance: none;
   background: transparent;
   line-height: 30px;
-  color: #A63755;
+  color: #337164;
   border: none;
   outline: none;
   cursor: pointer;
@@ -1105,7 +1105,7 @@ header.search #controls-right .search-hide {
 .era-dropdown div {
   font-size: 20px;
   pointer-events: none;
-  border: 2px solid #A63755;
+  border: 2px solid #337164;
   border-radius: 5px;
   text-align: left;
   line-height: 54px;
@@ -1116,7 +1116,7 @@ header.search #controls-right .search-hide {
 }
 
 .go-button {
-  background-color: #A63755;
+  background-color: #337164;
   border-radius: 5px;
   color: white;
   font-size: 20px;
@@ -1145,7 +1145,7 @@ header.search #controls-right .search-hide {
 }
 
 .era-years {
-  color: #A63755;
+  color: #337164;
   font-weight: 300;
   display: inline-block;
   width: 100%;
@@ -1656,7 +1656,7 @@ i.icon-ok:hover,
     line-height: 15px;
     text-align: center;
     font-size: 24px;
-    background-color: #A63755;
+    background-color: #337164;
     color: white;
   }
 

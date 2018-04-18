@@ -41,13 +41,15 @@ const getFilmstrip = (components) => {
     year = y;
     maxYear = max;
     rasters = [];
-    $.getJSON(server + 'raster/' + year + (max ? ('?max=' + max) : ''), (json) => {
+    const rasterUrl = `${server}raster/${year}${(max ? (`?max=${max}`) : '')}`;
+    $.getJSON(rasterUrl, (json) => {
       const {
         Photo,
         Overlay,
       } = components;
       filmstrip.show();
-      json = _.reject(json, function(r){ return r.id === null });
+      json = _.reject(json, r => r.id === null);
+      console.log(json);
       $('.mini-thumbs', filmstrip).empty();
       $('.filmstrip-thumbnails').empty();
       if (!json.length) {
@@ -55,7 +57,7 @@ const getFilmstrip = (components) => {
         $('.raster-types i.selected').removeClass('selected');
         $('.filmstrip-thumbnails').append('<p class="no-data">No views, maps, plans, or aerials are available for this year.</p>')
         $('.filmstrip-toggle span', filmstrip).html('<em>NONE</em>');
-        filmstrip.addClass('collapsed')
+        filmstrip.addClass('collapsed');
       }
       else {
         $('.filmstrip-showall').show();
@@ -159,15 +161,17 @@ const getFilmstrip = (components) => {
     return thumb;
   }
 
-  function showAll () {
+  function showAll() {
     filmstrip.removeClass('partial');
     $('.lightbox').css('display', 'flex');
     $('.lightbox .content > div').remove();
-    let container = $('<div>').attr('class', 'all-thumbs').appendTo('.lightbox .content');
-    let rast = _.chain(rasters)
+    const container = $('<div>').attr('class', 'all-thumbs').appendTo('.lightbox .content');
+    const rast = _.chain(rasters)
       .sortBy('date')
       .value();
-    let groups = _.groupBy(rast, 'layer');
+
+    const groups = _.groupBy(rast, 'layer');
+
     if (groups.viewsheds) addThumbSection(groups.viewsheds, 'Views', 'icon-camera', container);
     if (groups.maps) addThumbSection(groups.maps, 'Maps', 'icon-map-o', container);
     if (groups.plans) addThumbSection(groups.plans, 'Plans', 'icon-tsquare', container);
@@ -175,15 +179,15 @@ const getFilmstrip = (components) => {
   }
 
   function addThumbSection(group, title, icon, container) {
-    let section = $('<div>').attr('class', 'thumbs-section').appendTo(container);
-      $('<p>').attr('class', 'thumbs-title')
-        .html(' ' + title + ' (' + year + ')')
-        .prepend('<i class="' + icon + '"></i>')
-        .appendTo(section)
-      let photos = _.pluck(group, 'photo');
-      photos.forEach(function (p) {
-        addPhoto(p, section);
-      });
+    const section = $('<div>').attr('class', 'thumbs-section').appendTo(container);
+    $('<p>').attr('class', 'thumbs-title')
+      .html(' ' + title + ' (' + year + ')')
+      .prepend('<i class="' + icon + '"></i>')
+      .appendTo(section)
+    const innerPhotos = _.pluck(group, 'photo');
+    innerPhotos.forEach((p) => {
+      addPhoto(p, section);
+    });
   }
 
   F.initialize = () => {
@@ -207,7 +211,7 @@ const getFilmstrip = (components) => {
       tempRaster = id;
       return F;
     }
-    const raster = _.find(rasters, function(rast){ return rast.id == id });
+    const raster = _.find(rasters, rast => rast.id == id);
     if (raster) {
       if (!$('.raster-types i[data-layer="' + raster.layer + '"]').hasClass('selected')) {
         $('.raster-types i[data-layer="' + raster.layer + '"]').click();

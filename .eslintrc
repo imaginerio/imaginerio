@@ -15,7 +15,7 @@
     "no-console":"off",
     "no-unused-vars": "warn",
     "no-param-reassign": "off",
-    "no-use-before-define": "warn",
-    "no-underscore-dangle": "warn"
+    "no-use-before-define": "off",
+    "no-underscore-dangle": "off"
   }
 }
