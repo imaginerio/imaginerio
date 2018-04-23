@@ -298,7 +298,7 @@ const getInit = (components) => {
     
     $('.go-button').html('Go to Map <i class="icon-right-big"></i>').toggleClass('era', !mobile)
       .off('click')
-      .on('click', function () {
+      .on('click', () => {
         goToEra(e);
       });
     $('#intro').data('era', i);
@@ -306,19 +306,21 @@ const getInit = (components) => {
     $('#era-stepper .icon-angle-right').toggleClass('disabled', (i == eras.length-1));
   }
   
-  function goToEra (e) {
+  function goToEra(e) {
     $('main').removeClass('eras');
     Dispatch.call('setyear', this, e.dates[0]);
-    Map.setView(e.center, e.zoom);
+    if (e.center !== '' && e.zoom !== '') {
+      Map.setView(e.center, e.zoom);
+    }
     updateHash();
   }
   
-  function formatYear (y) {
+  function formatYear(y) {
     if (y < 0) return -y + ' BC';
     return y;
   }
   
-  function gup (name) {
+  function gup(name) {
     name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
     var regexS = "[\\?&]"+name+"=([^&#]*)";
     var regex = new RegExp( regexS );

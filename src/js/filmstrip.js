@@ -69,8 +69,8 @@ const getFilmstrip = (components) => {
           }
           rasters.push(allRasters[r.id]);
         });
-        let minis = rasters.slice(0, Math.min(3, rasters.length));
-        _.each(minis, function (m) {
+        const minis = rasters.slice(0, Math.min(3, rasters.length));
+        _.each(minis, (m) => {
           m.photo.getImage([20])
             .appendTo($('.mini-thumbs', filmstrip));
         });
@@ -124,7 +124,7 @@ const getFilmstrip = (components) => {
       .sortBy('date')
       .pluck('photo')
       .value();
-    photosInner.forEach(function (p) {
+    photosInner.forEach((p) => {
       addPhoto(p, $('.filmstrip-thumbnails'));
     });
   }

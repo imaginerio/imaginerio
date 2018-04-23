@@ -220,7 +220,7 @@ const getTimeline = (components) => {
     let container = $('#' + containerId);
     _eras = eras;
     _totalSteps = _.reduce(eras, function (m, e) {
-      let steps = Math.ceil((e.dates[1] - e.dates[0])/e.increment);
+      let steps = Math.ceil((e.dates[1] - e.dates[0]) / e.increment);
       if ((e.dates[1] - e.dates[0]) % e.increment != 0 ) steps++; // unless it divides perfectly, add an extra step for end year
       e.steps = steps;
       return m + steps;
