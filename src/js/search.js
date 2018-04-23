@@ -103,7 +103,7 @@ const getSearch = (components) => {
     }
   }
 
-  S.initialize = function (containerId) {
+  S.initialize = function initialize(containerId) {
     container = $('#' + containerId);
     resultsContainer = $('<div>')
       .attr('class', 'search-results')
@@ -112,13 +112,13 @@ const getSearch = (components) => {
     initEvents();
 
     return S;
-  }
+  };
 
   S.setYear = function (newYear) {
     year = newYear;
     resultsContainer.hide();
     return S;
-  }
+  };
 
   S.clear = function () {
     const { dispatch } = components;
@@ -126,7 +126,7 @@ const getSearch = (components) => {
     $('.search-result.selected').removeClass('selected');
     //$('input', container).val(null);
     if (resultsContainer) resultsContainer.hide();
-  }
+  };
 
   return S;
 };

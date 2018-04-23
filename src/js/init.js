@@ -206,7 +206,6 @@ const getInit = (components) => {
   
   function goToMap() {
 
-
     Dispatch.call('setyear', this, year);
     $('main').removeClass('eras').removeClass('start');
     updateHash();
@@ -223,7 +222,6 @@ const getInit = (components) => {
   }
   
   function showEra(i, noTransition) {
-    console.log('show era');
     $('main').removeClass('start');
     $('#eras-button div.desktop span').html('start');
     let e = eras[i];
@@ -332,7 +330,6 @@ const getInit = (components) => {
   }
   
   function check_hash() {
-    console.log('check hash');
     const hash = window.location.hash.replace( '#', '' ).replace(/\?.+$/, '').split( '/' );
     params.year = hash[ 0 ] ? parseInt( hash[ 0 ], 10 ) : '';
     params.zoom = hash[ 1 ] ? parseInt( hash[ 1 ] ) : '';
@@ -376,6 +373,10 @@ const getInit = (components) => {
     window.setTimeout( function(){ $( '#export' ).attr('class', 'icon-download'); }, 2000 );
   }
 
+  function setYear(newYear) {
+    year = newYear;
+  }
+
   return Object.assign(Init, {
     updateEra,
     formatYear,
@@ -386,6 +387,7 @@ const getInit = (components) => {
     rasterserver,
     names,
     thumbnaillUrl,
+    setYear,
   });
 };
 

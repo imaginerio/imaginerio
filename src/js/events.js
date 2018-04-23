@@ -16,11 +16,11 @@ const getDispatch = (components) => {
       updateHash,
     } = init;
 
-    components.year = newYear;
     Map.setYear(newYear);
     Legend.setYear(newYear);
     Filmstrip.setYear(newYear);
     Search.setYear(newYear);
+    init.setYear(newYear);
     Dispatch.call('removeoverlay', this);
     updateEra();
     updateHash();
