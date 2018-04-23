@@ -76,11 +76,16 @@ header {
   height: 85px;
 }
 
-header > *, #controls-right > *, #search > * {
+header > *, #controls-right > * {
   display: inline-block;
   vertical-align: middle;
   line-height: 65px;
   cursor: pointer;
+}
+#controls-right {
+  height: 65px;
+  display: flex;
+  align-items: center;
 }
 
 header > a{
@@ -126,10 +131,6 @@ header > a{
 
 .eras #top-right-buttons, .eras #search-button {
   display: none;
-}
-
-#search {
-  margin-top: 15px;
 }
 
 /* GENERAL LAYOUTS */
@@ -186,11 +187,11 @@ header > a{
   display: none;
 }
 
-header.search #search input, header.search #search > .search-go {
+#legend.search #search input, #legend.search #search > .search-go {
   display: inline-block;
 }
 
-header.search #controls-right .search-hide {
+#legend.search #controls-right .search-hide {
   display: none;
 }
 
@@ -1545,14 +1546,14 @@ i.icon-ok:hover,
     width: 100%;
     height: 100%;
     background: #eee;
-    display: none;
+    display: block;
   }
 
-  header.search {
+  #legend.search {
     height: 100%;
   }
 
-  header.search #search{
+  #legend.search #search{
     display: block;
   }
 
@@ -1573,6 +1574,7 @@ i.icon-ok:hover,
     position: absolute;
     left: 0;
     top: 0;
+    display: none;
   }
 
   #search > .search-results {
@@ -1808,5 +1810,19 @@ i.icon-ok:hover,
       font-size: 50px;
       line-height: 50px;
     }
+  }
+}
+
+#search {
+  display: none;
+}
+
+#legend.search #search {
+  display: block;
+}
+
+@media (min-width: 701px) {
+  #search .icon-left-big {
+    display: none;
   }
 }

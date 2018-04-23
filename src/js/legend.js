@@ -41,11 +41,15 @@ const getLegend = (components) => {
       // plans = plansJson;
       _.each(layersJson, (category, categoryName) => {
         const cat = $('<div>').attr('class', 'legend-category').appendTo('.legend-contents');
-        $('<div>').attr('class', 'category-title').html(categoryName.toUpperCase()).appendTo(cat);
+        $('<div>')
+          .attr('class', 'category-title')
+          .html(categoryName.toUpperCase())
+          .appendTo(cat);
+
         _.each(category, (obj, objName) => { // there's an extra level here
           if (obj.features) addLayerGroup(obj, objName);
           else _.each(obj, addLayerGroup);
-      });
+        });
 
         function addLayerGroup(group, groupName) {
           const { names } = init;
@@ -80,7 +84,7 @@ const getLegend = (components) => {
     });
   }
 
-  function getPlansForLayer (layer) {
+  function getPlansForLayer(layer) {
     if (!plans) return;
     let planArray;
     plans.forEach((plan) => {
@@ -146,16 +150,53 @@ const getLegend = (components) => {
     return swatch;
   }
 
+  Lg.addSearch = () => {
+    const { Search } = components;
+    $('.legend-category[data-category="search"]').remove();
+    const cat = $('<div>')
+      .attr('class', 'legend-category')
+      .attr('data-category', 'search')
+      .prependTo('.legend-contents');
+
+    cat.append(`
+      <div id='search'>
+        <input placeholder="Enter a building or place name" class="search-input" />
+        <div class='search-go desktop'>
+          <i class="icon-search"></i>
+        </div>
+        <i class="icon-left-big mobile"></i>
+      </div>
+      <div id='search-button' class='search-hide'><i class='icon-search'></i><span class="desktop">Search...</span></div>
+    `);
+
+    Search.initialize('search').setYear(year);
+  };
+
   Lg.addViews = () => {
     const { dispatch } = components;
     $('.legend-category[data-category="views"]').remove();
-    const cat = $('<div>').attr('class', 'legend-category').attr('data-category', 'views').prependTo('.legend-contents');
-    $('<div>').attr('class', 'category-title').html('VIEWS').appendTo(cat);
-    const gr = $('<div>').attr('class', 'legend-group').attr('data-group', 'views').appendTo(cat);
-    const groupTitle = $('<div>').attr('class', 'group-title').appendTo(gr);
+    const cat = $('<div>')
+      .attr('class', 'legend-category')
+      .attr('data-category', 'views')
+      .prependTo('.legend-contents');
+
+    $('<div>')
+      .attr('class', 'category-title')
+      .html('VIEWS').appendTo(cat);
+
+    const gr = $('<div>')
+      .attr('class', 'legend-group')
+      .attr('data-group', 'views')
+      .appendTo(cat);
+
+    const groupTitle = $('<div>')
+      .attr('class', 'group-title')
+      .appendTo(gr);
+
     const label = $('<label>')
       .html('Cones of vision')
       .appendTo(groupTitle);
+
     $('<input type="checkbox" value="views">')
       .attr('checked', Lg.hasViews ? 'checked' : null)
       .on('change', function onChange() {
@@ -166,13 +207,17 @@ const getLegend = (components) => {
       })
       .prependTo(label);
     add_swatch({ shape: 'viewshed.png' }).appendTo(groupTitle);
-  }
+    Lg.addSearch();
+  };
 
-  Lg.layers = function (list) {
+  Lg.layers = function lgLayers(list) {
+    // if no list is provided
     if (!list) {
       let layers = [];
-      $('.legend-contents input').each(function () {
-        if (!$(this).is(':checked') && $(this).attr('value') != 'views') {
+      $('.legend-contents input').each(function checked() {
+        if (!$(this).is(':checked') &&
+          $(this).attr('value') !== 'views' &&
+          $(this).attr('class') !== 'search-input') {
           layers.push($(this).attr('value'));
         }
       });
@@ -190,13 +235,12 @@ const getLegend = (components) => {
       $('.legend-contents input').attr('checked', 'checked');
       if (!Lg.hasViews) $('input[value="views"]').attr('checked', null);
     } else {
-      list.forEach(function (l) {
+      list.forEach((l) => {
         $('.legend-group[data-group="' + l + '"] input').attr('checked', null);
       });
     }
     return Lg;
-    
-  }
+  };
 
   Lg.initialize = function () {
     initEvents();

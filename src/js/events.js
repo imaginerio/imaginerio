@@ -77,6 +77,7 @@ const getDispatch = (components) => {
     Map.setOverlayOpacity(val);
   });
 
+  // set layers on map
   Dispatch.on('setlayers', (list) => {
     const { Map, init } = components;
     const { updateHash } = init;

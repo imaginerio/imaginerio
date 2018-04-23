@@ -81,8 +81,11 @@ const getFilmstrip = (components) => {
       $('.icon-tsquare, .raster-type-labels span.plans', filmstrip).toggleClass('disabled', !_.some(rasters, r => r.layer === 'plans'));
       $('.icon-map-o, .raster-type-labels span.maps', filmstrip).toggleClass('disabled', !_.some(rasters, r => r.layer === 'maps'));
       
-      if (!$('.icon-camera, .raster-type-labels span.views', filmstrip).hasClass('disabled')) dispatch.call('addviews', this);
-      else dispatch.call('resetviews', this);
+      if (!$('.icon-camera, .raster-type-labels span.views', filmstrip).hasClass('disabled')) {
+        dispatch.call('addviews', this);
+      } else {
+        dispatch.call('resetviews', this);
+      }
       
       if ($('.raster-types i.selected', filmstrip).hasClass('disabled') || !$('.raster-types i.selected', filmstrip).length) $('.raster-types i').not('.disabled').first().click();
       

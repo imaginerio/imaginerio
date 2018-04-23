@@ -89,6 +89,7 @@ const getInit = (components) => {
         if (!params.layers.length) params.layers = ['all'];
       }
       Legend.layers(params.layers);
+
       if (v) {
         $('input[value="views"]').attr('checked', null);
         Legend.hasViews = false;
@@ -117,18 +118,7 @@ const getInit = (components) => {
     } else {
       $('.mobile').hide();
     }
-    $('#search-button').click((e) => {
-      e.stopPropagation();
-      $('header').addClass('search');
-      $('#search input').focus();
-      $(document).on('click.search', (ee) => {
-        if (!$.contains(document.getElementById('search'), ee.target)) {
-          Search.clear();
-          $('header').removeClass('search');
-          $(document).off('click.search');
-        }
-      });
-    });
+    
   
     $('#fixed-probe .icon-times').click(function onClick() {
       $('#fixed-probe').hide();

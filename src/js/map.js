@@ -159,10 +159,11 @@ const getMap = (components) => {
       tileserver,
       server,
     } = init;
-    if (newYear == year) return;
+
+    if (newYear === year) return;
     M.clearSelected();
     year = newYear;
-    if (year == new Date().getFullYear()) {
+    if (year === new Date().getFullYear()) {
       map.removeLayer(tileLayer);
       map.addLayer(aerialLayer);
     } else {

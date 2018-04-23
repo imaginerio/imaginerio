@@ -1,5 +1,5 @@
 const getSearch = (components) => {
-  let S = {};
+  const S = {};
 
   let container;
   let request;
@@ -9,7 +9,20 @@ const getSearch = (components) => {
   let searchVal;
 
   function initEvents() {
-    $('input', container).on('keyup', function keyup(e) { 
+    $('#search-button').click((e) => {
+      console.log('search button click');
+      e.stopPropagation();
+      $('#legend').addClass('search');
+      $('#search input').focus();
+      $(document).on('click.search', (ee) => {
+        if (!$.contains(document.getElementById('search'), ee.target)) {
+          S.clear();
+          $('#legend').removeClass('search');
+          $(document).off('click.search');
+        }
+      });
+    });
+    $('input', container).on('keyup', function keyup(e) {
       const val = $(this).val();
       if (val.length > 2) {
         doSearch(val);
@@ -19,7 +32,7 @@ const getSearch = (components) => {
     });
   }
 
-  function doSearch (val) {
+  function doSearch(val) {
     const { init } = components;
     const { server } = init;
     if (val != searchVal) {
@@ -27,7 +40,7 @@ const getSearch = (components) => {
       if (request && request.readyState != 4) request.abort();
       request = $.getJSON(server + 'search/' + year + '/' + val, S.showResults);
     } else if (searchVal) {
-      S.showResults(searchResults)
+      S.showResults(searchResults);
     }
   }
 
@@ -40,6 +53,7 @@ const getSearch = (components) => {
       resultsContainer.css('margin-right', $('#overlay-info').is(':visible') ? '65px' : 0);
       dispatch.call('removeprobe', this);
       dispatch.call('removehighlight', this);
+      
       if (mobile) $('header').addClass('search');
       const array = _.mapObject(results, (r, k) => _.extend(r, { name: k }));
       const groups = _.groupBy(searchResults, 'layer');
@@ -110,11 +124,11 @@ const getSearch = (components) => {
       .append('<i class="icon-times">')
       .appendTo(container);
     initEvents();
-
+    console.log('init search');
     return S;
   };
 
-  S.setYear = function (newYear) {
+  S.setYear = (newYear) => {
     year = newYear;
     resultsContainer.hide();
     return S;
