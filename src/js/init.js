@@ -62,7 +62,7 @@ const getInit = (components) => {
   
   function initialize() {
     eras[eras.length - 1].dates[1] = new Date().getFullYear();
-    check_hash();
+    checkHash();
     year = params.year || 1943; // a year that actually has something
     Map.initialize('map').setYear(year);
     Timeline.initialize(eras, 'timeline').setYear(year);
@@ -132,31 +132,31 @@ const getInit = (components) => {
         $('.lightbox').hide();
       }
     });
-  
-    eras.forEach(function (e, i) {
+
+    eras.forEach((e, i) => {
       $('<option>')
         .attr('value', i)
         .html(e.name + ' (' + e.dates.map(formatYear).join(' – ') + ')')
         .appendTo('.era-dropdown select');
     });
-  
-    $('.era-dropdown select').on('change', function () {
+
+    $('.era-dropdown select').on('change', function change() {
       showEra($(this).val());
     });
-  
-    $('#era-stepper .icon-angle-left').click(function (){
+
+    $('#era-stepper .icon-angle-left').click(function click() {
       if ($(this).hasClass('disabled')) return;
       showEra(+$('#intro').data('era') - 1);
     });
-  
-    $('#era-stepper .icon-angle-right').click(function (){
+
+    $('#era-stepper .icon-angle-right').click(function click() {
       if ($(this).hasClass('disabled')) return;
       showEra(+$('#intro').data('era') + 1);
     });
-  
+
     $('.go-button').on('click', goButtonClick);
-  
-    $('#eras-button').click(function () {
+
+    $('#eras-button').click(function click() {
       if ($('main').hasClass('eras')) {
         goToStart();
         return;
@@ -167,33 +167,39 @@ const getInit = (components) => {
       $('#legend').addClass('collapsed');
       showEra(eras.indexOf(currentEra), true);
     });
-  
-    $('#overlay-info').click(function () {
+
+    $('#overlay-info').click(function click() {
+      const { probes } = components;
+      const { rasterProbe } = probes;
       rasterProbe($(this).data('p'));
     });
-  
-    $('.search-results .icon-times').click(function () {
+
+    $('.search-results .icon-times').click(() => {
       Search.clear();
     });
-  
-    $('#export').click(export_map);
+
+    $('#export').click(exportMap);
   }
-  
+
   function goButtonClick() {
     goToMap();
   }
-  
+
   function goToStart() {
     $('main').addClass('start');
-    $('.title-container h1').html('diverseLevant');
+
+    $('.title-container h1')
+      .html('imagineRio');
+
     $('.go-button')
       .html('<i class="icon-binoculars"></i> Begin Exploring')
       .removeClass('era')
       .off('click')
       .on('click', goButtonClick);
+
     window.location.hash = '';
   }
-  
+
   function goToMap() {
 
     Dispatch.call('setyear', this, year);
@@ -262,19 +268,19 @@ const getInit = (components) => {
       } else {
         $('.era-description-inner').last()
           .animate({
-            'margin-left': endOld
+            'margin-left': endOld,
           }, dur, function () {
             $(this).remove();
           });
         $('.era-years').last()
           .animate({
-            'margin-left': endOld
+            'margin-left': endOld,
           }, dur, function () {
             $(this).remove();
           });
         $('.title-container h1').last()
           .animate({
-            'margin-left': endOld
+            'margin-left': endOld,
           }, dur, function () {
             $(this).remove();
           });
@@ -291,7 +297,7 @@ const getInit = (components) => {
       });
     $('#intro').data('era', i);
     $('#era-stepper .icon-angle-left').toggleClass('disabled', (i == 0));
-    $('#era-stepper .icon-angle-right').toggleClass('disabled', (i == eras.length-1));
+    $('#era-stepper .icon-angle-right').toggleClass('disabled', (i == eras.length - 1));
   }
   
   function goToEra(e) {
@@ -319,16 +325,16 @@ const getInit = (components) => {
       return results[1];
   }
   
-  function check_hash() {
+  function checkHash() {
     const hash = window.location.hash.replace( '#', '' ).replace(/\?.+$/, '').split( '/' );
-    params.year = hash[ 0 ] ? parseInt( hash[ 0 ], 10 ) : '';
-    params.zoom = hash[ 1 ] ? parseInt( hash[ 1 ] ) : '';
-    params.center = hash[ 2 ] && hash[ 3 ] ? [ parseFloat( hash[ 2 ] ), parseFloat( hash[ 3 ] ) ] : '';
-    params.layers = hash[ 4 ] ? hash[ 4 ].split( '&' ) : [];
-    params.raster = hash[ 5 ] ? hash[ 5 ] : '';
+    params.year = hash[0] ? parseInt(hash[0], 10) : '';
+    params.zoom = hash[1] ? parseInt(hash[1]) : '';
+    params.center = hash[2] && hash[3] ? [parseFloat(hash[2]), parseFloat(hash[3]) ] : '';
+    params.layers = hash[4] ? hash[4].split( '&' ) : [];
+    params.raster = hash[5] ? hash[5] : '';
   }
   
-  function updateHash () {
+  function updateHash() {
     if ($('main').hasClass('eras')) {
       window.location.hash = '';
       return;
@@ -339,28 +345,29 @@ const getInit = (components) => {
       else layers.push('views');
     }
     layers = layers.join('&');
-    let raster = $('#overlay-info').data('p') ? $('#overlay-info').data('p').data.id : '';
+    const raster = $('#overlay-info').data('p') ? $('#overlay-info').data('p').data.id : '';
   
-    let mapView = Map.getView();
+    const mapView = Map.getView();
   
     window.location.hash = year + "/" + mapView[1] + "/" + mapView[0].lat + "/" + mapView[0].lng + "/" + layers + "/" + raster;
   
     $('.twitter').attr('href', $('.twitter').attr('data-href') + 'text=diverseLevant' + '&url=' + encodeURIComponent(window.location.href));
     $('.fb-share-btn').attr('href', $('.fb-share-btn').attr('data-href') + '&u=' + encodeURIComponent(window.location.href));
     // Update Social Media links
-    //$( '.twitter-button a' ).attr( 'href', 'https://twitter.com/intent/tweet?url=' + encodeURIComponent( window.location.href ) );
+    // $( '.twitter-button a' ).attr( 'href', 'https://twitter.com/intent/tweet?url=' + encodeURIComponent( window.location.href ) );
   
-   // $( '.facebook-button a' ).attr('href', 'http://www.facebook.com/sharer/sharer.php?u=imaginerio.org/' + encodeURIComponent( window.location.hash ) + '&title=Imagine Rio');
+    // $( '.facebook-button a' ).attr('href', 'http://www.facebook.com/sharer/sharer.php?u=imaginerio.org/' + encodeURIComponent( window.location.hash ) + '&title=Imagine Rio');
   }
-  
-  function export_map() {
-    $( '#export' ).attr('class', 'icon-circle-notch animate-spin');
-    let layers = Legend.layers().sort().join( ',' );
-    let raster = $('#overlay-info').data('p') ? $('#overlay-info').data('p').data.file : 'null';
-    var url = server + 'export/en/' + year + '/' + layers + '/' + raster + '/' + Map.getBounds().toBBoxString() + '/';
 
-    document.getElementById( 'download_iframe' ).src = url;
-    window.setTimeout( function(){ $( '#export' ).attr('class', 'icon-download'); }, 2000 );
+  function exportMap() {
+    $('#export')
+      .attr('class', 'icon-circle-notch animate-spin');
+    const layers = Legend.layers().sort().join(',');
+    const raster = $('#overlay-info').data('p') ? $('#overlay-info').data('p').data.file : 'null';
+    const url = server + 'export/en/' + year + '/' + layers + '/' + raster + '/' + Map.getBounds().toBBoxString() + '/';
+
+    document.getElementById('download_iframe').src = url;
+    window.setTimeout(() => { $('#export').attr('class', 'icon-download'); }, 2000);
   }
 
   function setYear(newYear) {

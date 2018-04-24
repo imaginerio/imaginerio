@@ -40,7 +40,11 @@ const getLegend = (components) => {
       layers = layersJson;
       // plans = plansJson;
       _.each(layersJson, (category, categoryName) => {
-        const cat = $('<div>').attr('class', 'legend-category').appendTo('.legend-contents');
+        console.log('cat name', categoryName);
+        const cat = $('<div>')
+          .attr('class', 'legend-category')
+          .attr('data-category', 'feature')
+          .appendTo('.legend-contents');
         $('<div>')
           .attr('class', 'category-title')
           .html(categoryName.toUpperCase())

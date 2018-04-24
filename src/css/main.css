@@ -208,10 +208,10 @@ header > a{
 }
 
 #search > .search-results {
-  position: absolute;
+  /* position: absolute; */
   z-index: 700;
-  top: 135px;
-  right: 30px;
+  /* top: 135px; */
+  /* right: 30px; */
   background-color: white;
   width: 300px;
   display: none;
@@ -1825,4 +1825,9 @@ i.icon-ok:hover,
   #search .icon-left-big {
     display: none;
   }
+}
+
+.search .legend-category[data-category="views"],
+.search .legend-category[data-category="feature"] {
+  display: none !important;
 }

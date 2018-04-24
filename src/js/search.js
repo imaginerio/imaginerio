@@ -37,7 +37,7 @@ const getSearch = (components) => {
     const { server } = init;
     if (val != searchVal) {
       searchVal = val;
-      if (request && request.readyState != 4) request.abort();
+      if (request && request.readyState !== 4) request.abort();
       request = $.getJSON(server + 'search/' + year + '/' + val, S.showResults);
     } else if (searchVal) {
       S.showResults(searchResults);
@@ -49,8 +49,13 @@ const getSearch = (components) => {
     const { mobile, names, server } = init;
 
     searchResults = results;
-    if (_.size(searchResults)) {
-      resultsContainer.css('margin-right', $('#overlay-info').is(':visible') ? '65px' : 0);
+    console.log('search results', results);
+    // if there are results
+    if (_.size(searchResults) !== 0) {
+      console.log('overlay info', $('#overlay-info').is(':visible'));
+      resultsContainer
+        .css('margin-right', $('#overlay-info').is(':visible') ? '65px' : 0);
+
       dispatch.call('removeprobe', this);
       dispatch.call('removehighlight', this);
       
@@ -71,8 +76,7 @@ const getSearch = (components) => {
             .appendTo(groupContainer);
           $('<span>' + r.name + '</span>')
             .appendTo(row)
-            .on('click', function () {
-              //$('header').removeClass('search');
+            .on('click', function click() {
               if (!row.hasClass('selected')) {
                 $('.search-result.selected').removeClass('selected');
                 row.addClass('selected');
@@ -86,23 +90,23 @@ const getSearch = (components) => {
               
             })
             .prepend('<i class="icon-binoculars">');
-          $('i.icon-right-dir, i.icon-down-dir', row).on('click', function () {
-              if (row.hasClass('expanded')) {
-                row.removeClass('expanded');
-              } else {
-                row.addClass('expanded');
-                if (!$('.result-details', row).length) {
-                  let details = $('<div>')
-                    .attr('class', 'result-details')
-                    .appendTo(row);
-                  $.getJSON(server + 'details/' + r.id[0], function(response) {
-                    if (!response.length) return;
-                    if (response[0].creator) $('<p>Creator: <span>' + response[0].creator + '</span></p>').appendTo(details);
-                    if (response[0].year) $('<p>Mapped: <span>' + response[0].year + '</span></p>').appendTo(details);
-                  });
-                }
+          $('i.icon-right-dir, i.icon-down-dir', row).on('click', () => {
+            if (row.hasClass('expanded')) {
+              row.removeClass('expanded');
+            } else {
+              row.addClass('expanded');
+              if (!$('.result-details', row).length) {
+                const details = $('<div>')
+                  .attr('class', 'result-details')
+                  .appendTo(row);
+                $.getJSON(server + 'details/' + r.id[0], (response) => {
+                  if (!response.length) return;
+                  if (response[0].creator) $('<p>Creator: <span>' + response[0].creator + '</span></p>').appendTo(details);
+                  if (response[0].year) $('<p>Mapped: <span>' + response[0].year + '</span></p>').appendTo(details);
+                });
               }
-            });
+            }
+          });
         });
       });
 
@@ -110,21 +114,20 @@ const getSearch = (components) => {
         // if only one result from map click, select it
         $('.search-result span').first().click();
       }
-      
     } else {
+      // if there are no results
       resultsContainer.hide();
       dispatch.call('removehighlight', this);
     }
-  }
+  };
 
   S.initialize = function initialize(containerId) {
-    container = $('#' + containerId);
+    container = $(`#${containerId}`);
     resultsContainer = $('<div>')
       .attr('class', 'search-results')
       .append('<i class="icon-times">')
       .appendTo(container);
     initEvents();
-    console.log('init search');
     return S;
   };
 
@@ -134,11 +137,10 @@ const getSearch = (components) => {
     return S;
   };
 
-  S.clear = function () {
+  S.clear = function clear() {
     const { dispatch } = components;
     dispatch.call('removehighlight', this);
     $('.search-result.selected').removeClass('selected');
-    //$('input', container).val(null);
     if (resultsContainer) resultsContainer.hide();
   };
 
