@@ -12,6 +12,8 @@ import getOverlay from './Overlay';
 import getProbes from './probes';
 import getSlider from './slider';
 
+require('../scss/index.scss');
+
 const components = {};
 
 components.eras = eras;

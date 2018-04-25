@@ -52,7 +52,6 @@ const getSearch = (components) => {
     console.log('search results', results);
     // if there are results
     if (_.size(searchResults) !== 0) {
-      console.log('overlay info', $('#overlay-info').is(':visible'));
       resultsContainer
         .css('margin-right', $('#overlay-info').is(':visible') ? '65px' : 0);
 

@@ -40,7 +40,7 @@ const getLegend = (components) => {
       layers = layersJson;
       // plans = plansJson;
       _.each(layersJson, (category, categoryName) => {
-        console.log('cat name', categoryName);
+
         const cat = $('<div>')
           .attr('class', 'legend-category')
           .attr('data-category', 'feature')
@@ -64,6 +64,7 @@ const getLegend = (components) => {
             .html(names[groupName.toLowerCase()] || groupName)
             .prepend('<input type="checkbox" value="' + groupName + '"checked>')
             .appendTo(groupTitle);
+
           _.each(group.features, (feature, key) => {
             let layer = $('<div>').attr('class', 'layer').appendTo(gr);
             addLayerExisting(feature, key, layer);
@@ -164,13 +165,15 @@ const getLegend = (components) => {
 
     cat.append(`
       <div id='search'>
-        <input placeholder="Enter a building or place name" class="search-input" />
-        <div class='search-go desktop'>
-          <i class="icon-search"></i>
+        <div class="search-input-container">
+          <input placeholder="Enter a building or place name" class="search-input" />
+          <i class="icon-left-big mobile"></i>
         </div>
-        <i class="icon-left-big mobile"></i>
       </div>
-      <div id='search-button' class='search-hide'><i class='icon-search'></i><span class="desktop">Search...</span></div>
+      <div class="search-button-container">
+        <div id='search-button' class='search-hide'><i class='icon-search'></i><span class="desktop">Search map layers...</span>
+        </div>
+      </div>
     `);
 
     Search.initialize('search').setYear(year);
