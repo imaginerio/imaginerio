@@ -3,8 +3,13 @@ const path = require('path');
 module.exports = {
   entry: ['babel-polyfill', './src/js/entry.js'],
   output: {
-    path: path.join(__dirname),
-    filename: './src/js_build/bundle.js',
+    path: path.join(__dirname, 'src'),
+    filename: 'js_build/bundle.js',
+  },
+  devServer: {
+    contentBase: path.join(__dirname, 'src'),
+    compress: true,
+    port: 8080,
   },
   watch: true,
   mode: 'development',
@@ -30,11 +35,11 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loaders: ['style-loader', 'css-loader'],
+        loaders: ['style-loader', 'css-loader?url=false'],
       },
       {
         test: /\.scss$/,
-        loaders: ['style-loader', 'css-loader', 'sass-loader'],
+        loaders: ['style-loader', 'css-loader?url=false', 'sass-loader'],
       },
     ],
   },

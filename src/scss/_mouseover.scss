@@ -1,0 +1,26 @@
+#eras-button:hover,
+#add-memory-button:hover,
+#search-button:hover,
+#top-right-buttons i:hover,
+.year-stepper i:not(.disabled):hover,
+#era-stepper i:not(.disabled):hover,
+.panel-toggle:hover,
+.filmstrip-showall:hover,
+i.icon-times:hover,
+i.icon-ok:hover,
+#overlay-info:hover,
+.raster-types i:not(.disabled):not(.selected):hover {
+  color: #333;
+}
+
+.timeline-slider:hover, .filmstrip-showall:hover {
+  border-color: #333;
+}
+
+.button.red:hover {
+  background-color: #fceff2;
+}
+
+.blue-button:hover {
+  background-color: #fceff2;
+}
