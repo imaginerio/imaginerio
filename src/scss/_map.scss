@@ -1,0 +1,28 @@
+#map {
+  flex: 1;
+  z-index: 0;
+}
+
+.leaflet-grab {
+  cursor: pointer;
+}
+
+.geolocate-control {
+  cursor: pointer;
+}
+
+.geolocate-control .icon-spinner, .geolocate-control.locating .icon-direction {
+  display: none;
+}
+
+.geolocate-control.locating .icon-spinner {
+  display: inline-block;
+}
+
+.leaflet-left {
+  margin-left: 20px;
+}
+
+.leaflet-bottom .leaflet-control.leaflet-control-zoom {
+  margin-bottom: 50px;
+}

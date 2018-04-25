@@ -1,0 +1,165 @@
+#legend {
+  width: 280px;
+  position: relative;
+  transition: width .25s;
+  height: 100%;
+  box-shadow: 4px 0 4px rgba(0,0,0,.1);
+  position: relative;
+  z-index: 3;
+}
+
+#legend.collapsed {
+  width: 0;
+}
+
+.legend-toggle {
+  width: 10px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  top: 20px;
+  left: 280px;
+  transition: left .25s, width .25s;
+}
+
+#legend.collapsed .legend-toggle {
+  left: 0;
+  width: 160px;
+}
+
+.legend-toggle i.icon-list-bullet {
+  float: none;
+  display: none;
+}
+
+#legend.subsequent.collapsed .legend-toggle {
+  width: 10px;
+}
+
+.legend-toggle span {
+  display: none;
+}
+
+#legend.collapsed .legend-toggle span, #legend.collapsed .legend-toggle i.icon-list-bullet{
+  display: inline-block;
+}
+
+#legend.subsequent .legend-toggle span, #legend.subsequent .legend-toggle i.icon-angle-double-right {
+  display: none;
+}
+
+.legend-category {
+  margin-bottom: 10px;
+}
+
+.category-title {
+  background-color: #666;
+  color: white;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.legend-contents {
+  height: 100%;
+  overflow: auto;
+}
+
+.legend-group {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.legend-group:last-child {
+  border-bottom: none;
+}
+
+.legend-group.planned input{
+  visibility: hidden;
+}
+
+.group-title label {
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 40px;
+}
+
+.group-title label input{
+  margin-right: 10px;
+}
+
+.group-title .swatch {
+  float: right;
+  margin-top: 10px;
+  width: 60px;
+  height: 20px;
+  text-align: center;
+}
+
+.group-title .swatch.viewshed {
+  margin-top: 0;
+  height: 40px;
+}
+
+.layer {
+  margin-left: 20px;
+}
+
+.layer-existing {
+  line-height: 30px;
+  padding: 0 5px;
+  background-color: #eee;
+  display: inline-block;
+  margin: 3px 0px;
+  border-radius: 5px;
+  width: 170px;
+  cursor: pointer;
+  padding-left: 30px;
+  text-indent: -12px;
+}
+
+.layer.styled .layer-existing {
+  width: 140px;
+}
+
+.layer.styled .swatch {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.plans-dropdown {
+  position: absolute;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 0 8px rgba(0,0,0,.25);
+  z-index: 5000;
+}
+
+.plan-menu-item {
+  background-color: #eee;
+  margin: 0;
+  padding: 10px 5px;
+  cursor: pointer;
+}
+
+.plan-menu-item:hover {
+  background-color: #ccc;
+}
+
+.layer-existing:hover {
+  background-color: #ccc;
+}
+
+.layer-existing.highlighted {
+  background-color: #337164;
+  color: white;
+}
+
+.layer-existing.not-present, .layer-existing.not-present:hover {
+  background-color: transparent;
+  color: #666;
+  cursor: default;
+}
+
+.layer-existing i {
+  margin-right: 5px;
+}

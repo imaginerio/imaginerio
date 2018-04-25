@@ -1,0 +1,132 @@
+#filmstrip {
+  height: 170px;
+  position: relative;
+  transition: height .25s;
+  background-color: white;
+  display: none;
+  box-shadow: 4px -4px 4px 0px rgba(0,0,0,0.1);
+  z-index: 2;
+}
+
+#filmstrip.collapsed {
+  height: 0px;
+}
+
+.filmstrip-toggle {
+  min-width: 230px;
+  top: -40px;
+  border-top-right-radius: 5px;
+  transition: y .25s;
+  padding-left: 0;
+  box-shadow: 4px -4px 4px rgba(0,0,0,.1)
+}
+
+.mini-thumbs {
+  margin-left: 10px;
+}
+
+.mini-thumbs div {
+  display: inline-block;
+  border-radius: 3px;
+  width: 20px; 
+  height: 20px;
+  overflow: hidden;
+  margin: 0 3px;
+  background-color: #eee;
+}
+
+.mini-thumbs i {
+  display: none;
+}
+
+.filmstrip-contents {
+  display: flex;
+  flex-direction: row;
+}
+
+.filmstrip-thumbnail, .filmstrip-showall {
+  width: 130px;
+  height: 130px;
+  border-radius: 65px;
+  display: inline-block;
+  vertical-align: top;
+  margin: 20px 10px;
+  cursor: pointer;
+  background-color: #eee;
+}
+
+#filmstrip .filmstrip-thumbnail:first-child {
+  margin-left: 20px;
+}
+
+#filmstrip i.icon-circle-notch.animate-spin, .probe i.icon-circle-notch.animate-spin {
+  position: relative;
+  left: 50%;
+  top: 50%;
+  margin: -8px 0 0 -12px;
+  font-size: 16px;
+  color: #999;
+}
+
+.filmstrip-thumbnails {
+  flex: 1;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.filmstrip-thumbnails p.no-data {
+  text-align: center;
+  line-height: 160px;
+}
+
+.filmstrip-showall {
+  border: 1px solid #95989A;
+  text-align: center;
+  line-height: 130px;
+  background-color: #fff;
+}
+
+.raster-types i {
+  display: block;
+  font-size: 20px;
+  padding: 12px 10px;
+  cursor: pointer;
+  width: 1.5em;
+  text-align: center;
+}
+
+.raster-types i.selected {
+  background-color: #337164;
+  color: white;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.raster-types i.disabled {
+  color: #ccc;
+}
+
+.all-thumbs .filmstrip-thumbnail {
+  margin: 10px;
+}
+
+.thumbs-section {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.thumbs-section:last-child {
+  border-bottom: none;
+}
+
+.thumbs-title {
+  font-size: 20px;
+  color: #337164;
+  margin: 0 0 20px 0;
+}
+
+.thumbs-title i {
+  width: 1.5em;
+  text-align: center;
+}

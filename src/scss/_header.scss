@@ -1,0 +1,66 @@
+header {
+  height: 70px;
+  padding: 0 30px;
+  font-size: 15px;
+}
+
+.eras header {
+  height: 85px;
+}
+
+header > *, #controls-right > * {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 65px;
+  cursor: pointer;
+}
+#controls-right {
+  height: 65px;
+  display: flex;
+  align-items: center;
+}
+
+header > a{
+  display: none;
+}
+
+.eras.start header > a{
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.eras .logo {
+  height: 80px;
+}
+
+#controls-right {
+  float: right;
+}
+
+#add-memory-button, #search-button {
+  margin-right: 30px;
+}
+
+#top-right-buttons > * {
+  color: white;
+  font-size: 12px;
+  line-height: 20px;
+  height: 20px;
+  background-color: #999;
+  border-radius: 3px;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+#top-right-buttons > i:before, #top-right-buttons > a i:before {
+  width: 16px;
+}
+
+#top-right-buttons > i.icon-circle-notch {
+  color: #999;
+  background-color: white;
+}
+
+.eras #top-right-buttons, .eras #search-button {
+  display: none;
+}

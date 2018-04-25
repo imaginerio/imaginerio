@@ -1,0 +1,124 @@
+.probe-hint {
+  position: absolute;
+  right: 30px;
+  border-radius: 5px;
+  top: 135px;
+  padding: 10px 15px;
+  z-index: 699;
+  background-color: #666;
+  color: white;
+  box-shadow: 0 0 8px rgba(0,0,0,.25);
+}
+
+.eras .probe-hint {
+  display: none;
+}
+
+.probe {
+  display: none;
+  position: absolute;
+  z-index: 3001;
+}
+
+#fixed-probe {
+  z-index: 2999;
+  top: 135px;
+  right: 30px;
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 0 8px rgba(0,0,0,.25);
+}
+
+#fixed-probe.map-feature {
+  padding: 10px 40px 5px 20px;
+}
+
+#fixed-probe .icon-times {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.fixed-probe-title {
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.fixed-probe-title.stepper {
+  min-height: 25px;
+}
+
+.fixed-probe-title.stepper i {
+  float: right;
+  cursor: pointer;
+}
+
+.fixed-probe-title.stepper i:hover:before {
+  color: #333;
+}
+
+.fixed-probe-title i.icon-angle-right:before {
+  margin-right: 0;
+}
+
+#fixed-probe .fixed-image {
+  margin: 10px auto;
+  display: block;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+#fixed-probe hr {
+  margin: 15px 0;
+  background: transparent;
+  border-style: solid;
+  border: none;
+  border-top: 1px solid #ccc;
+}
+
+#filmstrip-probe .content {
+  background-color: rgba(51, 51, 51, .9);
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+  padding: 10px 20px;
+  max-width: 150px;
+}
+
+#filmstrip-probe p {
+  margin: 3px 0;
+}
+
+#filmstrip-probe .tail {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 16px solid rgba(51, 51, 51, .9);
+  margin-left: calc(50% - 10px);
+}
+
+#map-probe {
+  background-color: rgba(255,255,255,.8);
+  border-radius: 5px;
+  padding: 10px;
+  max-width: 150px;
+}
+
+#map-probe strong {
+  color: #333;
+}
+
+#overlay-info {
+  display: none;
+  position: absolute;
+  right: 30px;
+  border-radius: 5px;
+  top: 135px;
+  padding: 10px 15px;
+  z-index: 2500;
+  background-color: white;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(0,0,0,.25);
+}

@@ -1,0 +1,36 @@
+.panel-toggle {
+  position: absolute;
+  background-color: white;
+  z-index: 700;
+  height: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  line-height: 20px;
+  font-weight: bold;
+  box-shadow: 4px 0 4px rgba(0,0,0,.1);
+}
+
+.panel-toggle > * {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.panel-toggle span {
+  margin-left: 15px;
+}
+
+.panel-toggle > i {
+  float: right;
+}
+
+.panel-toggle i.open {
+  display: none;
+}
+
+.panel.collapsed .panel-toggle i.close {
+  display: none;
+}
+
+.panel.collapsed .panel-toggle i.open {
+  display: inline-block;
+}
