@@ -163,3 +163,12 @@
 .layer-existing i {
   margin-right: 5px;
 }
+
+.legend-category[data-category="search"] {
+  margin-bottom: 0px;
+}
+
+.search .legend-category[data-category="views"],
+.search .legend-category[data-category="feature"] {
+  display: none !important;
+}

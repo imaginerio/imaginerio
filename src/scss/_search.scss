@@ -112,3 +112,28 @@
 .result-details p span {
   font-weight: normal;
 }
+
+#search {
+  display: none;
+}
+
+#legend.search #search {
+  display: block;
+}
+
+.search-input-container,
+.search-button-container {
+  display: flex;
+  align-items: center;
+  height: 60px;
+}
+
+#legend.search .search-button-container {
+  display: none;
+}
+
+@media (min-width: 701px) {
+  #search .icon-left-big {
+    display: none;
+  }
+}

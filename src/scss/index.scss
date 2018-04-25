@@ -1,3 +1,4 @@
+@import 'variables';
 @import 'general';
 @import 'header';
 @import 'layout';
@@ -7,7 +8,14 @@
 @import 'filmstrip';
 @import 'legend';
 @import 'probes';
-@import 'intro';
+@import 'eras';
 @import 'lightbox';
 @import 'slider';
 @import 'mouseover';
+@import 'mobile-eras-header';
+@import 'mobile-timeline';
+@import 'mobile-search';
+@import 'mobile-legend';
+@import 'mobile-filmstrip';
+@import 'mobile-lightbox';
+@import 'mobile-probe';

@@ -1,0 +1,52 @@
+@media (max-width: $mobile-width) {
+  #fixed-probe {
+    position: relative;
+    top: auto;
+    left: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  #fixed-probe .fixed-image {
+    width: 160px !important;
+    margin: 0;
+    background-size: cover;
+    display: inline-block;
+    vertical-align: bottom;
+  }
+
+  #fixed-probe hr {
+    display: none;
+  }
+
+  #fixed-probe .blue-button {
+    float: none;
+    display: inline-block;
+    vertical-align: bottom;
+    margin-left: 10px;
+  }
+
+  #fixed-probe .blue-button.slider-toggle {
+    width: auto;
+  }
+
+  #overlay-info {
+    top: 160px;
+    right: 15px;
+  }
+
+  .probe-hint {
+    left: 30px;
+    right: auto;
+    top: 110px;
+  }
+
+  .slider, .button.red {
+    display: none;
+  }
+
+  .slider {
+    width: 100%;
+    margin: 20px 0;
+  }
+}
