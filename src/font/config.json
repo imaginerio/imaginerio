@@ -249,6 +249,12 @@
       "css": "reply",
       "code": 61714,
       "src": "fontawesome"
+    },
+    {
+      "uid": "1bafeeb1808a5fe24484c7890096901a",
+      "css": "user-plus",
+      "code": 62004,
+      "src": "fontawesome"
     }
   ]
 }

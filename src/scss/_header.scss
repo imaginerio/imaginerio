@@ -14,13 +14,14 @@ header > *, #controls-right > * {
   line-height: 65px;
   cursor: pointer;
 }
+
 #controls-right {
   height: 65px;
   display: flex;
   align-items: center;
 }
 
-header > a{
+header > a {
   display: none;
 }
 
@@ -41,15 +42,22 @@ header > a{
   margin-right: 30px;
 }
 
-#top-right-buttons > * {
+
+#top-right-buttons {
+  display: flex;
+}
+
+#top-right-buttons > a {
   color: white;
   font-size: 12px;
-  line-height: 20px;
   height: 20px;
+  line-height: 20px;
   background-color: #999;
   border-radius: 3px;
-  display: inline-block;
   margin-left: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #top-right-buttons > i:before, #top-right-buttons > a i:before {
@@ -60,7 +68,16 @@ header > a{
   color: #999;
   background-color: white;
 }
+.register-button > i {
+  margin-right: 5px;
+}
+.register-button {
+  color: $dark-green;
+  font-size: 15px;
+  font-weight: bold;
+  margin-right: 35px;
+}
 
-.eras #top-right-buttons, .eras #search-button {
-  display: none;
+.eras #top-right-buttons, .eras #search-button, .eras .register-button {
+  display: none !important;
 }
