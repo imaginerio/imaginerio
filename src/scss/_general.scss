@@ -42,14 +42,14 @@ main {
 
 .button.red {
   background-color: #eee;
-  color: #337164;
+  color: $dark-green;
   margin-bottom: 0;
 }
 
 .blue-button {
   background-color: transparent;
-  border: 1px solid #337164;
-  color: #337164;
+  border: 1px solid $dark-green;
+  color: $dark-green;
   border-radius: 5px;
   margin: auto;
   text-align: center;

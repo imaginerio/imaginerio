@@ -1,15 +1,19 @@
-#search input {
+.search-input {
   font-size: 15px;
   line-height: 30px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
+  margin-left: 15px !important;
   outline: none;
-  border: 1px solid #999;
   margin: 0;
   padding: 1px 5px;
-  width: 260px;
+  border: none !important;
+  width: 100% !important;
   cursor: text;
-  display: none;
+}
+
+.search-input-container .icon-search {
+  margin-right: 15px;
 }
 
 #legend.search #search input, #legend.search #search > .search-go {
@@ -83,7 +87,7 @@
 }
 
 .search-result.selected > span {
-  background-color: #337164;
+  background-color: $dark-green;
   color: white;
 }
 
@@ -126,6 +130,10 @@
   display: flex;
   align-items: center;
   height: 60px;
+}
+#search-button {
+  margin-left: 15px;
+  font-size: 15px;
 }
 
 #legend.search .search-button-container {

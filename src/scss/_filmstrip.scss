@@ -96,7 +96,7 @@
 }
 
 .raster-types i.selected {
-  background-color: #337164;
+  background-color: $dark-green;
   color: white;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -122,7 +122,7 @@
 
 .thumbs-title {
   font-size: 20px;
-  color: #337164;
+  color: $dark-green;
   margin: 0 0 20px 0;
 }
 

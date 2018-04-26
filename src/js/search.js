@@ -35,9 +35,11 @@ const getSearch = (components) => {
   function doSearch(val) {
     const { init } = components;
     const { server } = init;
-    if (val != searchVal) {
+    console.log('request', request);
+    if (val !== searchVal) {
       searchVal = val;
-      if (request && request.readyState !== 4) request.abort();
+      // abort if search is already underway
+      if (request !== undefined && request.readyState !== 4) request.abort();
       request = $.getJSON(server + 'search/' + year + '/' + val, S.showResults);
     } else if (searchVal) {
       S.showResults(searchResults);
