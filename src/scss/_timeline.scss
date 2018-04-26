@@ -89,18 +89,27 @@
   margin-left: -8px;
 }
 
-.timeline-probe {
+.timeline-probe,
+.timeline-era-probe {
   position: absolute;
-  background-color: #333;
-  color: white;
   font-size: 12px;
   padding: 8px;
-  width: 30px;
-  border-radius: 5px;
-  margin-left: -23px;
-  top: -45px;
   text-align: center;
   display: none;
+}
+
+.timeline-probe {
+  margin-left: -23px;
+  background-color: #333;
+  color: white;
+  width: 30px;
+  top: -45px;
+  border-radius: 5px;
+}
+
+.timeline-era-probe {
+  top: 25px;
+  color: $dark-green;
 }
 
 .ticks-container {

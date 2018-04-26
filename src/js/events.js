@@ -1,6 +1,28 @@
 // events
 const getDispatch = (components) => {
-  const Dispatch = d3.dispatch('changeyear', 'setyear', 'highlightfeature', 'removehighlight', 'addoverlay', 'removeoverlay', 'addviews', 'showviews', 'hideviews', 'resetviews', 'setopacity', 'setlayers', 'viewshedclick', 'showresults', 'removeprobe', 'drawfeature', 'removeall', 'statechange', 'cancelmemory', 'showaddmemory');
+  const Dispatch = d3.dispatch(
+    'changeyear',
+    'setyear',
+    'setera',
+    'highlightfeature',
+    'removehighlight',
+    'addoverlay',
+    'removeoverlay',
+    'addviews',
+    'showviews',
+    'hideviews',
+    'resetviews',
+    'setopacity',
+    'setlayers',
+    'viewshedclick',
+    'showresults',
+    'removeprobe',
+    'drawfeature',
+    'removeall',
+    'statechange',
+    'cancelmemory',
+    'showaddmemory',
+);
 
   Dispatch.on('changeyear', (newYear) => {
     const {
