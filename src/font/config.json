@@ -237,6 +237,18 @@
       "css": "right-big",
       "code": 59395,
       "src": "fontawesome"
+    },
+    {
+      "uid": "2e2dba0307a502a8507c1729084c7ab5",
+      "css": "cancel-circled2",
+      "code": 59398,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "c6be5a58ee4e63a5ec399c2b0d15cf2c",
+      "css": "reply",
+      "code": 61714,
+      "src": "fontawesome"
     }
   ]
 }

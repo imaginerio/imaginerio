@@ -12,7 +12,7 @@
   cursor: text;
 }
 
-.search-input-container .icon-search {
+.search-input-container > i {
   margin-right: 15px;
 }
 
@@ -42,7 +42,7 @@
   /* top: 135px; */
   /* right: 30px; */
   background-color: white;
-  width: 300px;
+  width: 100%;
   display: none;
   line-height: 34px;
   border-radius: 0px;
@@ -74,7 +74,7 @@
 .search-result > span {
   display: inline-block;
   background-color: #EEEEEE;
-  width: 190px;
+  width: 170px;
   border-radius: 5px;
   padding: 10px 10px 10px 50px;
   line-height: 20px;

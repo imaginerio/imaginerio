@@ -126,7 +126,7 @@ const getSearch = (components) => {
     container = $(`#${containerId}`);
     resultsContainer = $('<div>')
       .attr('class', 'search-results')
-      .append('<i class="icon-times">')
+      // .append('<i class="icon-times">')
       .appendTo(container);
     initEvents();
     return S;

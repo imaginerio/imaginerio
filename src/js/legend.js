@@ -168,7 +168,7 @@ const getLegend = (components) => {
         <div class="search-input-container">
           <input placeholder="Enter a building or place name" class="search-input" />
           <i class="icon-left-big mobile"></i>
-          <i class="icon-search"></i>
+          <i class="icon-cancel-circled2"></i>
         </div>
       </div>
       <div class="search-button-container">
