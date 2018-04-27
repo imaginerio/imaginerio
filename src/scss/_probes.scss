@@ -1,16 +1,43 @@
-.probe-hint {
+$hint-probe-height: 36px;
+
+.probe-hint-container {
   position: absolute;
   right: 30px;
-  border-radius: 5px;
+  border-radius: 0px;
   top: 135px;
-  padding: 10px 15px;
+  background-color: rgba(51, 51, 51, .9);
+  height: $hint-probe-height;
+  align-items: center;
+  display: flex;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  font-size: 13px;
+}
+
+.probe-hint {
+  
+  padding-left: 15px;
+  padding-right: 15px;
   z-index: 699;
-  background-color: #666;
   color: white;
   box-shadow: 0 0 8px rgba(0,0,0,.25);
 }
 
-.eras .probe-hint {
+.probe-area {
+  padding-left: 15px;
+  padding-right: 15px;
+  background: white;
+  border-radius: 5px;
+  border: solid white 1px;
+  height: $hint-probe-height;
+  display: flex;
+  align-items: center;
+  color: #666666;
+  font-weight: bold;
+}
+
+.eras .probe-hint,
+.eras .probe-area {
   display: none;
 }
 

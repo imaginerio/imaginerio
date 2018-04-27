@@ -68,7 +68,7 @@ const getInit = (components) => {
     Timeline.initialize(eras, 'timeline').setYear(year);
     Filmstrip.initialize();
     Legend.initialize().setYear(year);
-    Search.initialize('search').setYear(year);
+    // Search.initialize('search').setYear(year);
     init_ui();
     updateEra();
 

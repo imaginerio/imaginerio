@@ -4,7 +4,8 @@
   <meta name="viewport" content="initial-scale=1.0"/>
   <!-- build:css css/{{site}}.css -->
   <link rel="stylesheet" href="https://use.typekit.net/nwz6jsn.css">
-  <link rel="stylesheet" href="libraries/leaflet.css" />
+  <link rel="stylesheet" href="css/leaflet.css" />
+  <link rel="stylesheet" href="css/leaflet.draw.css" />
 
   <link rel="stylesheet" href="css/fontello.css" />
   <link rel="stylesheet" href="css/animation.css" />
@@ -129,12 +130,16 @@
   <div class="probe" id="map-probe">
     <div class="content"></div>
   </div>
-
-  <div class="probe-hint">
-    <em>
-    <span class="desktop">Click the map to explore...</span>
-    <span class="mobile">Tap the map to explore...</span>
-    </em>
+  <div class="probe-hint-container">
+    <div class="probe-hint">
+      <em>
+      <span class="desktop">Click the map to explore, or</span>
+      <span class="mobile">Tap the map to explore, or</span>
+      </em>
+    </div>
+    <div class="probe-area">
+      Explore by area
+    </div>
   </div>
 
   <div id="overlay-info"><i class="icon-info"></i></div>
@@ -152,6 +157,7 @@
   <!-- build:js js/{{site}}.js -->
   <script src="libraries/jquery.min.js"></script>
   <script src="libraries/leaflet.js"></script>
+  <script src="libraries/leaflet.draw.js"></script>
   <script src="libraries/underscore-min.js"></script>
   <script src="libraries/d3-dispatch.min.js"></script>
   <script src="libraries/hammer.min.js"></script>

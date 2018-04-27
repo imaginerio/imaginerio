@@ -30,6 +30,14 @@ const getSearch = (components) => {
         S.clear();
       }
     });
+    setSearchByArea();
+  }
+
+  function setSearchByArea() {
+    console.log('init area');
+    $('.probe-area').on('click', () => {
+      console.log('search by area');
+    });
   }
 
   function doSearch(val) {

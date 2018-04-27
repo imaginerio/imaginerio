@@ -378,7 +378,7 @@ const getMap = (components) => {
     }
     let off = layers[0] == 'all' ? '' : layers.join(',');
     $.getJSON(server + 'probe/' + year + '/' + probeZoom + '/' + e.latlng.lng + ',' + e.latlng.lat + '/' + off, function (json) {
-      if (_.size(json)) $('.probe-hint').hide();
+      // if (_.size(json)) $('.probe-hint').hide();
       dispatch.call('showresults', this, _.indexBy(json, 'name'), true);
     });
   }

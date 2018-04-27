@@ -80,7 +80,7 @@ const getDispatch = (components) => {
     Map.addOverlay(p.data.overlay);
     rasterProbe(p);
     $('#overlay-info').data('p', p).show();
-    $('.probe-hint').css('margin-right', '65px');
+    // $('.probe-hint').css('margin-right', '65px');
     updateHash();
   });
 
@@ -90,7 +90,7 @@ const getDispatch = (components) => {
     Map.removeOverlay();
     $('#fixed-probe').hide();
     $('#overlay-info').data('p', null).hide();
-    $('.probe-hint').css('margin-right', '0');
+    // $('.probe-hint').css('margin-right', '0');
     updateHash();
   });
 
