@@ -117,11 +117,11 @@ const getMap = (components) => {
 
     const LocationControl = L.Control.extend({
       options: {
-        position: 'bottomleft'
+        position: 'bottomleft',
       },
 
       onAdd(innerMap) {
-        let div = L.DomUtil.create('div', 'leaflet-bar leaflet-control geolocate-control');
+        const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control geolocate-control');
         div.innerHTML = '<a><i class="icon-direction"></i><i class="icon-spinner animate-spin"></i></a>';
         div.onclick = function onClick(e) {
           e.stopPropagation();
@@ -140,7 +140,7 @@ const getMap = (components) => {
     $('.memory-icon .cancel').click(function () {
       dispatch.call('cancelmemory', this);
     });
-    $('.memory-icon .ok').click(function () {
+    $('.memory-icon .ok').click(function click() {
       let pos = $('.memory-icon .icon').offset();
       pos.left += 13;
       pos.top += 42;
@@ -151,7 +151,9 @@ const getMap = (components) => {
       dispatch.call('showaddmemory', this, ll.lat, ll.lng);
     });
     return M;
-  }
+  };
+
+  M.getMap = () => map;
 
   M.setYear = (newYear) => {
     const { init } = components;

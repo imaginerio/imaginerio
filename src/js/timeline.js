@@ -33,13 +33,11 @@ const getTimeline = (components) => {
 
     $('.timeline-track, .timeline-slider, .ticks', timeline)
       .on('mousemove.timeline', (e) => {
-        console.log(e);
         const d = getDataForMouseEvent(e);
         $('.timeline-probe', timeline)
           .show()
           .css('left', `${d.x}px`)
           .html(formatYear(d.year));
-        console.log(d.x);
 
         const timelineEraProbe = $('.timeline-era-probe', timeline)
           .show()

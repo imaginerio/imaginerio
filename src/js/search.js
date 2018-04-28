@@ -22,7 +22,7 @@ const getSearch = (components) => {
         }
       });
     });
-    $('input', container).on('keyup', function keyup(e) {
+    $('input', container).on('keyup', function keyup() {
       const val = $(this).val();
       if (val.length > 2) {
         doSearch(val);
@@ -34,9 +34,37 @@ const getSearch = (components) => {
   }
 
   function setSearchByArea() {
-    console.log('init area');
+    const { Map } = components;
+    const leafletMap = Map.getMap();
+    const drawnShape = new L.FeatureGroup().addTo(leafletMap);
+    const searchColor = '#337164';
+
+    leafletMap.on(L.Draw.Event.CREATED, (e) => {
+      const { layer } = e;
+      const searchBounds = layer.getLatLngs();
+      console.log('search bounds', searchBounds);
+      const currentSearch = drawnShape.getLayers();
+      // console.log(drawnShape);
+      if (currentSearch.length > 0) {
+        currentSearch.forEach((d) => {
+          drawnShape.removeLayer(d);
+        });
+      }
+      drawnShape.addLayer(layer);
+    });
+
+    L.drawLocal.draw.handlers.rectangle.tooltip.start = 'Click+drag to explore an area';
+    drawnShape.addTo(leafletMap);
     $('.probe-area').on('click', () => {
-      console.log('search by area');
+      new L.Draw.Rectangle(leafletMap, {
+        edit: {
+          featureGroup: drawnShape,
+        },
+        shapeOptions: {
+          color: searchColor,
+          fillColor: searchColor,
+        },
+      }).enable();
     });
   }
 
