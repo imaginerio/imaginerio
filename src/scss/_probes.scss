@@ -23,6 +23,20 @@ $hint-probe-height: 36px;
   box-shadow: 0 0 8px rgba(0,0,0,.25);
 }
 
+.searching-area .probe-hint {
+  display: none;
+}
+
+.searching-area .probe-hint-container {
+  background-color: rgba(51, 51, 51, 0);
+}
+
+.searching-area .probe-area {
+  color: white;
+  background: $dark-green;
+  border: solid $dark-green 1px;
+}
+
 .probe-area {
   padding-left: 15px;
   padding-right: 15px;

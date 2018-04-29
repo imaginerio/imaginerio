@@ -10,7 +10,6 @@ const getSearch = (components) => {
 
   function initEvents() {
     $('#search-button').click((e) => {
-      console.log('search button click');
       e.stopPropagation();
       $('#legend').addClass('search');
       $('#search input').focus();
@@ -39,23 +38,28 @@ const getSearch = (components) => {
     const drawnShape = new L.FeatureGroup().addTo(leafletMap);
     const searchColor = '#337164';
 
+    // leafletMap.on('draw:drawstart', () => {
+      
+    // });
+
     leafletMap.on(L.Draw.Event.CREATED, (e) => {
       const { layer } = e;
       const searchBounds = layer.getLatLngs();
       console.log('search bounds', searchBounds);
-      const currentSearch = drawnShape.getLayers();
-      // console.log(drawnShape);
-      if (currentSearch.length > 0) {
-        currentSearch.forEach((d) => {
-          drawnShape.removeLayer(d);
-        });
-      }
-      drawnShape.addLayer(layer);
+      $('main').removeClass('searching-area');
+      // const currentSearch = drawnShape.getLayers();
+      // if (currentSearch.length > 0) {
+      //   currentSearch.forEach((d) => {
+      //     drawnShape.removeLayer(d);
+      //   });
+      // }
+      // drawnShape.addLayer(layer);
     });
 
     L.drawLocal.draw.handlers.rectangle.tooltip.start = 'Click+drag to explore an area';
     drawnShape.addTo(leafletMap);
     $('.probe-area').on('click', () => {
+      $('main').addClass('searching-area');
       new L.Draw.Rectangle(leafletMap, {
         edit: {
           featureGroup: drawnShape,
@@ -160,16 +164,19 @@ const getSearch = (components) => {
 
   S.initialize = function initialize(containerId) {
     container = $(`#${containerId}`);
+
     resultsContainer = $('<div>')
       .attr('class', 'search-results')
-      // .append('<i class="icon-times">')
       .appendTo(container);
     initEvents();
     return S;
   };
 
   S.setYear = (newYear) => {
+    console.log('set year', newYear);
+
     year = newYear;
+    if (resultsContainer === undefined) return;
     resultsContainer.hide();
     return S;
   };
