@@ -14,14 +14,26 @@ const getLegend = (components) => {
 
   function initEvents() {
     const { dispatch } = components;
+    
     $('.legend-toggle').click(() => {
-      legend.toggleClass('collapsed').addClass('subsequent');
+      toggleSidebar();
     });
     $('.legend-contents').on('change', function onChange() {
       // checkbox clicks
       dispatch.call('setlayers', this, Lg.layers());
     });
   }
+
+  function toggleSidebar() {
+    legend.toggleClass('collapsed').addClass('subsequent');
+  }
+
+  function openSidebar() {
+    if (legend.hasClass('collapsed')) {
+      toggleSidebar();
+    }
+  }
+  Lg.openSidebar = openSidebar;
 
   function updateYear(y) {
     const {

@@ -7,19 +7,28 @@ const getSearch = (components) => {
   let resultsContainer;
   let searchResults = {};
   let searchVal;
+  let searchAreaVal;
+
+  function setSearchExit() {
+    // need something here to detect if click is a new search.
+    // if new search, do not remove 'search' class
+    $(document).on('click.search', (ee) => {
+      if (!$.contains(document.getElementById('search'), ee.target)) {
+        console.log('quit search');
+        S.clear();
+        $('#legend').removeClass('search');
+        $(document).off('click.search');
+      }
+    });
+  }
 
   function initEvents() {
+    console.log('init events');
     $('#search-button').click((e) => {
       e.stopPropagation();
       $('#legend').addClass('search');
       $('#search input').focus();
-      $(document).on('click.search', (ee) => {
-        if (!$.contains(document.getElementById('search'), ee.target)) {
-          S.clear();
-          $('#legend').removeClass('search');
-          $(document).off('click.search');
-        }
-      });
+      setSearchExit();
     });
     $('input', container).on('keyup', function keyup() {
       const val = $(this).val();
@@ -30,6 +39,13 @@ const getSearch = (components) => {
       }
     });
     setSearchByArea();
+  }
+
+  function toggleSearchResults() {
+    const { Legend } = components;
+    Legend.openSidebar();
+    $('#legend').addClass('search');
+    setSearchExit();
   }
 
   function setSearchByArea() {
@@ -44,9 +60,12 @@ const getSearch = (components) => {
 
     leafletMap.on(L.Draw.Event.CREATED, (e) => {
       const { layer } = e;
-      const searchBounds = layer.getLatLngs();
-      console.log('search bounds', searchBounds);
+      searchAreaVal = layer.getLatLngs();
       $('main').removeClass('searching-area');
+      
+
+      toggleSearchResults();
+
       // const currentSearch = drawnShape.getLayers();
       // if (currentSearch.length > 0) {
       //   currentSearch.forEach((d) => {
@@ -89,7 +108,8 @@ const getSearch = (components) => {
   S.showResults = function showResults(results, clicked) {
     const { dispatch, init } = components;
     const { mobile, names, server } = init;
-
+    console.log('show results');
+    toggleSearchResults();
     searchResults = results;
     console.log('search results', results);
     // if there are results
