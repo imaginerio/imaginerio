@@ -85,12 +85,6 @@
       "src": "entypo"
     },
     {
-      "uid": "5211af474d3a9848f67f945e2ccaf143",
-      "css": "times",
-      "code": 59401,
-      "src": "fontawesome"
-    },
-    {
       "uid": "fb1c799ffe5bf8fb7f8bcb647c8fe9e6",
       "css": "right-dir",
       "code": 59403,
@@ -254,6 +248,18 @@
       "uid": "1bafeeb1808a5fe24484c7890096901a",
       "css": "user-plus",
       "code": 62004,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "5211af474d3a9848f67f945e2ccaf143",
+      "css": "times",
+      "code": 59401,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "18e30ad120ce4b15d7e5c797e4bf0ee8",
+      "css": "hand-pointer-o",
+      "code": 62042,
       "src": "fontawesome"
     }
   ]

@@ -31,12 +31,6 @@ $hint-probe-height: 36px;
   background-color: rgba(51, 51, 51, 0);
 }
 
-.searching-area .probe-area {
-  color: white;
-  background: $dark-green;
-  border: solid $dark-green 1px;
-}
-
 .probe-area {
   padding-left: 15px;
   padding-right: 15px;
@@ -48,6 +42,26 @@ $hint-probe-height: 36px;
   align-items: center;
   color: #666666;
   font-weight: bold;
+  cursor: pointer;
+}
+
+.searching-area .probe-area {
+  color: white;
+  background: $dark-green;
+  border: solid $dark-green 1px;
+}
+
+.probe-area > .icon-times {
+  display: none;
+  margin-left: 20px;
+}
+
+.probe-area > .icon-search {
+  margin-right: 5px;
+}
+
+.searching-area .probe-area > .icon-times {
+  display: block;
 }
 
 .eras .probe-hint,

@@ -124,7 +124,6 @@ const getTimeline = (components) => {
       (i === 0 && innerYear === d.dates[0]) ||
       (i === eras.length - 1 && innerYear === d.dates[1]) ||
       (innerYear >= d.dates[0] && innerYear < d.dates[1]));
-    console.log(displayEra);
 
     return { x, year: innerYear, era: displayEra.name };
   }
