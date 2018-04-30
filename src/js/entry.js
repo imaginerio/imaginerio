@@ -11,6 +11,7 @@ import getPhoto from './Photo';
 import getOverlay from './Overlay';
 import getProbes from './probes';
 import getSlider from './slider';
+import getRegister from './register';
 
 require('../scss/index.scss');
 
@@ -28,6 +29,7 @@ components.Photo = getPhoto(components);
 components.Overlay = getOverlay(components);
 components.probes = getProbes(components);
 components.Slider = getSlider(components);
+components.register = getRegister(components);
 components.init = getInit(components);
 
 

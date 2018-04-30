@@ -14,7 +14,6 @@ const getSearch = (components) => {
     // if new search, do not remove 'search' class
     $(document).on('click.search', (ee) => {
       if (!$.contains(document.getElementById('search'), ee.target)) {
-        console.log('quit search');
         S.clear();
         $('#legend').removeClass('search');
         $(document).off('click.search');
@@ -23,7 +22,6 @@ const getSearch = (components) => {
   }
 
   function initEvents() {
-    console.log('init events');
     $('#search-button').click((e) => {
       e.stopPropagation();
       $('#legend').addClass('search');
@@ -193,8 +191,6 @@ const getSearch = (components) => {
   };
 
   S.setYear = (newYear) => {
-    console.log('set year', newYear);
-
     year = newYear;
     if (resultsContainer === undefined) return;
     resultsContainer.hide();

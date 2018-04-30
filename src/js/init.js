@@ -7,6 +7,7 @@ const getInit = (components) => {
     Legend,
     Search,
     dispatch,
+    register,
   } = components;
   const Dispatch = dispatch;
 
@@ -67,6 +68,7 @@ const getInit = (components) => {
     Map.initialize('map').setYear(year);
     Timeline.initialize(eras, 'timeline').setYear(year);
     Filmstrip.initialize();
+    register.initialize();
     Legend.initialize().setYear(year);
     // Search.initialize('search').setYear(year);
     init_ui();
@@ -130,6 +132,7 @@ const getInit = (components) => {
       // close on background click
       if (e.target == this || $(e.target).hasClass('icon-times')) {
         $('.lightbox').hide();
+        $('.lightbox').removeClass('register');
       }
     });
 
@@ -201,13 +204,12 @@ const getInit = (components) => {
   }
 
   function goToMap() {
-
     Dispatch.call('setyear', this, year);
     $('main').removeClass('eras').removeClass('start');
     updateHash();
     updateEra();
   }
-  
+
   function updateEra() {
     eras.forEach((e) => {
       if (year >= e.dates[0] && year <= e.dates[1]) {
@@ -216,14 +218,14 @@ const getInit = (components) => {
       }
     });
   }
-  
+
   function showEra(i, noTransition) {
     $('main').removeClass('start');
     $('#eras-button div.desktop span').html('start');
     let e = eras[i];
     Filmstrip.setYear(e.dates[0], e.dates[1]);
     Map.setYear(e.dates[0]);
-    
+
     if (noTransition) {
       $('.era-intro .era-description-inner').remove();
       $('<div class="era-description-inner">')

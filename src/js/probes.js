@@ -113,7 +113,7 @@ const getProbes = (components) => {
       });
   }
   
-  function mapProbe (event, content) {
+  function mapProbe(event, content) {
     let probe = $('#map-probe').show();
     $('#map-probe .content').empty().html(content);
     let x = event.originalEvent.pageX;
@@ -135,6 +135,7 @@ const getProbes = (components) => {
     $('<p>').attr('class', 'fixed-probe-title').html(name).appendTo('#fixed-probe .content');
     if (content) $('#fixed-probe .content').append(content);
   }
+
   return {
     rasterProbe,
     filmstripProbe,

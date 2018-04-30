@@ -20,6 +20,11 @@
   position: relative;
 }
 
+.lightbox.register .content {
+  padding: 0px;
+  padding-bottom: 20px;
+}
+
 .lightbox .content > div {
   max-height: 80%;
   overflow: auto;
@@ -55,3 +60,4 @@
 .image-credit {
   font-style: italic;
 }
+

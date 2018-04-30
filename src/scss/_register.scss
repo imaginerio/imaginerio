@@ -1,0 +1,88 @@
+.register-content {
+  max-width: 490px;
+  font-size: 15px;
+  padding: 0px 20px 20px 20px;
+}
+
+.register-image {
+  background-size: cover;
+  width: 100%;
+  height: 100px;
+  background-image: url('../img/pattern.png');
+}
+
+.register-title {
+  font-size: 40px;
+  font-weight: light;
+  color: $dark-green;
+  text-align: center;
+}
+
+.register-text {
+  text-align: center;
+}
+
+.register-thank-you-text {
+  max-width: 375px;
+}
+
+.register-form-row {
+  margin-top: 25px;
+}
+
+.register-content input,
+.register-content textarea {
+  width: 100%;
+  border: 1px solid $pale-green;
+  border-radius: 3px;
+  margin-top: 5px;
+}
+
+.register-content input {
+  height: 35px;
+}
+
+.register-form-buttons,
+.thankyou-buttons {
+  display: flex;
+  margin-top: 50px;
+}
+
+.thankyou-buttons {
+  justify-content: center;
+}
+
+.register-submit-button,
+.register-cancel-button,
+.thankyou-close-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  padding: 0px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.register-submit-button,
+.thankyou-close-button {
+  color: white;
+  background: $dark-green;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.register-cancel-button {
+  font-size: 15px;
+  font-weight: bold;
+  color: $dark-green;
+}
+
+.register-submit-button:hover,
+.thankyou-close-button:hover {
+  background: $darker-green;
+}
+
+.register-cancel-button:hover {
+  color: $darker-green;
+}
