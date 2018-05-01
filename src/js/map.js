@@ -359,28 +359,29 @@ const getMap = (components) => {
   function probe(e) {
     const { init, dispatch } = components;
     const { server } = init;
-    let zoom = map.getZoom();
+    if ($('main').hasClass('searching-area')) return;
+    const zoom = map.getZoom();
     let probeZoom;
-    switch ( zoom ){
+    switch (zoom) {
       case 15:
-        probeZoom = .5;
+        probeZoom = 0.5;
         break;
       case 16:
-        probeZoom = .35;
+        probeZoom = 0.35;
         break;
       case 17:
-        probeZoom = .2;
+        probeZoom = 0.2;
         break;
       case 18:
-        probeZoom = .1;
+        probeZoom = 0.1;
         break;
       default:
-        probeZoom = .6;
+        probeZoom = 0.6;
         break;
     }
-    let off = layers[0] == 'all' ? '' : layers.join(',');
-    $.getJSON(server + 'probe/' + year + '/' + probeZoom + '/' + e.latlng.lng + ',' + e.latlng.lat + '/' + off, function (json) {
-      // if (_.size(json)) $('.probe-hint').hide();
+    const off = layers[0] === 'all' ? '' : layers.join(',');
+    const probeUrl = `${server}probe/${year}/${probeZoom}/${e.latlng.lng},${e.latlng.lat}/${off}`;
+    $.getJSON(probeUrl, function probeJSON(json) {
       dispatch.call('showresults', this, _.indexBy(json, 'name'), true);
     });
   }

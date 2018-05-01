@@ -7,7 +7,11 @@ const getSearch = (components) => {
   let resultsContainer;
   let searchResults = {};
   let searchVal;
-  let searchAreaVal;
+  let layers = ['all']; // either 'all' or a list of DISABLED layers
+
+  S.setLayers = (list) => {
+    layers = list;
+  };
 
   function setSearchExit() {
     // need something here to detect if click is a new search.
@@ -58,19 +62,16 @@ const getSearch = (components) => {
 
     leafletMap.on(L.Draw.Event.CREATED, (e) => {
       const { layer } = e;
-      searchAreaVal = layer.getLatLngs();
+      const searchAreaVal = layer.getLatLngs();
       $('main').removeClass('searching-area');
-      
+      console.log('search area', searchAreaVal);
+      const getCoordString = latLng => `${latLng.lng},${latLng.lat}`;
+      // top left, bottom right
+      const topLeft = getCoordString(searchAreaVal[0][3]);
+      const bottomRight = getCoordString(searchAreaVal[0][1]);
 
+      doAreaSearch(topLeft, bottomRight);
       toggleSearchResults();
-
-      // const currentSearch = drawnShape.getLayers();
-      // if (currentSearch.length > 0) {
-      //   currentSearch.forEach((d) => {
-      //     drawnShape.removeLayer(d);
-      //   });
-      // }
-      // drawnShape.addLayer(layer);
     });
 
     L.drawLocal.draw.handlers.rectangle.tooltip.start = 'Click+drag to explore an area';
@@ -89,10 +90,25 @@ const getSearch = (components) => {
     });
   }
 
+  function doAreaSearch(topLeft, bottomRight) {
+    const { init, dispatch } = components;
+    const { server } = init;
+    const off = layers[0] === 'all' ? '' : layers.join(',');
+    // const probeUrl = `${server}probe/${year}/${probeZoom}/${e.latlng.lng},${e.latlng.lat}/${off}`;
+    // http://imaginerio.axismaps.io:3000/box/2003/-43.2192,-22.886/-43.167,-22.92/roads/
+    const searchUrl = `${server}box/${year}/${topLeft}/${bottomRight}/${off}`;
+    console.log('url', searchUrl);
+    $.getJSON(searchUrl, (data) => {
+      console.log('area search data', data);
+      S.showResults(_.indexBy(data, 'name'), true);
+    });
+  }
+
+
   function doSearch(val) {
     const { init } = components;
     const { server } = init;
-    console.log('request', request);
+    console.log('do search', request);
     if (val !== searchVal) {
       searchVal = val;
       // abort if search is already underway
