@@ -113,7 +113,7 @@ const getSearch = (components) => {
       searchVal = val;
       // abort if search is already underway
       if (request !== undefined && request.readyState !== 4) request.abort();
-      request = $.getJSON(server + 'search/' + year + '/' + val, S.showResults);
+      request = $.getJSON(server + 'search2/' + year + '/' + val, S.showResults);
     } else if (searchVal) {
       S.showResults(searchResults);
     }

@@ -117,13 +117,13 @@ const getTimeline = (components) => {
     const stepWidth = timeline.width() / (_totalSteps);
     let eraSteps = Math.ceil((era.dates[1] - era.dates[0]) / era.increment);
     const roundedStep = Math.min(Math.floor(localX / stepWidth), eraSteps - 1);
-    if ((era.dates[1] - era.dates[0]) % era.increment != 0 ) eraSteps++;
+    if ((era.dates[1] - era.dates[0]) % era.increment != 0 ) eraSteps += 1;
     const innerYear = roundedStep == eraSteps - 1 ? era.dates[1] : era.dates[0] + era.increment * roundedStep;
 
     const displayEra = eras.find((d, i) =>
       (i === 0 && innerYear === d.dates[0]) ||
       (i === eras.length - 1 && innerYear === d.dates[1]) ||
-      (innerYear >= d.dates[0] && innerYear < d.dates[1]));
+      (innerYear >= d.dates[0] && innerYear <= d.dates[1]));
 
     return { x, year: innerYear, era: displayEra.name };
   }
@@ -167,33 +167,47 @@ const getTimeline = (components) => {
     $('.ticks', timeline).remove();
     const width = timeline.width();
     const stepWidth = width / (_totalSteps);
+    // loop through each era
     _eras.forEach((era, index) => {
-      let steps = Math.ceil((era.dates[1] - era.dates[0])/era.increment);
-      if ((era.dates[1] - era.dates[0]) % era.increment != 0 ) steps++;
-      
-      const ticksContainer = $('<div class="ticks ticks-main">').appendTo(ticksOuter);
-      ticksContainer.css('width', (stepWidth * (steps)) + 'px');
-      let i = 0;
-      let tickVal = era.dates[0];
-      const mainInterval = window.innerWidth > 840 ? 10 : 20;
-      let otherIntervalTest = (index == 0 || index == 4 || index == 7 || index == 10);
-      if (window.innerWidth < 1090) otherIntervalTest = (index == 0 || index == 7 || index == 10);
-      if (window.innerWidth < 900) otherIntervalTest = (index == 0 || index == 10);
+      // total # of steps to click through
+      let steps = Math.ceil((era.dates[1] - era.dates[0]) / era.increment);
 
+      // add extra step if not divisible by increment
+      if ((era.dates[1] - era.dates[0]) % era.increment !== 0 ) steps += 1;
+
+      const ticksContainer = $('<div class="ticks ticks-main">').appendTo(ticksOuter);
+      ticksContainer.css('width', `${stepWidth * steps}px`);
+      
+      let i = 0; // which # tick we're on for current era
+      let tickVal = era.dates[0];
+      // const mainInterval = window.innerWidth > 840 ? 10 : 20;
+      // let otherIntervalTest = (index === 0 || index === 4 || index === 7 || index === 10);
+      // testing for specific eras, to set special rules for major/minor ticks for those eras
+      // if (window.innerWidth < 1090) otherIntervalTest = (index === 0 || index === 7 || index === 10);
+      // if (window.innerWidth < 900) otherIntervalTest = (index === 0 || index === 10);
+      const majorInterval = window.innerWidth >= 1090 ? 20 : 40;
+      const minorInterval = majorInterval / 2;
       while (tickVal < era.dates[1]) {
         let type;
-        if (era.increment == 1 && tickVal % mainInterval == 0) type = 'major';
-        else if (era.increment == 1 && tickVal % 5 == 0) type = 'minor';
-        else if (era.increment != 1) {
-          if (tickVal == era.dates[0] && otherIntervalTest) type = 'major';
-          // hard-coded index values that 
+        if (tickVal % majorInterval === 0) {
+          type = 'major';
+        } else if (tickVal % minorInterval === 0) {
+          type = 'minor';
+        } else {
+          type = 'hidden';
         }
-        if (!type) type = 'hidden';
-        appendTick(type, tickVal, stepWidth * i, ticksContainer)
-        tickVal += era.increment;
-        i++;
+        // if (era.increment === 1 && tickVal % mainInterval === 0) type = 'major';
+        // else if (era.increment === 1 && tickVal % 5 === 0) type = 'minor';
+        // else if (era.increment !== 1) {
+        //   if (tickVal === era.dates[0] && otherIntervalTest) type = 'major';
+        // }
+        // if (type === undefined) {
+        //   type = 'hidden';
+        // }
+        appendTick(type, tickVal, stepWidth * i, ticksContainer);
+        tickVal += era.increment; // current tick value
+        i += 1;
       }
-
     });
   }
 
@@ -240,11 +254,12 @@ const getTimeline = (components) => {
     _eras = eras;
     _totalSteps = _.reduce(eras, (m, e) => {
       let steps = Math.ceil((e.dates[1] - e.dates[0]) / e.increment);
-      if ((e.dates[1] - e.dates[0]) % e.increment != 0 ) steps++; // unless it divides perfectly, add an extra step for end year
+      if ((e.dates[1] - e.dates[0]) % e.increment !== 0) steps += 1; // unless it divides perfectly, add an extra step for end year
       e.steps = steps;
       return m + steps;
     }, 0);
-    year = eras[0].dates[0];
+
+    [year] = eras[0].dates;
   
     stepper = $('<div>')
       .attr('class', 'year-stepper')
