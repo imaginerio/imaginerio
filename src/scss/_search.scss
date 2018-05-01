@@ -12,42 +12,31 @@
   cursor: text;
 }
 
+.search-input-container {
+  display: none !important;
+}
+
 .search-input-container > i {
   margin-right: 15px;
 }
 
-#legend.search #search input, #legend.search #search > .search-go {
-  display: inline-block;
+#legend.search .search-input-container {
+  display: flex !important;
 }
 
-// #legend.search #controls-right .search-hide {
-//   display: none;
-// }
-
-#search > .search-go {
+#legend.collapsed .search-input-container,
+#legend.collapsed .search-button-container {
   display: none;
-  line-height: 30px;
-  width: 30px;
-  text-align: center;
-  background-color: #999999;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  color: white;
-  padding: 2px;
 }
 
 #search > .search-results {
-  /* position: absolute; */
   z-index: 700;
-  /* top: 135px; */
-  /* right: 30px; */
   background-color: white;
   width: 100%;
   display: none;
   line-height: 34px;
   border-radius: 0px;
   box-shadow: 0 0 8px rgba(0,0,0,.25);
-  // max-height: calc(100% - 200px);
   overflow: auto;
 }
 
@@ -129,7 +118,7 @@
 .search-button-container {
   display: flex;
   align-items: center;
-  height: 60px;
+  height: $search-input-height;
 }
 #search-button {
   margin-left: 15px;

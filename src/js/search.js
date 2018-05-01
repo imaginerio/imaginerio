@@ -2,6 +2,7 @@ const getSearch = (components) => {
   const S = {};
 
   let container;
+  let searchInput;
   let request;
   let year = 2015;
   let resultsContainer;
@@ -29,10 +30,10 @@ const getSearch = (components) => {
     $('#search-button').click((e) => {
       e.stopPropagation();
       $('#legend').addClass('search');
-      $('#search input').focus();
+      $('.search-input').focus();
       setSearchExit();
     });
-    $('input', container).on('keyup', function keyup() {
+    searchInput.on('keyup', function keyup() {
       const val = $(this).val();
       if (val.length > 2) {
         doSearch(val);
@@ -198,6 +199,7 @@ const getSearch = (components) => {
 
   S.initialize = function initialize(containerId) {
     container = $(`#${containerId}`);
+    searchInput = $('.search-input');
 
     resultsContainer = $('<div>')
       .attr('class', 'search-results')

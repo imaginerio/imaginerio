@@ -169,7 +169,10 @@ const getLegend = (components) => {
 
   Lg.addSearch = () => {
     const { Search } = components;
+    console.log('add search');
+    // clear search
     $('.legend-category[data-category="search"]').remove();
+
     const cat = $('<div>')
       .attr('class', 'legend-category')
       .attr('data-category', 'search')
@@ -177,17 +180,6 @@ const getLegend = (components) => {
 
     cat.append(`
       <div id="search">
-        <div class="search-input-container">
-          <input placeholder="Enter a building or place name" class="search-input" />
-          <i class="icon-left-big mobile"></i>
-          <i class="icon-cancel-circled2"></i>
-        </div>
-      </div>
-      <div class="search-button-container">
-        <div id="search-button" class="search-hide">
-          <i class="icon-search"></i>
-          <span class="desktop">Search map layers...</span>
-        </div>
       </div>
     `);
 
