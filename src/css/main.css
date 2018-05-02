@@ -109,7 +109,7 @@ header > a{
   font-size: 20px;
 }
 
-.eras #top-right-buttons, .eras #search-button {
+.eras #top-right-buttons, .eras #search-button, .eras #add-memory-button {
   display: none;
 }
 
