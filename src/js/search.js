@@ -71,12 +71,11 @@ const getSearch = (components) => {
       $('main').removeClass('searching-area');
       console.log('search area', searchAreaVal);
       const getCoordString = latLng => `${latLng.lng},${latLng.lat}`;
-      // top left, bottom right
+
       const topLeft = getCoordString(searchAreaVal[0][3]);
       const bottomRight = getCoordString(searchAreaVal[0][1]);
 
       doAreaSearch(topLeft, bottomRight);
-      // toggleSearchResults();
     });
 
     L.drawLocal.draw.handlers.rectangle.tooltip.start = 'Click+drag to explore an area';
@@ -102,7 +101,6 @@ const getSearch = (components) => {
     const searchUrl = `${server}box/${year}/${topLeft}/${bottomRight}/${off}`;
 
     $.getJSON(searchUrl, (data) => {
-      console.log('area search data', data);
       S.showResults(_.indexBy(data, 'name'), true);
     });
   }
@@ -157,7 +155,8 @@ const getSearch = (components) => {
             .append('<i class="icon-right-dir"></i>')
             .append('<i class="icon-down-dir"></i>')
             .appendTo(groupContainer);
-          $('<span>' + r.name + '</span>')
+
+          $(`<span>${r.name}</span>`)
             .appendTo(row)
             .on('click', function click() {
               if (!row.hasClass('selected')) {

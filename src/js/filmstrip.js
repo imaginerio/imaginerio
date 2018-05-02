@@ -43,7 +43,7 @@ const getFilmstrip = (components) => {
     // clear current rasters
     rasters = [];
     const rasterUrl = `${server}raster/${year}${(max ? (`?max=${max}`) : '')}`;
-    console.log('rasterUrl', `${server}raster/${year}${(max ? (`?max=${max}`) : '')}`);
+    // console.log('rasterUrl', `${server}raster/${year}${(max ? (`?max=${max}`) : '')}`);
     $.getJSON(rasterUrl, (json) => {
       const {
         Photo,
@@ -65,8 +65,6 @@ const getFilmstrip = (components) => {
         $('.filmstrip-showall').show();
         _.each(json, (r) => {
           if (!allRasters[r.id]) {
-            // console.log('r', r);
-            // console.log('thumbnailurl', thumbnaillUrl);
             // if allRasters doesn't have item, add
             allRasters[r.id] = r;
             // add photo and overlay to item
@@ -78,7 +76,7 @@ const getFilmstrip = (components) => {
         });
         // copy raster. Max 3 for mini icon display
         const minis = rasters.slice(0, Math.min(3, rasters.length));
-        console.log('rasters', rasters);
+        // console.log('rasters', rasters);
         _.each(minis, (m) => {
           // [20] -- Image size
           m.photo.getImage([20])

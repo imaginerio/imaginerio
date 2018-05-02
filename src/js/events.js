@@ -22,6 +22,7 @@ const getDispatch = (components) => {
     'statechange',
     'cancelmemory',
     'showaddmemory',
+    'drawplanfeature',
 );
 
   Dispatch.on('changeyear', (newYear) => {
@@ -127,12 +128,18 @@ const getDispatch = (components) => {
     $('#fixed-probe').hide();
   });
 
+  Dispatch.on('drawplanfeature', (plan) => {
+    const { Map } = components;
+    Map.drawPlanFeature(plan.planname);
+  });
+
   Dispatch.on('drawfeature', (data) => {
     const { Map, init, probes } = components;
     const { mobile, server } = init;
     const { detailsProbe } = probes;
     Map.drawFeature(data.name);
     if (mobile) $('#search .icon-left-big').click();
+    // move this into Map module
     $.getJSON(server + 'details/' + data.id[0], (response) => {
       let content = '';
       if (response.length) {

@@ -283,24 +283,39 @@ const getMap = (components) => {
     return M;
   }
 
-  M.drawFeature = function (name) {
+  M.drawFeature = (name) => {
     const { init } = components;
     const { server } = init;
     M.removeHighlight();
-    $.getJSON(server + 'draw/' + year + '/' + encodeURIComponent(name), (json) => {
-      highlightLayerBottom = L.geoJson(json, {
-        style: () => highlightBottomStyle,
-        pointToLayer: (pt, latlng) => L.circleMarker(latlng, highlightMarkerBottomStyle)
-      }).addTo(map);
-      highlightLayerTop = L.geoJson(json, {
-        style: () => highlightTopStyle,
-        pointToLayer: (pt, latlng) => L.circleMarker(latlng, highlightMarkerTopStyle),
-      }).addTo(map);
-      map.fitBounds(highlightLayerBottom.getBounds());
+    $.getJSON(`${server}draw/${year}/${encodeURIComponent(name)}`, (json) => {
+      M.drawLoadedFeature(json);
     });
-  }
+  };
 
-  M.clearSelected = function () {
+  M.drawPlanFeature = (name) => {
+    const { init } = components;
+    const { server } = init;
+    $.getJSON(`${server}plan/${encodeURI(name)}`, (json) => {
+      const { features } = json;
+      if (features.length > 0) {
+        M.drawLoadedFeature(json);
+      }
+    });
+  };
+
+  M.drawLoadedFeature = (geojson) => {
+    highlightLayerBottom = L.geoJson(geojson, {
+      style: () => highlightBottomStyle,
+      pointToLayer: (pt, latlng) => L.circleMarker(latlng, highlightMarkerBottomStyle)
+    }).addTo(map);
+    highlightLayerTop = L.geoJson(geojson, {
+      style: () => highlightTopStyle,
+      pointToLayer: (pt, latlng) => L.circleMarker(latlng, highlightMarkerTopStyle),
+    }).addTo(map);
+    map.fitBounds(highlightLayerBottom.getBounds());
+  };
+
+  M.clearSelected = () => {
     if (selectedViewshed) {
       selectedViewshed.setIcon(viewshedIcon).setZIndexOffset(99);
       map.removeLayer(selectedViewshed.feature.properties.cone);
@@ -308,7 +323,7 @@ const getMap = (components) => {
     selectedViewshed = null;
     selectedViewshedData = null;
     M.removeHighlight();
-  }
+  };
 
   M.zoomToView = (raster) => {
     M.clearSelected();

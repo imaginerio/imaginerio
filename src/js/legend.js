@@ -112,6 +112,7 @@ const getLegend = (components) => {
   }
 
   function addPlans() {
+    const { dispatch } = components;
     console.log('add plans');
     const cat = $('<div>')
       .attr('class', 'legend-category')
@@ -123,6 +124,45 @@ const getLegend = (components) => {
       .attr('class', 'category-title')
       .html('PLANS')
       .appendTo(cat);
+    
+    console.log('plans', plans);
+
+    plans.forEach((plan) => {
+      const row = $('<div>').attr('class', 'search-result')
+        .append('<i class="icon-right-dir"></i>')
+        .append('<i class="icon-down-dir"></i>')
+        .appendTo(cat);
+
+      $(`<span>${plan.planname}</span>`)
+        .appendTo(row)
+        .on('click', function click() {
+          if (!row.hasClass('selected')) {
+            $('.search-result.selected').removeClass('selected');
+            row.addClass('selected');
+            if (!row.hasClass('expanded')) $(this).prev().click();
+            dispatch.call('drawplanfeature', this, plan);
+          } else {
+            row.removeClass('selected');
+            if (row.hasClass('expanded')) $(this).prev().click();
+            dispatch.call('removehighlight', this);
+          }
+        })
+        .prepend('<i class="icon-binoculars">');
+
+      $('i.icon-right-dir, i.icon-down-dir', row).on('click', () => {
+        if (row.hasClass('expanded')) {
+          row.removeClass('expanded');
+        } else {
+          row.addClass('expanded');
+          if (!$('.result-details', row).length) {
+            const details = $('<div>')
+              .attr('class', 'result-details')
+              .appendTo(row);
+            details.html(plan.planyear);
+          }
+        }
+      });
+    });
   }
 
   function setCurrentPlans() {
