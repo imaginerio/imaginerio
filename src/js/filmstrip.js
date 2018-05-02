@@ -1,13 +1,13 @@
 const getFilmstrip = (components) => {
-  let F = {};
+  const F = {};
 
-  let filmstrip = $('#filmstrip');
+  const filmstrip = $('#filmstrip');
   let rasters = [];
-  let photos = [];
+  const photos = [];
   let year = 2015;
   let maxYear;
 
-  let allRasters = {};
+  const allRasters = {};
 
   let selectedType = 'viewsheds';
 
@@ -40,8 +40,10 @@ const getFilmstrip = (components) => {
     } = init;
     year = y;
     maxYear = max;
+    // clear current rasters
     rasters = [];
     const rasterUrl = `${server}raster/${year}${(max ? (`?max=${max}`) : '')}`;
+    console.log('rasterUrl', `${server}raster/${year}${(max ? (`?max=${max}`) : '')}`);
     $.getJSON(rasterUrl, (json) => {
       const {
         Photo,
@@ -52,6 +54,7 @@ const getFilmstrip = (components) => {
 
       $('.mini-thumbs', filmstrip).empty();
       $('.filmstrip-thumbnails').empty();
+      // if no rasters
       if (!json.length) {
         $('.filmstrip-showall').hide();
         $('.raster-types i.selected').removeClass('selected');
@@ -63,14 +66,22 @@ const getFilmstrip = (components) => {
         $('.filmstrip-showall').show();
         _.each(json, (r) => {
           if (!allRasters[r.id]) {
+            // console.log('r', r);
+            // console.log('thumbnailurl', thumbnaillUrl);
+            // if allRasters doesn't have item, add
             allRasters[r.id] = r;
+            // add photo and overlay to item
             r.photo = Photo(r, thumbnaillUrl);
             r.overlay = Overlay(r);
           }
+          // add to current rasters
           rasters.push(allRasters[r.id]);
         });
+        // copy raster. Max 3 for mini icon display
         const minis = rasters.slice(0, Math.min(3, rasters.length));
+        console.log('rasters', rasters);
         _.each(minis, (m) => {
+          // [20] -- Image size
           m.photo.getImage([20])
             .appendTo($('.mini-thumbs', filmstrip));
         });

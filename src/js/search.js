@@ -45,8 +45,12 @@ const getSearch = (components) => {
   }
 
   function toggleSearchResults() {
+    console.log('toggle search results');
     const { Legend } = components;
-    Legend.openSidebar();
+    if ($('#legend').hasClass('collapsed')) {
+      Legend.openSidebar();
+    }
+    
     $('#legend').addClass('search');
     setSearchExit();
   }
@@ -72,7 +76,7 @@ const getSearch = (components) => {
       const bottomRight = getCoordString(searchAreaVal[0][1]);
 
       doAreaSearch(topLeft, bottomRight);
-      toggleSearchResults();
+      // toggleSearchResults();
     });
 
     L.drawLocal.draw.handlers.rectangle.tooltip.start = 'Click+drag to explore an area';
@@ -95,10 +99,8 @@ const getSearch = (components) => {
     const { init, dispatch } = components;
     const { server } = init;
     const off = layers[0] === 'all' ? '' : layers.join(',');
-    // const probeUrl = `${server}probe/${year}/${probeZoom}/${e.latlng.lng},${e.latlng.lat}/${off}`;
-    // http://imaginerio.axismaps.io:3000/box/2003/-43.2192,-22.886/-43.167,-22.92/roads/
     const searchUrl = `${server}box/${year}/${topLeft}/${bottomRight}/${off}`;
-    console.log('url', searchUrl);
+
     $.getJSON(searchUrl, (data) => {
       console.log('area search data', data);
       S.showResults(_.indexBy(data, 'name'), true);
@@ -109,22 +111,27 @@ const getSearch = (components) => {
   function doSearch(val) {
     const { init } = components;
     const { server } = init;
-    console.log('do search', request);
     if (val !== searchVal) {
       searchVal = val;
       // abort if search is already underway
       if (request !== undefined && request.readyState !== 4) request.abort();
-      request = $.getJSON(server + 'search2/' + year + '/' + val, S.showResults);
+      request = $.getJSON(`${server}search2/${year}/${val}`, S.showResults);
     } else if (searchVal) {
       S.showResults(searchResults);
     }
   }
 
+
+
   S.showResults = function showResults(results, clicked) {
     const { dispatch, init } = components;
-    const { mobile, names, server } = init;
-    console.log('show results');
+    const {
+      mobile,
+      names,
+      server,
+    } = init;
     toggleSearchResults();
+
     searchResults = results;
     console.log('search results', results);
     // if there are results
@@ -175,7 +182,7 @@ const getSearch = (components) => {
                 const details = $('<div>')
                   .attr('class', 'result-details')
                   .appendTo(row);
-                $.getJSON(server + 'details/' + r.id[0], (response) => {
+                $.getJSON(`${server}details/${r.id[0]}`, (response) => {
                   if (!response.length) return;
                   if (response[0].creator) $('<p>Creator: <span>' + response[0].creator + '</span></p>').appendTo(details);
                   if (response[0].year) $('<p>Mapped: <span>' + response[0].year + '</span></p>').appendTo(details);

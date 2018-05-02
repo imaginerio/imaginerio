@@ -46,17 +46,27 @@ const getInit = (components) => {
   const mobile = window.innerWidth <= 700;
 
   if (gup( 'dev' ) == 'true') {
-    server = 'http://imaginerio-dev.axismaps.io:3000';
+    server = 'https://imaginerio-dev.axismaps.io:3000';
     tileserver = 'http://imaginerio-dev.axismaps.io:3001/tiles/';
     rasterserver = 'http://imaginerio-dev.axismaps.io:3001/raster/';
   }
 
-  $.getJSON(server + 'timeline', (yearsData) => {
+  $.getJSON(`${server}timeline`, (yearsData) => {
+    console.log('timeline', `${server}timeline`);
     years = yearsData;
     // while (years[0] < eras[0].dates[0]) years.shift();  // force min year and first era to match
-    $.getJSON(server + 'names/en', (namesData) => {
+    $.getJSON(`${server}names/en`, (namesData) => {
       Init.names = namesData;
-      initialize();
+      $.getJSON(`${server}plans`, (plansList) => {
+        // parse years
+        Init.plans = plansList.map((d) => {
+          const planCopy = Object.assign({}, d);
+          planCopy.years = d.planyear.split('-').map(dd => parseInt(dd, 10));
+          return planCopy;
+        });
+
+        initialize();
+      });
     });
   });
   

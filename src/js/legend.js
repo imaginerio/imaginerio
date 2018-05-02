@@ -45,6 +45,9 @@ const getLegend = (components) => {
 
     if (y == year) return;
     year = y;
+
+    getPlansForYear();
+
     $('.legend-contents').empty();
     $.getJSON(server + 'layers/' + year, (layersJson) => {
       const { dispatch } = components;
@@ -101,6 +104,21 @@ const getLegend = (components) => {
     });
   }
 
+  function getPlansForYear() {
+    // Init.plans.forEach(d => $.getJSON(`${server}plan/${encodeURI(d.planname)}`, dd => console.log('plan', dd)));
+    const { init } = components;
+    console.log('plans', init.plans);
+    // filter to find plans for selected year
+    plans = init.plans.filter((d) => {
+      console.log(d.years[0], year);
+      if (d.years.length === 1) {
+        return d.years[0] === year;
+      }
+      return d.years[0] <= year && d.years[1] >= year;
+    });
+    console.log('current plans', plans);
+  }
+
   function getPlansForLayer(layer) {
     if (!plans) return;
     let planArray;
@@ -117,7 +135,7 @@ const getLegend = (components) => {
     const name = feature.id ? key : feature;
     const l = $('<div>')
       .attr('class', 'layer-existing')
-      .attr('data-name',name)
+      .attr('data-name', name)
       .data('name', name)
       .html(name)
       .appendTo(container)
