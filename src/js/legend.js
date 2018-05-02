@@ -46,20 +46,24 @@ const getLegend = (components) => {
     if (y == year) return;
     year = y;
 
-    getPlansForYear();
+    setCurrentPlans();
 
     $('.legend-contents').empty();
-    $.getJSON(server + 'layers/' + year, (layersJson) => {
+    // get layer data
+    $.getJSON(`${server}layers/${year}`, (layersJson) => {
       const { dispatch } = components;
       
       layers = layersJson;
-      // plans = plansJson;
+      console.log('layers', layers);
+
       _.each(layersJson, (category, categoryName) => {
 
         const cat = $('<div>')
           .attr('class', 'legend-category')
           .attr('data-category', 'feature')
           .appendTo('.legend-contents');
+        
+
         $('<div>')
           .attr('class', 'category-title')
           .html(categoryName.toUpperCase())
@@ -101,22 +105,36 @@ const getLegend = (components) => {
         dispatch.call('setlayers', this, Lg.layers());
         dispatch.call('statechange', this);
       }
+      if (plans.length > 0) {
+        addPlans();
+      }
     });
   }
 
-  function getPlansForYear() {
+  function addPlans() {
+    console.log('add plans');
+    const cat = $('<div>')
+      .attr('class', 'legend-category')
+      .attr('data-category', 'feature')
+      .prependTo('.legend-contents');
+    
+
+    $('<div>')
+      .attr('class', 'category-title')
+      .html('PLANS')
+      .appendTo(cat);
+  }
+
+  function setCurrentPlans() {
     // Init.plans.forEach(d => $.getJSON(`${server}plan/${encodeURI(d.planname)}`, dd => console.log('plan', dd)));
     const { init } = components;
-    console.log('plans', init.plans);
     // filter to find plans for selected year
     plans = init.plans.filter((d) => {
-      console.log(d.years[0], year);
       if (d.years.length === 1) {
         return d.years[0] === year;
       }
       return d.years[0] <= year && d.years[1] >= year;
     });
-    console.log('current plans', plans);
   }
 
   function getPlansForLayer(layer) {

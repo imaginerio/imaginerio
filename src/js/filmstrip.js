@@ -61,8 +61,7 @@ const getFilmstrip = (components) => {
         $('.filmstrip-thumbnails').append('<p class="no-data">No views, maps, plans, or aerials are available for this year.</p>')
         $('.filmstrip-toggle span', filmstrip).html('<em>NONE</em>');
         filmstrip.addClass('collapsed');
-      }
-      else {
+      } else {
         $('.filmstrip-showall').show();
         _.each(json, (r) => {
           if (!allRasters[r.id]) {
@@ -92,6 +91,9 @@ const getFilmstrip = (components) => {
       $('.icon-tsquare, .raster-type-labels span.plans', filmstrip).toggleClass('disabled', !_.some(rasters, r => r.layer === 'plans'));
       $('.icon-map-o, .raster-type-labels span.maps', filmstrip).toggleClass('disabled', !_.some(rasters, r => r.layer === 'maps'));
       
+      // This is here because needs to happen after raster is loaded
+      // Need to replace with centralized state management system
+      // if not disabled, add views to legend
       if (!$('.icon-camera, .raster-type-labels span.views', filmstrip).hasClass('disabled')) {
         dispatch.call('addviews', this);
       } else {
