@@ -150,49 +150,31 @@ const getSearch = (components) => {
           .attr('class', 'results-group')
           .append('<span>' + names[gName.toLowerCase()] || gName + '</span>')
           .appendTo(resultsContainer);
+        // draw results row for each record found
         _.each(g, (r) => {
           const row = $('<div>').attr('class', 'search-result')
-            .append('<i class="icon-right-dir"></i>')
-            .append('<i class="icon-down-dir"></i>')
             .appendTo(groupContainer);
-
-          $(`<span>${r.name}</span>`)
-            .appendTo(row)
-            .on('click', function click() {
-              if (!row.hasClass('selected')) {
-                $('.search-result.selected').removeClass('selected');
-                row.addClass('selected');
-                if (!row.hasClass('expanded')) $(this).prev().click();
-                dispatch.call('drawfeature', this, r);
-              } else {
-                row.removeClass('selected');
-                if (row.hasClass('expanded')) $(this).prev().click();
-                dispatch.call('removehighlight', this);
-              }
-              
-            })
-            .prepend('<i class="icon-binoculars">');
-          $('i.icon-right-dir, i.icon-down-dir', row).on('click', () => {
-            if (row.hasClass('expanded')) {
-              row.removeClass('expanded');
-            } else {
-              row.addClass('expanded');
-              if (!$('.result-details', row).length) {
-                const details = $('<div>')
-                  .attr('class', 'result-details')
-                  .appendTo(row);
-                $.getJSON(`${server}details/${r.id[0]}`, (response) => {
-                  if (!response.length) return;
-                  if (response[0].creator) $('<p>Creator: <span>' + response[0].creator + '</span></p>').appendTo(details);
-                  if (response[0].year) $('<p>Mapped: <span>' + response[0].year + '</span></p>').appendTo(details);
-                });
-              }
-            }
-          });
+          const imageLayers = [
+            'viewsheds',
+            'plans',
+            'maps',
+            'surveys',
+          ];
+          if (imageLayers.includes(r.layer)) {
+            drawViewshedResultsRow({
+              row,
+              data: r,
+            });
+          } else {
+            drawNormalResultsRow({
+              row,
+              data: r,
+            });
+          }
         });
       });
 
-      if ($('.search-result').length == 1 && clicked) {
+      if ($('.search-result').length === 1 && clicked) {
         // if only one result from map click, select it
         $('.search-result span').first().click();
       }
@@ -202,6 +184,60 @@ const getSearch = (components) => {
       dispatch.call('removehighlight', this);
     }
   };
+
+  function drawViewshedResultsRow({ row, data }) {
+    const { dispatch, init, Photo } = components;
+    const { server, thumbnaillUrl } = init;
+    console.log('thumb url', thumbnaillUrl);
+    const photo = Photo(data, thumbnaillUrl);
+    const thumb = photo.getImage([130])
+      .attr('class', 'filmstrip-thumbnail')
+      .data('view', data);
+
+    row.append(thumb);
+  }
+
+  function drawNormalResultsRow({ row, data }) {
+    const { dispatch, init } = components;
+    const { server } = init;
+
+    row
+      .append('<i class="icon-right-dir"></i>')
+      .append('<i class="icon-down-dir"></i>');
+
+    $(`<span>${data.name}</span>`)
+      .appendTo(row)
+      .on('click', function click() {
+        if (!row.hasClass('selected')) {
+          $('.search-result.selected').removeClass('selected');
+          row.addClass('selected');
+          if (!row.hasClass('expanded')) $(this).prev().click();
+          dispatch.call('drawfeature', this, data);
+        } else {
+          row.removeClass('selected');
+          if (row.hasClass('expanded')) $(this).prev().click();
+          dispatch.call('removehighlight', this);
+        }
+      })
+      .prepend('<i class="icon-binoculars">');
+    $('i.icon-right-dir, i.icon-down-dir', row).on('click', () => {
+      if (row.hasClass('expanded')) {
+        row.removeClass('expanded');
+      } else {
+        row.addClass('expanded');
+        if (!$('.result-details', row).length) {
+          const details = $('<div>')
+            .attr('class', 'result-details')
+            .appendTo(row);
+          $.getJSON(`${server}details/${data.id[0]}`, (response) => {
+            if (!response.length) return;
+            if (response[0].creator) $('<p>Creator: <span>' + response[0].creator + '</span></p>').appendTo(details);
+            if (response[0].year) $('<p>Mapped: <span>' + response[0].year + '</span></p>').appendTo(details);
+          });
+        }
+      }
+    });
+  }
 
   S.initialize = function initialize(containerId) {
     container = $(`#${containerId}`);

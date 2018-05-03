@@ -7,7 +7,7 @@ const getPhoto = (components) => {
 
     P.data = data;
 
-    const file = data.file.replace('SSID', '');
+    // const file = data.file.replace('SSID', '');
     const tempImages = [];
     P.metadata = {};
 
@@ -16,23 +16,23 @@ const getPhoto = (components) => {
     let request;
 
     function getMetadata() {
-      request = $.getJSON( 'https://www.sscommons.org/openlibrary/secure/imagefpx/' + data.id + '/7731849/5', (json) => {
+      request = $.getJSON(`https://www.sscommons.org/openlibrary/secure/imagefpx/${data.id}/7731849/5`, (json) => {
         P.metadata = json[0];
         P.metadata.imageServer = P.metadata.imageServer.replace(/^http/, 'https');
         tempImages.forEach((img) => {
           img.div.empty().css('background-image', 'url(' + getUrl(img.size) + ')');
           if (img.setDimensions) {
-            let s = P.getScaled(img.size);
+            const s = P.getScaled(img.size);
             img.div.css('width', s[0] + 'px').css('height', s[1] + 'px');
           }
         });
   
-        request = $.ajax( 'https://www.sscommons.org/openlibrary/secure/metadata/' + data.id + '?_method=FpHtml',{
-          dataType : 'html',
-          success : function( html )
-          {
-            P.href  = $( html ).find( 'td' ).last().text().replace( /\s/gm, '' );
-          }
+        request = $.ajax(`https://www.sscommons.org/openlibrary/secure/metadata/${data.id}?_method=FpHtml`, {
+          dataType: 'html',
+          success(html) {
+            P.href = $(html).find('td').last().text()
+              .replace(/\s/gm, '');
+          },
         });
       });
     }

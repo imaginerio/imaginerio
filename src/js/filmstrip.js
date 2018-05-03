@@ -84,13 +84,18 @@ const getFilmstrip = (components) => {
         });
         showThumbs();
       }
-      $('.icon-camera, .raster-type-labels span.views', filmstrip).toggleClass('disabled', !_.some(rasters, r => r.layer === 'viewsheds'));
-      $('.icon-survey, .raster-type-labels span.surveys', filmstrip).toggleClass('disabled', !_.some(rasters, r => r.layer === 'surveys'));
-      $('.icon-tsquare, .raster-type-labels span.plans', filmstrip).toggleClass('disabled', !_.some(rasters, r => r.layer === 'plans'));
-      $('.icon-map-o, .raster-type-labels span.maps', filmstrip).toggleClass('disabled', !_.some(rasters, r => r.layer === 'maps'));
-      
-      // This is here because needs to happen after raster is loaded
+      $('.icon-camera, .raster-type-labels span.views', filmstrip)
+        .toggleClass('disabled', !_.some(rasters, r => r.layer === 'viewsheds'));
+      $('.icon-survey, .raster-type-labels span.surveys', filmstrip)
+        .toggleClass('disabled', !_.some(rasters, r => r.layer === 'surveys'));
+      $('.icon-tsquare, .raster-type-labels span.plans', filmstrip)
+        .toggleClass('disabled', !_.some(rasters, r => r.layer === 'plans'));
+      $('.icon-map-o, .raster-type-labels span.maps', filmstrip)
+        .toggleClass('disabled', !_.some(rasters, r => r.layer === 'maps'));
+
+      // This is here because adding views to legend needs to happen after raster is loaded
       // Need to replace with centralized state management system
+
       // if not disabled, add views to legend
       if (!$('.icon-camera, .raster-type-labels span.views', filmstrip).hasClass('disabled')) {
         dispatch.call('addviews', this);
@@ -98,7 +103,10 @@ const getFilmstrip = (components) => {
         dispatch.call('resetviews', this);
       }
       
-      if ($('.raster-types i.selected', filmstrip).hasClass('disabled') || !$('.raster-types i.selected', filmstrip).length) $('.raster-types i').not('.disabled').first().click();
+      // open first filmstrip category that isn't disabled (???)
+      if ($('.raster-types i.selected', filmstrip).hasClass('disabled') || !$('.raster-types i.selected', filmstrip).length) {
+        $('.raster-types i').not('.disabled').first().click();
+      }
       
       if (tempRaster) {
         F.setRaster(tempRaster);
