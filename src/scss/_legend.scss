@@ -77,6 +77,14 @@
   visibility: hidden;
 }
 
+.group-title {
+  display: flex;
+}
+
+.group-name {
+  font-weight: bold;
+}
+
 .group-title label {
   font-size: 15px;
   font-weight: bold;
@@ -88,15 +96,20 @@
 }
 
 .group-title .swatch {
-  float: right;
-  margin-top: 10px;
+  // float: right;
+  margin-top: 0px;
   width: 60px;
   height: 20px;
   text-align: center;
 }
 
-.group-title .swatch.viewshed {
-  margin-top: 0;
+.group-title .swatch.viewshed2 {
+  height: 40px;
+  margin-top: 0px;
+  margin-right: 10px;
+}
+.viewshed-icon {
+  width: 75px;
   height: 40px;
 }
 

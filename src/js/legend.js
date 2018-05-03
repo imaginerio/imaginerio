@@ -80,20 +80,25 @@ const getLegend = (components) => {
           const gr = $('<div>').attr('class', 'legend-group').attr('data-group', groupName).appendTo(cat);
           const groupTitle = $('<div>').attr('class', 'group-title').appendTo(gr);
           $('<label>')
-            .html(names[groupName.toLowerCase()] || groupName)
-            .prepend('<input type="checkbox" value="' + groupName + '"checked>')
+            // .html(names[groupName.toLowerCase()] || groupName)
+            .prepend(`<input type="checkbox" value="${groupName}"checked>`)
             .appendTo(groupTitle);
 
           _.each(group.features, (feature, key) => {
-            let layer = $('<div>').attr('class', 'layer').appendTo(gr);
+            const layer = $('<div>').attr('class', 'layer').appendTo(gr);
             addLayerExisting(feature, key, layer);
             if (feature.style) {
-              add_swatch(feature.style).appendTo(layer);
+              addSwatch(feature.style).appendTo(layer);
               layer.addClass('styled');
             }
           });
 
-          let swatch = add_swatch(group.style).appendTo(groupTitle);
+          addSwatch(group.style).appendTo(groupTitle);
+
+          $('<div>')
+            .attr('class', 'group-name')
+            .html(names[groupName.toLowerCase()] || groupName)
+            .appendTo(groupTitle);
         }
       });
       dispatch.call('setlayers', this, Lg.layers());
@@ -223,22 +228,24 @@ const getLegend = (components) => {
     });
   }
 
-  function add_swatch( style )
-  {
-    if (!style || !style.shape) return $('<div>');
-    var swatch = $( document.createElement( 'div' ) ).addClass( "swatch" ).addClass(style.shape.slice(0, style.shape.indexOf('.')));
-    if( style.shape.match( /svg$/ ) )
-    {
-      swatch.load( "img/legend/" + style.shape );
+  function addSwatch(style) {
+    console.log('style', style);
+    if (!style || !style.shape) {
+      return $('<div>');
     }
-    else
-    {
-      swatch.append(
-        $( document.createElement( 'img' ) ).attr( "src", "img/legend/" + style.shape )
-      );
+    const swatch = $(document.createElement('div'))
+      .addClass('swatch')
+      .addClass(style.shape.slice(0, style.shape.indexOf('.')));
+
+    if (style.shape.match(/svg$/)) {
+      swatch.load(`img/legend/${style.shape}`);
+    } else {
+      swatch.append($(document.createElement('img')).attr('src', `img/legend/${style.shape}`));
     }
 
-    if ( style.fill || style.stroke ) swatch.css( style );
+    if (style.fill || style.stroke) {
+      swatch.css(style);
+    }
 
     return swatch;
   }
@@ -296,7 +303,9 @@ const getLegend = (components) => {
         dispatch.call('statechange', this);
       })
       .prependTo(label);
-    add_swatch({ shape: 'viewshed.png' }).appendTo(groupTitle);
+    addSwatch({ shape: 'viewshed2.png' })
+      .appendTo(groupTitle);
+    $('img', groupTitle).addClass('viewshed-icon');
     Lg.addSearch();
   };
 
