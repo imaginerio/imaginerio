@@ -54,10 +54,8 @@ const getLegend = (components) => {
       const { dispatch } = components;
       
       layers = layersJson;
-      console.log('layers', layers);
 
       _.each(layersJson, (category, categoryName) => {
-        console.log('category, name', category, categoryName);
         const cat = $('<div>')
           .attr('class', 'legend-category')
           .attr('data-category', 'feature')
@@ -75,7 +73,6 @@ const getLegend = (components) => {
         });
 
         function addLayerGroup(group, groupName) {
-          console.log('group, groupname', group, groupName);
           const { names } = init;
 
           const gr = $('<div>').attr('class', 'legend-group').attr('data-group', groupName).appendTo(cat);
@@ -119,7 +116,6 @@ const getLegend = (components) => {
 
   function addPlans() {
     const { dispatch } = components;
-    console.log('add plans');
     const cat = $('<div>')
       .attr('class', 'legend-category')
       .attr('data-category', 'feature')
@@ -131,7 +127,6 @@ const getLegend = (components) => {
       .html('PLANS')
       .appendTo(cat);
     
-    console.log('plans', plans);
 
     plans.forEach((plan) => {
       const row = $('<div>').attr('class', 'search-result')
@@ -172,7 +167,6 @@ const getLegend = (components) => {
   }
 
   function setCurrentPlans() {
-    // Init.plans.forEach(d => $.getJSON(`${server}plan/${encodeURI(d.planname)}`, dd => console.log('plan', dd)));
     const { init } = components;
     // filter to find plans for selected year
     plans = init.plans.filter((d) => {
@@ -230,7 +224,6 @@ const getLegend = (components) => {
   }
 
   function addSwatch(style) {
-    console.log('style', style);
     if (!style || !style.shape) {
       return $('<div>');
     }
@@ -253,7 +246,6 @@ const getLegend = (components) => {
 
   Lg.addSearch = () => {
     const { Search } = components;
-    console.log('add search');
     // clear search
     $('.legend-category[data-category="search"]').remove();
 

@@ -60,7 +60,7 @@
 }
 
 .legend-contents {
-  height: 100%;
+  height: calc(100% - #{$search-input-height});
   overflow: auto;
 }
 
