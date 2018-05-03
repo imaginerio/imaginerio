@@ -57,7 +57,7 @@ const getLegend = (components) => {
       console.log('layers', layers);
 
       _.each(layersJson, (category, categoryName) => {
-
+        console.log('category, name', category, categoryName);
         const cat = $('<div>')
           .attr('class', 'legend-category')
           .attr('data-category', 'feature')
@@ -75,13 +75,14 @@ const getLegend = (components) => {
         });
 
         function addLayerGroup(group, groupName) {
+          console.log('group, groupname', group, groupName);
           const { names } = init;
 
           const gr = $('<div>').attr('class', 'legend-group').attr('data-group', groupName).appendTo(cat);
           const groupTitle = $('<div>').attr('class', 'group-title').appendTo(gr);
           $('<label>')
             // .html(names[groupName.toLowerCase()] || groupName)
-            .prepend(`<input type="checkbox" value="${groupName}"checked>`)
+            .prepend(`<input type="checkbox" value="${group.id}"checked>`)
             .appendTo(groupTitle);
 
           _.each(group.features, (feature, key) => {

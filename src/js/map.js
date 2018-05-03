@@ -169,7 +169,7 @@ const getMap = (components) => {
       map.removeLayer(tileLayer);
       map.addLayer(aerialLayer);
     } else {
-      tileLayer.setUrl(tileserver + year + '/' + layers.join(',') + '/{z}/{x}/{y}.png');
+      tileLayer.setUrl(`${tileserver}${year}/${layers.join(',')}/{z}/{x}/{y}.png`);
       if (map.hasLayer(aerialLayer)) map.removeLayer(aerialLayer);
       if (!map.hasLayer(tileLayer)) map.addLayer(tileLayer);
     }
@@ -235,8 +235,9 @@ const getMap = (components) => {
       if (list.indexOf(l) == -1) skip = false;
     });
     if (skip) return M;
+    console.log('list', list);
     layers = list;
-    tileLayer.setUrl(tileserver + year + '/' + layers.join(',') + '/{z}/{x}/{y}.png');
+    tileLayer.setUrl(`${tileserver}${year}/${layers.join(',')}/{z}/{x}/{y}.png`);
     return M;
   };
 
