@@ -78,17 +78,19 @@ const getDispatch = (components) => {
     } = components;
     const { updateHash } = init;
     const { rasterProbe } = probes;
+    
+    $('main').addClass('overlay');
     console.log('p', p);
     Map.addOverlay(p.data.overlay);
     rasterProbe(p);
     $('#overlay-info').data('p', p).show();
-    // $('.probe-hint').css('margin-right', '65px');
     updateHash();
   });
 
   Dispatch.on('removeoverlay', () => {
     const { Map, init } = components;
     const { updateHash } = init;
+    $('main').removeClass('overlay');
     Map.removeOverlay();
     $('#fixed-probe').hide();
     $('#overlay-info').data('p', null).hide();

@@ -43,6 +43,7 @@ const getFilmstrip = (components) => {
     // clear current rasters
     rasters = [];
     const rasterUrl = `${server}raster/${year}${(max ? (`?max=${max}`) : '')}`;
+    console.log(`${server}raster/${year}${(max ? (`?max=${max}`) : '')}`);
     // console.log('rasterUrl', `${server}raster/${year}${(max ? (`?max=${max}`) : '')}`);
     $.getJSON(rasterUrl, (json) => {
       const {
@@ -165,7 +166,6 @@ const getFilmstrip = (components) => {
       .attr('data-raster', p.data.id)
       .data('p', p)
       .click(function click() {
-        console.log('photo', p);
         // checking if width is undefined or 0?
         if (!p.metadata.width) return;
         if ($('main').hasClass('eras')) dispatch.call('setyear', this, p.data.date);

@@ -15,12 +15,7 @@ const getSearch = (components) => {
   };
 
   function setSearchExit() {
-    // need something here to detect if click is a new search.
-    // if new search, do not remove 'search' class
     $(document).on('click.search', (ee) => {
-      console.log('ee', ee.target.classList);
-      console.log('test', $(ee.target).hasClass('search-input'));
-      console.log('test2', $.contains(document.getElementById('search'), ee.target));
       const inSearchBox = $.contains(document.getElementById('search'), ee.target);
       const isSearchInput = $(ee.target).hasClass('search-input');
 
@@ -120,6 +115,7 @@ const getSearch = (components) => {
       // abort if search is already underway
       if (request !== undefined && request.readyState !== 4) request.abort();
       request = $.getJSON(`${server}search2/${year}/${val}`, S.showResults);
+      console.log(`${server}search2/${year}/${val}`);
     } else if (searchVal) {
       S.showResults(searchResults);
     }
@@ -202,18 +198,19 @@ const getSearch = (components) => {
     const { rasterProbe } = probes;
     const { thumbnaillUrl } = init;
 
-    const photo = Photo(data, thumbnaillUrl);
-    photo.data.overlay = Overlay(photo);
-    console.log('photo', photo.data.overlay.layer());
-    const thumb = photo.getImage([130])
+    data.photo = Photo(data, thumbnaillUrl);
+    data.overlay = Overlay(data);
+    // console.log('photo', photo.data.overlay.layer());
+    console.log('data', data);
+    const thumb = data.photo.getImage([100])
       .attr('class', 'filmstrip-thumbnail')
-      .data('view', data)
       .click(function click() {
-        if (!photo.metadata.width) return;
-        if (photo.data.layer !== 'viewsheds') {
-          dispatch.call('addoverlay', this, photo);
+        if (!data.photo.metadata.width) return;
+        if (data.photo.data.layer !== 'viewsheds') {
+          console.log(this);
+          dispatch.call('addoverlay', this, data.photo);
         } else {
-          rasterProbe(photo);
+          rasterProbe(data.photo);
         }
       });
 
