@@ -18,7 +18,13 @@ const getSearch = (components) => {
     // need something here to detect if click is a new search.
     // if new search, do not remove 'search' class
     $(document).on('click.search', (ee) => {
-      if (!$.contains(document.getElementById('search'), ee.target)) {
+      console.log('ee', ee.target.classList);
+      console.log('test', $(ee.target).hasClass('search-input'));
+      console.log('test2', $.contains(document.getElementById('search'), ee.target));
+      const inSearchBox = $.contains(document.getElementById('search'), ee.target);
+      const isSearchInput = $(ee.target).hasClass('search-input');
+
+      if (!inSearchBox && !isSearchInput) {
         S.clear();
         $('#legend').removeClass('search');
         $(document).off('click.search');
@@ -186,13 +192,30 @@ const getSearch = (components) => {
   };
 
   function drawViewshedResultsRow({ row, data }) {
-    const { dispatch, init, Photo } = components;
-    const { server, thumbnaillUrl } = init;
-    console.log('thumb url', thumbnaillUrl);
+    const {
+      dispatch,
+      init,
+      Photo,
+      Overlay,
+      probes,
+    } = components;
+    const { rasterProbe } = probes;
+    const { thumbnaillUrl } = init;
+
     const photo = Photo(data, thumbnaillUrl);
+    photo.data.overlay = Overlay(photo);
+    console.log('photo', photo.data.overlay.layer());
     const thumb = photo.getImage([130])
       .attr('class', 'filmstrip-thumbnail')
-      .data('view', data);
+      .data('view', data)
+      .click(function click() {
+        if (!photo.metadata.width) return;
+        if (photo.data.layer !== 'viewsheds') {
+          dispatch.call('addoverlay', this, photo);
+        } else {
+          rasterProbe(photo);
+        }
+      });
 
     row.append(thumb);
   }

@@ -165,9 +165,11 @@ const getFilmstrip = (components) => {
       .attr('data-raster', p.data.id)
       .data('p', p)
       .click(function click() {
+        console.log('photo', p);
+        // checking if width is undefined or 0?
         if (!p.metadata.width) return;
         if ($('main').hasClass('eras')) dispatch.call('setyear', this, p.data.date);
-        if (p.data.layer != 'viewsheds') {
+        if (p.data.layer !== 'viewsheds') {
           dispatch.call('addoverlay', this, p);
         } else {
           rasterProbe(p);

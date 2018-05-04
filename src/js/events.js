@@ -78,6 +78,7 @@ const getDispatch = (components) => {
     } = components;
     const { updateHash } = init;
     const { rasterProbe } = probes;
+    console.log('p', p);
     Map.addOverlay(p.data.overlay);
     rasterProbe(p);
     $('#overlay-info').data('p', p).show();
