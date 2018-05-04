@@ -19,7 +19,6 @@ $hint-probe-height: 36px;
 }
 
 .probe-hint {
-  
   padding-left: 15px;
   padding-right: 15px;
   z-index: 699;
@@ -47,6 +46,14 @@ $hint-probe-height: 36px;
   color: #666666;
   font-weight: bold;
   cursor: pointer;
+}
+
+.probe-hint-container.no-hint {
+  border-radius: 5px;
+}
+
+.probe-hint-container.no-hint .probe-hint {
+  display: none;
 }
 
 .searching-area .probe-area {

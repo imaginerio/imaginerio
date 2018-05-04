@@ -57,7 +57,7 @@ const getSearch = (components) => {
   }
 
   function setSearchByArea() {
-    const { Map } = components;
+    const { Map, probes } = components;
     const leafletMap = Map.getMap();
     const drawnShape = new L.FeatureGroup().addTo(leafletMap);
     const searchColor = '#337164';
@@ -83,6 +83,8 @@ const getSearch = (components) => {
     drawnShape.addTo(leafletMap);
     $('.probe-area').on('click', () => {
       $('main').addClass('searching-area');
+      // $('.probe-hint').hide();
+      probes.hideHintProbe();
       new L.Draw.Rectangle(leafletMap, {
         edit: {
           featureGroup: drawnShape,

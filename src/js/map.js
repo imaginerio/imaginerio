@@ -375,9 +375,10 @@ const getMap = (components) => {
   }
 
   function probe(e) {
-    const { init, dispatch } = components;
+    const { init, dispatch, probes } = components;
     const { server } = init;
     if ($('main').hasClass('searching-area')) return;
+    probes.hideHintProbe();
     const zoom = map.getZoom();
     let probeZoom;
     switch (zoom) {

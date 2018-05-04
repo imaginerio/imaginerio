@@ -164,11 +164,16 @@ const getProbes = (components) => {
     }
   }
 
+  function hideHintProbe() {
+    $('.probe-hint-container').addClass('no-hint');
+  }
+
   return {
     rasterProbe,
     filmstripProbe,
     mapProbe,
     detailsProbe,
+    hideHintProbe,
   };
 };
 
