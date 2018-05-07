@@ -13,12 +13,9 @@ const getInit = (components) => {
 
   const Init = {};
 
-  // let server = 'https://beirut.axismaps.io/';
-  // let tileserver = 'https://beirut.axismaps.io/tiles/';
-  // let rasterserver = 'https://beirut.axismaps.io/raster/';
-  let server = 'http://imaginerio.axismaps.io:3000/';
-  let tileserver = 'http://imaginerio.axismaps.io:3001/tiles/';
-  let rasterserver = 'http://imaginerio.axismaps.io:3001/raster/';
+  let server = 'https://irio.axismaps.io/';
+  let tileserver = 'https://irio.axismaps.io/tiles/';
+  let rasterserver = 'https://irio.axismaps.io/raster/';
   
   const thumbnaillUrl = 'https://mdxdv.artstor.org/thumb/imgstor/size1/sslps/c7731849/';
   const imageUrl = 'https://mdxdv.artstor.org/thumb/imgstor/size2/sslps/c7731849/';
@@ -57,7 +54,7 @@ const getInit = (components) => {
     // while (years[0] < eras[0].dates[0]) years.shift();  // force min year and first era to match
     $.getJSON(`${server}names/en`, (namesData) => {
       Init.names = namesData;
-      $.getJSON(`${server}plans`, (plansList) => {
+      $.getJSON(`${server}plans/`, (plansList) => {
         // parse years
         Init.plans = plansList.map((d) => {
           const planCopy = Object.assign({}, d);
