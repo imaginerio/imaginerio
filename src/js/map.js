@@ -88,7 +88,7 @@ const getMap = (components) => {
     map = L.map(container, {
       zoomControl: false,
       maxZoom: 18,
-      minZoom: 14,
+      minZoom: 10,
       maxBounds: [[ -23.10243406, -44.04944719  ], [ -22.63003187, -42.65988214 ]],
     })
       .setView([-22.9046, -43.1919], 16)
@@ -176,10 +176,11 @@ const getMap = (components) => {
     M.removeHighlight();
     removeViewsheds();
     viewshedPoints = null;
-    $.getJSON(`${server }visual/${year}`, (json) => {
+    $.getJSON(`${server}visual/${year}`, (json) => {
       const { probes, dispatch } = components;
       const Dispatch = dispatch;
       const { mapProbe } = probes;
+      // console.log('json', json);
       if (!json.features.length) return;
       const points = _.map(json.features, f => ({
         type: 'Feature',
