@@ -89,7 +89,7 @@ const getMap = (components) => {
       zoomControl: false,
       maxZoom: 18,
       minZoom: 10,
-      maxBounds: [[ -23.10243406, -44.04944719  ], [ -22.63003187, -42.65988214 ]],
+      maxBounds: [[-23.10243406, -44.04944719], [-22.63003187, -42.65988214]],
     })
       .setView([-22.9046, -43.1919], 16)
       .on('click', probe)

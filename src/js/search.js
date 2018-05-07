@@ -204,8 +204,9 @@ const getSearch = (components) => {
     data.overlay = Overlay(data);
     // console.log('photo', photo.data.overlay.layer());
     console.log('data', data);
+    row.addClass('search-result--thumbnail');
     const thumb = data.photo.getImage([100])
-      .attr('class', 'filmstrip-thumbnail')
+      .attr('class', 'search-thumbnail')
       .click(function click() {
         if (!data.photo.metadata.width) return;
         if (data.photo.data.layer !== 'viewsheds') {
@@ -216,7 +217,12 @@ const getSearch = (components) => {
         }
       });
 
+    const title = $('<div>')
+      .addClass('search-thumbnail-name')
+      .html(data.name);
+
     row.append(thumb);
+    row.append(title);
   }
 
   function drawNormalResultsRow({ row, data }) {

@@ -1,5 +1,7 @@
+$legend-width: 320px;
+
 #legend {
-  width: 280px;
+  width: $legend-width;
   position: relative;
   transition: width .25s;
   height: 100%;
@@ -17,7 +19,7 @@
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   top: 20px;
-  left: 280px;
+  left: $legend-width;
   transition: left .25s, width .25s;
 }
 
