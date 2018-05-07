@@ -176,30 +176,27 @@ const getMap = (components) => {
     M.removeHighlight();
     removeViewsheds();
     viewshedPoints = null;
-    $.getJSON(server + 'visual/' + year, (json) => {
+    $.getJSON(`${server }visual/${year}`, (json) => {
       const { probes, dispatch } = components;
-      console.log('visual', json);
       const Dispatch = dispatch;
       const { mapProbe } = probes;
       if (!json.features.length) return;
-      const points = _.map(json.features, (f) => {
-        return {
-          type: 'Feature',
-          properties: _.extend(
-            f.properties,
-            {
-              cone: L.geoJSON(
-                {
-                  type: 'Feature',
-                  geometry: f.geometry,
-                },
-                { style() { return viewshedConeStyle; } },
-              ),
-            },
-          ),
-          geometry: { type: 'Point', coordinates: f.geometry.coordinates[0][0] },
-        };
-      });
+      const points = _.map(json.features, f => ({
+        type: 'Feature',
+        properties: _.extend(
+          f.properties,
+          {
+            cone: L.geoJSON(
+              {
+                type: 'Feature',
+                geometry: f.geometry,
+              },
+              { style() { return viewshedConeStyle; } },
+            ),
+          },
+        ),
+        geometry: { type: 'Point', coordinates: f.geometry.coordinates[0][0] },
+      }));
       viewshedPoints = L.geoJSON({ type: 'FeatureCollection', features: points }, {
         pointToLayer(pt, latlng) {
           return L.marker(latlng, viewshedStyle);
@@ -300,6 +297,7 @@ const getMap = (components) => {
   M.drawPlanFeature = (name) => {
     const { init } = components;
     const { server } = init;
+    console.log('plan path', `${server}plan/${encodeURI(name)}`);
     $.getJSON(`${server}plan/${encodeURI(name)}`, (json) => {
       const { features } = json;
       if (features.length > 0) {
