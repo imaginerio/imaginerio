@@ -178,6 +178,7 @@ const getMap = (components) => {
     viewshedPoints = null;
     $.getJSON(server + 'visual/' + year, (json) => {
       const { probes, dispatch } = components;
+      console.log('visual', json);
       const Dispatch = dispatch;
       const { mapProbe } = probes;
       if (!json.features.length) return;
@@ -190,13 +191,14 @@ const getMap = (components) => {
               cone: L.geoJSON(
                 {
                   type: 'Feature',
-                  geometry: f.geometry.geometries[1],
+                  geometry: f.geometry,
                 },
-                { style() { return viewshedConeStyle; }},
+                { style() { return viewshedConeStyle; } },
               ),
             },
           ),
-          geometry: {type: 'Point', coordinates: f.geometry.geometries[1].coordinates[0][0]}}
+          geometry: { type: 'Point', coordinates: f.geometry.coordinates[0][0] },
+        };
       });
       viewshedPoints = L.geoJSON({ type: 'FeatureCollection', features: points }, {
         pointToLayer(pt, latlng) {
