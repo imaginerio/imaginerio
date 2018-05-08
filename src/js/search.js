@@ -210,11 +210,19 @@ const getSearch = (components) => {
       .click(function click() {
         if (!data.photo.metadata.width) return;
         if (data.photo.data.layer !== 'viewsheds') {
-          console.log(this);
           dispatch.call('addoverlay', this, data.photo);
         } else {
           rasterProbe(data.photo);
         }
+      });
+
+    const thumbIcon = $('<img>')
+      .addClass('thumbnail-icon')
+      .attr('src', () => {
+        if (data.layer === 'viewsheds') {
+          return 'img/legend/viewshed-small.png';
+        }
+        return 'img/legend/map.png';
       });
 
     const title = $('<div>')
@@ -223,6 +231,7 @@ const getSearch = (components) => {
 
     row.append(thumb);
     row.append(title);
+    row.append(thumbIcon);
   }
 
   function drawNormalResultsRow({ row, data }) {

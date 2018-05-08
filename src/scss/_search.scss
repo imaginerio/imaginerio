@@ -58,6 +58,7 @@
 
 .search-result {
   margin: 10px 0;
+  position: relative;
 }
 
 .search-result > span {
@@ -96,6 +97,14 @@
 .search-result--thumbnail {
   display: flex;
   align-items: center;
+}
+
+.thumbnail-icon {
+  position: absolute;
+  left: 85px;
+  top: 0px;
+  width: 40px;
+  height: 40px;
 }
 
 .search-thumbnail {

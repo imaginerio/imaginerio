@@ -117,6 +117,13 @@ $legend-width: 320px;
 
 .layer {
   margin-left: 20px;
+  display: flex;
+  align-items: center;
+  // justify-content: space-between;
+}
+
+.swatch.ripple {
+  margin-left: 10px;
 }
 
 .layer-existing {
@@ -188,3 +195,4 @@ $legend-width: 320px;
 .search .legend-category[data-category="feature"] {
   display: none !important;
 }
+
