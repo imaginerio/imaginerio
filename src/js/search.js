@@ -80,6 +80,9 @@ const getSearch = (components) => {
     });
 
     L.drawLocal.draw.handlers.rectangle.tooltip.start = 'Click+drag to explore an area';
+    L.drawLocal.draw.handlers.simpleshape.tooltip.end = 'Release to search';
+    console.log(L.drawLocal.draw.handlers);
+    console.log(L.drawLocal.draw.handlers.rectangle.tooltip);
     drawnShape.addTo(leafletMap);
     $('.probe-area').on('click', () => {
       $('main').addClass('searching-area');
