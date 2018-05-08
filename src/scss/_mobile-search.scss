@@ -1,13 +1,13 @@
 @media (max-width: $mobile-width) {
   #search {
-    position: absolute;
-    z-index: 2600;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
+    // position: absolute;
+    // z-index: 2600;
+    // left: 0;
+    // top: 0;
+    // width: 100%;
+    // height: 100%;
     background: #eee;
-    display: block;
+    display: none;
   }
 
   #legend.search {
@@ -16,6 +16,23 @@
 
   #legend.search #search{
     display: block;
+  }
+
+  .search-button-container {
+    z-index: 3000;
+    background: white;
+    position: relative;
+  }
+
+  #search-button {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+  }
+
+  .search-input-container {
+    z-index: 3500;
+    background: white;
   }
 
   #search input {
