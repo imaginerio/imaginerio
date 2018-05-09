@@ -57,7 +57,8 @@ const getSearch = (components) => {
   }
 
   function setSearchByArea() {
-    const { Map, probes } = components;
+    const { Map, probes, init } = components;
+    const { mobile } = init;
     const leafletMap = Map.getMap();
     const drawnShape = new L.FeatureGroup().addTo(leafletMap);
     const searchColor = '#337164';
@@ -83,7 +84,8 @@ const getSearch = (components) => {
 
     drawnShape.addTo(leafletMap);
     let rectangle;
-    $('.probe-area').on('click', () => {
+    const areaProbeButton = mobile ? $('.probe-area--mobile') : $('.probe-area');
+    areaProbeButton.on('click', () => {
       $('main').addClass('searching-area');
       probes.hideHintProbe();
       rectangle = new L.Draw.Rectangle(leafletMap, {

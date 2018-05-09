@@ -49,4 +49,19 @@
     width: 100%;
     margin: 20px 0;
   }
+
+  .probe-area--mobile {
+    position: absolute;
+    display: block;
+    right: 15px;
+    width: 15px;
+    left: auto;
+    border-radius: 5px;
+    padding: 10px 15px;
+    top: $legend-toggle-mobile-top + 50;
+    background-color: white;
+    height: 20px;
+    line-height: 20px;
+    box-shadow: 4px 0 4px rgba(0,0,0,.1);
+  }
 }

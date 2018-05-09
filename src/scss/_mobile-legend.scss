@@ -28,13 +28,14 @@
   }
   
   #legend.collapsed .legend-toggle, #legend.subsequent.collapsed .legend-toggle {
+    position: absolute;
     display: block;
     right: 15px;
     width: 15px;
     left: auto;
     border-radius: 5px;
+    padding: 10px 15px;
     top: 110px;
-    padding: 10px 15px
   }
   
   .plans-dropdown {
