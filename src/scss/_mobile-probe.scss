@@ -33,6 +33,10 @@
   #overlay-info {
     top: 160px;
     right: 15px;
+    
+    padding-left: 13px;
+    padding-right: 13px;
+
   }
 
   .probe-hint {
@@ -54,14 +58,18 @@
     position: absolute;
     display: block;
     right: 15px;
-    width: 15px;
+    // width: 15px;
     left: auto;
     border-radius: 5px;
-    padding: 10px 15px;
+    padding: 10px 14px;
     top: $legend-toggle-mobile-top + 50;
     background-color: white;
     height: 20px;
     line-height: 20px;
     box-shadow: 4px 0 4px rgba(0,0,0,.1);
+  }
+
+  .overlay .probe-area--mobile {
+    top: $legend-toggle-mobile-top + 100;
   }
 }

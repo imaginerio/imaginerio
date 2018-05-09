@@ -54,10 +54,18 @@ const getTimeline = (components) => {
 
     $('.icon-angle-left', stepper).click(() => {
       const era = getEraForYear(year);
+      console.log('era', era);
       const i = eras.indexOf(era);
-      if (era != eras[0] || year != era.dates[0]) {
-        if (year == era.dates[0]) changeYear(eras[i-1].dates[1])
-        else {
+      console.log(year !== era.dates[0]);
+      if (era !== eras[0]) {
+        if (year === era.dates[0]) {
+          if (era.dates[0] === eras[i - 1].dates[1]) {
+            // this is so stepper doesn't get stuck when eras have overlapping end/start dates
+            changeYear(eras[i - 1].dates[1] - eras[i - 1].increment);
+          } else {
+            changeYear(eras[i - 1].dates[1]);
+          }
+        } else {
           let y = era.dates[0];
           let newYear = y;
           while (y < year) {
@@ -132,8 +140,8 @@ const getTimeline = (components) => {
     let tick;
     let tickBefore;
     let tickAfter;
-    $('.tick').each(function () {
-      let val = $(this).data('value');
+    $('.tick').each(function setTick() {
+      const val = $(this).data('value');
       if (y == val) {
         tick = $(this);
       } else if (y > val) {

@@ -12,6 +12,8 @@ $hint-probe-height: 36px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   font-size: 13px;
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 
 .overlay .probe-hint-container {
@@ -37,6 +39,8 @@ $hint-probe-height: 36px;
 .probe-area {
   padding-left: 15px;
   padding-right: 15px;
+  padding-top: 0px;
+  padding-bottom: 0px;
   background: white;
   border-radius: 5px;
   border: solid white 1px;
@@ -47,15 +51,15 @@ $hint-probe-height: 36px;
   font-weight: bold;
   cursor: pointer;
 }
-$probe-area-min-height: $hint-probe-height - 5;
+// $probe-area-min-height: $hint-probe-height - 5;
 .probe-hint-container.probe-hint--used {
   border-radius: 5px;
-  height: $probe-area-min-height;
-  box-shadow: 0 0 8px rgba(0,0,0,.25);
+  // height: $probe-area-min-height;
+  // box-shadow: 0 0 8px rgba(0,0,0,.25);
 }
 
 .probe-hint-container.probe-hint--used .probe-area {
-  height: $probe-area-min-height;
+  // height: $probe-area-min-height;
   box-shadow: 4px 0 4px rgba(0,0,0,.1);
 }
 
@@ -189,13 +193,24 @@ $probe-area-min-height: $hint-probe-height - 5;
 
 #overlay-info {
   display: none;
+  align-items: center;
   position: absolute;
   right: 30px;
   border-radius: 5px;
   top: 135px;
-  padding: 10px 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 0px;
+  padding-bottom: 0px;
   z-index: 2500;
   background-color: white;
   cursor: pointer;
-  box-shadow: 0 0 8px rgba(0,0,0,.25);
+  height: $hint-probe-height;
+  border: solid white 1px;
+  // box-shadow: 0 0 8px rgba(0,0,0,.25);
+  box-shadow: 4px 0 4px rgba(0,0,0,.1);
+}
+
+.overlay-info--visible {
+  display: flex !important;
 }

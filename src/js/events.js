@@ -83,7 +83,7 @@ const getDispatch = (components) => {
     console.log('p', p);
     Map.addOverlay(p.data.overlay);
     rasterProbe(p);
-    $('#overlay-info').data('p', p).show();
+    $('#overlay-info').data('p', p).addClass('overlay-info--visible');
     updateHash();
   });
 
@@ -93,7 +93,7 @@ const getDispatch = (components) => {
     $('main').removeClass('overlay');
     Map.removeOverlay();
     $('#fixed-probe').hide();
-    $('#overlay-info').data('p', null).hide();
+    $('#overlay-info').data('p', null).removeClass('overlay-info--visible');
     // $('.probe-hint').css('margin-right', '0');
     updateHash();
   });
