@@ -62,15 +62,11 @@ const getSearch = (components) => {
     const drawnShape = new L.FeatureGroup().addTo(leafletMap);
     const searchColor = '#337164';
 
-    // leafletMap.on('draw:drawstart', () => {
-      
-    // });
-
     leafletMap.on(L.Draw.Event.CREATED, (e) => {
       const { layer } = e;
       const searchAreaVal = layer.getLatLngs();
       $('main').removeClass('searching-area');
-      console.log('search area', searchAreaVal);
+
       const getCoordString = latLng => `${latLng.lng},${latLng.lat}`;
 
       const topLeft = getCoordString(searchAreaVal[0][3]);
@@ -81,14 +77,13 @@ const getSearch = (components) => {
 
     L.drawLocal.draw.handlers.rectangle.tooltip.start = 'Click+drag to explore an area';
     L.drawLocal.draw.handlers.simpleshape.tooltip.end = 'Release to search';
-    console.log(L.drawLocal.draw.handlers);
-    console.log(L.drawLocal.draw.handlers.rectangle.tooltip);
+
     drawnShape.addTo(leafletMap);
+    let rectangle;
     $('.probe-area').on('click', () => {
       $('main').addClass('searching-area');
-      // $('.probe-hint').hide();
       probes.hideHintProbe();
-      new L.Draw.Rectangle(leafletMap, {
+      rectangle = new L.Draw.Rectangle(leafletMap, {
         edit: {
           featureGroup: drawnShape,
         },
@@ -96,8 +91,17 @@ const getSearch = (components) => {
           color: searchColor,
           fillColor: searchColor,
         },
-      }).enable();
+      });
+      rectangle.enable();
     });
+
+    $('.probe-area > .icon-times')
+      .on('click', () => {
+        console.log('close', rectangle);
+        if (rectangle !== undefined) {
+          rectangle.disable();
+        }
+      });
   }
 
   function doAreaSearch(topLeft, bottomRight) {

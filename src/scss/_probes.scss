@@ -48,11 +48,15 @@ $hint-probe-height: 36px;
   cursor: pointer;
 }
 
-.probe-hint-container.no-hint {
+.probe-hint-container.probe-hint--used {
   border-radius: 5px;
 }
 
-.probe-hint-container.no-hint .probe-hint {
+.probe-hint-container.probe-hint--used .probe-hint {
+  display: none;
+}
+
+.probe-hint-container.probe-hint--used .probe-area-text {
   display: none;
 }
 

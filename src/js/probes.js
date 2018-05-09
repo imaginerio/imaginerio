@@ -165,7 +165,7 @@ const getProbes = (components) => {
   }
 
   function hideHintProbe() {
-    $('.probe-hint-container').addClass('no-hint');
+    $('.probe-hint-container').addClass('probe-hint--used');
   }
 
   return {
