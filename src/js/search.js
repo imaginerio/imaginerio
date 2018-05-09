@@ -61,11 +61,13 @@ const getSearch = (components) => {
     const leafletMap = Map.getMap();
     const drawnShape = new L.FeatureGroup().addTo(leafletMap);
     const searchColor = '#337164';
+    const stopSearching = () => {
+      $('main').removeClass('searching-area');
+    };
 
     leafletMap.on(L.Draw.Event.CREATED, (e) => {
       const { layer } = e;
       const searchAreaVal = layer.getLatLngs();
-      $('main').removeClass('searching-area');
 
       const getCoordString = latLng => `${latLng.lng},${latLng.lat}`;
 
@@ -73,6 +75,7 @@ const getSearch = (components) => {
       const bottomRight = getCoordString(searchAreaVal[0][1]);
 
       doAreaSearch(topLeft, bottomRight);
+      stopSearching();
     });
 
     L.drawLocal.draw.handlers.rectangle.tooltip.start = 'Click+drag to explore an area';
@@ -96,10 +99,11 @@ const getSearch = (components) => {
     });
 
     $('.probe-area > .icon-times')
-      .on('click', () => {
-        console.log('close', rectangle);
+      .on('click', (e) => {
+        e.stopPropagation(); // prevent click from triggering new rectangle
         if (rectangle !== undefined) {
           rectangle.disable();
+          stopSearching();
         }
       });
   }
