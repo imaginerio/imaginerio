@@ -25,6 +25,7 @@ const getLegend = (components) => {
   }
 
   function toggleSidebar() {
+    console.log('toggle sidebar');
     legend.toggleClass('collapsed').addClass('subsequent');
   }
 

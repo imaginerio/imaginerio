@@ -14,15 +14,20 @@ const getSearch = (components) => {
     layers = list;
   };
 
+  function closeSearch() {
+    $('#legend').removeClass('search');
+    $(document).off('click.search');
+  }
+
   function setSearchExit() {
     $(document).on('click.search', (ee) => {
       const inSearchBox = $.contains(document.getElementById('search'), ee.target);
       const isSearchInput = $(ee.target).hasClass('search-input');
 
       if (!inSearchBox && !isSearchInput) {
+        console.log('CLOSE SEARCH');
         S.clear();
-        $('#legend').removeClass('search');
-        $(document).off('click.search');
+        closeSearch();
       }
     });
   }
@@ -169,8 +174,10 @@ const getSearch = (components) => {
           .appendTo(resultsContainer);
         // draw results row for each record found
         _.each(g, (r) => {
-          const row = $('<div>').attr('class', 'search-result')
+          const row = $('<div>')
+            .attr('class', 'search-result')
             .appendTo(groupContainer);
+
           const imageLayers = [
             'viewsheds',
             'plans',
@@ -211,7 +218,7 @@ const getSearch = (components) => {
       probes,
     } = components;
     const { rasterProbe } = probes;
-    const { thumbnaillUrl } = init;
+    const { thumbnaillUrl, mobile } = init;
 
     data.photo = Photo(data, thumbnaillUrl);
     data.overlay = Overlay(data);
@@ -226,6 +233,10 @@ const getSearch = (components) => {
           dispatch.call('addoverlay', this, data.photo);
         } else {
           rasterProbe(data.photo);
+        }
+        if (mobile) {
+          closeSearch();
+          $('#legend').toggleClass('collapsed');
         }
       });
 
@@ -249,7 +260,7 @@ const getSearch = (components) => {
 
   function drawNormalResultsRow({ row, data }) {
     const { dispatch, init } = components;
-    const { server } = init;
+    const { server, mobile } = init;
 
     row
       .append('<i class="icon-right-dir"></i>')
@@ -258,11 +269,25 @@ const getSearch = (components) => {
     $(`<span>${data.name}</span>`)
       .appendTo(row)
       .on('click', function click() {
+        // if row isn't selected clear previous selection, select new row...
         if (!row.hasClass('selected')) {
-          $('.search-result.selected').removeClass('selected');
+          $('.search-result.selected')
+            .removeClass('selected');
+
           row.addClass('selected');
-          if (!row.hasClass('expanded')) $(this).prev().click();
-          dispatch.call('drawfeature', this, data);
+
+          if (!row.hasClass('expanded')) {
+            // expand if isn't expanded
+            $(this).prev().click();
+          }
+          if (mobile) {
+            closeSearch();
+            $('#legend').toggleClass('collapsed');
+          }
+          
+
+          dispatch
+            .call('drawfeature', this, data);
         } else {
           row.removeClass('selected');
           if (row.hasClass('expanded')) $(this).prev().click();
