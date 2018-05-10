@@ -245,14 +245,16 @@ const getSearch = (components) => {
         }
       });
 
+    const imagePaths = {
+      viewsheds: 'img/legend/viewshed-small.png',
+      plans: 'img/legend/plan.png',
+      maps: 'img/legend/map.png',
+      surveys: 'img/legend/survey.png',
+    };
+
     const thumbIcon = $('<img>')
       .addClass('thumbnail-icon')
-      .attr('src', () => {
-        if (data.layer === 'viewsheds') {
-          return 'img/legend/viewshed-small.png';
-        }
-        return 'img/legend/map.png';
-      });
+      .attr('src', imagePaths[data.layer]);
 
     const title = $('<div>')
       .addClass('search-thumbnail-name')
