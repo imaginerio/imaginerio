@@ -19,12 +19,14 @@
   }
 
   .search-button-container {
+    height: $mobile-search-height;
     z-index: 3000;
     background: white;
     position: relative;
   }
 
   #search-button {
+    height: $mobile-search-height;
     position: absolute;
     left: 0px;
     top: 0px;

@@ -17,6 +17,7 @@
   .legend-contents{
     position: relative;
     background-color: white;
+    height: calc(100% - #{$mobile-header-height} - #{$mobile-search-height});
   }
   
   #legend.collapsed .legend-contents, .legend-toggle {

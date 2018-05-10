@@ -82,12 +82,12 @@
   // }
 
   .mobile-header {
-    height: 50px;
+    height: $mobile-header-height;
     width: 100%;
     color: #07407B;
     background-color: white;
     font-size: 20px;
-    line-height: 50px;
+    line-height: $mobile-header-height;
     box-sizing: border-box;
     padding: 0 15px;
   }
