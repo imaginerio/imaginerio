@@ -19,6 +19,12 @@ const getSearch = (components) => {
     $(document).off('click.search');
   }
 
+  function closeSearchSidebar() {
+    const { Legend } = components;
+    closeSearch();
+    Legend.closeSidebar();
+  }
+
   function setSearchExit() {
     $(document).on('click.search', (ee) => {
       const inSearchBox = $.contains(document.getElementById('search'), ee.target);
@@ -235,8 +241,7 @@ const getSearch = (components) => {
           rasterProbe(data.photo);
         }
         if (mobile) {
-          closeSearch();
-          $('#legend').toggleClass('collapsed');
+          closeSearchSidebar();
         }
       });
 
@@ -259,7 +264,7 @@ const getSearch = (components) => {
   }
 
   function drawNormalResultsRow({ row, data }) {
-    const { dispatch, init } = components;
+    const { dispatch, init, Legend } = components;
     const { server, mobile } = init;
 
     row
@@ -281,8 +286,7 @@ const getSearch = (components) => {
             $(this).prev().click();
           }
           if (mobile) {
-            closeSearch();
-            $('#legend').toggleClass('collapsed');
+            closeSearchSidebar();
           }
           
 

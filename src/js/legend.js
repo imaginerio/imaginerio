@@ -34,6 +34,10 @@ const getLegend = (components) => {
       toggleSidebar();
     }
   }
+
+  Lg.closeSidebar = () => {
+    $('#legend').addClass('collapsed');
+  };
   Lg.openSidebar = openSidebar;
 
   function updateYear(y) {
