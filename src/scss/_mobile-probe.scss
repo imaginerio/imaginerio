@@ -62,7 +62,7 @@
     left: auto;
     border-radius: 5px;
     padding: 10px 14px;
-    top: $legend-toggle-mobile-top + 50;
+    top: $legend-toggle-mobile-top;
     background-color: white;
     height: 20px;
     line-height: 20px;
@@ -70,6 +70,6 @@
   }
 
   .overlay .probe-area--mobile {
-    top: $legend-toggle-mobile-top + 100;
+    // top: $legend-toggle-mobile-top + 50;
   }
 }

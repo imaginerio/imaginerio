@@ -35,7 +35,12 @@
     left: auto;
     border-radius: 5px;
     padding: 10px 15px;
-    top: 110px;
+    top: 10px;
+    z-index: 3000;
+  }
+
+  .panel-toggle {
+    box-shadow: none;
   }
   
   .plans-dropdown {
