@@ -9,6 +9,12 @@ const getSearch = (components) => {
   let searchResults = {};
   let searchVal;
   let layers = ['all']; // either 'all' or a list of DISABLED layers
+  const imageLayers = [
+    'viewsheds',
+    'plans',
+    'maps',
+    'surveys',
+  ];
 
   S.setLayers = (list) => {
     layers = list;
@@ -141,20 +147,16 @@ const getSearch = (components) => {
       // abort if search is already underway
       if (request !== undefined && request.readyState !== 4) request.abort();
       request = $.getJSON(`${server}search/${year}/${val}`, S.showResults);
-      console.log(`${server}search/${year}/${val}`);
     } else if (searchVal) {
       S.showResults(searchResults);
     }
   }
-
-
 
   S.showResults = function showResults(results, clicked) {
     const { dispatch, init } = components;
     const {
       mobile,
       names,
-      server,
     } = init;
     toggleSearchResults();
 
@@ -169,11 +171,21 @@ const getSearch = (components) => {
       dispatch.call('removehighlight', this);
       
       if (mobile) $('header').addClass('search');
-      const array = _.mapObject(results, (r, k) => _.extend(r, { name: k }));
+      _.mapObject(results, (r, k) => _.extend(r, { name: k }));
       const groups = _.groupBy(searchResults, 'layer');
+      console.log('groups', groups);
+      // list of layer names, putting image layers first
+      const groupsList = [
+        ...Object.keys(groups).filter(d => imageLayers.includes(d)),
+        ...Object.keys(groups).filter(d => !imageLayers.includes(d)),
+      ];
       $('.results-group').remove();
       resultsContainer.show();
-      _.each(groups, (g, gName) => {
+      // _.each(groups, (g, gName) => {
+      groupsList.forEach((gName) => {
+        const g = groups[gName];
+        console.log('g', g);
+        console.log('gName', gName);
         const groupContainer = $('<div>')
           .attr('class', 'results-group')
           .append('<span>' + names[gName.toLowerCase()] || gName + '</span>')
@@ -184,12 +196,6 @@ const getSearch = (components) => {
             .attr('class', 'search-result')
             .appendTo(groupContainer);
 
-          const imageLayers = [
-            'viewsheds',
-            'plans',
-            'maps',
-            'surveys',
-          ];
           if (imageLayers.includes(r.layer)) {
             drawViewshedResultsRow({
               row,
@@ -229,7 +235,7 @@ const getSearch = (components) => {
     data.photo = Photo(data, thumbnaillUrl);
     data.overlay = Overlay(data);
     // console.log('photo', photo.data.overlay.layer());
-    console.log('data', data);
+    // console.log('data', data);
     row.addClass('search-result--thumbnail');
     const thumb = data.photo.getImage([100])
       .attr('class', 'search-thumbnail')
