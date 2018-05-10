@@ -28,7 +28,7 @@ $legend-width: 320px;
   width: 160px;
 }
 
-.legend-toggle i.icon-list-bullet {
+.legend-toggle i.icon-search {
   float: none;
   display: none;
 }
@@ -41,7 +41,7 @@ $legend-width: 320px;
   display: none;
 }
 
-#legend.collapsed .legend-toggle span, #legend.collapsed .legend-toggle i.icon-list-bullet{
+#legend.collapsed .legend-toggle span, #legend.collapsed .legend-toggle i.icon-search{
   display: inline-block;
 }
 
