@@ -59,6 +59,9 @@
   color: $dark-green;
   font-size: 15px;
   font-weight: bold;
+  background: rgba(255,255,255,.9);
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 .era-description {
@@ -191,6 +194,9 @@
 #era-stepper {
   text-align: center;
   font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .era-years-container {
@@ -214,7 +220,11 @@
   border: 1px solid #666666;
   line-height: 50px;
   width: 50px;
+  height: 50px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #era-stepper i:before {

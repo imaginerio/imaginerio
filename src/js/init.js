@@ -25,6 +25,8 @@ const getInit = (components) => {
   const minYear = 1830;
   let names;
   let currentEra = eras[0];
+  let language = 'english';
+  
   
   const params = {};
   
@@ -109,8 +111,45 @@ const getInit = (components) => {
       Filmstrip.setRaster(params.raster);
     }
   }
-  
+
+  function setLanguageDropdown() {
+    const languageOptions = {
+      english: 'English Version',
+      portuguese: 'Versão em Português',
+    };
+    const dropdownButton = $('.language-dropdown-button');
+    const currentLanguage = $('.language-dropdown-current');
+    const optionsContainer = $('.language-dropdown-content');
+    const otherLanguage = $('.language-dropdown-option');
+
+    dropdownButton.on('mouseover', () => {
+      optionsContainer.addClass('language-dropdown-content--on');
+    });
+
+    optionsContainer.on('mouseout', () => {
+      optionsContainer.removeClass('language-dropdown-content--on');
+    });
+
+    otherLanguage.on('click', function switchLanguage() {
+      const newLanguage = $(this).attr('data-language');
+      language = newLanguage;
+      currentLanguage.text(languageOptions[language]);
+      $('.language-dropdown-option').each(function toggle() {
+        const option = $(this);
+        const optionLanguage = option.attr('data-language');
+        console.log(language, optionLanguage !== language);
+        const display = optionLanguage !== language;
+        console.log(optionLanguage, language);
+        if (display) {
+          option.removeClass('language-dropdown-option--hidden');
+        } else {
+          option.addClass('language-dropdown-option--hidden');
+        }
+      });
+    });
+  }
   function init_ui() {
+    setLanguageDropdown();
     if (mobile) {
       $('#legend .mobile-header .icon-times').click(() => {
         $('#legend').toggleClass('collapsed');
@@ -395,6 +434,7 @@ const getInit = (components) => {
     names,
     thumbnaillUrl,
     setYear,
+    language,
   });
 };
 
