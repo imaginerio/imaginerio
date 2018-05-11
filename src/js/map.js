@@ -156,7 +156,7 @@ const getMap = (components) => {
   M.getMap = () => map;
 
   M.setYear = (newYear) => {
-    const { init } = components;
+    const { init, probes } = components;
     const {
       tileserver,
       server,
@@ -211,10 +211,11 @@ const getMap = (components) => {
             $('#map-probe').hide();
             if (map.hasLayer(feature.properties.cone) && selectedViewshed != this) map.removeLayer(feature.properties.cone);
           }).on('click', function onClick() {
+            probes.hideHintProbe();
             Dispatch.call('viewshedclick', this, this.feature.properties.id);
-          })
-        }
-      })
+          });
+        },
+      });
       if (M.hasViews) viewshedPoints.addTo(map);
       if (selectedViewshedData) { // was set after year change & before json load
         M.zoomToView(selectedViewshedData);
@@ -378,6 +379,7 @@ const getMap = (components) => {
   function probe(e) {
     const { init, dispatch, probes } = components;
     const { server } = init;
+
     if ($('main').hasClass('searching-area')) return;
     probes.hideHintProbe();
     const zoom = map.getZoom();

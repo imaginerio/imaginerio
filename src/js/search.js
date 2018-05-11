@@ -161,7 +161,7 @@ const getSearch = (components) => {
     toggleSearchResults();
 
     searchResults = results;
-    console.log('search results', results);
+
     // if there are results
     if (_.size(searchResults) !== 0) {
       resultsContainer
