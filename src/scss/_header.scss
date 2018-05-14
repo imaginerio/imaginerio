@@ -54,6 +54,10 @@ header {
   visibility: visible;
 }
 
+.language-dropdown--off {
+  visibility: hidden !important;
+}
+
 .eras header {
   height: 85px;
 }

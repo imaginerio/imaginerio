@@ -24,8 +24,8 @@ const getInit = (components) => {
   let year;
   const minYear = 1830;
   let names;
+  let language;
   let currentEra = eras[0];
-  let language = 'en';
   
   
   const params = {};
@@ -257,6 +257,8 @@ const getInit = (components) => {
 
   function goToStart() {
     $('main').addClass('start');
+    console.log('show dropdown');
+    $('.language-dropdown').removeClass('language-dropdown--off');
 
     $('.title-container h1')
       .html('imagineRio');
@@ -396,11 +398,13 @@ const getInit = (components) => {
   
   function checkHash() {
 
-    if (window.location.hash !== '' && window.location.hash !== '#') {
-      $('main').removeClass('start');
-    }
+    
     const hash = window.location.hash.replace( '#', '' ).replace(/\?.+$/, '').split( '/' );
-    console.log('hash', hash);
+
+    if (hash.length > 1) {
+      console.log('hide dropdown');
+      $('.language-dropdown').addClass('language-dropdown--off');
+    }
     params.language = hash[0] ? hash[0] : '';
     params.year = hash[1] ? parseInt(hash[1], 10) : '';
     params.zoom = hash[2] ? parseInt(hash[2]) : '';
