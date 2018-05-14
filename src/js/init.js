@@ -134,17 +134,12 @@ const getInit = (components) => {
       const newLanguage = $(this).attr('data-language');
       language = newLanguage;
       currentLanguage.text(languageOptions[language]);
-      $('.language-dropdown-option').each(function toggle() {
+      $('.language-dropdown-option').toggleClass('language-dropdown-option--hidden', function toggle() {
         const option = $(this);
         const optionLanguage = option.attr('data-language');
         console.log(language, optionLanguage !== language);
         const display = optionLanguage !== language;
-        console.log(optionLanguage, language);
-        if (display) {
-          option.removeClass('language-dropdown-option--hidden');
-        } else {
-          option.addClass('language-dropdown-option--hidden');
-        }
+        return !display;
       });
     });
   }
