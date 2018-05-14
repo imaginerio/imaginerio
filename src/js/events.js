@@ -23,7 +23,16 @@ const getDispatch = (components) => {
     'cancelmemory',
     'showaddmemory',
     'drawplanfeature',
-);
+    'updatelanguage',
+  );
+
+  Dispatch.on('updatelanguage', () => {
+    const {
+      Legend,
+    } = components;
+    
+    Legend.updateLanguage();
+  });
 
   Dispatch.on('changeyear', (newYear) => {
     const {

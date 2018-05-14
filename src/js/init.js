@@ -134,6 +134,7 @@ const getInit = (components) => {
       en: 'English Version',
       pr: 'Versão em Português',
     };
+
     const dropdownButton = $('.language-dropdown-button');
     const currentLanguage = $('.language-dropdown-current');
     const optionsContainer = $('.language-dropdown-content');
@@ -153,6 +154,21 @@ const getInit = (components) => {
       if (closeDropdownTimer !== undefined) {
         clearTimeout(closeDropdownTimer);
       }
+    };
+
+    const setDropdownOptionVisibility = () => {
+      currentLanguage.text(languageOptions[language]);
+
+      $('.language-dropdown-option').each(function toggleVisibility() {
+        const option = $(this);
+        const optionLanguage = option.attr('data-language');
+        const display = optionLanguage !== language;
+        if (display) {
+          option.removeClass('language-dropdown-option--hidden');
+        } else {
+          option.addClass('language-dropdown-option--hidden');
+        }
+      });
     };
 
     dropdownButton
@@ -179,21 +195,18 @@ const getInit = (components) => {
     otherLanguage.on('click', function switchLanguage() {
       const newLanguage = $(this).attr('data-language');
       language = newLanguage;
-      currentLanguage.text(languageOptions[language]);
+      
       // show/hide dropdown options
-      $('.language-dropdown-option').toggleClass('language-dropdown-option--hidden', function toggle() {
-        const option = $(this);
-        const optionLanguage = option.attr('data-language');
-        const display = optionLanguage !== language;
-        return !display;
-      });
+      setDropdownOptionVisibility();
       updateLanguage();
     });
+
+    setDropdownOptionVisibility();
   }
 
   function updateLanguage() {
     loadNames(() => {
-      console.log('new names loaded', Init.names);
+      Dispatch.call('updatelanguage', this);
     });
   }
 

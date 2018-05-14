@@ -40,16 +40,13 @@ const getLegend = (components) => {
   };
   Lg.openSidebar = openSidebar;
 
-  function updateYear(y) {
+  function drawSidebarContent() {
     const {
       init,
     } = components;
     const {
       server,
     } = init;
-
-    if (y == year) return;
-    year = y;
 
     setCurrentPlans();
 
@@ -118,6 +115,11 @@ const getLegend = (components) => {
         addPlans();
       }
     });
+  }
+
+  function updateYear(y) {
+    if (y === year) return;
+    year = y;
   }
 
   function addPlans() {
@@ -340,17 +342,21 @@ const getLegend = (components) => {
     return Lg;
   };
 
-  Lg.initialize = function () {
+  Lg.initialize = () => {
     initEvents();
-
     return Lg;
   }
 
-  Lg.setYear = function (newYear) {
+  Lg.setYear = (newYear) => {
     updateYear(newYear);
-
+    drawSidebarContent();
     return Lg;
-  }
+  };
+
+  Lg.updateLanguage = () => {
+    drawSidebarContent();
+    return Lg;
+  };
 
   return Lg;
 };
