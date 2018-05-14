@@ -25,7 +25,7 @@ const getInit = (components) => {
   const minYear = 1830;
   let names;
   let currentEra = eras[0];
-  let language = 'english';
+  let language = 'en';
   
   
   const params = {};
@@ -54,7 +54,8 @@ const getInit = (components) => {
     console.log('timeline', `${server}timeline`);
     years = yearsData;
     // while (years[0] < eras[0].dates[0]) years.shift();  // force min year and first era to match
-    $.getJSON(`${server}names/en`, (namesData) => {
+    // en pr
+    $.getJSON(`${server}names/${language}`, (namesData) => {
       Init.names = namesData;
       $.getJSON(`${server}plans/`, (plansList) => {
         // parse years
@@ -114,8 +115,8 @@ const getInit = (components) => {
 
   function setLanguageDropdown() {
     const languageOptions = {
-      english: 'English Version',
-      portuguese: 'Versão em Português',
+      en: 'English Version',
+      pr: 'Versão em Português',
     };
     const dropdownButton = $('.language-dropdown-button');
     const currentLanguage = $('.language-dropdown-current');
@@ -137,12 +138,16 @@ const getInit = (components) => {
       $('.language-dropdown-option').toggleClass('language-dropdown-option--hidden', function toggle() {
         const option = $(this);
         const optionLanguage = option.attr('data-language');
-        console.log(language, optionLanguage !== language);
         const display = optionLanguage !== language;
         return !display;
       });
     });
   }
+
+  function updateLanguage() {
+
+  }
+
   function init_ui() {
     setLanguageDropdown();
     if (mobile) {
@@ -370,6 +375,10 @@ const getInit = (components) => {
   }
   
   function checkHash() {
+    // console.log('check hash', window.location.hash);
+    if (window.location.hash !== '' && window.location.hash !== '#') {
+      $('main').removeClass('start');
+    }
     const hash = window.location.hash.replace( '#', '' ).replace(/\?.+$/, '').split( '/' );
     params.year = hash[0] ? parseInt(hash[0], 10) : '';
     params.zoom = hash[1] ? parseInt(hash[1]) : '';
@@ -379,6 +388,7 @@ const getInit = (components) => {
   }
   
   function updateHash() {
+    // console.log('update hash');
     if ($('main').hasClass('eras')) {
       window.location.hash = '';
       return;
@@ -409,7 +419,8 @@ const getInit = (components) => {
     const layers = Legend.layers().sort().join(',');
     const raster = $('#overlay-info').data('p') ? $('#overlay-info').data('p').data.file : 'null';
     const url = server + 'export/en/' + year + '/' + layers + '/' + raster + '/' + Map.getBounds().toBBoxString() + '/';
-
+    console.log('raster', raster);
+    console.log('export url', url);
     document.getElementById('download_iframe').src = url;
     window.setTimeout(() => { $('#export').attr('class', 'icon-download'); }, 2000);
   }
