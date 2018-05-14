@@ -139,13 +139,42 @@ const getInit = (components) => {
     const optionsContainer = $('.language-dropdown-content');
     const otherLanguage = $('.language-dropdown-option');
 
-    dropdownButton.on('mouseover', () => {
+    const openDropdown = () => {
       optionsContainer.addClass('language-dropdown-content--on');
-    });
+    };
 
-    optionsContainer.on('mouseout', () => {
+    const closeDropdown = () => {
       optionsContainer.removeClass('language-dropdown-content--on');
-    });
+    };
+
+    let closeDropdownTimer;
+
+    const stopDropdownTimer = () => {
+      if (closeDropdownTimer !== undefined) {
+        clearTimeout(closeDropdownTimer);
+      }
+    };
+
+    dropdownButton
+      .on('mouseover', () => {
+        stopDropdownTimer();
+        openDropdown();
+      })
+      .on('mouseout', () => {
+        stopDropdownTimer();
+        closeDropdownTimer = setTimeout(() => {
+          closeDropdown();
+        }, 3000);
+      });
+
+    optionsContainer
+      .on('mouseover', () => {
+        stopDropdownTimer();
+      })
+      .on('mouseout', () => {
+        stopDropdownTimer();
+        closeDropdown();
+      });
 
     otherLanguage.on('click', function switchLanguage() {
       const newLanguage = $(this).attr('data-language');
