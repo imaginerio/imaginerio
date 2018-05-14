@@ -50,31 +50,47 @@ const getInit = (components) => {
     rasterserver = 'http://imaginerio-dev.axismaps.io:3001/raster/';
   }
 
-  $.getJSON(`${server}timeline`, (yearsData) => {
-    console.log('timeline', `${server}timeline`);
-    years = yearsData;
-    // while (years[0] < eras[0].dates[0]) years.shift();  // force min year and first era to match
-    // en pr
+  function loadTimeline(callback) {
+    $.getJSON(`${server}timeline`, (yearsData) => {
+      years = yearsData;
+      if (callback !== undefined) callback();
+    });
+  }
+
+  function loadNames(callback) {
+    console.log('language', language);
     $.getJSON(`${server}names/${language}`, (namesData) => {
       Init.names = namesData;
-      $.getJSON(`${server}plans/`, (plansList) => {
-        // parse years
-        Init.plans = plansList.map((d) => {
-          const planCopy = Object.assign({}, d);
-          planCopy.years = d.planyear.split('-').map(dd => parseInt(dd, 10));
-          return planCopy;
-        });
+      if (callback !== undefined) callback();
+    });
+  }
 
-        initialize();
+  function loadPlans(callback) {
+    $.getJSON(`${server}plans/`, (plansList) => {
+      Init.plans = plansList.map((d) => {
+        const planCopy = Object.assign({}, d);
+        planCopy.years = d.planyear.split('-').map(dd => parseInt(dd, 10));
+        return planCopy;
       });
+      if (callback !== undefined) callback();
+    });
+  }
+
+  checkHash();
+  year = params.year || 1943; // a year that actually has something
+  language = params.language || 'en';
+  
+
+  loadTimeline(() => {
+    loadNames(() => {
+      loadPlans(initialize);
     });
   });
   
-  
   function initialize() {
     eras[eras.length - 1].dates[1] = new Date().getFullYear();
-    checkHash();
-    year = params.year || 1943; // a year that actually has something
+    
+    
     Map.initialize('map').setYear(year);
     Timeline.initialize(eras, 'timeline').setYear(year);
     Filmstrip.initialize();
@@ -135,17 +151,21 @@ const getInit = (components) => {
       const newLanguage = $(this).attr('data-language');
       language = newLanguage;
       currentLanguage.text(languageOptions[language]);
+      // show/hide dropdown options
       $('.language-dropdown-option').toggleClass('language-dropdown-option--hidden', function toggle() {
         const option = $(this);
         const optionLanguage = option.attr('data-language');
         const display = optionLanguage !== language;
         return !display;
       });
+      updateLanguage();
     });
   }
 
   function updateLanguage() {
-
+    loadNames(() => {
+      console.log('new names loaded', Init.names);
+    });
   }
 
   function init_ui() {
@@ -375,16 +395,19 @@ const getInit = (components) => {
   }
   
   function checkHash() {
-    // console.log('check hash', window.location.hash);
+
     if (window.location.hash !== '' && window.location.hash !== '#') {
       $('main').removeClass('start');
     }
     const hash = window.location.hash.replace( '#', '' ).replace(/\?.+$/, '').split( '/' );
-    params.year = hash[0] ? parseInt(hash[0], 10) : '';
-    params.zoom = hash[1] ? parseInt(hash[1]) : '';
-    params.center = hash[2] && hash[3] ? [parseFloat(hash[2]), parseFloat(hash[3]) ] : '';
-    params.layers = hash[4] ? hash[4].split( '&' ) : [];
-    params.raster = hash[5] ? hash[5] : '';
+    console.log('hash', hash);
+    params.language = hash[0] ? hash[0] : '';
+    params.year = hash[1] ? parseInt(hash[1], 10) : '';
+    params.zoom = hash[2] ? parseInt(hash[2]) : '';
+    params.center = hash[3] && hash[4] ? [parseFloat(hash[3]), parseFloat(hash[4]) ] : '';
+    params.layers = hash[5] ? hash[5].split( '&' ) : [];
+    params.raster = hash[6] ? hash[6] : '';
+    console.log(params);
   }
   
   function updateHash() {
@@ -403,7 +426,7 @@ const getInit = (components) => {
   
     const mapView = Map.getView();
   
-    window.location.hash = year + "/" + mapView[1] + "/" + mapView[0].lat + "/" + mapView[0].lng + "/" + layers + "/" + raster;
+    window.location.hash = language + "/" + year + "/" + mapView[1] + "/" + mapView[0].lat + "/" + mapView[0].lng + "/" + layers + "/" + raster;
   
     $('.twitter').attr('href', $('.twitter').attr('data-href') + 'text=diverseLevant' + '&url=' + encodeURIComponent(window.location.href));
     $('.fb-share-btn').attr('href', $('.fb-share-btn').attr('data-href') + '&u=' + encodeURIComponent(window.location.href));

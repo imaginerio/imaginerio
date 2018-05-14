@@ -79,6 +79,7 @@ const getLegend = (components) => {
 
         function addLayerGroup(group, groupName) {
           const { names } = init;
+          // console.log('names (addLayerGroup)', names);
 
           const gr = $('<div>').attr('class', 'legend-group').attr('data-group', groupName).appendTo(cat);
           const groupTitle = $('<div>').attr('class', 'group-title').appendTo(gr);
