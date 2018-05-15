@@ -311,7 +311,7 @@ const getInit = (components) => {
       .off('click')
       .on('click', goButtonClick);
 
-    window.location.hash = '';
+    window.location.hash = language;
   }
 
   function goToMap() {
@@ -459,12 +459,12 @@ const getInit = (components) => {
   function updateHash() {
     // console.log('update hash');
     if ($('main').hasClass('eras')) {
-      window.location.hash = '';
+      window.location.hash = language;
       return;
     }
     let layers = Legend.layers();
     if (!Legend.hasViews) {
-      if (layers[0] == 'all') layers = ['views'];
+      if (layers[0] === 'all') layers = ['views'];
       else layers.push('views');
     }
     layers = layers.join('&');
