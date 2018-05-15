@@ -198,12 +198,16 @@ const getLegend = (components) => {
   }
 
   function addLayerExisting(feature, key, container, notpresent) {
+    const { init } = components;
+    const { names } = init;
+    console.log('names', names);
     const name = feature.id ? key : feature;
+    console.log('feature', feature, key);
     const l = $('<div>')
       .attr('class', 'layer-existing')
       .attr('data-name', name)
       .data('name', name)
-      .html(name)
+      .html(names[name.toLowerCase()])
       .appendTo(container)
       .prepend('<i class="icon-binoculars">')
       .click(layerClick);
