@@ -8,6 +8,7 @@ const getInit = (components) => {
     Search,
     dispatch,
     register,
+    translations,
   } = components;
   const Dispatch = dispatch;
 
@@ -195,10 +196,12 @@ const getInit = (components) => {
     otherLanguage.on('click', function switchLanguage() {
       const newLanguage = $(this).attr('data-language');
       language = newLanguage;
+      Init.language = language;
       
       // show/hide dropdown options
       setDropdownOptionVisibility();
       updateLanguage();
+      updateUILanguage();
     });
 
     setDropdownOptionVisibility();
@@ -210,8 +213,17 @@ const getInit = (components) => {
     });
   }
 
+  function updateUILanguage() {
+    translations
+      .filter(d => d.selector !== '')
+      .forEach((d) => {
+        $(d.selector).html(d[language]);
+      });
+  }
+
   function init_ui() {
     setLanguageDropdown();
+    updateUILanguage();
     if (mobile) {
       $('#legend .mobile-header .icon-times').click(() => {
         $('#legend').toggleClass('collapsed');

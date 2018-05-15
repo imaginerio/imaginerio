@@ -30,7 +30,8 @@ const getDispatch = (components) => {
     const {
       Legend,
     } = components;
-    
+
+
     Legend.updateLanguage();
   });
 

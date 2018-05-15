@@ -200,9 +200,9 @@ const getLegend = (components) => {
   function addLayerExisting(feature, key, container, notpresent) {
     const { init } = components;
     const { names } = init;
-    console.log('names', names);
+
     const name = feature.id ? key : feature;
-    console.log('feature', feature, key);
+
     const l = $('<div>')
       .attr('class', 'layer-existing')
       .attr('data-name', name)

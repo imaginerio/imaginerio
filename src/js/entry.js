@@ -1,4 +1,5 @@
 import eras from './eras';
+import translations from './translations';
 import config from './config';
 import getDispatch from './events';
 import getInit from './init';
@@ -18,6 +19,7 @@ require('../scss/index.scss');
 const components = {};
 
 components.eras = eras;
+components.translations = translations;
 components.config = config;
 components.dispatch = getDispatch(components);
 components.Map = getMap(components);
