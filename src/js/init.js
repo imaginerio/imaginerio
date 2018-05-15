@@ -311,14 +311,17 @@ const getInit = (components) => {
 
   function goToStart() {
     $('main').addClass('start');
-    console.log('show dropdown');
+    // console.log('show dropdown');
     $('.language-dropdown').removeClass('language-dropdown--off');
-
+    console.log('language', language);
     $('.title-container h1')
       .html('imagineRio');
 
     $('.go-button')
-      .html('<i class="icon-binoculars"></i> Begin Exploring')
+      .html(`<i class="icon-binoculars"></i> 
+      <span class="explore-map-button-text">
+        ${translations.find(d => d.selector === '.explore-map-button-text')[language]}
+      </span>`)
       .removeClass('era')
       .off('click')
       .on('click', goButtonClick);
@@ -415,7 +418,7 @@ const getInit = (components) => {
       }
     }
     
-    $('.go-button').html('Go to Map <i class="icon-right-big"></i>').toggleClass('era', !mobile)
+    $('.go-button').html(`${translations.find(d => d.selector === 'go-to-map')[language]} <i class="icon-right-big"></i>`).toggleClass('era', !mobile)
       .off('click')
       .on('click', () => {
         goToEra(e);

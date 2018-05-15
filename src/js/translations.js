@@ -10,19 +10,19 @@ const translations = [
     pr: 'Este produto tem fins informativos e não foi preparado nem é adequado para fins legais, de engenharia ou de levantamento topográfico. Não representa um estudo in sitiu e apenas representa localizações relativas aproximadas. Não há qualquer garantia referente à precisão específica ou ao caráter integral deste produto e a Rice University assim como a equipe de pesquisa de imagineRio não assumem qualquer responsabilidade nem respondem por danos decorrentes de erros e omissões.',
   },
   {
-    selector: '',
-    en: '',
-    pr: '',
+    selector: '.legend-title-text',
+    en: 'Map Legend',
+    pr: 'Legenda do Mapa',
   },
   {
-    selector: '',
-    en: '',
-    pr: '',
+    selector: '.explore-map-button-text',
+    en: 'Begin Exploring',
+    pr: 'Ver o mapa',
   },
   {
-    selector: '',
-    en: '',
-    pr: '',
+    selector: 'go-to-map',
+    en: 'Go to Map',
+    pr: 'Vá Para o Mapa',
   },
   {
     selector: '',

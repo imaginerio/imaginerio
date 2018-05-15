@@ -12,6 +12,7 @@ const getLegend = (components) => {
   let layers;
   let plans;
 
+
   function initEvents() {
     const { dispatch } = components;
     
@@ -54,7 +55,8 @@ const getLegend = (components) => {
     // get layer data
     $.getJSON(`${server}layers/${year}`, (layersJson) => {
       const { dispatch } = components;
-      
+      const { language } = init;
+      console.log('layersJSON', layersJson);
       layers = layersJson;
 
       _.each(layersJson, (category, categoryName) => {
@@ -62,11 +64,13 @@ const getLegend = (components) => {
           .attr('class', 'legend-category')
           .attr('data-category', 'feature')
           .appendTo('.legend-contents');
-        
 
+        const names = categoryName.toUpperCase().split('/');
+        
+        const title = language === 'en' ? names[0] : names[1];
         $('<div>')
           .attr('class', 'category-title')
-          .html(categoryName.toUpperCase())
+          .html(title)
           .appendTo(cat);
 
         _.each(category, (obj, objName) => { // there's an extra level here
@@ -132,7 +136,7 @@ const getLegend = (components) => {
 
     $('<div>')
       .attr('class', 'category-title')
-      .html('PLANS')
+      .html('PLANS/PLANOS')
       .appendTo(cat);
     
 
@@ -275,16 +279,19 @@ const getLegend = (components) => {
   };
 
   Lg.addViews = () => {
-    const { dispatch } = components;
+    const { dispatch, init } = components;
+    const { language } = init;
     $('.legend-category[data-category="views"]').remove();
     const cat = $('<div>')
       .attr('class', 'legend-category')
       .attr('data-category', 'views')
       .prependTo('.legend-contents');
 
+    const title = language === 'en' ? 'VIEWS' : 'VISTAS';
     $('<div>')
       .attr('class', 'category-title')
-      .html('VIEWS').appendTo(cat);
+      .html(title)
+      .appendTo(cat);
 
     const gr = $('<div>')
       .attr('class', 'legend-group')
@@ -349,7 +356,7 @@ const getLegend = (components) => {
   Lg.initialize = () => {
     initEvents();
     return Lg;
-  }
+  };
 
   Lg.setYear = (newYear) => {
     updateYear(newYear);
