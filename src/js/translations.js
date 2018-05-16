@@ -51,14 +51,22 @@ const translations = [
     pr: 'Click for details',
   },
   {
-    name: '',
-    en: '',
-    pr: '',
+    name: 'probe-hint-text',
+    selector: '.probe-hint-text',
+    en: 'Click the map to explore, or',
+    pr: 'Click the map to explore, or',
   },
   {
-    name: '',
-    en: '',
-    pr: '',
+    name: 'probe-area-text',
+    selector: '.probe-area-text',
+    en: 'Expore by area ',
+    pr: 'Explore by area ',
+  },
+  {
+    name: 'probe-hint-text--mobile',
+    selector: '.probe-hint-text--mobile',
+    en: 'Tap the map to explore...',
+    pr: 'Tap the map to explore...',
   },
 ];
 
