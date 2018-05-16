@@ -156,7 +156,8 @@ const getMap = (components) => {
   M.getMap = () => map;
 
   M.setYear = (newYear) => {
-    const { init, probes } = components;
+    console.log('setyear');
+    const { init, translations } = components;
     const {
       tileserver,
       server,
@@ -199,14 +200,16 @@ const getMap = (components) => {
         geometry: { type: 'Point', coordinates: f.geometry.coordinates[0][0] },
       }));
       viewshedPoints = L.geoJSON({ type: 'FeatureCollection', features: points }, {
+
         pointToLayer(pt, latlng) {
           return L.marker(latlng, viewshedStyle);
         },
 
         onEachFeature(feature, layer) {
           layer.on('mouseover', (e) => {
+            const { language } = init;
             feature.properties.cone.addTo(map);
-            mapProbe(e, '<strong>' + feature.properties.description + '</strong><br><em>Click for details</em>');
+            mapProbe(e, `<strong>${feature.properties.description}</strong><br><em>${translations.find(d => d.name === 'click-for-details')[language]}</em>`);
           }).on('mouseout', function onMouseout() {
             $('#map-probe').hide();
             if (map.hasLayer(feature.properties.cone) && selectedViewshed != this) map.removeLayer(feature.properties.cone);

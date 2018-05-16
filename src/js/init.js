@@ -353,14 +353,14 @@ const getInit = (components) => {
     eras.forEach((e) => {
       if (year >= e.dates[0] && year <= e.dates[1]) {
         currentEra = e;
-        $('#eras-button div.desktop span').html(e.name);
+        $('#eras-button .back-to-page-text').html(e[language]);
       }
     });
   }
 
   function showEra(i, noTransition) {
     $('main').removeClass('start');
-    $('#eras-button div.desktop span').html('start');
+    $('#eras-button .back-to-page-text').html(translations.find(d => d.name === 'start')[language]);
     let e = eras[i];
     console.log('e[language]', e[language]);
     Filmstrip.setYear(e.dates[0], e.dates[1]);

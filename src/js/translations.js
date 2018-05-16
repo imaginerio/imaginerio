@@ -1,5 +1,11 @@
 const translations = [
   {
+    name: 'jump-to-era',
+    selector: '.era-dropdown-text',
+    en: 'Jump to era... ',
+    pr: 'Jump to era... ',
+  },
+  {
     name: 'h1',
     selector: 'h1',
     en: 'imagineRio',
@@ -26,18 +32,23 @@ const translations = [
   {
     name: 'go-to-map',
     en: 'Go to Map',
-    pr: 'Vá Para o Mapa',
+    pr: 'Go to Map',
   },
   {
-    name: '',
-    en: '',
-    pr: '',
+    name: 'back-to-text',
+    selector: '.back-to-text',
+    en: 'Back to ',
+    pr: 'Back to ',
   },
-  // era titles
   {
-    name: '',
-    en: '',
-    pr: '',
+    name: 'start',
+    en: 'start',
+    pr: 'start',
+  },
+  {
+    name: 'click-for-details',
+    en: 'Click for details',
+    pr: 'Click for details',
   },
   {
     name: '',
@@ -55,52 +66,52 @@ const eraTranslations = [
   {
     name: '1502-1808',
     en: 'Colonial Rule',
-    pr: '(pr)Colonial Rule',
+    pr: 'Colonial Rule',
   },
   {
     name: '1808-1821',
     en: 'Royal Rule',
-    pr: '(pr)Royal Rule',
+    pr: 'Royal Rule',
   },
   {
     name: '1822-1831',
     en: 'Imperial Rule I',
-    pr: '(pr)Imperial Rule I',
+    pr: 'Imperial Rule I',
   },
   {
     name: '1831-1839',
     en: 'Regency',
-    pr: '(pr)Regency',
+    pr: 'Regency',
   },
   {
     name: '1840-1889',
     en: 'Imperial Rule II',
-    pr: '(pr)Imperial Rule II',
+    pr: 'Imperial Rule II',
   },
   {
     name: '1889-1930',
     en: 'First Republic',
-    pr: '(pr)First Republic',
+    pr: 'First Republic',
   },
   {
     name: '1930-1945',
     en: 'Vargas Era',
-    pr: '(pr)Vargas Era',
+    pr: 'Vargas Era',
   },
   {
     name: '1946-1964',
     en: 'Democratic Interlude',
-    pr: '(pr)Democratic Interlude',
+    pr: 'Democratic Interlude',
   },
   {
     name: '1964-1985',
     en: 'Military Dictatorship',
-    pr: '(pr)Military Dictatorship',
+    pr: 'Military Dictatorship',
   },
   {
     name: `1985-${new Date().getFullYear()}`,
     en: 'New Republic',
-    pr: '(pr)New Republic',
+    pr: 'New Republic',
   },
 ];
 
