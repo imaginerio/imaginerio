@@ -28,6 +28,8 @@ const getInit = (components) => {
   let language;
   let currentEra = eras[0];
   
+  Init.mapProbing = false;
+  
   
   const params = {};
   

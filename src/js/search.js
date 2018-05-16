@@ -33,6 +33,8 @@ const getSearch = (components) => {
 
   function setSearchExit() {
     $(document).on('click.search', (ee) => {
+      const { init } = components;
+      if (init.mapProbing) return;
       const inSearchBox = $.contains(document.getElementById('search'), ee.target);
       const isSearchInput = $(ee.target).hasClass('search-input');
 

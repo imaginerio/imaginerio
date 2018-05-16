@@ -380,8 +380,12 @@ const getMap = (components) => {
   }
 
   function probe(e) {
+    
+    
     const { init, dispatch, probes } = components;
     const { server } = init;
+
+    init.mapProbing = true;
 
     if ($('main').hasClass('searching-area')) return;
     probes.hideHintProbe();
@@ -406,8 +410,10 @@ const getMap = (components) => {
     }
     const off = layers[0] === 'all' ? '' : layers.join(',');
     const probeUrl = `${server}probe/${year}/${probeZoom}/${e.latlng.lng},${e.latlng.lat}/${off}`;
+    
     $.getJSON(probeUrl, function probeJSON(json) {
       dispatch.call('showresults', this, _.indexBy(json, 'name'), true);
+      init.mapProbing = false;
     });
   }
 
