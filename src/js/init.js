@@ -267,6 +267,8 @@ const getInit = (components) => {
     });
 
     eras.forEach((e, i) => {
+      // console.log('e', e);
+      // console.log('i', i);
       $('<option>')
         .attr('value', i)
         .addClass(`era-dropdown-${e.id}`)
@@ -326,7 +328,7 @@ const getInit = (components) => {
     $('.language-dropdown').removeClass('language-dropdown--off');
     console.log('language', language);
     $('.title-container h1')
-      .html('imagineRio');
+      .html(translations.find(d => d.name === 'h1')[language]);
 
     $('.go-button')
       .html(`<i class="icon-binoculars"></i> 
@@ -360,6 +362,7 @@ const getInit = (components) => {
     $('main').removeClass('start');
     $('#eras-button div.desktop span').html('start');
     let e = eras[i];
+    console.log('e[language]', e[language]);
     Filmstrip.setYear(e.dates[0], e.dates[1]);
     Map.setYear(e.dates[0]);
 
@@ -371,7 +374,7 @@ const getInit = (components) => {
         .css('margin-left', '0%');
       $('.era-years').html(e.dates.map(formatYear).join(' – '))
         .css('margin-left', '0%');
-      $('#intro h1').html(e.name)
+      $('#intro h1').html(e[language])
         .css('margin-left', '0%');
     } else {
       let dur = 500;
@@ -383,7 +386,7 @@ const getInit = (components) => {
       let newYear = $('<p class="era-years">')
          .html(e.dates.map(formatYear).join(' – '))
          .css('margin-left', startNew);
-      let newTitle = $('<h1>' + e.name + '</h1>')
+      let newTitle = $('<h1>' + e[language] + '</h1>')
         .css('margin-left', startNew);
       if (startNew == '-100%') {
         newDesc.prependTo('.era-description-container')
