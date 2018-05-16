@@ -215,10 +215,19 @@ const getInit = (components) => {
 
   function updateUILanguage() {
     translations
-      .filter(d => d.selector !== '')
+      .filter(d => d.name !== '' && Object.prototype.hasOwnProperty.call(d, 'selector'))
       .forEach((d) => {
         $(d.selector).html(d[language]);
       });
+    setEraDropdownText();
+  }
+
+  function getEraDropdownItem(e) {
+    return `${e[language]} (${e.dates.map(formatYear).join(' – ')})`;
+  }
+
+  function setEraDropdownText() {
+    eras.forEach(e => $(`.era-dropdown-${e.id}`).text(getEraDropdownItem(e)));
   }
 
   function init_ui() {
@@ -260,9 +269,11 @@ const getInit = (components) => {
     eras.forEach((e, i) => {
       $('<option>')
         .attr('value', i)
-        .html(e.name + ' (' + e.dates.map(formatYear).join(' – ') + ')')
+        .addClass(`era-dropdown-${e.id}`)
         .appendTo('.era-dropdown select');
     });
+
+    setEraDropdownText();
 
     $('.era-dropdown select').on('change', function change() {
       showEra($(this).val());
@@ -320,7 +331,7 @@ const getInit = (components) => {
     $('.go-button')
       .html(`<i class="icon-binoculars"></i> 
       <span class="explore-map-button-text">
-        ${translations.find(d => d.selector === '.explore-map-button-text')[language]}
+        ${translations.find(d => d.name === 'explore-map-button-text')[language]}
       </span>`)
       .removeClass('era')
       .off('click')
@@ -418,7 +429,7 @@ const getInit = (components) => {
       }
     }
     
-    $('.go-button').html(`${translations.find(d => d.selector === 'go-to-map')[language]} <i class="icon-right-big"></i>`).toggleClass('era', !mobile)
+    $('.go-button').html(`${translations.find(d => d.name === 'go-to-map')[language]} <i class="icon-right-big"></i>`).toggleClass('era', !mobile)
       .off('click')
       .on('click', () => {
         goToEra(e);
@@ -438,7 +449,7 @@ const getInit = (components) => {
   }
   
   function formatYear(y) {
-    if (y < 0) return -y + ' BC';
+    if (y < 0) return - y + ' BC';
     return y;
   }
   

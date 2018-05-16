@@ -16,6 +16,12 @@ import getRegister from './register';
 
 require('../scss/index.scss');
 
+eras.forEach((e) => {
+  const text = translations.find(d => d.name === e.dates.join('-'));
+  const { en, pr, name } = text;
+  Object.assign(e, { en, pr, id: name });
+});
+
 const components = {};
 
 components.eras = eras;
