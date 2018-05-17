@@ -33,7 +33,10 @@ const getTimeline = (components) => {
 
     $('.timeline-track, .timeline-slider, .ticks', timeline)
       .on('mousemove.timeline', (e) => {
+        const timelineInner = $('.timeline-inner');
+
         const d = getDataForMouseEvent(e);
+
         $('.timeline-probe', timeline)
           .show()
           .css('left', `${d.x}px`)
@@ -41,11 +44,18 @@ const getTimeline = (components) => {
 
         const timelineEraProbe = $('.timeline-era-probe', timeline)
           .show()
-          // .css('left', `${d.x}px`)
           .html(d.era);
         const eraProbeLeft = timelineEraProbe.width() / 2;
+        const eraProbeWidth = timelineEraProbe.width() +
+          parseFloat(timelineEraProbe.css('padding-left').replace('px', '')) +
+          parseFloat(timelineEraProbe.css('padding-right').replace('px', ''));
+
+        const offset = timelineInner.width() - ((d.x - eraProbeLeft) + eraProbeWidth);
+
+        const posEnd = offset <= 0 ? offset : 0;
+
         timelineEraProbe
-          .css('left', `${d.x - eraProbeLeft}`);
+          .css('left', `${(d.x - eraProbeLeft) + posEnd}`);
       })
       .on('mouseleave', () => {
         $('.timeline-probe', timeline).hide();
@@ -104,9 +114,10 @@ const getTimeline = (components) => {
     let pageX;
 
     if (e.touches && e.touches[0]) {
-      pageX = e.touches[0].pageX;
+      ([{ pageX }] = e.touches);
+      console.log('pagex', pageX);
     } else {
-      pageX = e.pageX;
+      ({ pageX } = e);
     }
     const t = $('.timeline-track', timeline);
     let x = pageX - t.offset().left;
