@@ -12,14 +12,14 @@ const getMap = (components) => {
   let selectedViewshed;
   let selectedViewshedData;
   const viewshedIcon = L.icon({
-    iconUrl: 'img/viewshed.png',
-    iconSize: [33, 37.25],
-    iconAnchor: [16.5, 27.25],
+    iconUrl: 'img/viewshed-new.png',
+    iconSize: [33, 33],
+    iconAnchor: [16.5, 16.5],
   });
   const viewshedActiveIcon = L.icon({
-    iconUrl: 'img/viewshed_active.png',
-    iconSize: [33, 37.25],
-    iconAnchor: [16.5, 27.25],
+    iconUrl: 'img/viewshed-new-active.png',
+    iconSize: [33, 33],
+    iconAnchor: [16.5, 16.5],
   });
   const viewshedStyle = {
     icon: viewshedIcon,
