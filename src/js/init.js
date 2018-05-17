@@ -30,9 +30,9 @@ let params = {};
 var mobile = window.innerWidth <= 700;
 
 if( gup( 'dev' ) == 'true' ){
-  server = "http://beirut-dev.axismaps.io/";
-  tileserver = "http://beirut-dev.axismaps.io/tiles/";
-  rasterserver = "http://beirut-dev.axismaps.io/raster/";
+  server = "https://beirut-dev.axismaps.io/";
+  tileserver = "https://beirut-dev.axismaps.io/tiles/";
+  rasterserver = "https://beirut-dev.axismaps.io/raster/";
 }
 
 $.getJSON(server + 'timeline', function(yearsData) {
