@@ -57,6 +57,10 @@ $hint-probe-height: 36px;
   font-weight: bold;
   cursor: pointer;
 }
+
+.probe-area:hover {
+  color: #333 !important;
+}
 // $probe-area-min-height: $hint-probe-height - 5;
 .probe-hint-container.probe-hint--used {
   border-radius: 5px;
