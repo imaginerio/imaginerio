@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.845 20.873">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        font-size: 13px;
+        font-family: FontAwesome5ProSolid, "Font Awesome 5 Pro";
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke: #fff;
+      }
+    </style>
+  </defs>
+  <g id="Group_12127" data-name="Group 12127" transform="translate(5090.047 5215.194) rotate(-20)">
+    <text id="hand-pointer" class="cls-1" transform="translate(-2998.348 -6621.354)"><tspan x="0" y="0">hand-pointer</tspan></text>
+    <line id="Line_145" data-name="Line 145" class="cls-2" x2="2" y2="2" transform="translate(-2999.5 -6637.5)"/>
+    <line id="Line_146" data-name="Line 146" class="cls-2" y2="4" transform="translate(-2994.5 -6639.5)"/>
+    <line id="Line_147" data-name="Line 147" class="cls-2" x1="2" y2="2" transform="translate(-2991.5 -6637.5)"/>
+    <line id="Line_148" data-name="Line 148" class="cls-2" x1="3" transform="translate(-3002.5 -6632.5)"/>
+    <line id="Line_149" data-name="Line 149" class="cls-2" x2="3" transform="translate(-2989.5 -6632.5)"/>
+  </g>
+</svg>
