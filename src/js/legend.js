@@ -56,7 +56,6 @@ const getLegend = (components) => {
     $.getJSON(`${server}layers/${year}`, (layersJson) => {
       const { dispatch } = components;
       const { language } = init;
-      console.log('layersJSON', layersJson);
       layers = layersJson;
 
       _.each(layersJson, (category, categoryName) => {
