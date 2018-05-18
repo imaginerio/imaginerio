@@ -6,7 +6,6 @@ const getMap = (components) => {
   let map;
   let year = 2015;
   let tileLayer;
-  let baseTileLayer;
   let overlayLayer;
   let viewshedPoints;
   let selectedViewshed;
@@ -106,9 +105,6 @@ const getMap = (components) => {
     L.control.zoom({ position: 'bottomleft' }).addTo(map);
 
     const tileUrl = `${tileserver}${year}/${layers.join(',')}/{z}/{x}/{y}.png`;
-    const baseTileUrl = `${tileserver}${year}/base/{z}/{x}/{y}.png`;
-
-    baseTileLayer = L.tileLayer(baseTileUrl).addTo(map);
     tileLayer = L.tileLayer(tileUrl).addTo(map);
 
     $(window).on('transitionend', () => {
