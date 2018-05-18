@@ -165,7 +165,13 @@ const getProbes = (components) => {
   }
 
   function hideHintProbe() {
-    $('.probe-hint-container').addClass('probe-hint--used');
+    const { init } = components;
+    const { mobile } = init;
+    if (mobile) {
+      $('.probe-hint--mobile').hide();
+    } else {
+      $('.probe-hint-container').addClass('probe-hint--used');
+    }
   }
 
   return {

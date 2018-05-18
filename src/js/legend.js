@@ -12,6 +12,7 @@ const getLegend = (components) => {
   let layers;
   let plans;
 
+
   function initEvents() {
     const { dispatch } = components;
     
@@ -40,7 +41,7 @@ const getLegend = (components) => {
   };
   Lg.openSidebar = openSidebar;
 
-  function updateYear(y) {
+  function drawSidebarContent() {
     const {
       init,
     } = components;
@@ -48,16 +49,13 @@ const getLegend = (components) => {
       server,
     } = init;
 
-    if (y == year) return;
-    year = y;
-
     setCurrentPlans();
 
     $('.legend-contents').empty();
     // get layer data
     $.getJSON(`${server}layers/${year}`, (layersJson) => {
       const { dispatch } = components;
-      
+      const { language } = init;
       layers = layersJson;
 
       _.each(layersJson, (category, categoryName) => {
@@ -65,11 +63,13 @@ const getLegend = (components) => {
           .attr('class', 'legend-category')
           .attr('data-category', 'feature')
           .appendTo('.legend-contents');
-        
 
+        const names = categoryName.toUpperCase().split('/');
+        
+        const title = language === 'en' ? names[0] : names[1];
         $('<div>')
           .attr('class', 'category-title')
-          .html(categoryName.toUpperCase())
+          .html(title)
           .appendTo(cat);
 
         _.each(category, (obj, objName) => { // there's an extra level here
@@ -79,6 +79,7 @@ const getLegend = (components) => {
 
         function addLayerGroup(group, groupName) {
           const { names } = init;
+          // console.log('names (addLayerGroup)', names);
 
           const gr = $('<div>').attr('class', 'legend-group').attr('data-group', groupName).appendTo(cat);
           const groupTitle = $('<div>').attr('class', 'group-title').appendTo(gr);
@@ -119,6 +120,11 @@ const getLegend = (components) => {
     });
   }
 
+  function updateYear(y) {
+    if (y === year) return;
+    year = y;
+  }
+
   function addPlans() {
     const { dispatch } = components;
     const cat = $('<div>')
@@ -129,7 +135,7 @@ const getLegend = (components) => {
 
     $('<div>')
       .attr('class', 'category-title')
-      .html('PLANS')
+      .html('PLANS/PLANOS')
       .appendTo(cat);
     
 
@@ -195,12 +201,16 @@ const getLegend = (components) => {
   }
 
   function addLayerExisting(feature, key, container, notpresent) {
+    const { init } = components;
+    const { names } = init;
+
     const name = feature.id ? key : feature;
+
     const l = $('<div>')
       .attr('class', 'layer-existing')
       .attr('data-name', name)
       .data('name', name)
-      .html(name)
+      .html(names[name.toLowerCase()])
       .appendTo(container)
       .prepend('<i class="icon-binoculars">')
       .click(layerClick);
@@ -268,16 +278,19 @@ const getLegend = (components) => {
   };
 
   Lg.addViews = () => {
-    const { dispatch } = components;
+    const { dispatch, init } = components;
+    const { language } = init;
     $('.legend-category[data-category="views"]').remove();
     const cat = $('<div>')
       .attr('class', 'legend-category')
       .attr('data-category', 'views')
       .prependTo('.legend-contents');
 
+    const title = language === 'en' ? 'VIEWS' : 'VISTAS';
     $('<div>')
       .attr('class', 'category-title')
-      .html('VIEWS').appendTo(cat);
+      .html(title)
+      .appendTo(cat);
 
     const gr = $('<div>')
       .attr('class', 'legend-group')
@@ -339,17 +352,21 @@ const getLegend = (components) => {
     return Lg;
   };
 
-  Lg.initialize = function () {
+  Lg.initialize = () => {
     initEvents();
-
     return Lg;
-  }
+  };
 
-  Lg.setYear = function (newYear) {
+  Lg.setYear = (newYear) => {
     updateYear(newYear);
-
+    drawSidebarContent();
     return Lg;
-  }
+  };
+
+  Lg.updateLanguage = () => {
+    drawSidebarContent();
+    return Lg;
+  };
 
   return Lg;
 };

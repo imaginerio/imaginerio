@@ -12,14 +12,14 @@ const getMap = (components) => {
   let selectedViewshed;
   let selectedViewshedData;
   const viewshedIcon = L.icon({
-    iconUrl: 'img/viewshed.png',
-    iconSize: [33, 37.25],
-    iconAnchor: [16.5, 27.25],
+    iconUrl: 'img/viewshed-new.png',
+    iconSize: [33, 33],
+    iconAnchor: [16.5, 16.5],
   });
   const viewshedActiveIcon = L.icon({
-    iconUrl: 'img/viewshed_active.png',
-    iconSize: [33, 37.25],
-    iconAnchor: [16.5, 27.25],
+    iconUrl: 'img/viewshed-new-active.png',
+    iconSize: [33, 33],
+    iconAnchor: [16.5, 16.5],
   });
   const viewshedStyle = {
     icon: viewshedIcon,
@@ -156,7 +156,8 @@ const getMap = (components) => {
   M.getMap = () => map;
 
   M.setYear = (newYear) => {
-    const { init } = components;
+    console.log('setyear');
+    const { init, translations } = components;
     const {
       tileserver,
       server,
@@ -199,22 +200,25 @@ const getMap = (components) => {
         geometry: { type: 'Point', coordinates: f.geometry.coordinates[0][0] },
       }));
       viewshedPoints = L.geoJSON({ type: 'FeatureCollection', features: points }, {
+
         pointToLayer(pt, latlng) {
           return L.marker(latlng, viewshedStyle);
         },
 
         onEachFeature(feature, layer) {
           layer.on('mouseover', (e) => {
+            const { language } = init;
             feature.properties.cone.addTo(map);
-            mapProbe(e, '<strong>' + feature.properties.description + '</strong><br><em>Click for details</em>');
+            mapProbe(e, `<strong>${feature.properties.description}</strong><br><em>${translations.find(d => d.name === 'click-for-details')[language]}</em>`);
           }).on('mouseout', function onMouseout() {
             $('#map-probe').hide();
             if (map.hasLayer(feature.properties.cone) && selectedViewshed != this) map.removeLayer(feature.properties.cone);
           }).on('click', function onClick() {
+            probes.hideHintProbe();
             Dispatch.call('viewshedclick', this, this.feature.properties.id);
-          })
-        }
-      })
+          });
+        },
+      });
       if (M.hasViews) viewshedPoints.addTo(map);
       if (selectedViewshedData) { // was set after year change & before json load
         M.zoomToView(selectedViewshedData);
@@ -376,8 +380,13 @@ const getMap = (components) => {
   }
 
   function probe(e) {
+    
+    
     const { init, dispatch, probes } = components;
     const { server } = init;
+
+    init.mapProbing = true;
+
     if ($('main').hasClass('searching-area')) return;
     probes.hideHintProbe();
     const zoom = map.getZoom();
@@ -401,8 +410,10 @@ const getMap = (components) => {
     }
     const off = layers[0] === 'all' ? '' : layers.join(',');
     const probeUrl = `${server}probe/${year}/${probeZoom}/${e.latlng.lng},${e.latlng.lat}/${off}`;
+    
     $.getJSON(probeUrl, function probeJSON(json) {
       dispatch.call('showresults', this, _.indexBy(json, 'name'), true);
+      init.mapProbing = false;
     });
   }
 

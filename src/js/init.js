@@ -8,6 +8,7 @@ const getInit = (components) => {
     Search,
     dispatch,
     register,
+    translations,
   } = components;
   const Dispatch = dispatch;
 
@@ -24,7 +25,11 @@ const getInit = (components) => {
   let year;
   const minYear = 1830;
   let names;
+  let language;
   let currentEra = eras[0];
+  
+  Init.mapProbing = false;
+  
   
   const params = {};
   
@@ -48,30 +53,47 @@ const getInit = (components) => {
     rasterserver = 'http://imaginerio-dev.axismaps.io:3001/raster/';
   }
 
-  $.getJSON(`${server}timeline`, (yearsData) => {
-    console.log('timeline', `${server}timeline`);
-    years = yearsData;
-    // while (years[0] < eras[0].dates[0]) years.shift();  // force min year and first era to match
-    $.getJSON(`${server}names/en`, (namesData) => {
-      Init.names = namesData;
-      $.getJSON(`${server}plans/`, (plansList) => {
-        // parse years
-        Init.plans = plansList.map((d) => {
-          const planCopy = Object.assign({}, d);
-          planCopy.years = d.planyear.split('-').map(dd => parseInt(dd, 10));
-          return planCopy;
-        });
+  function loadTimeline(callback) {
+    $.getJSON(`${server}timeline`, (yearsData) => {
+      years = yearsData;
+      if (callback !== undefined) callback();
+    });
+  }
 
-        initialize();
+  function loadNames(callback) {
+    console.log('language', language);
+    $.getJSON(`${server}names/${language}`, (namesData) => {
+      Init.names = namesData;
+      if (callback !== undefined) callback();
+    });
+  }
+
+  function loadPlans(callback) {
+    $.getJSON(`${server}plans/`, (plansList) => {
+      Init.plans = plansList.map((d) => {
+        const planCopy = Object.assign({}, d);
+        planCopy.years = d.planyear.split('-').map(dd => parseInt(dd, 10));
+        return planCopy;
       });
+      if (callback !== undefined) callback();
+    });
+  }
+
+  checkHash();
+  year = params.year || 1943; // a year that actually has something
+  language = params.language || 'en';
+  
+
+  loadTimeline(() => {
+    loadNames(() => {
+      loadPlans(initialize);
     });
   });
   
-  
   function initialize() {
     eras[eras.length - 1].dates[1] = new Date().getFullYear();
-    checkHash();
-    year = params.year || 1943; // a year that actually has something
+    
+    
     Map.initialize('map').setYear(year);
     Timeline.initialize(eras, 'timeline').setYear(year);
     Filmstrip.initialize();
@@ -109,8 +131,110 @@ const getInit = (components) => {
       Filmstrip.setRaster(params.raster);
     }
   }
-  
+
+  function setLanguageDropdown() {
+    const languageOptions = {
+      en: 'English Version',
+      pr: 'Versão em Português',
+    };
+
+    const dropdownButton = $('.language-dropdown-button');
+    const currentLanguage = $('.language-dropdown-current');
+    const optionsContainer = $('.language-dropdown-content');
+    const otherLanguage = $('.language-dropdown-option');
+
+    const openDropdown = () => {
+      optionsContainer.addClass('language-dropdown-content--on');
+    };
+
+    const closeDropdown = () => {
+      optionsContainer.removeClass('language-dropdown-content--on');
+    };
+
+    let closeDropdownTimer;
+
+    const stopDropdownTimer = () => {
+      if (closeDropdownTimer !== undefined) {
+        clearTimeout(closeDropdownTimer);
+      }
+    };
+
+    const setDropdownOptionVisibility = () => {
+      currentLanguage.text(languageOptions[language]);
+
+      $('.language-dropdown-option').each(function toggleVisibility() {
+        const option = $(this);
+        const optionLanguage = option.attr('data-language');
+        const display = optionLanguage !== language;
+        if (display) {
+          option.removeClass('language-dropdown-option--hidden');
+        } else {
+          option.addClass('language-dropdown-option--hidden');
+        }
+      });
+    };
+
+    dropdownButton
+      .on('mouseover', () => {
+        stopDropdownTimer();
+        openDropdown();
+      })
+      .on('mouseout', () => {
+        stopDropdownTimer();
+        closeDropdownTimer = setTimeout(() => {
+          closeDropdown();
+        }, 3000);
+      });
+
+    optionsContainer
+      .on('mouseover', () => {
+        stopDropdownTimer();
+      })
+      .on('mouseout', () => {
+        stopDropdownTimer();
+        closeDropdown();
+      });
+
+    otherLanguage.on('click', function switchLanguage() {
+      const newLanguage = $(this).attr('data-language');
+      language = newLanguage;
+      Init.language = language;
+      
+      // show/hide dropdown options
+      setDropdownOptionVisibility();
+      updateLanguage();
+      updateUILanguage();
+    });
+
+    setDropdownOptionVisibility();
+  }
+
+  function updateLanguage() {
+    loadNames(() => {
+      Dispatch.call('updatelanguage', this);
+    });
+  }
+
+  function updateUILanguage() {
+    translations
+      .filter(d => d.name !== '' && Object.prototype.hasOwnProperty.call(d, 'selector'))
+      .forEach((d) => {
+        $(d.selector).html(d[language]);
+      });
+    setEraDropdownText();
+  }
+
+  function getEraDropdownItem(e) {
+    return `${e[language]} (${e.dates.map(formatYear).join(' – ')})`;
+  }
+
+  function setEraDropdownText() {
+    eras.forEach(e => $(`.era-dropdown-${e.id}`).text(getEraDropdownItem(e)));
+  }
+
   function init_ui() {
+    setLanguageDropdown();
+    updateUILanguage();
     if (mobile) {
       $('#legend .mobile-header .icon-times').click(() => {
         $('#legend').toggleClass('collapsed');
@@ -145,11 +269,15 @@ const getInit = (components) => {
     });
 
     eras.forEach((e, i) => {
+      // console.log('e', e);
+      // console.log('i', i);
       $('<option>')
         .attr('value', i)
-        .html(e.name + ' (' + e.dates.map(formatYear).join(' – ') + ')')
+        .addClass(`era-dropdown-${e.id}`)
         .appendTo('.era-dropdown select');
     });
+
+    setEraDropdownText();
 
     $('.era-dropdown select').on('change', function change() {
       showEra($(this).val());
@@ -198,17 +326,22 @@ const getInit = (components) => {
 
   function goToStart() {
     $('main').addClass('start');
-
+    // console.log('show dropdown');
+    $('.language-dropdown').removeClass('language-dropdown--off');
+    console.log('language', language);
     $('.title-container h1')
-      .html('imagineRio');
+      .html(translations.find(d => d.name === 'h1')[language]);
 
     $('.go-button')
-      .html('<i class="icon-binoculars"></i> Begin Exploring')
+      .html(`<i class="icon-binoculars"></i> 
+      <span class="explore-map-button-text">
+        ${translations.find(d => d.name === 'explore-map-button-text')[language]}
+      </span>`)
       .removeClass('era')
       .off('click')
       .on('click', goButtonClick);
 
-    window.location.hash = '';
+    window.location.hash = language;
   }
 
   function goToMap() {
@@ -222,15 +355,16 @@ const getInit = (components) => {
     eras.forEach((e) => {
       if (year >= e.dates[0] && year <= e.dates[1]) {
         currentEra = e;
-        $('#eras-button div.desktop span').html(e.name);
+        $('#eras-button .back-to-page-text').html(e[language]);
       }
     });
   }
 
   function showEra(i, noTransition) {
     $('main').removeClass('start');
-    $('#eras-button div.desktop span').html('start');
+    $('#eras-button .back-to-page-text').html(translations.find(d => d.name === 'start')[language]);
     let e = eras[i];
+    console.log('e[language]', e[language]);
     Filmstrip.setYear(e.dates[0], e.dates[1]);
     Map.setYear(e.dates[0]);
 
@@ -242,7 +376,7 @@ const getInit = (components) => {
         .css('margin-left', '0%');
       $('.era-years').html(e.dates.map(formatYear).join(' – '))
         .css('margin-left', '0%');
-      $('#intro h1').html(e.name)
+      $('#intro h1').html(e[language])
         .css('margin-left', '0%');
     } else {
       let dur = 500;
@@ -254,7 +388,7 @@ const getInit = (components) => {
       let newYear = $('<p class="era-years">')
          .html(e.dates.map(formatYear).join(' – '))
          .css('margin-left', startNew);
-      let newTitle = $('<h1>' + e.name + '</h1>')
+      let newTitle = $('<h1>' + e[language] + '</h1>')
         .css('margin-left', startNew);
       if (startNew == '-100%') {
         newDesc.prependTo('.era-description-container')
@@ -300,7 +434,7 @@ const getInit = (components) => {
       }
     }
     
-    $('.go-button').html('Go to Map <i class="icon-right-big"></i>').toggleClass('era', !mobile)
+    $('.go-button').html(`${translations.find(d => d.name === 'go-to-map')[language]} <i class="icon-right-big"></i>`).toggleClass('era', !mobile)
       .off('click')
       .on('click', () => {
         goToEra(e);
@@ -320,7 +454,7 @@ const getInit = (components) => {
   }
   
   function formatYear(y) {
-    if (y < 0) return -y + ' BC';
+    if (y < 0) return - y + ' BC';
     return y;
   }
   
@@ -336,22 +470,32 @@ const getInit = (components) => {
   }
   
   function checkHash() {
+
+    
     const hash = window.location.hash.replace( '#', '' ).replace(/\?.+$/, '').split( '/' );
-    params.year = hash[0] ? parseInt(hash[0], 10) : '';
-    params.zoom = hash[1] ? parseInt(hash[1]) : '';
-    params.center = hash[2] && hash[3] ? [parseFloat(hash[2]), parseFloat(hash[3]) ] : '';
-    params.layers = hash[4] ? hash[4].split( '&' ) : [];
-    params.raster = hash[5] ? hash[5] : '';
+
+    if (hash.length > 1) {
+      console.log('hide dropdown');
+      $('.language-dropdown').addClass('language-dropdown--off');
+    }
+    params.language = hash[0] ? hash[0] : '';
+    params.year = hash[1] ? parseInt(hash[1], 10) : '';
+    params.zoom = hash[2] ? parseInt(hash[2]) : '';
+    params.center = hash[3] && hash[4] ? [parseFloat(hash[3]), parseFloat(hash[4]) ] : '';
+    params.layers = hash[5] ? hash[5].split( '&' ) : [];
+    params.raster = hash[6] ? hash[6] : '';
+    console.log(params);
   }
   
   function updateHash() {
+    // console.log('update hash');
     if ($('main').hasClass('eras')) {
-      window.location.hash = '';
+      window.location.hash = language;
       return;
     }
     let layers = Legend.layers();
     if (!Legend.hasViews) {
-      if (layers[0] == 'all') layers = ['views'];
+      if (layers[0] === 'all') layers = ['views'];
       else layers.push('views');
     }
     layers = layers.join('&');
@@ -359,7 +503,7 @@ const getInit = (components) => {
   
     const mapView = Map.getView();
   
-    window.location.hash = year + "/" + mapView[1] + "/" + mapView[0].lat + "/" + mapView[0].lng + "/" + layers + "/" + raster;
+    window.location.hash = language + "/" + year + "/" + mapView[1] + "/" + mapView[0].lat + "/" + mapView[0].lng + "/" + layers + "/" + raster;
   
     $('.twitter').attr('href', $('.twitter').attr('data-href') + 'text=diverseLevant' + '&url=' + encodeURIComponent(window.location.href));
     $('.fb-share-btn').attr('href', $('.fb-share-btn').attr('data-href') + '&u=' + encodeURIComponent(window.location.href));
@@ -375,7 +519,8 @@ const getInit = (components) => {
     const layers = Legend.layers().sort().join(',');
     const raster = $('#overlay-info').data('p') ? $('#overlay-info').data('p').data.file : 'null';
     const url = server + 'export/en/' + year + '/' + layers + '/' + raster + '/' + Map.getBounds().toBBoxString() + '/';
-
+    console.log('raster', raster);
+    console.log('export url', url);
     document.getElementById('download_iframe').src = url;
     window.setTimeout(() => { $('#export').attr('class', 'icon-download'); }, 2000);
   }
@@ -395,6 +540,7 @@ const getInit = (components) => {
     names,
     thumbnaillUrl,
     setYear,
+    language,
   });
 };
 

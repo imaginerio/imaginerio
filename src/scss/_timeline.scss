@@ -71,10 +71,10 @@
   position: absolute;
   overflow: hidden;
   background: #7ca2ce; /* Old browsers */
-  background: -moz-linear-gradient(left, #92BEB4 0%, $dark-green 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(left, #92BEB4 0%,$dark-green 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to right, #92BEB4 0%,$dark-green 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#92BEB4', endColorstr='$dark-green',GradientType=1 ); /* IE6-9 */
+  background: -moz-linear-gradient(left, $pale-green 0%, $dark-green 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, $pale-green 0%,$dark-green 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, $pale-green 0%,$dark-green 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$pale-green', endColorstr='$dark-green',GradientType=1 ); /* IE6-9 */
 }
 
 .timeline-slider {

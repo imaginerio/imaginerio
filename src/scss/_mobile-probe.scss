@@ -39,10 +39,22 @@
 
   }
 
-  .probe-hint {
+  .probe-hint--mobile {
+    position: absolute;
     left: 30px;
-    right: auto;
-    top: 110px;
+    top: $legend-toggle-mobile-top;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(51, 51, 51, .9);
+    color: white;
+    font-style: italic;
+    border-radius: 5px;
+    border: solid white 1px;
+    box-shadow: 4px 0 4px rgba(0,0,0,.1);
+    padding-left: 14px;
+    padding-right: 14px;
   }
 
   .slider, .button.red {

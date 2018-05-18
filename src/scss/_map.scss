@@ -12,9 +12,9 @@
 }
 
 .geolocate-control > a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 .geolocate-control .icon-spinner, .geolocate-control.locating .icon-direction {

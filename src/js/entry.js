@@ -1,4 +1,5 @@
 import eras from './eras';
+import translations from './translations';
 import config from './config';
 import getDispatch from './events';
 import getInit from './init';
@@ -15,9 +16,16 @@ import getRegister from './register';
 
 require('../scss/index.scss');
 
+eras.forEach((e) => {
+  const text = translations.find(d => d.name === e.dates.join('-'));
+  const { en, pr, name } = text;
+  Object.assign(e, { en, pr, id: name });
+});
+
 const components = {};
 
 components.eras = eras;
+components.translations = translations;
 components.config = config;
 components.dispatch = getDispatch(components);
 components.Map = getMap(components);

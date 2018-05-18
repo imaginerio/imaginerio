@@ -33,11 +33,17 @@ const getSearch = (components) => {
 
   function setSearchExit() {
     $(document).on('click.search', (ee) => {
-      const inSearchBox = $.contains(document.getElementById('search'), ee.target);
+      const { init } = components;
+      if (init.mapProbing) return;
+
+      let inSearchBox = false;
+      const searchBox = $('#search');
+      if (searchBox.length > 0) {
+        inSearchBox = $.contains(searchBox[0], ee.target);
+      }
       const isSearchInput = $(ee.target).hasClass('search-input');
 
       if (!inSearchBox && !isSearchInput) {
-        console.log('CLOSE SEARCH');
         S.clear();
         closeSearch();
       }
@@ -63,7 +69,6 @@ const getSearch = (components) => {
   }
 
   function toggleSearchResults() {
-    console.log('toggle search results');
     const { Legend } = components;
     if ($('#legend').hasClass('collapsed')) {
       Legend.openSidebar();
@@ -161,7 +166,7 @@ const getSearch = (components) => {
     toggleSearchResults();
 
     searchResults = results;
-    console.log('search results', results);
+
     // if there are results
     if (_.size(searchResults) !== 0) {
       resultsContainer
@@ -173,7 +178,6 @@ const getSearch = (components) => {
       if (mobile) $('header').addClass('search');
       _.mapObject(results, (r, k) => _.extend(r, { name: k }));
       const groups = _.groupBy(searchResults, 'layer');
-      console.log('groups', groups);
       // list of layer names, putting image layers first
       const groupsList = [
         ...Object.keys(groups).filter(d => imageLayers.includes(d)),
@@ -184,8 +188,6 @@ const getSearch = (components) => {
       // _.each(groups, (g, gName) => {
       groupsList.forEach((gName) => {
         const g = groups[gName];
-        console.log('g', g);
-        console.log('gName', gName);
         const groupContainer = $('<div>')
           .attr('class', 'results-group')
           .append('<span>' + names[gName.toLowerCase()] || gName + '</span>')

@@ -6,6 +6,7 @@ $hint-probe-height: 36px;
   border-radius: 0px;
   top: 136px;
   background-color: rgba(51, 51, 51, .9);
+  box-shadow: 0 0 8px rgba(0,0,0,.25);
   height: $hint-probe-height;
   align-items: center;
   display: flex;
@@ -14,6 +15,10 @@ $hint-probe-height: 36px;
   font-size: 13px;
   padding-top: 0px;
   padding-bottom: 0px;
+}
+
+.probe-hint-text {
+  font-style: italic;
 }
 
 .overlay .probe-hint-container {
@@ -25,7 +30,8 @@ $hint-probe-height: 36px;
   padding-right: 15px;
   z-index: 699;
   color: white;
-  box-shadow: 0 0 8px rgba(0,0,0,.25);
+  background-color: rgba(0, 0, 0, 0) !important;
+  // box-shadow: 0 0 8px rgba(0,0,0,.25);
 }
 
 .searching-area .probe-hint {
@@ -51,6 +57,10 @@ $hint-probe-height: 36px;
   font-weight: bold;
   cursor: pointer;
 }
+
+.probe-area:hover {
+  color: #333 !important;
+}
 // $probe-area-min-height: $hint-probe-height - 5;
 .probe-hint-container.probe-hint--used {
   border-radius: 5px;
@@ -59,8 +69,7 @@ $hint-probe-height: 36px;
 }
 
 .probe-hint-container.probe-hint--used .probe-area {
-  // height: $probe-area-min-height;
-  box-shadow: 4px 0 4px rgba(0,0,0,.1);
+  // box-shadow: 4px 0 4px rgba(0,0,0,.1);
 }
 
 .probe-hint-container.probe-hint--used .probe-hint {

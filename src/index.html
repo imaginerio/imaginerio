@@ -9,7 +9,7 @@
 
   <link rel="stylesheet" href="css/fontello.css" />
   <link rel="stylesheet" href="css/animation.css" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <!-- <link rel="stylesheet" href="css/styles.css" /> -->
 
   <meta property="og:url" content="https://www.diverselevant.org" />
   <meta property="og:title" content="diverseLevant" />
@@ -20,8 +20,16 @@
 
   <main class='flex-column eras start'>
   <div class="intro-pattern"></div>
+  <div class="language-dropdown-button language-dropdown"><span class="language-dropdown-current"> English Version</span> <i class="icon-down-dir"></i></div>
+    <div class="language-dropdown-content language-dropdown">
+      <div class="language-dropdown-option" data-language="pr">Versão em Português</div>
+      <div class="language-dropdown-option language-dropdown-option--hidden" data-language="en">English Version</div>
+    </div>
   <header>
-    <div id='eras-button'><div class="desktop"><i class='icon-level-up'></i>Back to <span>eras</span></div><i class="icon-left-big mobile"></i></div>
+
+    
+
+    <div id='eras-button'><div class="desktop"><i class='icon-reply'></i><span class="back-to-text">Back to</span> <span class="back-to-page-text">eras</span></div><i class="icon-left-big mobile"></i></div>
     <div id='controls-right'>
       <div class="register-button">
         <i class="icon-user-plus"></i>Register
@@ -36,7 +44,7 @@
         <a>
           <i class='icon-download' id='export' title="Download map image"></i>
         </a>
-        <a href="http://hrc.rice.edu/diverseLevant/home" target="_blank">
+        <a href="http://hrc.rice.edu/imagineRio/home" target="_blank">
           <i class='icon-info-1'></i>
         </a>
       </div>
@@ -65,12 +73,12 @@
       <p class="era-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In fringilla posuere dolor, condimentum tempus purus aliquet nec. Proin vitae condimentum sapien, id scelerisque nunc. Ut ut velit vel tellus mollis ultricies quis vel felis. Quisque volutpat, leo at bibendum pharetra, sapien orci fermentum mauris, nec sodales odio lacus gravida libero. Maecenas in elit sed est vulputate vehicula. Donec tempor elit sapien, ac ullamcorper nulla elementum et. Aenean aliquam tellus ut sapien feugiat, quis luctus sapien auctor. In commodo sem nec ligula iaculis, sit amet viverra sapien finibus. Pellentesque auctor vitae massa a congue.</p>
     </div>
     <div class="intro-buttons">
-      <div class="go-button"><i class="icon-binoculars"></i> Begin Exploring</div>
+      <div class="go-button"><i class="icon-binoculars"></i> <span class="explore-map-button-text">Begin Exploring</span></div>
       <div class="era-dropdown">
         <select>
           <option value="" disabled selected>Jump to era...</option>
         </select>
-        <div class='dropdown-button'><span>Jump to era... </span><i class="icon-sort"></i>
+        <div class='dropdown-button'><span class="era-dropdown-text">Jump to era... </span><i class="icon-sort"></i>
         </div>
       </div>
     </div>
@@ -82,7 +90,10 @@
         <a href="http://hrc.rice.edu/" target="_blank"><img class="logo" src='img/hrc-logo.png'/></a>
         <a href="http://www.axismaps.com/" target="_blank"><img class="logo" src='img/axis-logo.png'/></a>
       </div>
-      This product is for informational purposes and was neither prepared nor is suitable for legal, engineering, or surveying purposes. Represented objects have approximate locations relative to a particular moment of the research project. No warranty is made regarding specific accuracy or completeness. Rice University, the New Levant Initiative, and the diverseLevant research team assume no liability or damages due to errors or omissions.</div>
+      <div class="disclaimer-text">
+        This product is for informational purposes and was neither prepared nor is suitable for legal, engineering, or surveying purposes. Represented objects have approximate locations relative to a particular moment of the research project. No warranty is made regarding specific accuracy or completeness. Rice University and the imagineRio research team assume no liability or damages due to errors or omissions.
+      </div>
+    </div>
   </div>
   <section id="timeline"></section>
   <div class="flex-row right-side">
@@ -90,7 +101,7 @@
       <div class="panel-toggle legend-toggle">
         <i class="icon-menu mobile"></i>
         <i class="icon-search desktop"></i>
-        <span class="desktop">Map Legend</span>
+        <span class="desktop legend-title-text">Map Legend</span>
         <i class="icon-angle-double-right open desktop"></i>
         <i class="icon-angle-double-left close desktop"></i>
       </div>
@@ -151,17 +162,15 @@
   </div>
   <div class="probe-hint-container desktop">
     <div class="probe-hint">
-      <i class="icon-hand-pointer-o"></i>
-      <em>
-        Click the map to explore
-      </em>
+      <!-- <i class="icon-hand-pointer-o"></i> -->
+        <span class="probe-hint-text">Click the map to explore, or</span>
     </div>
     <div class="probe-area">
       <i class="icon-search-area"></i> <span class="probe-area-text">Explore by area </span><i class="icon-times"></i>
     </div>
   </div>
   <div class="probe-hint--mobile mobile">
-    Tap the map to explore
+    <span class="probe-hint-text--mobile">Tap the map to explore...</span>
   </div>
   <div class="probe-area--mobile mobile">
       <i class="icon-search-area"></i>
