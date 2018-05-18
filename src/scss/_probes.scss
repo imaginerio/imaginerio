@@ -128,14 +128,36 @@ $hint-probe-height: 36px;
 }
 
 #fixed-probe .icon-times {
-  position: absolute;
-  top: 5px;
-  right: 5px;
+  // position: absolute;
+  // top: 5px;
+  // right: 5px;
+  // font-size: 100px;
 }
 
 .fixed-probe-title {
   font-weight: bold;
   margin: 5px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fixed-probe-title-right {
+  display: flex;
+  align-items: center;
+}
+
+.fixed-probe-title-right .icon-times {
+  margin-left: 10px;
+}
+
+.fixed-probe-stepper-container {
+  display: flex;
+  margin-left: 10px;
+}
+
+.fixed-probe-stepper-container > i {
+  cursor: pointer;
 }
 
 .fixed-probe-title.stepper {
@@ -143,7 +165,7 @@ $hint-probe-height: 36px;
 }
 
 .fixed-probe-title.stepper i {
-  float: right;
+  // float: right;
   cursor: pointer;
 }
 

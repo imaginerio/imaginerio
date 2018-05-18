@@ -1,4 +1,12 @@
 const getProbes = (components) => {
+  function closeFixedProbe() {
+    const { Map, dispatch } = components;
+    // show probe-hint???
+    $('#fixed-probe').hide();
+    dispatch.call('removehighlight', this);
+    Map.clearSelected();
+  }
+
   function rasterProbe(p) {
     const {
       dispatch,
@@ -14,15 +22,44 @@ const getProbes = (components) => {
     $('#fixed-probe .content').empty();
     $('#fixed-probe').show().removeClass('map-feature');
     // $('.search-results').hide();
-    const title = $('<p>')
+    console.log('p.data.description', p.data.description);
+    const title = $('<div>')
       .attr('class', 'fixed-probe-title')
-      .html(p.data.description)
       .appendTo('#fixed-probe .content');
+
+    // probe descriptive text
+    $('<div>')
+      .attr('class', 'fixed-probe-description')
+      .html(p.data.description)
+      .appendTo(title);
+
+    const rightMenuContainer = $('<div>')
+      .attr('class', 'fixed-probe-title-right')
+      .appendTo(title);
 
     if (p.data.layer === 'viewsheds') {
       const photos = _.filter(Filmstrip.getRasters(), r => r.layer === 'viewsheds');
       if (photos.length) {
-        title.prepend('<i class="icon-angle-left">').prepend('<i class="icon-angle-right">').addClass('stepper');
+        // title.addClass('stepper');
+
+        // probe stepper container
+        
+
+        const stepperContainer = $('<div>')
+          .attr('class', 'fixed-probe-stepper-container stepper')
+          .appendTo(rightMenuContainer);
+
+        stepperContainer
+          .append('<i class="icon-angle-left">')
+          .append('<i class="icon-angle-right">');
+
+        
+
+
+        // stepperContainer
+        //   ;
+
+        // title.prepend('<i class="icon-angle-left">').prepend('<i class="icon-angle-right">').addClass('stepper');
         const i = photos.indexOf(p.data);
         $('i.icon-angle-left', title).click(() => {
           if (i == 0) rasterProbe(photos[photos.length - 1].photo);
@@ -34,6 +71,11 @@ const getProbes = (components) => {
         });
       }
     }
+
+    $('<i class="icon-times">')
+      .on('click', closeFixedProbe)
+      .appendTo(rightMenuContainer);
+
     const dimensions = mobile ? [160, 160] : [400, 300];
     const size = p.getScaled(dimensions);
     let slider;

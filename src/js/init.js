@@ -254,12 +254,12 @@ const getInit = (components) => {
     }
     
   
-    $('#fixed-probe .icon-times').click(function onClick() {
-      // show probe-hint???
-      $('#fixed-probe').hide();
-      Dispatch.call('removehighlight', this);
-      Map.clearSelected();
-    });
+    // $('#fixed-probe .icon-times').click(function onClick() {
+    //   // show probe-hint???
+    //   $('#fixed-probe').hide();
+    //   Dispatch.call('removehighlight', this);
+    //   Map.clearSelected();
+    // });
   
     $('.lightbox').click(function onClick(e) {
       // close on background click
