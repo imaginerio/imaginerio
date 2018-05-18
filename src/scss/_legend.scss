@@ -28,6 +28,12 @@ $legend-width: 320px;
   width: 160px;
 }
 
+.legend-toggle > .icon-search,
+.legend-toggle > .icon-angle-double-right,
+.legend-toggle > .icon-angle-double-left {
+  font-size: $standard-icon-size;
+}
+
 .legend-toggle i.icon-search {
   float: none;
   display: none;

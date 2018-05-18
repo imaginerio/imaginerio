@@ -86,13 +86,19 @@ $hint-probe-height: 36px;
   border: solid $dark-green 1px;
 }
 
+.probe-hint > .icon-hand-pointer-o {
+  font-size: $standard-icon-size;
+}
+
 .probe-area > .icon-times {
   display: none;
   margin-left: 20px;
+  font-size: $standard-icon-size;
 }
 
-.probe-area > .icon-search {
+.probe-area > .icon-search-area {
   margin-right: 5px;
+  font-size: $standard-icon-size;
 }
 
 .searching-area .probe-area > .icon-times {
