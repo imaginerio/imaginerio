@@ -61,22 +61,19 @@ $hint-probe-height: 36px;
 .probe-area:hover {
   color: #333 !important;
 }
-// $probe-area-min-height: $hint-probe-height - 5;
-.probe-hint-container.probe-hint--used {
+
+.probe-hint-container.probe-hint--no-hint {
   border-radius: 5px;
-  // height: $probe-area-min-height;
-  // box-shadow: 0 0 8px rgba(0,0,0,.25);
 }
 
-.probe-hint-container.probe-hint--used .probe-area {
-  // box-shadow: 4px 0 4px rgba(0,0,0,.1);
-}
-
-.probe-hint-container.probe-hint--used .probe-hint {
+// hide hint
+.probe-hint-container.probe-hint--no-hint .probe-hint {
+  
   display: none;
 }
 
-.probe-hint-container.probe-hint--used .probe-area-text {
+// minimize area search
+.probe-hint-container.probe-hint--min-area .probe-area-text {
   display: none;
 }
 

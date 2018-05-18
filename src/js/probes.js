@@ -170,8 +170,12 @@ const getProbes = (components) => {
     if (mobile) {
       $('.probe-hint--mobile').hide();
     } else {
-      $('.probe-hint-container').addClass('probe-hint--used');
+      $('.probe-hint-container').addClass('probe-hint--no-hint');
     }
+  }
+
+  function minimizeAreaSearch() {
+    $('.probe-hint-container').addClass('probe-hint--min-area');
   }
 
   return {
@@ -180,6 +184,7 @@ const getProbes = (components) => {
     mapProbe,
     detailsProbe,
     hideHintProbe,
+    minimizeAreaSearch,
   };
 };
 
