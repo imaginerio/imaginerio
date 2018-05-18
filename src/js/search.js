@@ -112,6 +112,7 @@ const getSearch = (components) => {
     let rectangle;
     
     areaProbeButton.on('click', () => {
+      if ($('main').hasClass('searching-area')) return;
       $('main').addClass('searching-area');
       probes.hideHintProbe();
       rectangle = new L.Draw.Rectangle(leafletMap, {
