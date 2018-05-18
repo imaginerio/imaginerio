@@ -134,6 +134,10 @@ header > a {
   margin-right: 35px;
 }
 
+.register-button:hover {
+  color: black;
+}
+
 .eras #top-right-buttons, .eras #search-button, .eras .register-button {
   display: none !important;
 }
