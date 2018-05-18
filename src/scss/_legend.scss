@@ -21,6 +21,8 @@ $legend-width: 320px;
   top: 20px;
   left: $legend-width;
   transition: left .25s, width .25s;
+  display: flex;
+  justify-content: space-between;
 }
 
 #legend.collapsed .legend-toggle {
