@@ -18,7 +18,9 @@
   border-top-right-radius: 5px;
   transition: y .25s;
   padding-left: 0;
-  box-shadow: 4px -4px 4px rgba(0,0,0,.1)
+  box-shadow: 4px -4px 4px rgba(0,0,0,.1);
+  display: flex;
+  align-items: middle;
 }
 
 .filmstrip-toggle > i {
