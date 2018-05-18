@@ -30,28 +30,12 @@ const getMap = (components) => {
   };
   let highlightLayerBottom;
   let highlightLayerTop;
-  const highlightBottomStyle = {
-    weight: 8,
-    color: '#A63755',
-    opacity: 0.5,
-  };
-  const highlightTopStyle = {
-    weight: 2,
-    color: '#1a1a1a',
-    opacity: 1,
-  };
-  const highlightMarkerBottomStyle = {
-    color: '#A63755',
-    weight: 3,
-    fill: false,
-    radius: 3,
-  };
-  const highlightMarkerTopStyle = {
-    color: '#1a1a1a',
-    weight: 1,
-    fill: false,
-    radius: 3,
-  };
+
+  let highlightBottomStyle;
+  let highlightTopStyle;
+  let highlightMarkerBottomStyle;
+  let highlightMarkerTopStyle;
+
   let layers = ['all']; // either 'all' or a list of DISABLED layers
 
   const aerialLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
@@ -64,7 +48,30 @@ const getMap = (components) => {
 
   M.initialize = (container) => {
     const { init, dispatch } = components;
-    const { tileserver } = init;
+    const { tileserver, darkBlue } = init;
+
+    highlightBottomStyle = {
+      weight: 8,
+      color: darkBlue,
+      opacity: 0.5,
+    };
+    highlightTopStyle = {
+      weight: 2,
+      color: '#1a1a1a',
+      opacity: 1,
+    };
+    highlightMarkerBottomStyle = {
+      color: darkBlue,
+      weight: 3,
+      fill: false,
+      radius: 3,
+    };
+    highlightMarkerTopStyle = {
+      color: '#1a1a1a',
+      weight: 1,
+      fill: false,
+      radius: 3,
+    };
     
     function showLocation(latlng) {
       if (locationMarker && map.hasLayer(locationMarker)) map.removeLayer(locationMarker);
@@ -117,6 +124,7 @@ const getMap = (components) => {
       },
 
       onAdd(innerMap) {
+        // geolocate control
         const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control geolocate-control');
         div.innerHTML = '<a><i class="icon-direction"></i><i class="icon-spinner animate-spin"></i></a>';
         div.onclick = function onClick(e) {
@@ -130,20 +138,18 @@ const getMap = (components) => {
 
     map.addControl(new LocationControl());
 
-   // L.marker([29.717, -95.402]).addTo(map);
-
     $('.memory-icon').appendTo('#' + container);
     $('.memory-icon .cancel').click(function () {
       dispatch.call('cancelmemory', this);
     });
     $('.memory-icon .ok').click(function click() {
-      let pos = $('.memory-icon .icon').offset();
+      const pos = $('.memory-icon .icon').offset();
       pos.left += 13;
       pos.top += 42;
-      let containerPos = $('#' + container).offset();
+      const containerPos = $('#' + container).offset();
       pos.left -= containerPos.left;
       pos.top -= containerPos.top;
-      let ll = map.containerPointToLatLng([pos.left, pos.top]);
+      const ll = map.containerPointToLatLng([pos.left, pos.top]);
       dispatch.call('showaddmemory', this, ll.lat, ll.lng);
     });
     return M;
@@ -152,7 +158,7 @@ const getMap = (components) => {
   M.getMap = () => map;
 
   M.setYear = (newYear) => {
-    console.log('setyear');
+
     const { init, translations } = components;
     const {
       tileserver,
@@ -177,7 +183,7 @@ const getMap = (components) => {
       const { probes, dispatch } = components;
       const Dispatch = dispatch;
       const { mapProbe } = probes;
-      // console.log('json', json);
+
       if (!json.features.length) return;
       const points = _.map(json.features, f => ({
         type: 'Feature',
@@ -235,13 +241,14 @@ const getMap = (components) => {
       if (list.indexOf(l) == -1) skip = false;
     });
     if (skip) return M;
-    console.log('list', list);
+
     layers = list;
     tileLayer.setUrl(`${tileserver}${year}/${layers.join(',')}/{z}/{x}/{y}.png`);
     return M;
   };
 
-  M.highlightFeature = function (geojson) {
+  // highlight legend features
+  M.highlightFeature = function highlightFeature(geojson) {
     M.removeHighlight();
     highlightLayerBottom = L.geoJson(geojson, {
       style: () => highlightBottomStyle,
@@ -286,6 +293,7 @@ const getMap = (components) => {
     return M;
   }
 
+  // draw search feature
   M.drawFeature = (name) => {
     const { init } = components;
     const { server } = init;
@@ -298,7 +306,7 @@ const getMap = (components) => {
   M.drawPlanFeature = (name) => {
     const { init } = components;
     const { server } = init;
-    console.log('plan path', `${server}plan/${encodeURI(name)}`);
+
     $.getJSON(`${server}plan/${encodeURI(name)}`, (json) => {
       const { features } = json;
       if (features.length > 0) {
@@ -310,7 +318,7 @@ const getMap = (components) => {
   M.drawLoadedFeature = (geojson) => {
     highlightLayerBottom = L.geoJson(geojson, {
       style: () => highlightBottomStyle,
-      pointToLayer: (pt, latlng) => L.circleMarker(latlng, highlightMarkerBottomStyle)
+      pointToLayer: (pt, latlng) => L.circleMarker(latlng, highlightMarkerBottomStyle),
     }).addTo(map);
     highlightLayerTop = L.geoJson(geojson, {
       style: () => highlightTopStyle,
@@ -376,8 +384,6 @@ const getMap = (components) => {
   }
 
   function probe(e) {
-    
-    
     const { init, dispatch, probes } = components;
     const { server } = init;
 

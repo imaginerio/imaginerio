@@ -68,6 +68,7 @@ const getDispatch = (components) => {
 
   Dispatch.on('highlightfeature', (json) => {
     const { Map } = components;
+    console.log('highlightfeature');
 
     Map.highlightFeature(json);
   });

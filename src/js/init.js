@@ -27,6 +27,7 @@ const getInit = (components) => {
   let names;
   let language;
   let currentEra = eras[0];
+  const darkBlue = 'rgb(1, 34, 95)';
   
   Init.mapProbing = false;
   
@@ -541,6 +542,7 @@ const getInit = (components) => {
     thumbnaillUrl,
     setYear,
     language,
+    darkBlue,
   });
 };
 

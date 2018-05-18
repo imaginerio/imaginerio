@@ -83,7 +83,7 @@ const getSearch = (components) => {
     const { mobile } = init;
     const leafletMap = Map.getMap();
     const drawnShape = new L.FeatureGroup().addTo(leafletMap);
-    const searchColor = 'rgb(1, 34, 95)';
+    const { darkBlue } = init;
     const stopSearching = () => {
       $('main').removeClass('searching-area');
     };
@@ -115,8 +115,8 @@ const getSearch = (components) => {
           featureGroup: drawnShape,
         },
         shapeOptions: {
-          color: searchColor,
-          fillColor: searchColor,
+          color: darkBlue,
+          fillColor: darkBlue,
           className: 'search-rectangle',
         },
       });
