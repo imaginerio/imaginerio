@@ -172,7 +172,6 @@ function updateYear(y) {
   if (year == y) return false;
   year = y;
 
-  loadBase();
   loadTiles();
 }
 
@@ -196,19 +195,6 @@ function mapLoading(show) {
 }
 
 /* Tile functions */
-
-function loadBase() {
-  if (leafletMap.hasLayer(base)) leafletMap.removeLayer(base);
-
-  if (year == maxYear) {
-    base = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-      attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-    }).addTo(leafletMap);
-  } else {
-    base = L.tileLayer(tileserver + year + '/base/{z}/{x}/{y}.png').addTo(leafletMap);
-  }
-}
-
 function loadTiles() {
   mapLoading(true);
   if (tiles[year]) {
