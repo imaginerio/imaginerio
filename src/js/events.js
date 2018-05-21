@@ -151,10 +151,13 @@ const getDispatch = (components) => {
     const { Map, init, probes } = components;
     const { mobile, server } = init;
     const { detailsProbe } = probes;
-    Map.drawFeature(data.name);
-    if (mobile) $('#search .icon-left-big').click();
+    console.log('drawfeature data', data);
+    
     // move this into Map module
     $.getJSON(server + 'details/' + data.id[0], (response) => {
+      Map.drawFeature(data.name, response);
+    if (mobile) $('#search .icon-left-big').click();
+      console.log('details', response);
       let content = '';
       if (response.length) {
         if (response[0].creator) content += '<p>Creator: <span>' + response[0].creator + '</span></p>';

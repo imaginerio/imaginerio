@@ -17,14 +17,14 @@ const getProbes = (components) => {
     } = components;
     const { mobile } = init;
     const Dispatch = dispatch;
+
+    const description = Object.prototype.hasOwnProperty.call(p.data, 'description') ? p.data.description : p.data.name;
+
     Dispatch.call('removeall', this);
 
     $('#fixed-probe .content').empty();
     $('#fixed-probe').show().removeClass('map-feature');
-    // $('.search-results').hide();
-    console.log(p);
-    console.log('p.data.description', p.data.description);
-    const description = Object.prototype.hasOwnProperty.call(p.data, 'description') ? p.data.description : p.data.name;
+
     const title = $('<div>')
       .attr('class', 'fixed-probe-title')
       .appendTo('#fixed-probe .content');
@@ -42,11 +42,6 @@ const getProbes = (components) => {
     if (p.data.layer === 'viewsheds') {
       const photos = _.filter(Filmstrip.getRasters(), r => r.layer === 'viewsheds');
       if (photos.length) {
-        // title.addClass('stepper');
-
-        // probe stepper container
-        
-
         const stepperContainer = $('<div>')
           .attr('class', 'fixed-probe-stepper-container stepper')
           .appendTo(rightMenuContainer);
@@ -55,13 +50,6 @@ const getProbes = (components) => {
           .append('<i class="icon-angle-left">')
           .append('<i class="icon-angle-right">');
 
-        
-
-
-        // stepperContainer
-        //   ;
-
-        // title.prepend('<i class="icon-angle-left">').prepend('<i class="icon-angle-right">').addClass('stepper');
         const i = photos.indexOf(p.data);
         $('i.icon-angle-left', title).click(() => {
           if (i == 0) rasterProbe(photos[photos.length - 1].photo);
@@ -171,6 +159,8 @@ const getProbes = (components) => {
   }
 
   function mapProbe(event, content) {
+    console.log('event', event);
+    console.log('content', content);
     const probe = $('#map-probe').show();
     $('#map-probe .content').empty().html(content);
     let x = event.originalEvent.pageX;

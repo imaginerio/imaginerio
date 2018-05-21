@@ -242,8 +242,7 @@ const getSearch = (components) => {
 
     data.photo = Photo(data, thumbnaillUrl);
     data.overlay = Overlay(data);
-    // console.log('photo', photo.data.overlay.layer());
-    // console.log('data', data);
+
     row.addClass('search-result--thumbnail');
     const thumb = data.photo.getImage([100])
       .attr('class', 'search-thumbnail')

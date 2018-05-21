@@ -249,6 +249,7 @@ const getMap = (components) => {
 
   // highlight legend features
   M.highlightFeature = function highlightFeature(geojson) {
+    console.log('highlight');
     M.removeHighlight();
     highlightLayerBottom = L.geoJson(geojson, {
       style: () => highlightBottomStyle,
@@ -297,6 +298,7 @@ const getMap = (components) => {
   M.drawFeature = (name) => {
     const { init } = components;
     const { server } = init;
+    console.log('name', name);
     M.removeHighlight();
     $.getJSON(`${server}draw/${year}/${encodeURIComponent(name)}`, (json) => {
       M.drawLoadedFeature(json);
@@ -316,15 +318,23 @@ const getMap = (components) => {
   };
 
   M.drawLoadedFeature = (geojson) => {
+    const { probes } = components;
+    const { mapProbe } = probes;
+    console.log('geojson', geojson);
+    console.log('bounds', L.geoJson(geojson).getBounds());
     highlightLayerBottom = L.geoJson(geojson, {
       style: () => highlightBottomStyle,
       pointToLayer: (pt, latlng) => L.circleMarker(latlng, highlightMarkerBottomStyle),
     }).addTo(map);
+    
+    // test page position, decide on coordinates to use based on this
     highlightLayerTop = L.geoJson(geojson, {
       style: () => highlightTopStyle,
       pointToLayer: (pt, latlng) => L.circleMarker(latlng, highlightMarkerTopStyle),
     }).addTo(map);
     map.fitBounds(highlightLayerBottom.getBounds());
+    const probeCoords = map.latLngToLayerPoint(highlightLayerBottom.getBounds()._northEast);
+    const probeContent = geojson.features[0].properties.name;
   };
 
   M.clearSelected = () => {
