@@ -22,7 +22,9 @@ const getProbes = (components) => {
     $('#fixed-probe .content').empty();
     $('#fixed-probe').show().removeClass('map-feature');
     // $('.search-results').hide();
+    console.log(p);
     console.log('p.data.description', p.data.description);
+    const description = Object.prototype.hasOwnProperty.call(p.data, 'description') ? p.data.description : p.data.name;
     const title = $('<div>')
       .attr('class', 'fixed-probe-title')
       .appendTo('#fixed-probe .content');
@@ -30,7 +32,7 @@ const getProbes = (components) => {
     // probe descriptive text
     $('<div>')
       .attr('class', 'fixed-probe-description')
-      .html(p.data.description)
+      .html(description)
       .appendTo(title);
 
     const rightMenuContainer = $('<div>')
