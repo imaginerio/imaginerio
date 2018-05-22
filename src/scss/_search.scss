@@ -21,7 +21,8 @@
   font-size: $standard-icon-size;
 }
 
-#legend.search .search-input-container {
+#legend.search .search-input-container,
+#legend.enter-search .search-input-container  {
   display: flex !important;
 }
 
@@ -142,7 +143,8 @@
   display: none;
 }
 
-#legend.search #search {
+#legend.search #search,
+#legend.enter-search #search {
   display: block;
 }
 
@@ -157,7 +159,8 @@
   font-size: 15px;
 }
 
-#legend.search .search-button-container {
+#legend.search .search-button-container,
+#legend.enter-search .search-button-container {
   display: none;
 }
 

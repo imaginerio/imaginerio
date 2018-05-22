@@ -22,6 +22,7 @@ const getSearch = (components) => {
 
   function closeSearch() {
     $('#legend').removeClass('search');
+    $('#legend').removeClass('enter-search');
     $(document).off('click.search');
   }
 
@@ -53,7 +54,8 @@ const getSearch = (components) => {
   function initEvents() {
     $('#search-button').click((e) => {
       e.stopPropagation();
-      $('#legend').addClass('search');
+      // $('#legend').addClass('search');
+      $('#legend').addClass('enter-search');
       $('.search-input').focus();
       setSearchExit();
     });
