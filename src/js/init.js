@@ -100,7 +100,7 @@ const getInit = (components) => {
     Filmstrip.initialize();
     register.initialize();
     Legend.initialize().setYear(year);
-    // Search.initialize('search').setYear(year);
+    Search.initialize('search').setYear(year);
     init_ui();
     updateEra();
 

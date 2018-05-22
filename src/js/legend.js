@@ -260,6 +260,7 @@ const getLegend = (components) => {
   }
 
   Lg.addSearch = () => {
+    console.log('legend add search');
     const { Search } = components;
     // clear search
     $('.legend-category[data-category="search"]').remove();
@@ -317,7 +318,7 @@ const getLegend = (components) => {
     addSwatch({ shape: 'viewshed2.png' })
       .appendTo(groupTitle);
     $('img', groupTitle).addClass('viewshed-icon');
-    Lg.addSearch();
+    // Lg.addSearch();
   };
 
   Lg.layers = function lgLayers(list) {

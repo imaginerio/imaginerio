@@ -171,6 +171,7 @@ const getSearch = (components) => {
       mobile,
       names,
     } = init;
+    console.log('results', results);
     toggleSearchResults();
 
     searchResults = results;
@@ -336,6 +337,7 @@ const getSearch = (components) => {
   }
 
   S.initialize = function initialize(containerId) {
+    console.log('containerid', containerId);
     container = $(`#${containerId}`);
     searchInput = $('.search-input');
 

@@ -159,8 +159,8 @@ const getProbes = (components) => {
   }
 
   function mapProbe(event, content) {
-    // console.log('event', event);
-    // console.log('content', content);
+    console.log('event', event);
+    console.log('content', content);
     const probe = $('#map-probe').show();
     $('#map-probe .content').empty().html(content);
     let x;
