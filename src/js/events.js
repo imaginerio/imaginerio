@@ -68,14 +68,12 @@ const getDispatch = (components) => {
 
   Dispatch.on('highlightfeature', (json) => {
     const { Map } = components;
-    console.log('highlightfeature');
 
     Map.highlightFeature(json);
   });
 
   Dispatch.on('removehighlight', () => {
     const { Map } = components;
-
     Map.removeHighlight();
     $('.layer-existing.highlighted, .layer-plans.highlighted').removeClass('highlighted');
     $('.layer-plans').data('selected-plan', null);
@@ -91,7 +89,7 @@ const getDispatch = (components) => {
     const { rasterProbe } = probes;
     
     $('main').addClass('overlay');
-    console.log('p', p);
+
     Map.addOverlay(p.data.overlay);
     rasterProbe(p);
     $('#overlay-info').data('p', p).addClass('overlay-info--visible');
@@ -151,13 +149,24 @@ const getDispatch = (components) => {
     const { Map, init, probes } = components;
     const { mobile, server } = init;
     const { detailsProbe } = probes;
-    console.log('drawfeature data', data);
     
     // move this into Map module
     $.getJSON(server + 'details/' + data.id[0], (response) => {
-      Map.drawFeature(data.name, response);
-    if (mobile) $('#search .icon-left-big').click();
-      console.log('details', response);
+      // name--data.name
+      // layer type--data.layer (but use layers list to find correct name/translation)
+      // plan name / layer name / feature name...?
+      let probeContent = `
+        <div class="map-probe-row"><b>${data.name}</b></div>
+      `;
+      if (response[0].creator !== undefined && response[0].creator !== '') {
+        probeContent += `<div class="map-probe-row">Creator: ${response[0].creator}</div>`;
+      }
+      if (response[0].year !== undefined && response[0].year !== '') {
+        probeContent += `<div class="map-probe-row">Mapped: ${response[0].year}</div>`;
+      }
+      Map.drawFeature(data.name, probeContent);
+      if (mobile) $('#search .icon-left-big').click();
+
       let content = '';
       if (response.length) {
         if (response[0].creator) content += '<p>Creator: <span>' + response[0].creator + '</span></p>';

@@ -1,3 +1,5 @@
+import { SSL_OP_CRYPTOPRO_TLSEXT_BUG } from "constants";
+
 // map
 const getMap = (components) => {
   
@@ -47,7 +49,7 @@ const getMap = (components) => {
   const locationBounds = L.latLngBounds([[-23.10243406, -44.04944719 ], [-22.63003187, -42.65988214]]);
 
   M.initialize = (container) => {
-    const { init, dispatch } = components;
+    const { init, dispatch, probes } = components;
     const { tileserver, darkBlue } = init;
 
     highlightBottomStyle = {
@@ -99,6 +101,9 @@ const getMap = (components) => {
     })
       .setView([-22.9046, -43.1919], 16)
       .on('click', probe)
+      .on('movestart', () => {
+        probes.hideMapProbe();
+      })
       .on('moveend zoomend', () => {
         dispatch.call('statechange', this);
       })
@@ -264,7 +269,10 @@ const getMap = (components) => {
     return M;
   };
 
-  M.removeHighlight = function () {
+  M.removeHighlight = () => {
+    const { probes } = components;
+    probes.hideMapProbe();
+
     if (highlightLayerBottom && map.hasLayer(highlightLayerBottom)) map.removeLayer(highlightLayerBottom).removeLayer(highlightLayerTop);
     return M;
   };
@@ -295,13 +303,13 @@ const getMap = (components) => {
   }
 
   // draw search feature
-  M.drawFeature = (name) => {
+  M.drawFeature = (name, probeContent) => {
     const { init } = components;
     const { server } = init;
-    console.log('name', name);
+    console.log('name', name, probeContent);
     M.removeHighlight();
     $.getJSON(`${server}draw/${year}/${encodeURIComponent(name)}`, (json) => {
-      M.drawLoadedFeature(json);
+      M.drawLoadedFeature(json, probeContent);
     });
   };
 
@@ -317,24 +325,46 @@ const getMap = (components) => {
     });
   };
 
-  M.drawLoadedFeature = (geojson) => {
-    const { probes } = components;
+  M.drawLoadedFeature = (geojson, probeContent) => {
+    const { probes, init } = components;
     const { mapProbe } = probes;
-    console.log('geojson', geojson);
-    console.log('bounds', L.geoJson(geojson).getBounds());
+    const { mobile } = init;
+    // console.log('geojson', geojson);
+
     highlightLayerBottom = L.geoJson(geojson, {
       style: () => highlightBottomStyle,
       pointToLayer: (pt, latlng) => L.circleMarker(latlng, highlightMarkerBottomStyle),
     }).addTo(map);
-    
+
+
     // test page position, decide on coordinates to use based on this
     highlightLayerTop = L.geoJson(geojson, {
       style: () => highlightTopStyle,
       pointToLayer: (pt, latlng) => L.circleMarker(latlng, highlightMarkerTopStyle),
     }).addTo(map);
+    if (!mobile) {
+      map.once('moveend zoomend', () => {
+        const bounds = L.geoJson(geojson).getBounds();
+        const NEPoint = map.latLngToContainerPoint(bounds._northEast);
+        const SWPoint = map.latLngToContainerPoint(bounds._southWest);
+  
+        const mapContainerPosition = $('#map').position();
+  
+  
+        const x = ((NEPoint.x + mapContainerPosition.left) / window.innerWidth) > 0.75 ?
+          ((NEPoint.x + SWPoint.x) / 2) + mapContainerPosition.left :
+          NEPoint.x + mapContainerPosition.left;
+  
+        const y = ((SWPoint.y + mapContainerPosition.top) / window.innerHeight) > 0.75 ?
+          ((NEPoint.y + SWPoint.y) / 2) + mapContainerPosition.top :
+          SWPoint.y + mapContainerPosition.top;
+  
+        const probeCoords = { x, y };
+        mapProbe(probeCoords, probeContent);
+      });
+    }
+
     map.fitBounds(highlightLayerBottom.getBounds());
-    const probeCoords = map.latLngToLayerPoint(highlightLayerBottom.getBounds()._northEast);
-    const probeContent = geojson.features[0].properties.name;
   };
 
   M.clearSelected = () => {
@@ -400,6 +430,7 @@ const getMap = (components) => {
     init.mapProbing = true;
 
     if ($('main').hasClass('searching-area')) return;
+    probes.hideMapProbe();
     probes.hideHintProbe();
     const zoom = map.getZoom();
     let probeZoom;

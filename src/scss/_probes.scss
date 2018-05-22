@@ -218,11 +218,15 @@ $hint-probe-height: 36px;
   background-color: rgba(255,255,255,.8);
   border-radius: 5px;
   padding: 10px;
-  max-width: 150px;
+  max-width: 175px;
 }
 
 #map-probe strong {
   color: #333;
+}
+
+.map-probe-row:not(:last-child) {
+  margin-bottom: 5px;
 }
 
 #overlay-info {

@@ -159,16 +159,25 @@ const getProbes = (components) => {
   }
 
   function mapProbe(event, content) {
-    console.log('event', event);
-    console.log('content', content);
+    // console.log('event', event);
+    // console.log('content', content);
     const probe = $('#map-probe').show();
     $('#map-probe .content').empty().html(content);
-    let x = event.originalEvent.pageX;
-    if (x > window.innerWidth / 2) x -= probe.outerWidth() + 10;
-    else x += 10;
-    let y = event.originalEvent.pageY;
-    if (y > window.innerHeight / 2) y -= probe.outerHeight() + 10;
-    else y += 10;
+    let x;
+    let y;
+    if (Object.prototype.hasOwnProperty.call(event, 'originalEvent')) {
+      x = event.originalEvent.pageX;
+      y = event.originalEvent.pageY;
+      if (x > window.innerWidth / 2) x -= probe.outerWidth() + 10;
+      else x += 10;
+      
+      if (y > window.innerHeight / 2) y -= probe.outerHeight() + 10;
+      else y += 10;
+    } else {
+      ({ x, y } = event);
+    }
+
+    
     probe.css({
       top: y + 'px',
       left: x + 'px'
@@ -212,12 +221,18 @@ const getProbes = (components) => {
     $('.probe-hint-container').addClass('probe-hint--min-area');
   }
 
+  function hideMapProbe() {
+    // TEST IF IS VISIBLE FIRST
+    $('#map-probe').hide();
+  }
+
   return {
     rasterProbe,
     filmstripProbe,
     mapProbe,
     detailsProbe,
     hideHintProbe,
+    hideMapProbe,
     minimizeAreaSearch,
   };
 };
