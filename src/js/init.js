@@ -245,7 +245,8 @@ const getInit = (components) => {
           goToStart();
           return;
         }
-        Search.clear();
+        // Search.clear();
+        Search.clearAndClose();
         $('header').removeClass('search');
       });
       $('#filmstrip').addClass('collapsed').insertBefore('#map');

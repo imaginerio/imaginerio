@@ -16,9 +16,10 @@
   display: none !important;
 }
 
-.search-input-container > i {
+.close-search-button {
   margin-right: 15px;
   font-size: $standard-icon-size;
+  cursor: pointer;
 }
 
 #legend.search .search-input-container,

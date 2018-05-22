@@ -9,6 +9,7 @@ $hint-probe-height: 36px;
   box-shadow: 0 0 8px rgba(0,0,0,.25);
   height: $hint-probe-height;
   align-items: center;
+  display:-webkit-flex;
   display: flex;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -31,7 +32,6 @@ $hint-probe-height: 36px;
   z-index: 699;
   color: white;
   background-color: rgba(0, 0, 0, 0) !important;
-  // box-shadow: 0 0 8px rgba(0,0,0,.25);
 }
 
 .searching-area .probe-hint {
@@ -58,9 +58,7 @@ $hint-probe-height: 36px;
   cursor: pointer;
 }
 
-.probe-area:hover {
-  color: #333 !important;
-}
+
 
 .probe-hint-container.probe-hint--no-hint {
   border-radius: 5px;
@@ -68,7 +66,6 @@ $hint-probe-height: 36px;
 
 // hide hint
 .probe-hint-container.probe-hint--no-hint .probe-hint {
-  
   display: none;
 }
 
@@ -82,6 +79,9 @@ $hint-probe-height: 36px;
   background: $dark-green;
   border: solid $dark-green 1px;
 }
+
+
+
 
 .probe-hint > .icon-click-to-explore {
   font-size: $standard-icon-size;
@@ -100,6 +100,10 @@ $hint-probe-height: 36px;
 
 .searching-area .probe-area > .icon-times {
   display: block;
+}
+
+.probe-area:hover {
+  color: #333;
 }
 
 .eras .probe-hint,

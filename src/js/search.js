@@ -20,47 +20,51 @@ const getSearch = (components) => {
     layers = list;
   };
 
+  const clearInput = () => {
+    searchInput.val('');
+  };
+
   function closeSearch() {
+    console.log('close search');
+    clearInput();
     $('#legend').removeClass('search');
     $('#legend').removeClass('enter-search');
     $(document).off('click.search');
   }
 
+  
+
   function closeSearchSidebar() {
+    console.log('close search sidebar');
     const { Legend } = components;
     closeSearch();
     Legend.closeSidebar();
   }
 
+  S.clearAndClose = () => {
+    S.clear();
+    closeSearch();
+  };
+
   function setSearchExit() {
-    $(document).on('click.search', (ee) => {
-      const { init } = components;
-      if (init.mapProbing) return;
-
-      let inSearchBox = false;
-      const searchBox = $('#search');
-      if (searchBox.length > 0) {
-        inSearchBox = $.contains(searchBox[0], ee.target);
-      }
-      const isSearchInput = $(ee.target).hasClass('search-input');
-
-      if (!inSearchBox && !isSearchInput) {
-        S.clear();
-        closeSearch();
-      }
-    });
+    $('.close-search-button')
+      .on('click', () => {
+        S.clearAndClose();
+      });
   }
+
+  const getInputValue = () => searchInput.val();
 
   function initEvents() {
     $('#search-button').click((e) => {
       e.stopPropagation();
       // $('#legend').addClass('search');
       $('#legend').addClass('enter-search');
-      $('.search-input').focus();
+      searchInput.focus();
       setSearchExit();
     });
-    searchInput.on('keyup', function keyup() {
-      const val = $(this).val();
+    searchInput.on('keyup', () => {
+      const val = getInputValue();
       if (val.length > 2) {
         doSearch(val);
       } else {
@@ -113,22 +117,23 @@ const getSearch = (components) => {
     drawnShape.addTo(leafletMap);
     let rectangle;
     
-    areaProbeButton.on('click', () => {
-      if ($('main').hasClass('searching-area')) return;
-      $('main').addClass('searching-area');
-      probes.hideHintProbe();
-      rectangle = new L.Draw.Rectangle(leafletMap, {
-        edit: {
-          featureGroup: drawnShape,
-        },
-        shapeOptions: {
-          color: darkBlue,
-          fillColor: darkBlue,
-          className: 'search-rectangle',
-        },
+    areaProbeButton
+      .on('click', () => {
+        if ($('main').hasClass('searching-area')) return;
+        $('main').addClass('searching-area');
+        probes.hideHintProbe();
+        rectangle = new L.Draw.Rectangle(leafletMap, {
+          edit: {
+            featureGroup: drawnShape,
+          },
+          shapeOptions: {
+            color: darkBlue,
+            fillColor: darkBlue,
+            className: 'search-rectangle',
+          },
+        });
+        rectangle.enable();
       });
-      rectangle.enable();
-    });
 
     $('.probe-area > .icon-times')
       .on('click', (e) => {
@@ -152,10 +157,11 @@ const getSearch = (components) => {
   }
 
 
-  function doSearch(val) {
+  function doSearch(val, changedYear = false) {
     const { init } = components;
     const { server } = init;
-    if (val !== searchVal) {
+    console.log('doSearch', val);
+    if (val !== searchVal || changedYear) {
       searchVal = val;
       // abort if search is already underway
       if (request !== undefined && request.readyState !== 4) request.abort();
@@ -171,7 +177,7 @@ const getSearch = (components) => {
       mobile,
       names,
     } = init;
-    console.log('results', results);
+    // console.log('results', results);
 
     toggleSearchResults();
     $('.no-results-text').remove();
@@ -196,7 +202,7 @@ const getSearch = (components) => {
       ];
       
       resultsContainer.show();
-      // _.each(groups, (g, gName) => {
+
       groupsList.forEach((gName) => {
         const g = groups[gName];
         const groupContainer = $('<div>')
@@ -356,8 +362,14 @@ const getSearch = (components) => {
 
   S.setYear = (newYear) => {
     year = newYear;
-    if (resultsContainer === undefined) return;
-    resultsContainer.hide();
+    const val = getInputValue();
+    console.log('val', val);
+    if (val.length > 0) {
+      doSearch(val, true);
+    } else {
+      S.clearAndClose();
+    }
+
     return S;
   };
 
@@ -365,7 +377,6 @@ const getSearch = (components) => {
     const { dispatch } = components;
     dispatch.call('removehighlight', this);
     $('.search-result.selected').removeClass('selected');
-    // if (resultsContainer) resultsContainer.hide();
 
     $('.results-group').remove();
     $('.no-results-text').remove();
