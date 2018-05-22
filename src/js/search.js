@@ -172,8 +172,10 @@ const getSearch = (components) => {
       names,
     } = init;
     console.log('results', results);
-    toggleSearchResults();
 
+    toggleSearchResults();
+    $('.no-results-text').remove();
+    $('.results-group').remove();
     searchResults = results;
 
     // if there are results
@@ -192,7 +194,7 @@ const getSearch = (components) => {
         ...Object.keys(groups).filter(d => imageLayers.includes(d)),
         ...Object.keys(groups).filter(d => !imageLayers.includes(d)),
       ];
-      $('.results-group').remove();
+      
       resultsContainer.show();
       // _.each(groups, (g, gName) => {
       groupsList.forEach((gName) => {
@@ -227,7 +229,11 @@ const getSearch = (components) => {
       }
     } else {
       // if there are no results
-      resultsContainer.hide();
+      console.log('no results');
+      $('<div>')
+        .attr('class', 'no-results-text')
+        .text('No results found')
+        .appendTo(resultsContainer);
       dispatch.call('removehighlight', this);
     }
   };
