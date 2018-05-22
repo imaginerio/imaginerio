@@ -365,7 +365,10 @@ const getSearch = (components) => {
     const { dispatch } = components;
     dispatch.call('removehighlight', this);
     $('.search-result.selected').removeClass('selected');
-    if (resultsContainer) resultsContainer.hide();
+    // if (resultsContainer) resultsContainer.hide();
+
+    $('.results-group').remove();
+    $('.no-results-text').remove();
   };
 
   return S;
