@@ -44,7 +44,7 @@ $hint-probe-height: 36px;
 
 .probe-area {
   padding-left: 15px;
-  padding-right: 15px;
+  padding-right: 6px;
   padding-top: 0px;
   padding-bottom: 0px;
   background: white;
@@ -104,6 +104,14 @@ $hint-probe-height: 36px;
 
 .probe-area:hover {
   color: #333;
+}
+
+.probe-area-bug-fix {
+  color: white;
+}
+
+.searching-area .probe-area-bug-fix {
+  color: $dark-green;
 }
 
 .eras .probe-hint,
