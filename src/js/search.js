@@ -21,11 +21,11 @@ const getSearch = (components) => {
   };
 
   const clearInput = () => {
+    searchVal = '';
     searchInput.val('');
   };
 
   function closeSearch() {
-    console.log('close search');
     clearInput();
     $('#legend').removeClass('search');
     $('#legend').removeClass('click-search');
@@ -34,7 +34,6 @@ const getSearch = (components) => {
   }
 
   function closeSearchSidebar() {
-    console.log('close search sidebar');
     const { Legend } = components;
     closeSearch();
     Legend.closeSidebar();
@@ -163,7 +162,7 @@ const getSearch = (components) => {
   function doSearch(val, changedYear = false) {
     const { init } = components;
     const { server } = init;
-    console.log('doSearch', val, year);
+    console.log('val searchval', val, searchVal);
     if (val !== searchVal || changedYear) {
       searchVal = val;
       // abort if search is already underway
@@ -182,7 +181,8 @@ const getSearch = (components) => {
       mobile,
       names,
     } = init;
-    console.log('show results', results, searchType);
+    console.log('results', results);
+    console.log('searchtype', searchType);
     // S.initialize('search');
     const legend = $('#legend');
     if (searchType === 'click' || searchType === 'area') {
@@ -236,8 +236,6 @@ const getSearch = (components) => {
         ...Object.keys(groups).filter(d => !imageLayers.includes(d)),
       ];
 
-      console.log('results container', resultsContainer);
-
       groupsList.forEach((gName) => {
         const g = groups[gName];
         const groupContainer = $('<div>')
@@ -248,6 +246,7 @@ const getSearch = (components) => {
         _.each(g, (r) => {
           const row = $('<div>')
             .attr('class', 'search-result')
+            // .data(r)
             .appendTo(groupContainer);
 
           if (imageLayers.includes(r.layer)) {
@@ -268,7 +267,13 @@ const getSearch = (components) => {
         ($('.search-result').length === 1 && searchType === 'area')
       ) {
         // if only one result from map click, select it
-        $('.search-result span').first().click();
+        const singleFeature = groups[groupsList[0]][0];
+        dispatch.call('drawfeature', this, singleFeature, false);
+        const row = $('.search-result').first();
+        row.addClass('selected');
+        if (!row.hasClass('expanded')) {
+          expandRow(row, singleFeature.id[0]);
+        }
       }
     } else {
       // if there are no results
@@ -331,7 +336,7 @@ const getSearch = (components) => {
   }
 
   function drawNormalResultsRow({ row, data }) {
-    const { dispatch, init, Legend } = components;
+    const { dispatch, init } = components;
     const { server, mobile } = init;
 
     row
@@ -350,13 +355,13 @@ const getSearch = (components) => {
 
           if (!row.hasClass('expanded')) {
             // expand if isn't expanded
+            // $(this).prev() returns triangle button
             $(this).prev().click();
           }
           if (mobile) {
             closeSearchSidebar();
           }
-          
-
+          console.log('feature data', data);
           dispatch
             .call('drawfeature', this, data);
         } else {
@@ -370,19 +375,25 @@ const getSearch = (components) => {
       if (row.hasClass('expanded')) {
         row.removeClass('expanded');
       } else {
-        row.addClass('expanded');
-        if (!$('.result-details', row).length) {
-          const details = $('<div>')
-            .attr('class', 'result-details')
-            .appendTo(row);
-          $.getJSON(`${server}details/${data.id[0]}`, (response) => {
-            if (!response.length) return;
-            if (response[0].creator) $('<p>Creator: <span>' + response[0].creator + '</span></p>').appendTo(details);
-            if (response[0].year) $('<p>Mapped: <span>' + response[0].year + '</span></p>').appendTo(details);
-          });
-        }
+        expandRow(row, data.id[0]);
       }
     });
+  }
+
+  function expandRow(row, id) {
+    const { init } = components;
+    const { server } = init;
+    row.addClass('expanded');
+    if (!$('.result-details', row).length) {
+      const details = $('<div>')
+        .attr('class', 'result-details')
+        .appendTo(row);
+      $.getJSON(`${server}details/${id}`, (response) => {
+        if (!response.length) return;
+        if (response[0].creator) $('<p>Creator: <span>' + response[0].creator + '</span></p>').appendTo(details);
+        if (response[0].year) $('<p>Mapped: <span>' + response[0].year + '</span></p>').appendTo(details);
+      });
+    }
   }
 
   S.initialize = function initialize() {
@@ -394,7 +405,6 @@ const getSearch = (components) => {
   S.setYear = (newYear) => {
     year = newYear;
     const val = getInputValue();
-    console.log('set year, val', val);
     if (val.length > 0) {
       doSearch(val, true);
     } else {

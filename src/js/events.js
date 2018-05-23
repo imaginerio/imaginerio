@@ -145,10 +145,11 @@ const getDispatch = (components) => {
     Map.drawPlanFeature(plan.planname);
   });
 
-  Dispatch.on('drawfeature', (data) => {
+  Dispatch.on('drawfeature', (data, zoomTo = true) => {
     const { Map, init, probes } = components;
     const { mobile, server } = init;
     const { detailsProbe } = probes;
+    console.log('dispatch drawfeature');
     
     // move this into Map module
     $.getJSON(server + 'details/' + data.id[0], (response) => {
@@ -164,7 +165,7 @@ const getDispatch = (components) => {
       if (response[0].year !== undefined && response[0].year !== '') {
         probeContent += `<div class="map-probe-row">Mapped: ${response[0].year}</div>`;
       }
-      Map.drawFeature(data.name, probeContent);
+      Map.drawFeature(data.name, probeContent, zoomTo);
       if (mobile) $('#search .icon-left-big').click();
 
       let content = '';

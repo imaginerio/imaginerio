@@ -303,13 +303,13 @@ const getMap = (components) => {
   }
 
   // draw search feature
-  M.drawFeature = (name, probeContent) => {
+  M.drawFeature = (name, probeContent, zoomTo) => {
     const { init } = components;
     const { server } = init;
-    console.log('name', name, probeContent);
+
     M.removeHighlight();
     $.getJSON(`${server}draw/${year}/${encodeURIComponent(name)}`, (json) => {
-      M.drawLoadedFeature(json, probeContent);
+      M.drawLoadedFeature(json, probeContent, zoomTo);
     });
   };
 
@@ -325,7 +325,7 @@ const getMap = (components) => {
     });
   };
 
-  M.drawLoadedFeature = (geojson, probeContent) => {
+  M.drawLoadedFeature = (geojson, probeContent, zoomTo) => {
     const { probes, init } = components;
     const { mapProbe } = probes;
     const { mobile } = init;
@@ -342,29 +342,35 @@ const getMap = (components) => {
       style: () => highlightTopStyle,
       pointToLayer: (pt, latlng) => L.circleMarker(latlng, highlightMarkerTopStyle),
     }).addTo(map);
-    if (!mobile) {
-      map.once('moveend zoomend', () => {
-        const bounds = L.geoJson(geojson).getBounds();
-        const NEPoint = map.latLngToContainerPoint(bounds._northEast);
-        const SWPoint = map.latLngToContainerPoint(bounds._southWest);
-  
-        const mapContainerPosition = $('#map').position();
-  
-  
-        const x = ((NEPoint.x + mapContainerPosition.left) / window.innerWidth) > 0.75 ?
-          ((NEPoint.x + SWPoint.x) / 2) + mapContainerPosition.left :
-          NEPoint.x + mapContainerPosition.left;
-  
-        const y = ((SWPoint.y + mapContainerPosition.top) / window.innerHeight) > 0.75 ?
-          ((NEPoint.y + SWPoint.y) / 2) + mapContainerPosition.top :
-          SWPoint.y + mapContainerPosition.top;
-  
-        const probeCoords = { x, y };
-        mapProbe(probeCoords, probeContent);
-      });
-    }
 
-    map.fitBounds(highlightLayerBottom.getBounds());
+    const addProbe = () => {
+      const bounds = L.geoJson(geojson).getBounds();
+      const NEPoint = map.latLngToContainerPoint(bounds._northEast);
+      const SWPoint = map.latLngToContainerPoint(bounds._southWest);
+
+      const mapContainerPosition = $('#map').position();
+
+
+      const x = ((NEPoint.x + mapContainerPosition.left) / window.innerWidth) > 0.75 ?
+        ((NEPoint.x + SWPoint.x) / 2) + mapContainerPosition.left :
+        NEPoint.x + mapContainerPosition.left;
+
+      const y = ((SWPoint.y + mapContainerPosition.top) / window.innerHeight) > 0.75 ?
+        ((NEPoint.y + SWPoint.y) / 2) + mapContainerPosition.top :
+        SWPoint.y + mapContainerPosition.top;
+
+      const probeCoords = { x, y };
+      mapProbe(probeCoords, probeContent);
+    };
+    console.log('zoomto', zoomTo);
+    if (!mobile) {
+      if (zoomTo) {
+        map.once('moveend zoomend', addProbe);
+        map.fitBounds(highlightLayerBottom.getBounds());
+      } else {
+        // addProbe();
+      }
+    }
   };
 
   M.clearSelected = () => {
