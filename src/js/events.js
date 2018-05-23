@@ -193,7 +193,7 @@ const getDispatch = (components) => {
   Dispatch.on('addviews', () => {
     const { Legend } = components;
     Legend.addViews();
-    Legend.addSearch();
+    // Legend.addSearch();
   });
 
   Dispatch.on('showviews', () => {
@@ -211,7 +211,7 @@ const getDispatch = (components) => {
     const { Map, Legend } = components;
     Map.showViews();
     Legend.hasViews = true;
-    Legend.addSearch();
+    // Legend.addSearch();
   });
 
   Dispatch.on('cancelmemory', () => {

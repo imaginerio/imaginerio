@@ -64,6 +64,7 @@ const getSearch = (components) => {
       setSearchExit();
     });
     searchInput.on('keyup', () => {
+      console.log('keyup');
       const val = getInputValue();
       if (val.length > 2) {
         doSearch(val);
@@ -160,13 +161,15 @@ const getSearch = (components) => {
   function doSearch(val, changedYear = false) {
     const { init } = components;
     const { server } = init;
-    console.log('doSearch', val);
+    console.log('doSearch', val, year);
     if (val !== searchVal || changedYear) {
       searchVal = val;
       // abort if search is already underway
       if (request !== undefined && request.readyState !== 4) request.abort();
       request = $.getJSON(`${server}search/${year}/${val}`, S.showResults);
+      // console.log('request');
     } else if (searchVal) {
+      // console.log('already have results');
       S.showResults(searchResults);
     }
   }
@@ -177,13 +180,37 @@ const getSearch = (components) => {
       mobile,
       names,
     } = init;
-    // console.log('results', results);
+    console.log('show results', results);
+    // S.initialize('search');
+
+    $('.legend-category[data-category="search"]').remove();
+
+    const cat = $('<div>')
+      .attr('class', 'legend-category')
+      .attr('data-category', 'search')
+      .prependTo('.legend-contents');
+
+    cat.append(`
+      <div id="search">
+      </div>
+    `);
+
+    resultsContainer = $('<div>')
+      .attr('class', 'search-results')
+      .appendTo($('#search'));
 
     toggleSearchResults();
     $('.no-results-text').remove();
     $('.results-group').remove();
     searchResults = results;
-
+    console.log('container', $('#search'));
+    // if (resultsContainer.length === 0 || !resultsContainer.is(':visible')) {
+    //   console.log('add results container');
+    //   resultsContainer = $('<div>')
+    //     .attr('class', 'search-results')
+    //     .appendTo($('#search'));
+    // }
+    
     // if there are results
     if (_.size(searchResults) !== 0) {
       resultsContainer
@@ -200,8 +227,10 @@ const getSearch = (components) => {
         ...Object.keys(groups).filter(d => imageLayers.includes(d)),
         ...Object.keys(groups).filter(d => !imageLayers.includes(d)),
       ];
+
+      console.log('results container', resultsContainer);
       
-      resultsContainer.show();
+      
 
       groupsList.forEach((gName) => {
         const g = groups[gName];
@@ -235,13 +264,13 @@ const getSearch = (components) => {
       }
     } else {
       // if there are no results
-      console.log('no results');
       $('<div>')
         .attr('class', 'no-results-text')
         .text('No results found')
         .appendTo(resultsContainer);
       dispatch.call('removehighlight', this);
     }
+    resultsContainer.show();
   };
 
   function drawViewshedResultsRow({ row, data }) {
@@ -348,14 +377,8 @@ const getSearch = (components) => {
     });
   }
 
-  S.initialize = function initialize(containerId) {
-    console.log('containerid', containerId);
-    container = $(`#${containerId}`);
+  S.initialize = function initialize() {
     searchInput = $('.search-input');
-
-    resultsContainer = $('<div>')
-      .attr('class', 'search-results')
-      .appendTo(container);
     initEvents();
     return S;
   };
@@ -363,7 +386,7 @@ const getSearch = (components) => {
   S.setYear = (newYear) => {
     year = newYear;
     const val = getInputValue();
-    console.log('val', val);
+    console.log('set year, val', val);
     if (val.length > 0) {
       doSearch(val, true);
     } else {

@@ -259,24 +259,25 @@ const getLegend = (components) => {
     return swatch;
   }
 
-  Lg.addSearch = () => {
-    console.log('legend add search');
-    const { Search } = components;
+  // Lg.addSearch = () => {
+    // console.log('legend add search');
+    // const { Search } = components;
     // clear search
-    $('.legend-category[data-category="search"]').remove();
+    // $('.legend-category[data-category="search"]').remove();
 
-    const cat = $('<div>')
-      .attr('class', 'legend-category')
-      .attr('data-category', 'search')
-      .prependTo('.legend-contents');
+    // const cat = $('<div>')
+    //   .attr('class', 'legend-category')
+    //   .attr('data-category', 'search')
+    //   .prependTo('.legend-contents');
 
-    cat.append(`
-      <div id="search">
-      </div>
-    `);
+    // cat.append(`
+    //   <div id="search">
+    //   </div>
+    // `);
 
-    Search.initialize('search').setYear(year);
-  };
+    // Search.setYear(year);
+    // Search.initialize('search').setYear(year);
+  // };
 
   Lg.addViews = () => {
     const { dispatch, init } = components;
