@@ -368,7 +368,7 @@ const getMap = (components) => {
         map.once('moveend zoomend', addProbe);
         map.fitBounds(highlightLayerBottom.getBounds());
       } else {
-        // addProbe();
+        addProbe();
       }
     }
   };
