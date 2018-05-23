@@ -455,7 +455,7 @@ const getMap = (components) => {
     const probeUrl = `${server}probe/${year}/${probeZoom}/${e.latlng.lng},${e.latlng.lat}/${off}`;
     
     $.getJSON(probeUrl, function probeJSON(json) {
-      dispatch.call('showresults', this, _.indexBy(json, 'name'), true);
+      dispatch.call('showresults', this, _.indexBy(json, 'name'), 'click');
       init.mapProbing = false;
     });
   }

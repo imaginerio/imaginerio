@@ -207,7 +207,7 @@ const getDispatch = (components) => {
   });
 
   Dispatch.on('resetviews', () => {
-    console.log('reset reviews');
+    // console.log('reset reviews');
     const { Map, Legend } = components;
     Map.showViews();
     Legend.hasViews = true;

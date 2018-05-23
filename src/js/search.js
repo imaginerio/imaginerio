@@ -28,11 +28,10 @@ const getSearch = (components) => {
     console.log('close search');
     clearInput();
     $('#legend').removeClass('search');
+    $('#legend').removeClass('click-search');
     $('#legend').removeClass('enter-search');
     $(document).off('click.search');
   }
-
-  
 
   function closeSearchSidebar() {
     console.log('close search sidebar');
@@ -63,8 +62,11 @@ const getSearch = (components) => {
       searchInput.focus();
       setSearchExit();
     });
+
+    $('.search-clear-button')
+      .on('click', S.clearAndClose);
+
     searchInput.on('keyup', () => {
-      console.log('keyup');
       const val = getInputValue();
       if (val.length > 2) {
         doSearch(val);
@@ -153,7 +155,7 @@ const getSearch = (components) => {
     const searchUrl = `${server}box/${year}/${topLeft}/${bottomRight}/${off}`;
 
     $.getJSON(searchUrl, (data) => {
-      S.showResults(_.indexBy(data, 'name'), true);
+      S.showResults(_.indexBy(data, 'name'), 'area');
     });
   }
 
@@ -174,14 +176,20 @@ const getSearch = (components) => {
     }
   }
 
-  S.showResults = function showResults(results, clicked) {
+  S.showResults = function showResults(results, searchType) {
     const { dispatch, init } = components;
     const {
       mobile,
       names,
     } = init;
-    console.log('show results', results);
+    console.log('show results', results, searchType);
     // S.initialize('search');
+    const legend = $('#legend');
+    if (searchType === 'click' || searchType === 'area') {
+      legend.addClass('click-search');
+      legend.removeClass('enter-search');
+      clearInput();
+    }
 
     $('.legend-category[data-category="search"]').remove();
 
@@ -203,7 +211,7 @@ const getSearch = (components) => {
     $('.no-results-text').remove();
     $('.results-group').remove();
     searchResults = results;
-    console.log('container', $('#search'));
+
     // if (resultsContainer.length === 0 || !resultsContainer.is(':visible')) {
     //   console.log('add results container');
     //   resultsContainer = $('<div>')
@@ -229,8 +237,6 @@ const getSearch = (components) => {
       ];
 
       console.log('results container', resultsContainer);
-      
-      
 
       groupsList.forEach((gName) => {
         const g = groups[gName];
@@ -258,7 +264,9 @@ const getSearch = (components) => {
         });
       });
 
-      if ($('.search-result').length === 1 && clicked) {
+      if (($('.search-result').length === 1 && searchType === 'click') ||
+        ($('.search-result').length === 1 && searchType === 'area')
+      ) {
         // if only one result from map click, select it
         $('.search-result span').first().click();
       }
