@@ -258,8 +258,8 @@ $hint-probe-height: 36px;
   cursor: pointer;
   height: $hint-probe-height;
   border: solid white 1px;
-  // box-shadow: 0 0 8px rgba(0,0,0,.25);
-  box-shadow: 4px 0 4px rgba(0,0,0,.1);
+  // box-shadow: 4px 0 4px rgba(0,0,0,.1);
+  box-shadow: 0 0 8px rgba(0,0,0,.25);
 }
 
 .overlay-info--visible {
