@@ -141,7 +141,7 @@ const getProbes = (components) => {
     } else {
       Map.zoomToView(p.data);
       $('#fixed-probe')
-        .css('margin-right', $('#overlay-info').is(':visible') ? '65px' : 0);
+        .css('margin-right', $('#overlay-info').is(':visible') && !mobile ? '65px' : 0);
     }
   }
 
