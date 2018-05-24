@@ -28,6 +28,10 @@
 
   #fixed-probe .blue-button.slider-toggle {
     width: auto;
+    height: 16.8px;
+  }
+  .blue-button.slider-toggle > i::before {
+    margin-top: 1px;
   }
 
   #overlay-info {
