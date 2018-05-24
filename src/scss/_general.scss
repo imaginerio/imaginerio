@@ -41,15 +41,15 @@ main {
 }
 
 .button.red {
-  background-color: #eee;
-  color: $dark-green;
+  background-color: $standard-button-background;
+  color: #d5484a;
   margin-bottom: 0;
 }
 
 .blue-button {
-  background-color: transparent;
-  border: 1px solid $dark-green;
-  color: $dark-green;
+  background-color: $standard-button-background;
+  // border: 1px solid $dark-green;
+  color: #666;
   border-radius: 5px;
   margin: auto;
   text-align: center;

@@ -100,7 +100,7 @@
 
 .search-result > span {
   display: inline-block;
-  background-color: #EEEEEE;
+  background-color: $standard-button-background;
   width: 150px;
   border-radius: 5px;
   padding: 10px 10px 10px 50px;
@@ -112,6 +112,7 @@
 
 .search-result > span:hover {
   background-color: #ccc;
+  color: $standard-button-color-hover;
 }
 
 .search-result.selected > span {

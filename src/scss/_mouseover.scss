@@ -17,10 +17,8 @@ i.icon-ok:hover,
   border-color: #333;
 }
 
-.button.red:hover {
-  background-color: #fceff2;
-}
-
+.button.red:hover,
 .blue-button:hover {
-  background-color: #fceff2;
+  background-color: $standard-button-background-hover;
+  color: $standard-button-color-hover;
 }

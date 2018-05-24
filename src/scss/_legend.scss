@@ -178,7 +178,8 @@ $legend-width: 320px;
 }
 
 .layer-existing:hover {
-  background-color: #ccc;
+  background-color: $standard-button-background-hover;
+  color: $standard-button-color-hover;
 }
 
 .layer-existing.highlighted {
