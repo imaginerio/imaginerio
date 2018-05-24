@@ -507,7 +507,7 @@ const getInit = (components) => {
   
     window.location.hash = language + "/" + year + "/" + mapView[1] + "/" + mapView[0].lat + "/" + mapView[0].lng + "/" + layers + "/" + raster;
   
-    $('.twitter').attr('href', $('.twitter').attr('data-href') + 'text=diverseLevant' + '&url=' + encodeURIComponent(window.location.href));
+    $('.twitter').attr('href', $('.twitter').attr('data-href') + 'text=imagineRio' + '&url=' + encodeURIComponent(window.location.href));
     $('.fb-share-btn').attr('href', $('.fb-share-btn').attr('data-href') + '&u=' + encodeURIComponent(window.location.href));
     // Update Social Media links
     // $( '.twitter-button a' ).attr( 'href', 'https://twitter.com/intent/tweet?url=' + encodeURIComponent( window.location.href ) );
