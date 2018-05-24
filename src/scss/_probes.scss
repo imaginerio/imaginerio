@@ -45,7 +45,8 @@
 
 .probe-area {
   padding-left: 15px;
-  padding-right: 6px;
+  // padding-right: 6px;
+  padding-right: 15px;
   padding-top: 0px;
   padding-bottom: 0px;
   background: white;
@@ -75,13 +76,20 @@
   display: none;
 }
 
-.searching-area .probe-area {
-  color: white;
-  background: $dark-green;
-  border: solid $dark-green 1px;
+.probe-area:hover {
+  color: #333;
 }
 
+.searching-area .probe-area {
+  color: white;
+  background: $dark-button-background;
+  border: solid $dark-button-background 1px;
+}
 
+.searching-area .probe-area:hover {
+  background: $dark-button-background-hover;
+  border: solid $dark-button-background-hover 1px;
+}
 
 
 .probe-hint > .icon-click-to-explore {
@@ -103,9 +111,7 @@
   display: block;
 }
 
-.probe-area:hover {
-  color: #333;
-}
+
 
 .probe-area-bug-fix {
   color: white;

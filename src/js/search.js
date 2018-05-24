@@ -109,7 +109,7 @@ const getSearch = (components) => {
       const bottomRight = getCoordString(searchAreaVal[0][1]);
 
       doAreaSearch(topLeft, bottomRight);
-      probes.minimizeAreaSearch();
+      // probes.minimizeAreaSearch();
       stopSearching();
     });
 

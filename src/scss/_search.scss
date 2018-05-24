@@ -22,7 +22,7 @@
   display: none;
   align-items: center;
   justify-content: center;
-  background: #999999;
+  background: $dark-button-background;
   color: white;
   border-radius: 5px;
   margin-left: 10px;
@@ -39,7 +39,7 @@
 }
 
 .search-clear-button:hover {
-  background: #909090;
+  background: $dark-button-background-hover;
 }
 
 .close-search-button {
