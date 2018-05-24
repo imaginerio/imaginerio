@@ -19,9 +19,13 @@ const getTimeline = (components) => {
     const { formatYear } = init;
     $('.timeline-slider, .timeline-track', timeline).on('mousedown touchstart', (e) => {
       let y = getDataForMouseEvent(e).year;
+      
       $(document)
         .on('mousemove.timeslide touchmove.timeslide', (ee) => {
           const d = getDataForMouseEvent(ee);
+          // update timeline year text.
+          // don't update application state until mouseup
+          updateTimelineYear(d.year);
           $('.timeline-slider', timeline).css('left', d.x + 'px');
           y = d.year;
         })
@@ -115,12 +119,11 @@ const getTimeline = (components) => {
 
     if (e.touches && e.touches[0]) {
       ([{ pageX }] = e.touches);
-      console.log('pagex', pageX);
     } else {
       ({ pageX } = e);
     }
     const t = $('.timeline-track', timeline);
-    let x = pageX - t.offset().left;
+    const x = pageX - t.offset().left;
     const tickContainers = $('.ticks', timeline);
     let era;
     let localX;
@@ -248,14 +251,22 @@ const getTimeline = (components) => {
     dispatch.call('changeyear', this, year);
   }
 
-  function updateYear(y) {
-    const { init, eras } = components;
+  function updateTimelineYear(newYear) {
+    const { init } = components;
     const { formatYear } = init;
+    $('.year', stepper).html(formatYear(newYear));
+  }
+
+  function updateYear(y) {
+    const { eras } = components;
+    // const { formatYear } = init;
+    // console.log('update timeline year');
     year = y;
-    $('.year', stepper).html(formatYear(year));
+    // $('.year', stepper).html(formatYear(year));
+    updateTimelineYear(year);
     $('.timeline-slider', timeline).css('left', getXForYear(y) + 'px');
-    $('.icon-angle-left', stepper).toggleClass('disabled', year == eras[0].dates[0])
-    $('.icon-angle-right', stepper).toggleClass('disabled', year == eras[eras.length-1].dates[1])
+    $('.icon-angle-left', stepper).toggleClass('disabled', year == eras[0].dates[0]);
+    $('.icon-angle-right', stepper).toggleClass('disabled', year == eras[eras.length - 1].dates[1]);
   }
 
   function getEraForYear(y) {
@@ -284,7 +295,7 @@ const getTimeline = (components) => {
       .attr('class', 'year-stepper')
       .appendTo(container);
     stepper.append('<i class="icon-angle-left">')
-      .append('<div class="year">' + year + '</div>')
+      .append(`<div class="year">${year}</div>`)
       .append('<i class="icon-angle-right">');
     const inner = $('<div>').attr('class', 'timeline-inner').appendTo(container);
     timeline = $('<div>')
