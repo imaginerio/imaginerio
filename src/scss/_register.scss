@@ -13,7 +13,9 @@
 
 .register-title {
   font-size: 40px;
-  font-weight: 200;
+  font-weight: 200 !important;
+  font-family: 'Helvetica Neue', Helvetica, coolvetica, Arial, sans-serif;
+  font-style: normal;
   // font-weight: light;
   color: $dark-green;
   text-align: center;
