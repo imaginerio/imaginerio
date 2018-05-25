@@ -180,26 +180,39 @@ const getProbes = (components) => {
     
     probe.css({
       top: y + 'px',
-      left: x + 'px'
+      left: x + 'px',
     });
   }
 
   function detailsProbe(name, content) {
     console.log('details probe', name, content);
-    $('#fixed-probe .content')
+    const fixedProbe = $('#fixed-probe');
+    const fixedProbeContent = $('#fixed-probe .content');
+    fixedProbeContent
       .empty()
       .css('width', 'auto');
 
-    $('#fixed-probe')
+    fixedProbe
       .show()
       .css('margin-right', $('#overlay-info').is(':visible') ? '65px' : 0)
       .addClass('map-feature');
 
     $('.search-results').hide();
 
-    $('<p>')
+    const fixedProbeTitleRow = $('<div>')
+      .attr('class', 'fixed-probe-title-row')
+      .appendTo(fixedProbeContent);
+
+    $('<div>')
       .attr('class', 'fixed-probe-title')
-      .html(name).appendTo('#fixed-probe .content');
+      .html(name).appendTo(fixedProbeTitleRow);
+
+    $('<i>')
+      .attr('class', 'icon-times')
+      .on('click', () => {
+        fixedProbe.hide();
+      })
+      .appendTo(fixedProbeTitleRow);
   
     // does this mean if content !== undefined ??
     if (content) {
