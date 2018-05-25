@@ -118,18 +118,21 @@ const getSearch = (components) => {
 
     drawnShape.addTo(leafletMap);
     let rectangle;
+
+    function stopAreaSearch() {
+      if (rectangle !== undefined) {
+        rectangle.disable();
+        stopSearching();
+      }
+    }
     
     areaProbeButton
       .on('click', () => {
         console.log('searching', $('main').hasClass('searching-area'));
         // if currently searching, end area search
         if ($('main').hasClass('searching-area')) {
-          if (rectangle !== undefined) {
-            console.log('end', rectangle);
-            rectangle.disable();
-            stopSearching();
-            return;
-          }
+          stopAreaSearch();
+          return;
         }
         $('main').addClass('searching-area');
         probes.hideHintProbe();
@@ -146,15 +149,16 @@ const getSearch = (components) => {
         rectangle.enable();
       });
 
+    $(document).keyup((ee) => {
+      if (ee.keyCode === 27) {
+        stopAreaSearch();
+      }
+    });
     // set click event for area search close button
     $('.probe-area > .icon-times')
       .on('click', (e) => {
-        console.log('click', rectangle);
         e.stopPropagation(); // prevent click from triggering new rectangle
-        if (rectangle !== undefined) {
-          rectangle.disable();
-          stopSearching();
-        }
+        stopAreaSearch();
       });
   }
 
