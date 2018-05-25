@@ -79,7 +79,18 @@ const getLegend = (components) => {
 
         function addLayerGroup(group, groupName) {
           const { names } = init;
+          console.log('groupName', groupName);
+          // console.log('names', names);
           // console.log('names (addLayerGroup)', names);
+          if (groupName === 'NeighborhoodsPoly') {
+            console.log('group', group);
+          }
+          if (group.style) {
+            if (group.style.shape === 'dashed_line.svg') {
+              console.log('group2', group);
+            }
+          }
+          
 
           const gr = $('<div>').attr('class', 'legend-group').attr('data-group', groupName).appendTo(cat);
           const groupTitle = $('<div>').attr('class', 'group-title').appendTo(gr);
@@ -91,11 +102,13 @@ const getLegend = (components) => {
           _.each(group.features, (feature, key) => {
             const layer = $('<div>').attr('class', 'layer').appendTo(gr);
             addLayerExisting(feature, key, layer);
+            // console.log(feature, key);
             if (feature.style) {
               addSwatch(feature.style).appendTo(layer);
               layer.addClass('styled');
             }
           });
+          // console.log('group', group);
 
           addSwatch(group.style).appendTo(groupTitle);
 
@@ -205,7 +218,7 @@ const getLegend = (components) => {
     const { names } = init;
 
     const name = feature.id ? key : feature;
-
+    // console.log(names[name.toLowerCase()]);
     const l = $('<div>')
       .attr('class', 'layer-existing')
       .attr('data-name', name)
@@ -242,6 +255,7 @@ const getLegend = (components) => {
     if (!style || !style.shape) {
       return $('<div>');
     }
+    // console.log(style);
     const swatch = $(document.createElement('div'))
       .addClass('swatch')
       .addClass(style.shape.slice(0, style.shape.indexOf('.')));
