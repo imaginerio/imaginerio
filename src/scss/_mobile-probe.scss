@@ -76,7 +76,9 @@
 
   .probe-area--mobile {
     position: absolute;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     right: 15px;
     // width: 15px;
     left: auto;
@@ -87,6 +89,11 @@
     height: 20px;
     line-height: 20px;
     box-shadow: 4px 0 4px rgba(0,0,0,.1);
+    
+  }
+
+  .probe-area--mobile > i {
+    font-size: $standard-icon-size;
   }
 
   .overlay .probe-area--mobile {

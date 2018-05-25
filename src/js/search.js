@@ -121,7 +121,16 @@ const getSearch = (components) => {
     
     areaProbeButton
       .on('click', () => {
-        if ($('main').hasClass('searching-area')) return;
+        console.log('searching', $('main').hasClass('searching-area'));
+        // if currently searching, end area search
+        if ($('main').hasClass('searching-area')) {
+          if (rectangle !== undefined) {
+            console.log('end', rectangle);
+            rectangle.disable();
+            stopSearching();
+            return;
+          }
+        }
         $('main').addClass('searching-area');
         probes.hideHintProbe();
         rectangle = new L.Draw.Rectangle(leafletMap, {
@@ -137,8 +146,10 @@ const getSearch = (components) => {
         rectangle.enable();
       });
 
+    // set click event for area search close button
     $('.probe-area > .icon-times')
       .on('click', (e) => {
+        console.log('click', rectangle);
         e.stopPropagation(); // prevent click from triggering new rectangle
         if (rectangle !== undefined) {
           rectangle.disable();
