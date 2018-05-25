@@ -2,12 +2,12 @@
 <!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="60px" height="20px" 
 	 viewBox="0 0 60 20" style="enable-background:new 0 0 60 20;" xml:space="preserve">
-<style type="text/css">
+<!-- <style type="text/css">
 	.st0{fill:none;stroke:#90B0CC;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 	.st1{fill:#90B0CC;}
-</style>
-<polyline class="st0" points="13.4,14.8 24.9,5.2 35.9,14.8 46.8,5.2 "/>
-<circle class="st1" cx="19.1" cy="10.1" r="2.7"/>
-<circle class="st1" cx="30.5" cy="10.1" r="2.7"/>
-<circle class="st1" cx="41.2" cy="10.1" r="2.7"/>
+</style> -->
+<polyline stroke-width="2" fill="none" stroke="#90B0CC" points="13.4,14.8 24.9,5.2 35.9,14.8 46.8,5.2 "/>
+<circle fill="#90B0CC" cx="19.1" cy="10.1" r="2.7"/>
+<circle fill="#90B0CC" cx="30.5" cy="10.1" r="2.7"/>
+<circle fill="#90B0CC" cx="41.2" cy="10.1" r="2.7"/>
 </svg>
