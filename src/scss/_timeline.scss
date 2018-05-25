@@ -38,9 +38,9 @@
 }
 
 .year-stepper i:before, .stepper i:before {
-  color: #666;
+  color: $stepper-color;
   border-radius: 12.5px;
-  border: 1px solid #666;
+  border: 1px solid $stepper-color;
   width: 25px;
   line-height: 25px;
   margin: 0 5px;
@@ -48,13 +48,13 @@
 }
 
 .year-stepper i:hover:before {
-  color: #333;
-  border-color: #333;
+  color: $stepper-color-hover;
+  border-color: $stepper-color-hover;
 }
 
 .year-stepper i.disabled:before, .year-stepper i.disabled:hover:before {
-  color: #ccc;
-  border-color: #ccc;
+  color: $stepper-color-disabled;
+  border-color: $stepper-color-disabled;
 }
 
 .timeline {

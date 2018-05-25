@@ -175,8 +175,16 @@
   margin-left: 10px;
 }
 
-.fixed-probe-stepper-container > i {
+.fixed-probe-stepper-container > i:before {
   cursor: pointer;
+  color: $stepper-color;
+  border-color: $stepper-color;
+}
+
+.fixed-probe-stepper-container > i:hover:before {
+  cursor: pointer;
+  color: $stepper-color-hover;
+  border-color: $stepper-color-hover;
 }
 
 .fixed-probe-title.stepper {
