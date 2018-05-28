@@ -141,6 +141,7 @@ const getInit = (components) => {
 
     const dropdownButton = $('.language-dropdown-button');
     const currentLanguage = $('.language-dropdown-current');
+    const currentLanguageMobile = $('.language-dropdown-current--mobile');
     const optionsContainer = $('.language-dropdown-content');
     const otherLanguage = $('.language-dropdown-option');
 
@@ -161,7 +162,9 @@ const getInit = (components) => {
     };
 
     const setDropdownOptionVisibility = () => {
-      currentLanguage.text(languageOptions[language]);
+      const languageText = languageOptions[language];
+      currentLanguage.text(languageText);
+      currentLanguageMobile.text(languageText);
 
       $('.language-dropdown-option').each(function toggleVisibility() {
         const option = $(this);
