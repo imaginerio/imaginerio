@@ -95,13 +95,21 @@ const getSearch = (components) => {
 
 
     const areaProbeButton = mobile ? $('.probe-area--mobile') : $('.probe-area');
+    const areaMobileHintProbe = $('.probe-area-hint');
+
     const stopSearching = () => {
       $('main').removeClass('searching-area');
     };
 
     leafletMap.on(L.Draw.Event.CREATED, (e) => {
+      console.log('end search', e);
       const { layer } = e;
       const searchAreaVal = layer.getLatLngs();
+      console.log('val', searchAreaVal);
+      if (searchAreaVal[0].length !== 4) {
+        stopSearching();
+        return;
+      }
 
       const getCoordString = latLng => `${latLng.lng},${latLng.lat}`;
 
@@ -112,9 +120,18 @@ const getSearch = (components) => {
       // probes.minimizeAreaSearch();
       stopSearching();
     });
+    console.log('draw', L.Draw.Event);
 
-    L.drawLocal.draw.handlers.rectangle.tooltip.start = 'Click+drag to explore an area';
-    L.drawLocal.draw.handlers.simpleshape.tooltip.end = 'Release to search';
+    const startText = 'Click+drag to explore an area';
+    const endText = 'Release to search';
+
+    L.drawLocal.draw.handlers.rectangle.tooltip.start = startText;
+    L.drawLocal.draw.handlers.simpleshape.tooltip.end = endText;
+
+    leafletMap.on(L.Draw.Event.EDITSTART, () => {
+      areaMobileHintProbe.text(endText);
+      console.log('start draw');
+    });
 
     drawnShape.addTo(leafletMap);
     let rectangle;
@@ -129,6 +146,7 @@ const getSearch = (components) => {
     areaProbeButton
       .on('click', () => {
         // if currently searching, end area search
+        areaMobileHintProbe.text(startText);
         if ($('main').hasClass('searching-area')) {
           stopAreaSearch();
           return;
@@ -145,6 +163,10 @@ const getSearch = (components) => {
             className: 'search-rectangle',
           },
         });
+        // leafletMap.on('touchstart', () => {
+        //   console.log('start touch');
+        // });
+        // console.log('rectangle', rectangle);
         rectangle.enable();
       });
 

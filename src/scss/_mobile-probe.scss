@@ -47,23 +47,7 @@
 
   }
 
-  .probe-hint--mobile {
-    position: absolute;
-    left: 30px;
-    top: $legend-toggle-mobile-top;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(51, 51, 51, .9);
-    color: white;
-    font-style: italic;
-    border-radius: 5px;
-    // border: solid white 1px;
-    box-shadow: 4px 0 4px rgba(0,0,0,.1);
-    padding-left: 14px;
-    padding-right: 14px;
-  }
+  
 
   .slider, .button.red {
     display: none;
@@ -92,12 +76,35 @@
     box-shadow: 0 0 8px rgba(0,0,0,.25);
   }
 
+  .probe-hint--mobile,
+  .probe-area-hint {
+    position: absolute;
+    left: 30px;
+    top: $legend-toggle-mobile-top;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(51, 51, 51, .9);
+    color: white;
+    font-style: italic;
+    border-radius: 5px;
+    box-shadow: 4px 0 4px rgba(0,0,0,.1);
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
   .probe-area--mobile > i {
     font-size: $standard-icon-size;
   }
 
-  .overlay .probe-area--mobile {
-    // top: $legend-toggle-mobile-top + 50;
+  .probe-area-hint {
+    z-index: 2000;
+    display: none;
+  }
+
+  .searching-area .probe-area-hint {
+    display: flex;
   }
 
   .fixed-probe-title-row {
