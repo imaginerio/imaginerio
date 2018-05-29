@@ -167,14 +167,17 @@
   .era-dropdown div,
   .go-button {
     width: auto;
-    // height: auto;
-    height: 80px;
+    // height: 80px;
+    height: 57px;
+    padding: 15px 15px;
     line-height: normal;
     box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 15px 30px;
+    // padding: 15px 30px;
+    font-size: 18px;
+    
   }
 
   .era-dropdown select {
@@ -202,11 +205,11 @@
   }
 
   @media (min-width: $mobile-landscape-min-width) {
-    .era-dropdown div,
-    .go-button {
-      height: 57px;
-      padding: 15px 15px;
-    }
+    // .era-dropdown div,
+    // .go-button {
+    //   height: 57px;
+    //   padding: 15px 15px;
+    // }
 
     .intro-buttons {
       margin-top: 10px;
