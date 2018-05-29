@@ -128,7 +128,6 @@ const getSearch = (components) => {
     
     areaProbeButton
       .on('click', () => {
-        console.log('searching', $('main').hasClass('searching-area'));
         // if currently searching, end area search
         if ($('main').hasClass('searching-area')) {
           stopAreaSearch();

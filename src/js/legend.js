@@ -28,6 +28,7 @@ const getLegend = (components) => {
   function toggleSidebar() {
     console.log('toggle sidebar');
     legend.toggleClass('collapsed').addClass('subsequent');
+    resizeLegendButton();
   }
 
   function openSidebar() {
@@ -50,6 +51,7 @@ const getLegend = (components) => {
     } = init;
 
     setCurrentPlans();
+    resizeLegendButton();
 
     $('.legend-contents').empty();
     // get layer data
@@ -355,6 +357,19 @@ const getLegend = (components) => {
     }
     return Lg;
   };
+
+  function resizeLegendButton() {
+    const { init } = components;
+    const { language } = init;
+    const legendButton = $('#legend .legend-toggle');
+    if (!$('#legend').hasClass('subsequent')) {
+      const width = language === 'pr' ? '170px' : '160px';
+      
+      legendButton.css({ width });
+    } else {
+      legendButton.css({ width: '10px' });
+    }
+  }
 
   Lg.initialize = () => {
     initEvents();
