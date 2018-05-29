@@ -360,8 +360,9 @@ const getLegend = (components) => {
 
   function resizeLegendButton() {
     const { init } = components;
-    const { language } = init;
+    const { language, mobile } = init;
     const legendButton = $('#legend .legend-toggle');
+    if (mobile) return;
     if (!$('#legend').hasClass('subsequent')) {
       const width = language === 'pr' ? '170px' : '160px';
       
