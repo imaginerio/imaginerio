@@ -144,6 +144,13 @@ const getSearch = (components) => {
     function searchTouchStart() {
       areaMobileHintProbe.text(endText);
     }
+
+    function searchTouchEnd() {
+      console.log('END');
+      $(document).off('touchend touchcancel', searchTouchEnd);
+      rectangle.disable();
+      stopSearching();
+    }
     
     areaProbeButton
       .on('click', () => {
@@ -165,8 +172,9 @@ const getSearch = (components) => {
             className: 'search-rectangle',
           },
         });
+        $(document).on('touchend touchcancel', searchTouchEnd);
         leafletMap.on('touchstart', searchTouchStart);
-
+        
         rectangle.enable();
       });
 
@@ -217,9 +225,7 @@ const getSearch = (components) => {
       mobile,
       names,
     } = init;
-    console.log('results', results);
-    console.log('searchtype', searchType);
-    // S.initialize('search');
+
     const legend = $('#legend');
     if (searchType === 'click' || searchType === 'area') {
       legend.addClass('click-search');
