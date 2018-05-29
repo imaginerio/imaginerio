@@ -111,6 +111,8 @@ const getSearch = (components) => {
         return;
       }
 
+      leafletMap.off('touchstart', searchTouchStart);
+
       const getCoordString = latLng => `${latLng.lng},${latLng.lat}`;
 
       const topLeft = getCoordString(searchAreaVal[0][3]);
@@ -128,10 +130,6 @@ const getSearch = (components) => {
     L.drawLocal.draw.handlers.rectangle.tooltip.start = startText;
     L.drawLocal.draw.handlers.simpleshape.tooltip.end = endText;
 
-    leafletMap.on(L.Draw.Event.EDITSTART, () => {
-      areaMobileHintProbe.text(endText);
-      console.log('start draw');
-    });
 
     drawnShape.addTo(leafletMap);
     let rectangle;
@@ -141,6 +139,10 @@ const getSearch = (components) => {
         rectangle.disable();
         stopSearching();
       }
+    }
+
+    function searchTouchStart() {
+      areaMobileHintProbe.text(endText);
     }
     
     areaProbeButton
@@ -163,10 +165,8 @@ const getSearch = (components) => {
             className: 'search-rectangle',
           },
         });
-        // leafletMap.on('touchstart', () => {
-        //   console.log('start touch');
-        // });
-        // console.log('rectangle', rectangle);
+        leafletMap.on('touchstart', searchTouchStart);
+
         rectangle.enable();
       });
 
