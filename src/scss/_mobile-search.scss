@@ -76,4 +76,8 @@
   .search-result > span {
     width: calc(100% - 80px);
   }
+
+  .leaflet-draw-tooltip {
+    display: none;
+  }
 }
