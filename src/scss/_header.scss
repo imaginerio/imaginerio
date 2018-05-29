@@ -142,20 +142,3 @@ header > a {
 .eras #top-right-buttons, .eras #search-button, .eras .register-button {
   display: none !important;
 }
-
-@media (max-width: $mobile-width) {
-  .language-dropdown-option {
-    font-weight: normal;
-  }
-
-  .language-dropdown-button {
-    padding-right: 0px;
-    padding-left: 15px;
-    font-size: 18px;
-    color: $dark-green !important;
-  }
-
-  .language-dropdown-content {
-    left: 20px;
-  }
-}
