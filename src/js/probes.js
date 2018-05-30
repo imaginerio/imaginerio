@@ -88,7 +88,10 @@ const getProbes = (components) => {
         $('.lightbox').css('display', 'flex');
         $('.lightbox .content > div').remove();
 
-        const div = $('<div>').appendTo('.lightbox .content');
+        const div = $('<div>')
+          .attr('class', 'inner-content')
+          .appendTo('.lightbox .content');
+
         const w = window.innerWidth * 0.75;
         const h = window.innerHeight - 300;
         const sizeInner = p.getScaled([w, h], true);
@@ -97,21 +100,32 @@ const getProbes = (components) => {
           .css('width', `${sizeInner[0]}px`)
           .css('height', `${sizeInner[1]}px`)
           .appendTo(div);
-        $('<a>')
-          .attr('class', 'image blue-button')
-          .attr('href', 'https://www.sscommons.org/openlibrary/' + p.href + '&fs=true')
-          .attr('target', 'blank')
-          .html('View image on SharedShelf Commons')
+
+        const textRow = $('<div>')
+          .attr('class', 'lightbox-content-row')
           .appendTo(div);
+
         let text = '';
         if (p.data.creator) text += p.data.creator + '<br>';
         if (p.data.description) text += '<span class="image-title">' + p.data.description + '</span><br>';
         if (p.data.date) text += formatYear(p.data.date) + '<br>';
         if (p.data.credits) text += '<span class="image-credit">' + p.data.credits + '</span>';
   
-        $('<p>')
+        $('<div>')
           .html(text)
-          .appendTo(div);
+          .appendTo(textRow);
+
+        const buttonContainer = $('<div>')
+          .attr('class', 'blue-button-container')
+          .appendTo(textRow);
+
+        $('<a>')
+          .attr('class', 'image blue-button')
+          .attr('href', 'https://www.sscommons.org/openlibrary/' + p.href + '&fs=true')
+          .attr('target', 'blank')
+          .html('View image on SharedShelf Commons')
+          .appendTo(buttonContainer);
+        
       });
     if (p.data.layer !== 'viewsheds' && mobile) {
       $('<div>').attr('class', 'blue-button slider-toggle').html('<i class="icon-sliders"></i>').appendTo('#fixed-probe .content')

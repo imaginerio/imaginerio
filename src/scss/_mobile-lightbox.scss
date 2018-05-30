@@ -11,4 +11,23 @@
     width: 100%;
     max-height: 100%;
   }
+
+  .lightbox .blue-button-container {
+    // margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .lightbox .content > div {
+    max-height: 100%;
+  }
+  @media (max-width: $mobile-portrait-max-width) {
+    .lightbox-content-row {
+      display: block;
+    }
+    .lightbox .blue-button-container {
+      margin-top: 20px;
+    }
+  }
 }
