@@ -155,7 +155,7 @@
 
 .fixed-probe-title {
   font-weight: bold;
-  margin: 5px 0;
+  margin: 5px 0px;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -164,6 +164,7 @@
 .fixed-probe-title-right {
   display: flex;
   align-items: center;
+  margin-top: -5px;
 }
 
 .fixed-probe-title-right .icon-times {
