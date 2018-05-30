@@ -178,6 +178,7 @@ const getInit = (components) => {
       });
     };
 
+    const menuCloseDelay = mobile ? 0 : 500;
     dropdownButton
       .on('mouseover', () => {
         stopDropdownTimer();
@@ -187,7 +188,7 @@ const getInit = (components) => {
         stopDropdownTimer();
         closeDropdownTimer = setTimeout(() => {
           closeDropdown();
-        }, 500);
+        }, menuCloseDelay);
       });
 
     optionsContainer
