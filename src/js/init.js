@@ -187,7 +187,7 @@ const getInit = (components) => {
         stopDropdownTimer();
         closeDropdownTimer = setTimeout(() => {
           closeDropdown();
-        }, 3000);
+        }, 500);
       });
 
     optionsContainer
