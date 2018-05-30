@@ -89,6 +89,7 @@ const getSearch = (components) => {
   function setSearchByArea() {
     const { Map, probes, init } = components;
     const { mobile, darkBlue } = init;
+    let searchInProcess = false;
 
     const leafletMap = Map.getMap();
     const drawnShape = new L.FeatureGroup().addTo(leafletMap);
@@ -102,11 +103,13 @@ const getSearch = (components) => {
     };
 
     leafletMap.on(L.Draw.Event.CREATED, (e) => {
+      searchInProcess = true;
       console.log('end search', e);
       const { layer } = e;
       const searchAreaVal = layer.getLatLngs();
       console.log('val', searchAreaVal);
       if (searchAreaVal[0].length !== 4) {
+        console.log('searchAreaVal', searchAreaVal[0]);
         stopSearching();
         return;
       }
@@ -121,6 +124,7 @@ const getSearch = (components) => {
       doAreaSearch(topLeft, bottomRight);
       // probes.minimizeAreaSearch();
       stopSearching();
+      searchInProcess = false;
     });
     console.log('draw', L.Draw.Event);
 
@@ -146,10 +150,13 @@ const getSearch = (components) => {
     }
 
     function searchTouchEnd() {
-      console.log('END');
-      $(document).off('touchend touchcancel', searchTouchEnd);
-      rectangle.disable();
-      stopSearching();
+      // timeout is to get this to go to end of queue,
+      // otherwise search is disabled before it can go through
+      setTimeout(() => {
+        $(document).off('touchend touchcancel', searchTouchEnd);
+        rectangle.disable();
+        stopSearching();
+      }, 0);
     }
     
     areaProbeButton

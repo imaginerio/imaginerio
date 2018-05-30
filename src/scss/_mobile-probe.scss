@@ -76,6 +76,11 @@
     box-shadow: 0 0 8px rgba(0,0,0,.25);
   }
 
+  .searching-area .probe-area--mobile {
+    color: white;
+    background: $dark-button-background;
+  }
+
   .probe-hint--mobile,
   .probe-area-hint {
     position: absolute;
