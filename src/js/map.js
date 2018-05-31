@@ -101,9 +101,9 @@ const getMap = (components) => {
     })
       .setView([-22.9046, -43.1919], 16)
       .on('click', probe)
-      .on('movestart', () => {
-        probes.hideMapProbe();
-      })
+      // .on('movestart', () => {
+      //   probes.hideMapProbe();
+      // })
       .on('moveend zoomend', () => {
         dispatch.call('statechange', this);
       })
@@ -327,7 +327,7 @@ const getMap = (components) => {
 
   M.drawLoadedFeature = (geojson, probeContent, zoomTo) => {
     const { probes, init } = components;
-    const { mapProbe } = probes;
+    const { mapProbe, hideMapProbe } = probes;
     const { mobile } = init;
     // console.log('geojson', geojson);
 
@@ -342,6 +342,22 @@ const getMap = (components) => {
       style: () => highlightTopStyle,
       pointToLayer: (pt, latlng) => L.circleMarker(latlng, highlightMarkerTopStyle),
     }).addTo(map);
+
+    const highlightMouseover = (e) => {
+      const mapContainerPosition = $('#map').position();
+      const x = e.containerPoint.x + mapContainerPosition.left;
+      const y = e.containerPoint.y + mapContainerPosition.top;
+      const probeCoords = { x, y };
+      mapProbe(probeCoords, probeContent);
+    };
+
+    const highlightMouseout = () => {
+      hideMapProbe();
+    };
+
+    highlightLayerTop.on('mouseover', highlightMouseover);
+    highlightLayerTop.on('mouseout', highlightMouseout);
+
 
     const addProbe = () => {
       const bounds = L.geoJson(geojson).getBounds();
@@ -362,13 +378,13 @@ const getMap = (components) => {
       const probeCoords = { x, y };
       mapProbe(probeCoords, probeContent);
     };
-    console.log('zoomto', zoomTo);
+    // console.log('zoomto', zoomTo);
     if (!mobile) {
       if (zoomTo) {
-        map.once('moveend zoomend', addProbe);
+        // map.once('moveend zoomend', addProbe);
         map.fitBounds(highlightLayerBottom.getBounds());
       } else {
-        addProbe();
+        // addProbe();
       }
     }
   };
@@ -396,9 +412,8 @@ const getMap = (components) => {
     });
   };
 
-  M.getView = () => {
-    return [map.getCenter(), map.getZoom()];
-  };
+  M.getView = () => [map.getCenter(), map.getZoom()];
+
 
   M.setView = (center, zoom) => {
     map.setView(center, zoom);
