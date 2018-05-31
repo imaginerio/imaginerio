@@ -62,7 +62,7 @@
   align-items: center;
   justify-content: center;
   height: 60px;
-  padding: 0px 20px;
+  padding: 0px 30px;
   border-radius: 5px;
   cursor: pointer;
 }
@@ -71,8 +71,9 @@
 .thankyou-close-button {
   color: white;
   background: $dark-green;
-  font-weight: bold;
+  // font-weight: bold;
   font-size: 20px;
+  font-family: "HelveticaNeue-CondensedBold", "HelveticaNeueBoldCondensed", "HelveticaNeue-Bold-Condensed", "Helvetica Neue Bold Condensed", "HelveticaNeueBold", "HelveticaNeue-Bold", "Helvetica Neue Bold", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosCnBold', "Helvetica", "Arial Narrow", "Arial", sans-serif;
 }
 
 .register-cancel-button {
