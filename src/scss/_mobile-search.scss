@@ -31,6 +31,26 @@
     margin-left: 10px;
   }
 
+  .search-return-to-legend-container {
+    height: $mobile-search-height;
+    align-items: center;
+    // margin-left: 10px;
+    font-style: italic;
+    display: none;
+  }
+
+  .search-return-to-legend-text {
+    font-size: 15px;
+  }
+
+  .search-return-to-legend-container > .mobile-back-to-legend-button {
+    margin-right: 15px;
+  }
+
+  .click-search .search-return-to-legend-container {
+    display: flex;
+  }
+
   #search-button {
     // height: $mobile-search-height;
     // position: absolute;
