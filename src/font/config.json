@@ -303,6 +303,12 @@
       "src": "modernpics"
     },
     {
+      "uid": "6855131631509e8795730ce062045ea1",
+      "css": "left-circled",
+      "code": 61608,
+      "src": "fontawesome"
+    },
+    {
       "uid": "9b9c72e593baf550c99d16b1d7602dff",
       "css": "search-area",
       "code": 59413,

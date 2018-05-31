@@ -241,18 +241,19 @@ const getInit = (components) => {
     setLanguageDropdown();
     updateUILanguage();
     if (mobile) {
-      $('#legend .mobile-header .icon-times').click(() => {
+      $('.mobile-back-to-map-button').click(() => {
         $('#legend').toggleClass('collapsed');
       });
-      $('#search .icon-left-big').click(() => {
-        if ($('main').hasClass('eras')) {
-          goToStart();
-          return;
-        }
-        // Search.clear();
-        Search.clearAndClose();
-        $('header').removeClass('search');
-      });
+      $('.mobile-back-to-legend-button')
+        .click(() => {
+          if ($('main').hasClass('eras')) {
+            goToStart();
+            return;
+          }
+          // Search.clear();
+          Search.clearAndClose();
+          $('header').removeClass('search');
+        });
       $('#filmstrip').addClass('collapsed').insertBefore('#map');
     } else {
       $('.mobile').hide();

@@ -25,11 +25,17 @@
     position: relative;
   }
 
+  .mobile-back-to-map-button,
+  .mobile-back-to-legend-button {
+    font-size: 16px;
+    margin-left: 10px;
+  }
+
   #search-button {
-    height: $mobile-search-height;
-    position: absolute;
-    left: 0px;
-    top: 0px;
+    // height: $mobile-search-height;
+    // position: absolute;
+    // left: 0px;
+    // top: 0px;
   }
 
   .search-input-container {
