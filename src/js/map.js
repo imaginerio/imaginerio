@@ -270,6 +270,7 @@ const getMap = (components) => {
   };
 
   M.removeHighlight = () => {
+    console.log('M.removeHighlight');
     const { probes } = components;
     probes.hideMapProbe();
 
@@ -307,7 +308,7 @@ const getMap = (components) => {
     const { init } = components;
     const { server } = init;
 
-    M.removeHighlight();
+    M.clearSelected();
     $.getJSON(`${server}draw/${year}/${encodeURIComponent(name)}`, (json) => {
       M.drawLoadedFeature(json, probeContent, zoomTo);
     });
@@ -390,6 +391,7 @@ const getMap = (components) => {
   };
 
   M.clearSelected = () => {
+    console.log('M.clearSelected');
     if (selectedViewshed) {
       selectedViewshed.setIcon(viewshedIcon).setZIndexOffset(99);
       map.removeLayer(selectedViewshed.feature.properties.cone);

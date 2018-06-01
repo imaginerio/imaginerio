@@ -126,7 +126,7 @@ const getSearch = (components) => {
       stopSearching();
       searchInProcess = false;
     });
-    console.log('draw', L.Draw.Event);
+    // console.log('draw', L.Draw.Event);
 
     const startText = 'Click+drag to explore an area';
     const endText = 'Release to search';
@@ -233,7 +233,7 @@ const getSearch = (components) => {
       names,
     } = init;
 
-    console.log('search results', results);
+    // console.log('search results', results);
 
     const legend = $('#legend');
     if (searchType === 'click' || searchType === 'area') {
@@ -394,8 +394,9 @@ const getSearch = (components) => {
       .append('<i class="icon-right-dir"></i>')
       .append('<i class="icon-down-dir"></i>');
 
-    $(`<span>${data.name}</span>`)
+    $(`<span class="result-text">${data.name}</span>`)
       .appendTo(row)
+      .data(data)
       .on('click', function click() {
         // if row isn't selected clear previous selection, select new row...
         if (!row.hasClass('selected')) {
@@ -422,6 +423,7 @@ const getSearch = (components) => {
         }
       })
       .prepend('<i class="icon-binoculars">');
+
     $('i.icon-right-dir, i.icon-down-dir', row).on('click', () => {
       if (row.hasClass('expanded')) {
         row.removeClass('expanded');
@@ -430,6 +432,23 @@ const getSearch = (components) => {
       }
     });
   }
+
+  S.setSelectedFeature = (id) => {
+    $('.result-text').each(function setResultButton() {
+      const button = $(this);
+      const row = button.parent();
+      const data = button.data();
+      if (data.id.includes(id)) {
+        row.addClass('selected');
+        if (!row.hasClass('expanded')) {
+          button.prev().click();
+        }
+      } else {
+        row.removeClass('selected');
+        row.removeClass('expanded');
+      }
+    });
+  };
 
   function expandRow(row, id) {
     const { init } = components;

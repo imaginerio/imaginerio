@@ -66,14 +66,20 @@ const getDispatch = (components) => {
     Dispatch.call('changeyear', this, newYear);
   });
 
+  // Not to be confused with 'drawfeature'
   Dispatch.on('highlightfeature', (json) => {
     const { Map } = components;
 
     Map.highlightFeature(json);
   });
 
+
+  // Removes drawn feature
   Dispatch.on('removehighlight', () => {
-    const { Map } = components;
+    console.log('removehighlight');
+    // THIS SHOULD DISPATCH TO SIDEBAR, TOO
+    const { Map, Search } = components;
+    Search.setSelectedFeature(null);
     Map.removeHighlight();
     $('.layer-existing.highlighted, .layer-plans.highlighted').removeClass('highlighted');
     $('.layer-plans').data('selected-plan', null);
@@ -122,18 +128,24 @@ const getDispatch = (components) => {
   });
 
   Dispatch.on('viewshedclick', (id) => {
-    const { Filmstrip, probes } = components;
+    console.log('viewshedclick');
+    const { Filmstrip, probes, Search } = components;
     const { rasterProbe } = probes;
+
+    Search.setSelectedFeature('none');
+
     const raster = _.find(Filmstrip.getRasters(), r => r.id == id);
     if (raster) rasterProbe(raster.photo);
   });
 
   Dispatch.on('showresults', (results, clicked) => {
+    console.log('showresults');
     const { Search } = components;
     Search.showResults(results, clicked);
   });
 
   Dispatch.on('removeprobe', () => {
+    console.log('removeprobe');
     const { Search, Map } = components;
     Search.clear();
     Map.clearSelected();
@@ -146,11 +158,17 @@ const getDispatch = (components) => {
   });
 
   Dispatch.on('drawfeature', (data, zoomTo = true) => {
-    const { Map, init, probes } = components;
+    const {
+      Map,
+      init,
+      probes,
+      Search,
+    } = components;
     const { mobile, server } = init;
     const { detailsProbe } = probes;
-    console.log('dispatch drawfeature');
-    
+    console.log('drawfeature');
+    $('.probe').hide();
+    Search.setSelectedFeature(data.id[0]);
     // move this into Map module
     $.getJSON(server + 'details/' + data.id[0], (response) => {
       // name--data.name

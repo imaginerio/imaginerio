@@ -249,7 +249,6 @@ const getProbes = (components) => {
   }
 
   function hideMapProbe() {
-    // TEST IF IS VISIBLE FIRST
     $('#map-probe').hide();
   }
 
