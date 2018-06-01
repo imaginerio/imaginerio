@@ -146,12 +146,25 @@ const getInit = (components) => {
     const otherLanguage = $('.language-dropdown-option');
 
     const openDropdown = () => {
+      if (optionsContainer.hasClass('language-dropdown-content--on')) return;
       optionsContainer.addClass('language-dropdown-content--on');
     };
 
     const closeDropdown = () => {
       optionsContainer.removeClass('language-dropdown-content--on');
     };
+
+    const closeDropdownMobile = (e) => {
+      console.log('close drop mobile');
+      const target = $(e.target);
+      const isMenu = target.hasClass('language-dropdown-option') ||
+        target.hasClass('language-dropdown-content');
+      if (isMenu) return;
+
+      optionsContainer.removeClass('language-dropdown-content--on');
+
+      $(document).off('click', closeDropdownMobile);
+    }
 
     let closeDropdownTimer;
 
@@ -177,30 +190,45 @@ const getInit = (components) => {
         }
       });
     };
-
-    const menuCloseDelay = mobile ? 0 : 500;
-    dropdownButton
-      .on('mouseover', () => {
-        stopDropdownTimer();
-        openDropdown();
-      })
-      .on('mouseout', () => {
-        stopDropdownTimer();
-        closeDropdownTimer = setTimeout(() => {
+    // NEED TO FIND A WAY TO CLOSE MENU ON MOBILE
+    // MOUSEOVER/OUT EVENTS MESS UP CLICK EVENTS ON MOBILE
+    if (!mobile) {
+      const menuCloseDelay = mobile ? 0 : 500;
+      dropdownButton
+        .on('mouseover', () => {
+          stopDropdownTimer();
+          openDropdown();
+        })
+        .on('mouseout', () => {
+          stopDropdownTimer();
+          closeDropdownTimer = setTimeout(() => {
+            closeDropdown();
+          }, menuCloseDelay);
+        });
+  
+      optionsContainer
+        .on('mouseover', () => {
+          stopDropdownTimer();
+        })
+        .on('mouseout', () => {
+          stopDropdownTimer();
           closeDropdown();
-        }, menuCloseDelay);
-      });
-
-    optionsContainer
-      .on('mouseover', () => {
-        stopDropdownTimer();
-      })
-      .on('mouseout', () => {
-        stopDropdownTimer();
-        closeDropdown();
-      });
+        });
+    } else {
+      dropdownButton
+        .on('click', (e) => {
+          console.log('click drop');
+          openDropdown();
+          e.stopPropagation();
+          $(document)
+            .on('click', closeDropdownMobile);
+        });
+      
+    }
+    
 
     otherLanguage.on('click', function switchLanguage() {
+      console.log('LANGUAGE CLICK');
       const newLanguage = $(this).attr('data-language');
       language = newLanguage;
       Init.language = language;
