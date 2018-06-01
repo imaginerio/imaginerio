@@ -213,7 +213,7 @@ const getSearch = (components) => {
   function doSearch(val, changedYear = false) {
     const { init } = components;
     const { server } = init;
-    console.log('val searchval', val, searchVal);
+    // console.log('val searchval', val, searchVal);
     if (val !== searchVal || changedYear) {
       searchVal = val;
       // abort if search is already underway
@@ -232,6 +232,8 @@ const getSearch = (components) => {
       mobile,
       names,
     } = init;
+
+    console.log('search results', results);
 
     const legend = $('#legend');
     if (searchType === 'click' || searchType === 'area') {

@@ -240,20 +240,28 @@ const getInit = (components) => {
   function init_ui() {
     setLanguageDropdown();
     updateUILanguage();
+    // if mobile, go back to map.
+    // if desktop, go back to legend
+    $('.search-return-to-legend-text')
+      .text(mobile ? 'Return to Map' : 'Return to Legend');
+    $('.search-return-button')
+      .click(() => {
+        console.log('back to legend');
+        if ($('main').hasClass('eras')) {
+          goToStart();
+          return;
+        } else if ($('#legend').hasClass('click-search') && mobile) {
+          $('#legend').toggleClass('collapsed');
+        }
+        // Search.clear();
+        Search.clearAndClose();
+        $('header').removeClass('search');
+      });
     if (mobile) {
       $('.mobile-back-to-map-button').click(() => {
         $('#legend').toggleClass('collapsed');
       });
-      $('.mobile-back-to-legend-button')
-        .click(() => {
-          if ($('main').hasClass('eras')) {
-            goToStart();
-            return;
-          }
-          // Search.clear();
-          Search.clearAndClose();
-          $('header').removeClass('search');
-        });
+      
       $('#filmstrip').addClass('collapsed').insertBefore('#map');
     } else {
       $('.mobile').hide();

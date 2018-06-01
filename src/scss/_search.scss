@@ -57,8 +57,36 @@
   display: none !important;
 }
 
+.mobile-back-to-map-button,
+.search-return-button {
+  font-size: 16px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.search-return-container {
+  height: $mobile-search-height;
+  align-items: center;
+  // margin-left: 10px;
+  font-style: italic;
+  display: none;
+}
+
+.search-return-to-legend-text {
+  font-size: 15px;
+}
+
+.search-return-container > .search-return-button {
+  margin-right: 15px;
+}
+
+.click-search .search-return-container {
+  display: flex;
+}
+
 #legend.collapsed .search-input-container,
-#legend.collapsed .search-button-container {
+#legend.collapsed .search-button-container,
+#legend.collapsed .search-return-container {
   display: none;
 }
 

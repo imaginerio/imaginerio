@@ -59,6 +59,7 @@ const getLegend = (components) => {
       const { dispatch } = components;
       const { language } = init;
       layers = layersJson;
+      console.log('legend layers', layersJson);
 
       _.each(layersJson, (category, categoryName) => {
         const cat = $('<div>')
