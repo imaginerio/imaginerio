@@ -139,11 +139,19 @@ const getInit = (components) => {
       pr: 'Versão em Português',
     };
 
+
     const dropdownButton = $('.language-dropdown-button');
     const currentLanguage = $('.language-dropdown-current');
     const currentLanguageMobile = $('.language-dropdown-current--mobile');
     const optionsContainer = $('.language-dropdown-content');
     const otherLanguage = $('.language-dropdown-option');
+
+    Object.keys(languageOptions).forEach((languageKey) => {
+      $(`.language-dropdown-option[data-language="${languageKey}"]`)
+        .text(languageOptions[languageKey]);
+    });
+
+    
 
     const openDropdown = () => {
       if (optionsContainer.hasClass('language-dropdown-content--on')) return;
@@ -164,7 +172,7 @@ const getInit = (components) => {
       optionsContainer.removeClass('language-dropdown-content--on');
 
       $(document).off('click', closeDropdownMobile);
-    }
+    };
 
     let closeDropdownTimer;
 
