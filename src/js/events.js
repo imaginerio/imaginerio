@@ -77,7 +77,6 @@ const getDispatch = (components) => {
   // Removes drawn feature
   Dispatch.on('removehighlight', () => {
     console.log('removehighlight');
-    // THIS SHOULD DISPATCH TO SIDEBAR, TOO
     const { Map, Search } = components;
     Search.setSelectedFeature(null);
     Map.removeHighlight();
