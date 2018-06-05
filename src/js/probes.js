@@ -42,7 +42,7 @@ const getProbes = (components) => {
 
     if (p.data.layer === 'viewsheds') {
       const photos = _.filter(Filmstrip.getRasters(), r => r.layer === 'viewsheds');
-      if (photos.length) {
+      if (photos.length > 1) {
         const stepperContainer = $('<div>')
           .attr('class', 'fixed-probe-stepper-container stepper')
           .appendTo(rightMenuContainer);
