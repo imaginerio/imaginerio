@@ -50,16 +50,16 @@
     box-sizing: border-box;
   }
 
-  #search .icon-left-big {
-    font-size: 24px;
-    padding: 12px 5px;
-    line-height: 24px;
-    z-index: 2501;
-    position: absolute;
-    left: 0;
-    top: 0;
-    display: none;
-  }
+  // #search .icon-left-big {
+  //   font-size: 24px;
+  //   padding: 12px 5px;
+  //   line-height: 24px;
+  //   z-index: 2501;
+  //   position: absolute;
+  //   left: 0;
+  //   top: 0;
+  //   display: none;
+  // }
 
   #search > .search-results {
     top: 50px;
@@ -83,5 +83,9 @@
 
   .leaflet-draw-tooltip {
     display: none;
+  }
+
+  #legend .icon-left-big {
+    @include mobile-back-arrow();
   }
 }

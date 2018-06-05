@@ -38,3 +38,9 @@ $dark-button-background-hover: #909090;
 $stepper-color: #666;
 $stepper-color-hover: #333;
 $stepper-color-disabled: #ccc;
+
+@mixin mobile-back-arrow() {
+  color: $dark-green;
+  font-weight: bold;
+  font-size: 24px;
+}
