@@ -325,6 +325,9 @@ const getSearch = (components) => {
         if (!row.hasClass('expanded')) {
           expandRow(row, singleFeature.id[0]);
         }
+        if (mobile) {
+          $('#legend').addClass('collapsed');
+        }
       }
     } else {
       // if there are no results

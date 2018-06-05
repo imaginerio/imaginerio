@@ -287,6 +287,7 @@ const getInit = (components) => {
           goToStart();
           return;
         } else if ($('#legend').hasClass('click-search') && mobile) {
+          console.log('collapse mobile legend');
           $('#legend').toggleClass('collapsed');
         }
         // Search.clear();

@@ -215,7 +215,7 @@ const getProbes = (components) => {
   function detailsProbe(name, content) {
     const { dispatch } = components;
 
-    console.log('details probe', name, content);
+    // console.log('details probe', name, content);
     const fixedProbe = $('#fixed-probe');
     const fixedProbeContent = $('#fixed-probe .content');
     fixedProbeContent
@@ -240,7 +240,6 @@ const getProbes = (components) => {
     $('<i>')
       .attr('class', 'icon-times')
       .on('click', () => {
-        // CLEAR HIGHLIGHTED FEATURE HERE
         dispatch.call('removehighlight', this);
         fixedProbe.hide();
       })

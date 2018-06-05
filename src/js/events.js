@@ -183,7 +183,7 @@ const getDispatch = (components) => {
         probeContent += `<div class="map-probe-row">Mapped: ${response[0].year}</div>`;
       }
       Map.drawFeature(data.name, probeContent, zoomTo);
-      if (mobile) $('#search .icon-left-big').click();
+      // if (mobile) $('#search .icon-left-big').click();
 
       let content = '';
       if (response.length) {
