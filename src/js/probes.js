@@ -15,6 +15,7 @@ const getProbes = (components) => {
       Map,
       Slider,
     } = components;
+    console.log('raster probe', p);
     const { mobile } = init;
     const Dispatch = dispatch;
 
@@ -75,14 +76,23 @@ const getProbes = (components) => {
       $('#fixed-probe .content').css('width', 'auto');
     }
 
+    const getProbeCredits = () => {
+      const { formatYear } = init;
+      let text = '';
+      if (p.data.creator) text += p.data.creator + '<br>';
+      if (p.data.description) text += '<span class="image-title">' + p.data.description + '</span><br>';
+      if (p.data.date) text += formatYear(p.data.date);
+      if (p.data.credits) text += `<span class="image-credit"> [${p.data.credits}]</span>`;
+      return text;
+    };
+    const text = getProbeCredits();
+    const probeContent = $('#fixed-probe .content');
     const img = p.getImage(dimensions, true)
       .attr('class', 'fixed-image')
       .css('width', `${size[0]}px`)
       .css('height', `${size[1]}px`)
-      .appendTo('#fixed-probe .content')
+      .appendTo(probeContent)
       .click(function click() {
-        const { formatYear } = init;
-
         Dispatch.call('removeall', this);
 
         $('.lightbox').css('display', 'flex');
@@ -105,11 +115,8 @@ const getProbes = (components) => {
           .attr('class', 'lightbox-content-row')
           .appendTo(div);
 
-        let text = '';
-        if (p.data.creator) text += p.data.creator + '<br>';
-        if (p.data.description) text += '<span class="image-title">' + p.data.description + '</span><br>';
-        if (p.data.date) text += formatYear(p.data.date) + '<br>';
-        if (p.data.credits) text += '<span class="image-credit">' + p.data.credits + '</span>';
+        // MOVE TO OWN FUNCTION
+        
   
         $('<div>')
           .html(text)
@@ -125,8 +132,14 @@ const getProbes = (components) => {
           .attr('target', 'blank')
           .html('View image on SharedShelf Commons')
           .appendTo(buttonContainer);
-        
       });
+
+    const textRow = $('<div>')
+      .attr('class', 'probe-credits-row')
+      .appendTo(probeContent);
+
+    textRow.append(text);
+
     if (p.data.layer !== 'viewsheds' && mobile) {
       $('<div>').attr('class', 'blue-button slider-toggle').html('<i class="icon-sliders"></i>').appendTo('#fixed-probe .content')
         .click(() => {
@@ -173,6 +186,7 @@ const getProbes = (components) => {
   }
 
   function mapProbe(event, content) {
+    // console.log('mapProbe');
     // console.log('event', event);
     // console.log('content', content);
     const probe = $('#map-probe').show();
