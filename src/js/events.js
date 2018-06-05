@@ -166,7 +166,7 @@ const getDispatch = (components) => {
     } = components;
     const { mobile, server } = init;
     const { detailsProbe } = probes;
-    console.log('drawfeature');
+
     $('.probe').hide();
     Search.setSelectedFeature(data.id[0]);
     // move this into Map module

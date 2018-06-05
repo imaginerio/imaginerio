@@ -16,13 +16,26 @@
   font-weight: 200 !important;
   font-family: 'Helvetica Neue', Helvetica, coolvetica, Arial, sans-serif;
   font-style: normal;
+  width: 75%;
   // font-weight: light;
   color: $dark-green;
   text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.register-title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .register-text {
   text-align: center;
+  color: #666666;
+  font-size: 18px;
+  font-family: 'Helvetica Neue', Helvetica, coolvetica, Arial, sans-serif;
 }
 
 .register-thank-you-text {
@@ -48,45 +61,56 @@
 .register-form-buttons,
 .thankyou-buttons {
   display: flex;
-  margin-top: 50px;
+  margin-top: 20px;
 }
 
 .thankyou-buttons {
   justify-content: center;
 }
 
+.clear > input,
 .register-submit-button,
 .register-cancel-button,
 .thankyou-close-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 60px;
-  padding: 0px 30px;
-  border-radius: 5px;
-  cursor: pointer;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 60px !important;
+  padding: 0px 30px !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
 }
 
 .register-submit-button,
+.clear > input,
 .thankyou-close-button {
-  color: white;
-  background: $dark-green;
+  color: white !important;
+  background: $dark-green !important;
   // font-weight: bold;
-  font-size: 20px;
-  font-family: "HelveticaNeue-CondensedBold", "HelveticaNeueBoldCondensed", "HelveticaNeue-Bold-Condensed", "Helvetica Neue Bold Condensed", "HelveticaNeueBold", "HelveticaNeue-Bold", "Helvetica Neue Bold", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosCnBold', "Helvetica", "Arial Narrow", "Arial", sans-serif;
+  font-size: 20px !important;
+  font-family: "HelveticaNeue-CondensedBold", "HelveticaNeueBoldCondensed", "HelveticaNeue-Bold-Condensed", "Helvetica Neue Bold Condensed", "HelveticaNeueBold", "HelveticaNeue-Bold", "Helvetica Neue Bold", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosCnBold', "Helvetica", "Arial Narrow", "Arial", sans-serif !important;
 }
 
 .register-cancel-button {
   font-size: 15px;
   font-weight: bold;
   color: $dark-green;
+  float: left;
 }
 
+.clear > input:hover,
 .register-submit-button:hover,
 .thankyou-close-button:hover {
-  background: $darker-green;
+  background: $darker-green !important;
 }
 
 .register-cancel-button:hover {
   color: $darker-green;
+}
+
+// ------------------- new register content -------------
+
+.register-content input {
+  background-color: #F5F8FC;
+  border: 1px solid #BCC8E0 !important;
 }
