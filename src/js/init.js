@@ -151,8 +151,6 @@ const getInit = (components) => {
         .text(languageOptions[languageKey]);
     });
 
-    
-
     const openDropdown = () => {
       if (optionsContainer.hasClass('language-dropdown-content--on')) return;
       optionsContainer.addClass('language-dropdown-content--on');
@@ -163,15 +161,25 @@ const getInit = (components) => {
     };
 
     const closeDropdownMobile = (e) => {
-      console.log('close drop mobile');
-      const target = $(e.target);
-      const isMenu = target.hasClass('language-dropdown-option') ||
-        target.hasClass('language-dropdown-content');
-      if (isMenu) return;
+      console.log('close drop mobile', e);
+      if (!$(e.target).hasClass('language-dropdown-option')) {
+        console.log('stop prop');
+        e.stopPropagation();
+      }
 
       optionsContainer.removeClass('language-dropdown-content--on');
+      $('body').off('touchstart', closeDropdownMobile);
+      
+      // const target = $(e.target);
+      // const isMenu = target.hasClass('language-dropdown-option') ||
+      //   target.hasClass('language-dropdown-content') ||
+      //   target.hasClass('language-dropdown-button');
+      // if (isMenu) return;
 
-      $(document).off('click', closeDropdownMobile);
+      // if (!$(e.target).parent().hasClass('language-dropdown-button')) {
+      //   optionsContainer.removeClass('language-dropdown-content--on');
+      //   $('body').off('touchstart', closeDropdownMobile);
+      // }
     };
 
     let closeDropdownTimer;
@@ -198,8 +206,7 @@ const getInit = (components) => {
         }
       });
     };
-    // NEED TO FIND A WAY TO CLOSE MENU ON MOBILE
-    // MOUSEOVER/OUT EVENTS MESS UP CLICK EVENTS ON MOBILE
+
     if (!mobile) {
       const menuCloseDelay = mobile ? 0 : 500;
       dropdownButton
@@ -224,18 +231,23 @@ const getInit = (components) => {
         });
     } else {
       dropdownButton
-        .on('click', (e) => {
-          console.log('click drop');
+        .on('touchstart', (e) => {
+          console.log('click drop', e.isPropagationStopped());
+          if (optionsContainer.hasClass('language-dropdown-content--on')) {
+            console.log('is open');
+            closeDropdownMobile(e);
+            return;
+          }
           openDropdown();
           e.stopPropagation();
-          $(document)
-            .on('click', closeDropdownMobile);
+          $('body')
+            .on('touchstart', closeDropdownMobile);
         });
-      
     }
-    
 
-    otherLanguage.on('click', function switchLanguage() {
+    const eventType = mobile ? 'touchstart' : 'click';
+
+    otherLanguage.on(eventType, function switchLanguage() {
       console.log('LANGUAGE CLICK');
       const newLanguage = $(this).attr('data-language');
       language = newLanguage;
@@ -287,7 +299,6 @@ const getInit = (components) => {
           goToStart();
           return;
         } else if ($('#legend').hasClass('click-search') && mobile) {
-          console.log('collapse mobile legend');
           $('#legend').toggleClass('collapsed');
         }
         // Search.clear();

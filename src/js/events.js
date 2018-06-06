@@ -76,7 +76,7 @@ const getDispatch = (components) => {
 
   // Removes drawn feature
   Dispatch.on('removehighlight', () => {
-    console.log('removehighlight');
+    // console.log('removehighlight');
     const { Map, Search } = components;
     Search.setSelectedFeature(null);
     Map.removeHighlight();
@@ -127,7 +127,7 @@ const getDispatch = (components) => {
   });
 
   Dispatch.on('viewshedclick', (id) => {
-    console.log('viewshedclick');
+    // console.log('viewshedclick');
     const { Filmstrip, probes, Search } = components;
     const { rasterProbe } = probes;
 
@@ -138,13 +138,13 @@ const getDispatch = (components) => {
   });
 
   Dispatch.on('showresults', (results, clicked) => {
-    console.log('showresults');
+    // console.log('showresults');
     const { Search } = components;
     Search.showResults(results, clicked);
   });
 
   Dispatch.on('removeprobe', () => {
-    console.log('removeprobe');
+    // console.log('removeprobe');
     const { Search, Map } = components;
     Search.clear();
     Map.clearSelected();
