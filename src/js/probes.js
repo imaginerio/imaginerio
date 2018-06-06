@@ -69,6 +69,7 @@ const getProbes = (components) => {
 
     const dimensions = mobile ? [160, 160] : [400, 300];
     const size = p.getScaled(dimensions);
+    console.log('size', size);
     let slider;
     if (!mobile) {
       $('#fixed-probe .content').css('width', `${size[0]}px`);
@@ -102,9 +103,23 @@ const getProbes = (components) => {
           .attr('class', 'inner-content')
           .appendTo('.lightbox .content');
 
-        const w = window.innerWidth * 0.75;
-        const h = window.innerHeight - 300;
+        console.log('window', window.innerWidth, window.innerHeight);
+
+        let w;
+        let h;
+
+        if (h > 375) {
+          w = window.innerWidth * 0.75;
+          h = window.innerHeight - 300;
+        } else {
+          w = window.innerWidth * 0.75;
+          h = window.innerHeight * 0.75;
+        }
+
+        
+        console.log('w, h', w, h);
         const sizeInner = p.getScaled([w, h], true);
+        console.log('sizeInner', sizeInner);
         p.getImage([w, h])
           .attr('class', 'lightbox-image')
           .css('width', `${sizeInner[0]}px`)
@@ -114,9 +129,6 @@ const getProbes = (components) => {
         const textRow = $('<div>')
           .attr('class', 'lightbox-content-row')
           .appendTo(div);
-
-        // MOVE TO OWN FUNCTION
-        
   
         $('<div>')
           .html(text)
