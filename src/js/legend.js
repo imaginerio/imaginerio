@@ -83,11 +83,15 @@ const getLegend = (components) => {
         function addLayerGroup(group, groupName) {
           const { names } = init;
 
+          const value = group.id !== undefined ? group.id :
+            [...new Set(Object.keys(group.features).map(d => group.features[d].id))]
+              .join('&');
+
           const gr = $('<div>').attr('class', 'legend-group').attr('data-group', groupName).appendTo(cat);
           const groupTitle = $('<div>').attr('class', 'group-title').appendTo(gr);
           $('<label>')
             // .html(names[groupName.toLowerCase()] || groupName)
-            .prepend(`<input type="checkbox" value="${group.id}"checked>`)
+            .prepend(`<input type="checkbox" value="${value}"checked>`)
             .appendTo(groupTitle);
 
           _.each(group.features, (feature, key) => {
@@ -335,7 +339,12 @@ const getLegend = (components) => {
         if (!$(this).is(':checked') &&
           $(this).attr('value') !== 'views' &&
           $(this).attr('class') !== 'search-input') {
-          layers.push($(this).attr('value'));
+          $(this).attr('value')
+            .split('&')
+            .forEach((layer) => {
+              layers.push(layer);
+            });
+          // layers.push($(this).attr('value'));
         }
       });
       if (!layers.length) layers = ['all'];

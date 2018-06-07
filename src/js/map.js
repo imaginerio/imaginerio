@@ -1,4 +1,4 @@
-import { SSL_OP_CRYPTOPRO_TLSEXT_BUG } from "constants";
+import { SSL_OP_CRYPTOPRO_TLSEXT_BUG } from 'constants';
 
 // map
 const getMap = (components) => {
@@ -47,6 +47,28 @@ const getMap = (components) => {
   // -22.9046, -43.1919
   let locationMarker;
   const locationBounds = L.latLngBounds([[-23.10243406, -44.04944719 ], [-22.63003187, -42.65988214]]);
+
+  let tilesAreLoaded = false;
+  let minTileLoadDone = false;
+
+  const setLoadScreen = () => {
+    minTileLoadDone = false;
+    tilesAreLoaded = false;
+    toggleLoadScreen(true);
+    setTimeout(() => {
+      minTileLoadDone = true;
+      if (tilesAreLoaded) {
+        toggleLoadScreen(false);
+      }
+    }, 500);
+  };
+
+  const removeLoadIfTimePassed = () => {
+    tilesAreLoaded = true;
+    if (minTileLoadDone) {
+      toggleLoadScreen(false);
+    }
+  };
 
   M.initialize = (container) => {
     const { init, dispatch, probes } = components;
@@ -163,7 +185,6 @@ const getMap = (components) => {
   M.getMap = () => map;
 
   M.setYear = (newYear) => {
-
     const { init, translations } = components;
     const {
       tileserver,
@@ -177,6 +198,7 @@ const getMap = (components) => {
       map.removeLayer(tileLayer);
       map.addLayer(aerialLayer);
     } else {
+      console.log('initial load?');
       tileLayer.setUrl(`${tileserver}${year}/${layers.join(',')}/{z}/{x}/{y}.png`);
       if (map.hasLayer(aerialLayer)) map.removeLayer(aerialLayer);
       if (!map.hasLayer(tileLayer)) map.addLayer(tileLayer);
@@ -234,21 +256,43 @@ const getMap = (components) => {
     return M;
   };
 
+  const toggleLoadScreen = (status) => {
+    const loadScreen = $('.loading-screen');
+    const hideScreenClass = 'loading-screen--off';
+    if (status) {
+      loadScreen.removeClass(hideScreenClass);
+    } else {
+      loadScreen.addClass(hideScreenClass);
+    }
+  };
+
+
+
   M.setLayers = function setLayers(list) {
     const { init } = components;
     const { tileserver } = init;
     // don't do things if layer list hasn't changed
     let skip = true;
     list.forEach((l) => {
-      if (layers.indexOf(l) == -1) skip = false;
+      if (layers.indexOf(l) === -1) skip = false;
     });
     layers.forEach((l) => {
-      if (list.indexOf(l) == -1) skip = false;
+      if (list.indexOf(l) === -1) skip = false;
     });
     if (skip) return M;
 
     layers = list;
-    tileLayer.setUrl(`${tileserver}${year}/${layers.join(',')}/{z}/{x}/{y}.png`);
+
+    
+    
+    setLoadScreen();
+
+    tileLayer
+      .off('load', removeLoadIfTimePassed);
+
+    tileLayer
+      .setUrl(`${tileserver}${year}/${layers.join(',')}/{z}/{x}/{y}.png`)
+      .on('load', removeLoadIfTimePassed);
     return M;
   };
 
@@ -450,7 +494,7 @@ const getMap = (components) => {
     init.mapProbing = true;
 
     if ($('main').hasClass('searching-area')) return;
-    console.log('e', e);
+
     const pos = e.layerPoint;
     const imgWidth = 60;
     const pulse = $('<img>')

@@ -119,6 +119,7 @@ const getDispatch = (components) => {
 
   // set layers on map
   Dispatch.on('setlayers', (list) => {
+    console.log('setlayers', list);
     const { Map, Search, init } = components;
     const { updateHash } = init;
     Map.setLayers(list);
