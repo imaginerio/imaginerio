@@ -450,8 +450,8 @@ const getMap = (components) => {
     init.mapProbing = true;
 
     if ($('main').hasClass('searching-area')) return;
-
-    const pos = e.containerPoint;
+    console.log('e', e);
+    const pos = e.layerPoint;
     const imgWidth = 60;
     const pulse = $('<img>')
       .attr('src', `img/pulse.gif?a=${Math.random()}`)
@@ -467,7 +467,7 @@ const getMap = (components) => {
           $(this).remove();
         }, 900);
       })
-      .appendTo($('#map'));
+      .appendTo($('.leaflet-marker-pane'));
 
     
 
