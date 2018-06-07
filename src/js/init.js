@@ -299,7 +299,7 @@ const getInit = (components) => {
     // if desktop, go back to legend
     $('.search-return-to-legend-text')
       .text(mobile ? 'Return to Map' : 'Return to Legend');
-    $('.search-return-button')
+    $('.search-return-button, .search-return-to-legend-text')
       .click(() => {
         console.log('back to legend');
         if ($('main').hasClass('eras')) {
