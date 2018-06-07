@@ -455,17 +455,21 @@ const getMap = (components) => {
     const imgWidth = 60;
     const pulse = $('<img>')
       .attr('src', `img/pulse.gif?a=${Math.random()}`)
+      .attr('class', 'pulse-animation')
       .css({
         position: 'absolute',
         left: `${pos.x - (imgWidth / 2)}px`,
         top: `${pos.y - (imgWidth / 2)}px`,
         'z-index': 10000,
       })
+      .one('load', function removeAfterPlay() {
+        setTimeout(() => {
+          $(this).remove();
+        }, 900);
+      })
       .appendTo($('#map'));
 
-    setTimeout(() => {
-      pulse.remove();
-    }, 450);
+    
 
     probes.hideMapProbe();
     probes.hideHintProbe();
