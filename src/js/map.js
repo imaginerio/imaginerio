@@ -74,6 +74,7 @@ const getMap = (components) => {
     const { init, dispatch, probes } = components;
     const { tileserver, darkBlue } = init;
 
+    setLoadScreen();
     highlightBottomStyle = {
       weight: 8,
       color: darkBlue,
@@ -139,7 +140,10 @@ const getMap = (components) => {
     L.control.zoom({ position: 'bottomleft' }).addTo(map);
 
     const tileUrl = `${tileserver}${year}/${layers.join(',')}/{z}/{x}/{y}.png`;
-    tileLayer = L.tileLayer(tileUrl).addTo(map);
+
+    tileLayer = L.tileLayer(tileUrl)
+      .on('load', removeLoadIfTimePassed)
+      .addTo(map);
 
     $(window).on('transitionend', () => {
       map.invalidateSize();
@@ -283,8 +287,6 @@ const getMap = (components) => {
 
     layers = list;
 
-    
-    
     setLoadScreen();
 
     tileLayer
