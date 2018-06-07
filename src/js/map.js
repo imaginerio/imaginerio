@@ -450,6 +450,23 @@ const getMap = (components) => {
     init.mapProbing = true;
 
     if ($('main').hasClass('searching-area')) return;
+
+    const pos = e.containerPoint;
+    const imgWidth = 60;
+    const pulse = $('<img>')
+      .attr('src', `img/pulse.gif?a=${Math.random()}`)
+      .css({
+        position: 'absolute',
+        left: `${pos.x - (imgWidth / 2)}px`,
+        top: `${pos.y - (imgWidth / 2)}px`,
+        'z-index': 10000,
+      })
+      .appendTo($('#map'));
+
+    setTimeout(() => {
+      pulse.remove();
+    }, 450);
+
     probes.hideMapProbe();
     probes.hideHintProbe();
     const zoom = map.getZoom();

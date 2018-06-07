@@ -90,6 +90,13 @@ const getInit = (components) => {
       loadPlans(initialize);
     });
   });
+
+  const preloadImages = () => {
+    const img = new Image();
+    img.src = 'img/pulse.gif';
+  };
+
+  preloadImages();
   
   function initialize() {
     eras[eras.length - 1].dates[1] = new Date().getFullYear();
