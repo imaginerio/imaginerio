@@ -87,7 +87,7 @@ const getFilmstrip = (components) => {
       }
       $('.icon-camera, .raster-type-labels span.views', filmstrip)
         .toggleClass('disabled', !_.some(rasters, r => r.layer === 'viewsheds'));
-      $('.icon-survey, .raster-type-labels span.surveys', filmstrip)
+      $('.icon-flight, .raster-type-labels span.surveys', filmstrip)
         .toggleClass('disabled', !_.some(rasters, r => r.layer === 'surveys'));
       $('.icon-tsquare, .raster-type-labels span.plans', filmstrip)
         .toggleClass('disabled', !_.some(rasters, r => r.layer === 'plans'));
@@ -199,7 +199,7 @@ const getFilmstrip = (components) => {
     if (groups.viewsheds) addThumbSection(groups.viewsheds, 'Views', 'icon-camera', container);
     if (groups.maps) addThumbSection(groups.maps, 'Maps', 'icon-map-o', container);
     if (groups.plans) addThumbSection(groups.plans, 'Plans', 'icon-tsquare', container);
-    if (groups.surveys) addThumbSection(groups.surveys, 'Surveys', 'icon-survey', container);
+    if (groups.surveys) addThumbSection(groups.surveys, 'Surveys', 'icon-flight', container);
   }
 
   function addThumbSection(group, title, icon, container) {
