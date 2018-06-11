@@ -85,9 +85,17 @@
   display: flex;
 }
 
-#legend.collapsed .search-input-container,
+.search-input-container,
+.search-button-container {
+  display: flex;
+  align-items: center;
+  height: $search-input-height;
+}
+
+#legend.collapsed .search-input-container input,
 #legend.collapsed .search-button-container,
-#legend.collapsed .search-return-container {
+#legend.collapsed .search-return-container,
+#legend.collapsed .search-return-button {
   display: none;
 }
 
@@ -213,12 +221,7 @@
   display: block;
 }
 
-.search-input-container,
-.search-button-container {
-  display: flex;
-  align-items: center;
-  height: $search-input-height;
-}
+
 #search-button {
   margin-left: 15px;
   font-size: 15px;
