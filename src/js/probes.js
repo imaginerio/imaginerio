@@ -16,7 +16,7 @@ const getProbes = (components) => {
       Slider,
     } = components;
     console.log('raster probe', p);
-    const { mobile } = init;
+    const { mobile, mobileLandscape } = init;
     const Dispatch = dispatch;
 
     const description = Object.prototype.hasOwnProperty.call(p.data, 'description') ? p.data.description : p.data.name;
@@ -67,7 +67,19 @@ const getProbes = (components) => {
       .on('click', closeFixedProbe)
       .appendTo(rightMenuContainer);
 
-    const dimensions = mobile ? [160, 160] : [400, 300];
+    let dimensions;
+    if (mobile) {
+      if (mobileLandscape) {
+        const content = $('#fixed-probe .content');
+        dimensions = [content.innerWidth(), content.innerWidth()];
+        console.log(dimensions);
+      } else {
+        dimensions = [160, 160];
+      }
+    } else {
+      dimensions = [400, 300];
+    }
+
     const size = p.getScaled(dimensions);
     console.log('size', size);
     let slider;

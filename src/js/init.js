@@ -47,6 +47,7 @@ const getInit = (components) => {
   // runtime stuff
   
   const mobile = window.innerWidth <= 700;
+  const mobileLandscape = mobile && window.innerWidth >= 415;
 
   if (gup( 'dev' ) == 'true') {
     server = 'https://imaginerio-dev.axismaps.io:3000';
@@ -604,6 +605,7 @@ const getInit = (components) => {
     formatYear,
     updateHash,
     mobile,
+    mobileLandscape,
     server,
     tileserver,
     rasterserver,

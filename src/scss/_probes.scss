@@ -133,12 +133,12 @@
 }
 
 #fixed-probe {
-  z-index: 2999;
+  z-index: 10000;
   top: 135px;
   right: 30px;
   background-color: white;
   border-radius: 5px;
-  padding: 20px;
+  padding: $fixed-probe-padding;
   box-shadow: 0 0 8px rgba(0,0,0,.25);
 }
 

@@ -18,6 +18,7 @@ $legend-toggle-top: 20px;
 
 $mobile-header-height: 50px;
 $mobile-search-height: 60px;
+$mobile-timeline-height: 50px;
 
 $legend-toggle-mobile-top: 110px;
 $legend-toggle-mobile-size: 15px;
@@ -38,6 +39,8 @@ $dark-button-background-hover: #909090;
 $stepper-color: #666;
 $stepper-color-hover: #333;
 $stepper-color-disabled: #ccc;
+
+$fixed-probe-padding: 20px;
 
 @mixin mobile-back-arrow() {
   color: $dark-green;
