@@ -81,12 +81,12 @@ const getProbes = (components) => {
       const { formatYear } = init;
       let text = '';
       if (p.data.creator) text += p.data.creator + '<br>';
-      if (p.data.description) text += '<span class="image-title">' + p.data.description + '</span><br>';
+      if (p.data.description && $('.lightbox').is(':visible')) text += '<span class="image-title">' + p.data.description + '</span><br>';
       if (p.data.date) text += formatYear(p.data.date);
       if (p.data.credits) text += `<span class="image-credit"> [${p.data.credits}]</span>`;
       return text;
     };
-    const text = getProbeCredits();
+
     const probeContent = $('#fixed-probe .content');
     const img = p.getImage(dimensions, true)
       .attr('class', 'fixed-image')
@@ -103,8 +103,6 @@ const getProbes = (components) => {
           .attr('class', 'inner-content')
           .appendTo('.lightbox .content');
 
-        console.log('window', window.innerWidth, window.innerHeight);
-
         let w;
         let h;
 
@@ -116,10 +114,8 @@ const getProbes = (components) => {
           h = window.innerHeight * 0.75;
         }
 
-        
-        console.log('w, h', w, h);
         const sizeInner = p.getScaled([w, h], true);
-        console.log('sizeInner', sizeInner);
+
         p.getImage([w, h])
           .attr('class', 'lightbox-image')
           .css('width', `${sizeInner[0]}px`)
@@ -129,9 +125,9 @@ const getProbes = (components) => {
         const textRow = $('<div>')
           .attr('class', 'lightbox-content-row')
           .appendTo(div);
-  
+
         $('<div>')
-          .html(text)
+          .html(getProbeCredits())
           .appendTo(textRow);
 
         const buttonContainer = $('<div>')
@@ -150,7 +146,7 @@ const getProbes = (components) => {
       .attr('class', 'probe-credits-row')
       .appendTo(probeContent);
 
-    textRow.append(text);
+    textRow.append(getProbeCredits());
 
     if (p.data.layer !== 'viewsheds' && mobile) {
       $('<div>').attr('class', 'blue-button slider-toggle').html('<i class="icon-sliders"></i>').appendTo('#fixed-probe .content')
@@ -198,9 +194,6 @@ const getProbes = (components) => {
   }
 
   function mapProbe(event, content) {
-    // console.log('mapProbe');
-    // console.log('event', event);
-    // console.log('content', content);
     const probe = $('#map-probe').show();
     $('#map-probe .content').empty().html(content);
     let x;
