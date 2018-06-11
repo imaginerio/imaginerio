@@ -8,6 +8,7 @@ const getSearch = (components) => {
   let resultsContainer;
   let searchResults = {};
   let searchVal;
+  let pulse;
   let layers = ['all']; // either 'all' or a list of DISABLED layers
   const imageLayers = [
     'viewsheds',
@@ -89,7 +90,7 @@ const getSearch = (components) => {
   function setSearchByArea() {
     const { Map, probes, init } = components;
     const { mobile, darkBlue } = init;
-    let searchInProcess = false;
+
 
     const leafletMap = Map.getMap();
     const drawnShape = new L.FeatureGroup().addTo(leafletMap);
@@ -103,7 +104,12 @@ const getSearch = (components) => {
     };
 
     leafletMap.on(L.Draw.Event.CREATED, (e) => {
-      searchInProcess = true;
+      console.log('e', e);
+
+      // const center = e.target.getBounds().getCenter();
+      // console.log('center', center);
+      // const pixelCenter = leafletMap.latLngToLayerPoint(center);
+      // console.log('pos', pixelCenter);
       const { layer } = e;
       const searchAreaVal = layer.getLatLngs();
       if (searchAreaVal[0].length !== 4) {
@@ -118,10 +124,17 @@ const getSearch = (components) => {
       const topLeft = getCoordString(searchAreaVal[0][3]);
       const bottomRight = getCoordString(searchAreaVal[0][1]);
 
+      const center = {
+        lat: (searchAreaVal[0][3].lat + searchAreaVal[0][1].lat) / 2,
+        lng: (searchAreaVal[0][3].lng + searchAreaVal[0][1].lng) / 2,
+      };
+
+      const pixelCenter = leafletMap.latLngToLayerPoint(center);
+      pulse = Map.getPulse(pixelCenter).appendTo($('.leaflet-marker-pane'));
+
       doAreaSearch(topLeft, bottomRight);
       // probes.minimizeAreaSearch();
       stopSearching();
-      searchInProcess = false;
     });
     // console.log('draw', L.Draw.Event);
 
@@ -285,11 +298,14 @@ const getSearch = (components) => {
     const {
       dispatch,
       init,
+      Map,
     } = components;
     const {
       mobile,
       names,
     } = init;
+
+    console.log('show results');
 
     addStylesToResults(results);
 
@@ -395,6 +411,9 @@ const getSearch = (components) => {
       dispatch.call('removehighlight', this);
     }
     resultsContainer.show();
+    if (searchType === 'area') {
+      pulse.remove();
+    }
   };
 
   function drawViewshedResultsRow({ row, data }) {

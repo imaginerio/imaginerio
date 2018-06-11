@@ -489,6 +489,24 @@ const getMap = (components) => {
     if (viewshedPoints && !map.hasLayer(viewshedPoints)) map.addLayer(viewshedPoints);
   }
 
+
+  function getPulse(pos) {
+    const imgWidth = 60;
+
+    const pulse = $('<img>')
+      .attr('src', `img/pulse.gif?a=${Math.random()}`)
+      .attr('class', 'pulse-animation')
+      .css({
+        position: 'absolute',
+        left: `${pos.x - (imgWidth / 2)}px`,
+        top: `${pos.y - (imgWidth / 2)}px`,
+        'z-index': 10000,
+      });
+    return pulse;
+  }
+
+  M.getPulse = getPulse;
+
   function probe(e) {
     const { init, dispatch, probes } = components;
     const { server } = init;
@@ -498,24 +516,14 @@ const getMap = (components) => {
     if ($('main').hasClass('searching-area')) return;
 
     const pos = e.layerPoint;
-    const imgWidth = 60;
-    const pulse = $('<img>')
-      .attr('src', `img/pulse.gif?a=${Math.random()}`)
-      .attr('class', 'pulse-animation')
-      .css({
-        position: 'absolute',
-        left: `${pos.x - (imgWidth / 2)}px`,
-        top: `${pos.y - (imgWidth / 2)}px`,
-        'z-index': 10000,
-      })
+    
+    getPulse(pos)
       .one('load', function removeAfterPlay() {
         setTimeout(() => {
           $(this).remove();
         }, 900);
       })
       .appendTo($('.leaflet-marker-pane'));
-
-    
 
     probes.hideMapProbe();
     probes.hideHintProbe();
