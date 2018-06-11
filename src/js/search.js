@@ -412,7 +412,9 @@ const getSearch = (components) => {
     }
     resultsContainer.show();
     if (searchType === 'area') {
-      pulse.remove();
+      setTimeout(() => {
+        pulse.remove();
+      }, 0);
     }
   };
 
