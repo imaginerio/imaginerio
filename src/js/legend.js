@@ -26,7 +26,6 @@ const getLegend = (components) => {
   }
 
   function toggleSidebar() {
-    console.log('toggle sidebar');
     legend.toggleClass('collapsed').addClass('subsequent');
     resizeLegendButton();
   }
@@ -59,7 +58,7 @@ const getLegend = (components) => {
       const { dispatch } = components;
       const { language } = init;
       layers = layersJson;
-      console.log('legend layers', layersJson);
+      // console.log('legend layers', layersJson);
 
       _.each(layersJson, (category, categoryName) => {
         const cat = $('<div>')
@@ -251,14 +250,16 @@ const getLegend = (components) => {
       return $('<div>');
     }
     // console.log(style);
-    const swatch = $(document.createElement('div'))
+    const swatch = $('<div>')
       .addClass('swatch')
+      .css({ float: 'right' })
       .addClass(style.shape.slice(0, style.shape.indexOf('.')));
-
+    
     if (style.shape.match(/svg$/)) {
       swatch.load(`img/legend/${style.shape}`);
     } else {
-      swatch.append($(document.createElement('img')).attr('src', `img/legend/${style.shape}`));
+      swatch
+        .append($('<img>').attr('src', `img/legend/${style.shape}`));
     }
 
     if (style.fill || style.stroke) {
@@ -268,25 +269,7 @@ const getLegend = (components) => {
     return swatch;
   }
 
-  // Lg.addSearch = () => {
-    // console.log('legend add search');
-    // const { Search } = components;
-    // clear search
-    // $('.legend-category[data-category="search"]').remove();
-
-    // const cat = $('<div>')
-    //   .attr('class', 'legend-category')
-    //   .attr('data-category', 'search')
-    //   .prependTo('.legend-contents');
-
-    // cat.append(`
-    //   <div id="search">
-    //   </div>
-    // `);
-
-    // Search.setYear(year);
-    // Search.initialize('search').setYear(year);
-  // };
+  Lg.addSwatch = addSwatch;
 
   Lg.addViews = () => {
     const { dispatch, init } = components;
@@ -357,7 +340,7 @@ const getLegend = (components) => {
       return Lg;
     }
 
-    if (list[0] == 'all') {
+    if (list[0] === 'all') {
       $('.legend-contents input').attr('checked', 'checked');
       if (!Lg.hasViews) $('input[value="views"]').attr('checked', null);
     } else {
@@ -367,6 +350,8 @@ const getLegend = (components) => {
     }
     return Lg;
   };
+
+  Lg.getLayersData = () => layers;
 
   function resizeLegendButton() {
     const { init } = components;

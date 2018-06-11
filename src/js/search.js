@@ -104,12 +104,9 @@ const getSearch = (components) => {
 
     leafletMap.on(L.Draw.Event.CREATED, (e) => {
       searchInProcess = true;
-      console.log('end search', e);
       const { layer } = e;
       const searchAreaVal = layer.getLatLngs();
-      console.log('val', searchAreaVal);
       if (searchAreaVal[0].length !== 4) {
-        console.log('searchAreaVal', searchAreaVal[0]);
         stopSearching();
         return;
       }
@@ -226,15 +223,77 @@ const getSearch = (components) => {
     }
   }
 
+  function getCategories() {
+    const {
+      Legend,
+    } = components;
+
+    return Object.keys(Legend.getLayersData());
+  }
+
+  // returns object lookup table to find category for given layer
+  function getLayerDataTable() {
+    const {
+      Legend,
+    } = components;
+
+    const legendData = Legend.getLayersData();
+    const categories = getCategories();
+
+    return categories.reduce((accumulator, category) => {
+      Object.keys(legendData[category])
+        .forEach((layer) => {
+          accumulator[layer] = legendData[category][layer];
+        });
+      return accumulator;
+    }, {});
+  }
+
+  function addStylesToResults(results) {
+    const { init } = components;
+    // console.log('names', names);
+    const layersDataTable = getLayerDataTable();
+    // console.log('layer data table', layersDataTable);
+    Object.keys(results)
+      .forEach((resultName) => {
+        const result = results[resultName];
+        const layerName = result.layer;
+        const resultType = result.featuretyp;
+        const layerData = layersDataTable[layerName];
+        if (layerData === undefined) {
+          result.style = null;
+        } else if (Array.isArray(layerData.features) &&
+          Object.prototype.hasOwnProperty.call(layerData, 'style')) {
+          result.style = layerData.style;
+        } else if (resultType !== null) {
+          const subLayerDetails = layerData.features[resultType];
+
+          if (subLayerDetails !== undefined && Object.prototype.hasOwnProperty.call(subLayerDetails, 'style')) {
+            result.style = subLayerDetails.style;
+          } else {
+            // layer type is not found in legend
+            result.style = null;
+          }
+        } else {
+          // add fallbacks (at least for buildings)
+          result.style = null;
+        }
+      });
+  }
+
   S.showResults = function showResults(results, searchType) {
-    const { dispatch, init } = components;
+    const {
+      dispatch,
+      init,
+    } = components;
     const {
       mobile,
       names,
     } = init;
 
-    // console.log('search results', results);
+    addStylesToResults(results);
 
+    // set search back button
     const legend = $('#legend');
     if (searchType === 'click' || searchType === 'area') {
       legend.addClass('click-search');
@@ -242,6 +301,7 @@ const getSearch = (components) => {
       clearInput();
     }
 
+    // clear old results
     $('.legend-category[data-category="search"]').remove();
 
     const cat = $('<div>')
@@ -258,19 +318,12 @@ const getSearch = (components) => {
       .attr('class', 'search-results')
       .appendTo($('#search'));
 
+    // open legend, set back to legend button events
     toggleSearchResults();
     $('.no-results-text').remove();
     $('.results-group').remove();
     searchResults = results;
 
-    // if (resultsContainer.length === 0 || !resultsContainer.is(':visible')) {
-    //   console.log('add results container');
-    //   resultsContainer = $('<div>')
-    //     .attr('class', 'search-results')
-    //     .appendTo($('#search'));
-    // }
-    
-    // if there are results
     if (_.size(searchResults) !== 0) {
       resultsContainer
         .css('margin-right', $('#overlay-info').is(':visible') ? '65px' : 0);
@@ -311,6 +364,10 @@ const getSearch = (components) => {
               data: r,
             });
           }
+          // if (r.style !== null) {
+          //   Legend.addSwatch(r.style)
+          //     .appendTo(row);
+          // }
         });
       });
 
@@ -390,8 +447,8 @@ const getSearch = (components) => {
   }
 
   function drawNormalResultsRow({ row, data }) {
-    const { dispatch, init } = components;
-    const { server, mobile } = init;
+    const { dispatch, init, Legend } = components;
+    const { mobile } = init;
 
     row
       .append('<i class="icon-right-dir"></i>')
@@ -416,7 +473,6 @@ const getSearch = (components) => {
           if (mobile) {
             closeSearchSidebar();
           }
-          console.log('feature data', data);
           dispatch
             .call('drawfeature', this, data);
         } else {
@@ -434,6 +490,15 @@ const getSearch = (components) => {
         expandRow(row, data.id[0]);
       }
     });
+
+    if (data.style !== null) {
+      Legend.addSwatch(data.style, true)
+        .appendTo(row);
+      $('.swatch', row)
+        .css({
+          'margin-top': '10px',
+        });
+    }
   }
 
   S.setSelectedFeature = (id) => {
