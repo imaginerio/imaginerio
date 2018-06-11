@@ -81,7 +81,7 @@ const getInit = (components) => {
   }
 
   checkHash();
-  year = params.year || 1943; // a year that actually has something
+  year = params.year || 1565; // a year that actually has something
   language = params.language || 'en';
   
 
