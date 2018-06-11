@@ -9,6 +9,8 @@ const getSearch = (components) => {
   let searchResults = {};
   let searchVal;
   let pulse;
+  let areaSearchDone = false;
+  let minPulseDone = false;
   let layers = ['all']; // either 'all' or a list of DISABLED layers
   const imageLayers = [
     'viewsheds',
@@ -91,6 +93,8 @@ const getSearch = (components) => {
     const { Map, probes, init } = components;
     const { mobile, darkBlue } = init;
 
+    
+
 
     const leafletMap = Map.getMap();
     const drawnShape = new L.FeatureGroup().addTo(leafletMap);
@@ -104,12 +108,9 @@ const getSearch = (components) => {
     };
 
     leafletMap.on(L.Draw.Event.CREATED, (e) => {
-      console.log('e', e);
+      minPulseDone = false;
+      areaSearchDone = false;
 
-      // const center = e.target.getBounds().getCenter();
-      // console.log('center', center);
-      // const pixelCenter = leafletMap.latLngToLayerPoint(center);
-      // console.log('pos', pixelCenter);
       const { layer } = e;
       const searchAreaVal = layer.getLatLngs();
       if (searchAreaVal[0].length !== 4) {
@@ -131,6 +132,13 @@ const getSearch = (components) => {
 
       const pixelCenter = leafletMap.latLngToLayerPoint(center);
       pulse = Map.getPulse(pixelCenter).appendTo($('.leaflet-marker-pane'));
+
+      setTimeout(() => {
+        minPulseDone = true;
+        if (areaSearchDone) {
+          pulse.remove();
+        }
+      }, 900);
 
       doAreaSearch(topLeft, bottomRight);
       // probes.minimizeAreaSearch();
@@ -305,7 +313,7 @@ const getSearch = (components) => {
       names,
     } = init;
 
-    console.log('show results');
+    // console.log('show results');
 
     addStylesToResults(results);
 
@@ -411,7 +419,9 @@ const getSearch = (components) => {
       dispatch.call('removehighlight', this);
     }
     resultsContainer.show();
-    if (searchType === 'area') {
+    areaSearchDone = true;
+
+    if (searchType === 'area' && minPulseDone) {
       setTimeout(() => {
         pulse.remove();
       }, 0);
