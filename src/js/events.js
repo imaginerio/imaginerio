@@ -69,7 +69,6 @@ const getDispatch = (components) => {
   // Not to be confused with 'drawfeature'
   Dispatch.on('highlightfeature', (json) => {
     const { Map } = components;
-
     Map.highlightFeature(json);
   });
 
@@ -166,6 +165,7 @@ const getDispatch = (components) => {
     } = components;
     const { mobile, server } = init;
     const { detailsProbe } = probes;
+    console.log('drawfeature');
 
     $('.probe').hide();
     Search.setSelectedFeature(data.id[0]);

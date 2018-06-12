@@ -127,5 +127,8 @@
       max-height: calc(100% - #{$mobile-header-height + $mobile-timeline-height + (2 * $fixed-probe-padding)});
       overflow: scroll;
     }
+    #fixed-probe.map-feature {
+      padding-right: 20px;
+    }
   }
 }
