@@ -202,7 +202,6 @@ const getMap = (components) => {
       map.removeLayer(tileLayer);
       map.addLayer(aerialLayer);
     } else {
-      console.log('initial load?');
       tileLayer.setUrl(`${tileserver}${year}/${layers.join(',')}/{z}/{x}/{y}.png`);
       if (map.hasLayer(aerialLayer)) map.removeLayer(aerialLayer);
       if (!map.hasLayer(tileLayer)) map.addLayer(tileLayer);
