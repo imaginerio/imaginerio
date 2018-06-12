@@ -48,7 +48,7 @@
     position: absolute;
     z-index: 2500;
     right: 15px;
-    bottom: 115px;
+    bottom: $mobile-filmstrip-button-bottom;
   }
 
   #filmstrip.partial .raster-type-labels {
@@ -56,7 +56,7 @@
     position: absolute;
     z-index: 2500;
     right: 20px;
-    bottom: 135px;
+    bottom: $mobile-filmstrip-label-bottom;
     margin-right: 50px;
   }
 
@@ -97,5 +97,15 @@
     width: 90px;
     height: 90px;
     background-size: cover;
+  }
+  @media (min-width: $mobile-landscape-min-width) {
+    $shift-buttons: 20px;
+    #filmstrip.partial .raster-types {
+      bottom: $mobile-filmstrip-button-bottom - $shift-buttons;
+    }
+  
+    #filmstrip.partial .raster-type-labels {
+      bottom: $mobile-filmstrip-label-bottom - $shift-buttons;
+    }
   }
 }

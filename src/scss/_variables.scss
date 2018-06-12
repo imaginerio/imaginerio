@@ -2,9 +2,6 @@ $mobile-width: 700px;
 $mobile-landscape-min-width: 415px;
 $mobile-portrait-max-width: 414px;
 
-// $pale-green: #AAC4BF;
-// $dark-green: #337164;
-// $darker-green: #2F675B;
 
 $pale-green: #92A1BE;
 $dark-green: #032A74;
@@ -41,6 +38,9 @@ $stepper-color-hover: #333;
 $stepper-color-disabled: #ccc;
 
 $fixed-probe-padding: 20px;
+
+$mobile-filmstrip-button-bottom: 115px;
+$mobile-filmstrip-label-bottom: $mobile-filmstrip-button-bottom + 20px;
 
 @mixin mobile-back-arrow() {
   color: $dark-green;

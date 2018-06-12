@@ -21,6 +21,7 @@ const getFilmstrip = (components) => {
         filmstrip.toggleClass('collapsed');
       } else {
         filmstrip.toggleClass('partial');
+        toggleButtonsLandscape();
       }
     });
 
@@ -185,8 +186,25 @@ const getFilmstrip = (components) => {
     return thumb;
   }
 
+  function toggleButtonsLandscape() {
+    const { init } = components;
+    const { mobileLandscape } = init;
+    console.log('land', mobileLandscape);
+    if (!mobileLandscape) return;
+
+    if (filmstrip.hasClass('partial')) {
+      $('.probe-area--mobile').addClass('menu-on');
+      $('#overlay-info').addClass('menu-on');
+    } else {
+      $('.probe-area--mobile').removeClass('menu-on');
+      $('#overlay-info').removeClass('menu-on');
+    }
+  }
+
   function showAll() {
+    console.log('showAll');
     filmstrip.removeClass('partial');
+    toggleButtonsLandscape();
     $('.lightbox').css('display', 'flex');
     $('.lightbox .content > div').remove();
     const container = $('<div>').attr('class', 'all-thumbs').appendTo('.lightbox .content');
