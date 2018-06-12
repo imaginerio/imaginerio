@@ -147,7 +147,7 @@ const getLegend = (components) => {
     
 
     plans.forEach((plan) => {
-      const row = $('<div>').attr('class', 'search-result')
+      const row = $('<div>').attr('class', 'search-result plan-legend-row')
         .append('<i class="icon-right-dir"></i>')
         .append('<i class="icon-down-dir"></i>')
         .appendTo(cat);
