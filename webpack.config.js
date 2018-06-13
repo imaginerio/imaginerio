@@ -3,11 +3,11 @@ const path = require('path');
 module.exports = {
   entry: ['babel-polyfill', './src/js/entry.js'],
   output: {
-    path: path.join(__dirname, 'src'),
-    filename: 'js_build/bundle.js',
+    path: path.join(__dirname, 'js_build'),
+    filename: 'bundle.js',
   },
   devServer: {
-    contentBase: path.join(__dirname, 'src'),
+    contentBase: path.join(__dirname, 'dist'),
     compress: true,
     port: 8080,
   },
@@ -16,15 +16,6 @@ module.exports = {
   devtool: 'inline-source-map',
   module: {
     rules: [
-      // {
-      //   test: /\.js$/,
-      //   enforce: 'pre',
-      //   exclude: /node_modules/,
-      //   loader: 'eslint-loader',
-      //   options: {
-      //     fix: true,
-      //   },
-      // },
       {
         test: /\.js$/, 
         exclude: [/node_modules/], 

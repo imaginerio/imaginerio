@@ -1,4 +1,4 @@
 npm-debug.log*
 node_modules/
-src/js_build
-src/css/styles.css
+bundle.js
+styles.css
