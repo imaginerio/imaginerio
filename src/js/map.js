@@ -422,15 +422,14 @@ const getMap = (components) => {
       const probeCoords = { x, y };
       mapProbe(probeCoords, probeContent);
     };
-    // console.log('zoomto', zoomTo);
-    if (!mobile) {
-      if (zoomTo) {
-        // map.once('moveend zoomend', addProbe);
-        map.fitBounds(highlightLayerBottom.getBounds());
-      } else {
-        // addProbe();
-      }
+    if (zoomTo) {
+      map.fitBounds(highlightLayerBottom.getBounds());
     }
+    // if (!mobile) {
+    //   if (zoomTo) {
+    //     map.fitBounds(highlightLayerBottom.getBounds());
+    //   }
+    // }
   };
 
   M.clearSelected = () => {
