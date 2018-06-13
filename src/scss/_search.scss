@@ -64,6 +64,17 @@
   cursor: pointer;
 }
 
+// .search-return-button:hover {
+//   color: #333;
+// }
+
+// .search-return-to-legend-text:hover {
+//   color: #333;
+// }
+.search-return-highlighted {
+  color: #333;
+}
+
 .search-return-container {
   height: $mobile-search-height;
   align-items: center;

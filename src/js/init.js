@@ -302,7 +302,6 @@ const getInit = (components) => {
       .text(mobile ? 'Return to Map' : 'Return to Legend');
     $('.search-return-button, .search-return-to-legend-text')
       .click(() => {
-        console.log('back to legend');
         if ($('main').hasClass('eras')) {
           goToStart();
           return;
@@ -312,6 +311,14 @@ const getInit = (components) => {
         // Search.clear();
         Search.clearAndClose();
         $('header').removeClass('search');
+      })
+      .on('mouseover', () => {
+        $('.search-return-button, .search-return-to-legend-text')
+          .addClass('search-return-highlighted');
+      })
+      .on('mouseout', () => {
+        $('.search-return-button, .search-return-to-legend-text')
+          .removeClass('search-return-highlighted');
       });
     if (mobile) {
       $('.mobile-back-to-map-button').click(() => {
