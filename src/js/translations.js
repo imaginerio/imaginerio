@@ -3,7 +3,7 @@ const translations = [
     name: 'jump-to-era',
     selector: '.era-dropdown-text',
     en: 'Jump to era... ',
-    pr: 'Jump to era... ',
+    pr: 'Ir direto para o período... ',
   },
   {
     name: 'h1',
