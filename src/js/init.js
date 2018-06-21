@@ -63,7 +63,6 @@ const getInit = (components) => {
   }
 
   function loadNames(callback) {
-    console.log('language', language);
     $.getJSON(`${server}names/${language}`, (namesData) => {
       Init.names = namesData;
       if (callback !== undefined) callback();
@@ -169,9 +168,7 @@ const getInit = (components) => {
     };
 
     const closeDropdownMobile = (e) => {
-      console.log('close drop mobile', e);
       if (!$(e.target).hasClass('language-dropdown-option')) {
-        console.log('stop prop');
         e.stopPropagation();
       }
 
@@ -240,9 +237,7 @@ const getInit = (components) => {
     } else {
       dropdownButton
         .on('touchstart', (e) => {
-          console.log('click drop', e.isPropagationStopped());
           if (optionsContainer.hasClass('language-dropdown-content--on')) {
-            console.log('is open');
             closeDropdownMobile(e);
             return;
           }
@@ -256,7 +251,6 @@ const getInit = (components) => {
     const eventType = mobile ? 'touchstart' : 'click';
 
     otherLanguage.on(eventType, function switchLanguage() {
-      console.log('LANGUAGE CLICK');
       const newLanguage = $(this).attr('data-language');
       language = newLanguage;
       Init.language = language;
@@ -406,7 +400,6 @@ const getInit = (components) => {
     $('main').addClass('start');
     // console.log('show dropdown');
     $('.language-dropdown').removeClass('language-dropdown--off');
-    console.log('language', language);
     $('.title-container h1')
       .html(translations.find(d => d.name === 'h1')[language]);
 
@@ -442,7 +435,6 @@ const getInit = (components) => {
     $('main').removeClass('start');
     $('#eras-button .back-to-page-text').html(translations.find(d => d.name === 'start')[language]);
     let e = eras[i];
-    console.log('e[language]', e[language]);
     Filmstrip.setYear(e.dates[0], e.dates[1]);
     Map.setYear(e.dates[0]);
 

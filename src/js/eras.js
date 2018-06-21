@@ -18,7 +18,7 @@ const eras = [
     increment: 1,
     name: 'Royal Rule',
     notes: '',
-    zoom: 14,
+    zoom: 15,
   },
   {
     attachments: '',
@@ -28,7 +28,7 @@ const eras = [
     increment: 1,
     name: 'Imperial Rule I',
     notes: '',
-    zoom: 14,
+    zoom: 15,
   },
   {
     attachments: '',
@@ -58,7 +58,7 @@ const eras = [
     increment: 1,
     name: 'First Republic',
     notes: '',
-    zoom: 14,
+    zoom: 13,
   },
   {
     attachments: '',
@@ -68,7 +68,7 @@ const eras = [
     increment: 1,
     name: 'Vargas Era',
     notes: '',
-    zoom: 14,
+    zoom: 13,
   },
   {
     attachments: '',
@@ -78,7 +78,7 @@ const eras = [
     increment: 1,
     name: 'Democratic Interlude',
     notes: '',
-    zoom: 14,
+    zoom: 13,
   },
   {
     attachments: '',
@@ -88,7 +88,7 @@ const eras = [
     increment: 1,
     name: 'Military Dictatorship',
     notes: '',
-    zoom: 14,
+    zoom: 12,
   },
   {
     attachments: '',
@@ -98,7 +98,7 @@ const eras = [
     increment: 1,
     name: 'New Republic',
     notes: '',
-    zoom: 14,
+    zoom: 12,
   },
 ];
 
