@@ -435,6 +435,8 @@ const getInit = (components) => {
     $('main').removeClass('start');
     $('#eras-button .back-to-page-text').html(translations.find(d => d.name === 'start')[language]);
     let e = eras[i];
+    zoomToEra(e);
+    console.log('e', e);
     Filmstrip.setYear(e.dates[0], e.dates[1]);
     Map.setYear(e.dates[0]);
 
@@ -504,7 +506,9 @@ const getInit = (components) => {
       }
     }
     
-    $('.go-button').html(`${translations.find(d => d.name === 'go-to-map')[language]} <i class="icon-right-big"></i>`).toggleClass('era', !mobile)
+    $('.go-button')
+      .html(`${translations.find(d => d.name === 'go-to-map')[language]} <i class="icon-right-big"></i>`)
+      .toggleClass('era', !mobile)
       .off('click')
       .on('click', () => {
         goToEra(e);
@@ -517,10 +521,14 @@ const getInit = (components) => {
   function goToEra(e) {
     $('main').removeClass('eras');
     Dispatch.call('setyear', this, e.dates[0]);
+    zoomToEra(e);
+    updateHash();
+  }
+
+  function zoomToEra(e) {
     if (e.center !== '' && e.zoom !== '') {
       Map.setView(e.center, e.zoom);
     }
-    updateHash();
   }
   
   function formatYear(y) {
