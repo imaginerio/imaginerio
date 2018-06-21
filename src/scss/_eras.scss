@@ -126,17 +126,19 @@
 
 .intro-buttons {
   text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
 .intro-buttons > * {
-  display: inline-block;
-  vertical-align: middle;
+  // display: inline-block;
+  // vertical-align: middle;
   margin: 0 10px;
 }
 
 .era-dropdown {
   position: relative;
-  width: 197px;
+  // width: 197px;
   height: 60px;
   display: none;
 }
@@ -145,12 +147,16 @@
   display: inline-block;
 }
 
-.era-dropdown select, .era-dropdown div {
+.era-dropdown select {
   position: absolute;
+}
+
+.era-dropdown select, .era-dropdown div {
+  // position: absolute;
   left: 0;
-  width: 165px;
+  // width: 165px;
   height: 54px;
-  padding: 0 0 0 32px;
+  padding: 0 25px 0 32px;
   -webkit-appearance: none;
   background: transparent;
   line-height: 30px;

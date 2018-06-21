@@ -7,7 +7,7 @@
     "start": "node index.js",
     "dev": "npm run remove-css && npm run start-dev-server",
     "start-dev-server": "node_modules/.bin/webpack-dev-server --hot --inline",
-    "remove-css": "rm -f -- src/css/styles.css",
+    "remove-css": "rm -f -- dist/styles.css",
     "build": "node_modules/.bin/webpack -p --config webpack.config.prod.js",
     "postinstall": "node_modules/.bin/webpack -p --config webpack.config.prod.js"
   },

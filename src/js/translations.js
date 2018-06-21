@@ -43,7 +43,7 @@ const translations = [
   {
     name: 'start',
     en: 'start',
-    pr: 'início',
+    pr: 'o início',
   },
   {
     name: 'click-for-details',
@@ -114,7 +114,7 @@ const eraTranslations = [
   {
     name: '1946-1964',
     en: 'Democratic Interlude',
-    pr: 'Período democrático',
+    pr: 'Período Democrático',
   },
   {
     name: '1964-1985',
