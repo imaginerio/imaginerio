@@ -68,6 +68,11 @@ const translations = [
     en: 'Tap the map to explore...',
     pr: 'Tap the map to explore...',
   },
+  {
+    name: 'plans',
+    en: 'Urban Projects',
+    pr: 'Projetos Urbanos',
+  },
 ];
 
 const eraTranslations = [

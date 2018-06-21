@@ -133,7 +133,14 @@ const getLegend = (components) => {
   }
 
   function addPlans() {
-    const { dispatch } = components;
+    const {
+      dispatch,
+      translations,
+      init,
+    } = components;
+
+    const { language } = init;
+
     const cat = $('<div>')
       .attr('class', 'legend-category')
       .attr('data-category', 'feature')
@@ -142,7 +149,7 @@ const getLegend = (components) => {
 
     $('<div>')
       .attr('class', 'category-title')
-      .html('PLANS/PLANOS')
+      .html(translations.find(d => d.name === 'plans')[language].toUpperCase())
       .appendTo(cat);
     
 
