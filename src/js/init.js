@@ -265,17 +265,21 @@ const getInit = (components) => {
   }
 
   function updateLanguage() {
+    console.log('update language');
     loadNames(() => {
       Dispatch.call('updatelanguage', this);
     });
   }
 
   function updateUILanguage() {
+    console.log('updateUILanguage', language);
     translations
       .filter(d => d.name !== '' && Object.prototype.hasOwnProperty.call(d, 'selector'))
       .forEach((d) => {
         $(d.selector).html(d[language]);
       });
+    $('.search-input-container input')
+      .attr('placeholder', translations.find(d => d.name === 'search-map-layers')[language]);
     setEraDropdownText();
   }
 
@@ -562,7 +566,6 @@ const getInit = (components) => {
     params.center = hash[3] && hash[4] ? [parseFloat(hash[3]), parseFloat(hash[4]) ] : '';
     params.layers = hash[5] ? hash[5].split( '&' ) : [];
     params.raster = hash[6] ? hash[6] : '';
-    console.log(params);
   }
   
   function updateHash() {

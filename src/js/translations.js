@@ -73,6 +73,12 @@ const translations = [
     en: 'Urban Projects',
     pr: 'Projetos Urbanos',
   },
+  {
+    name: 'search-map-layers',
+    selector: '.search-map-layers-text',
+    en: 'Search map layers...',
+    pr: 'Buscar nas camadas do mapa...',
+  },
 ];
 
 const eraTranslations = [
