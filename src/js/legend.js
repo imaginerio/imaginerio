@@ -56,7 +56,9 @@ const getLegend = (components) => {
     // get layer data
     $.getJSON(`${server}layers/${year}`, (layersJson) => {
       const { dispatch } = components;
-      const { language } = init;
+      const { names } = init;
+      // console.log('names', names);
+
       layers = layersJson;
       // console.log('legend layers', layersJson);
 
@@ -65,10 +67,10 @@ const getLegend = (components) => {
           .attr('class', 'legend-category')
           .attr('data-category', 'feature')
           .appendTo('.legend-contents');
+        // console.log('layers', layersJson);
+        // console.log('cat name', categoryName);
 
-        const names = categoryName.toUpperCase().split('/');
-        
-        const title = language === 'en' ? names[0] : names[1];
+        const title = names[categoryName.toLowerCase()].toUpperCase();
         $('<div>')
           .attr('class', 'category-title')
           .html(title)

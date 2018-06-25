@@ -65,6 +65,7 @@ const getInit = (components) => {
   function loadNames(callback) {
     $.getJSON(`${server}names/${language}`, (namesData) => {
       Init.names = namesData;
+      // console.log('names', Init.names);
       if (callback !== undefined) callback();
     });
   }
@@ -272,7 +273,6 @@ const getInit = (components) => {
   }
 
   function updateUILanguage() {
-    console.log('updateUILanguage', language);
     translations
       .filter(d => d.name !== '' && Object.prototype.hasOwnProperty.call(d, 'selector'))
       .forEach((d) => {
