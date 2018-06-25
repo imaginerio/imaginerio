@@ -1,2 +1,8 @@
 npm-debug.log*
 node_modules/
+
+src/leaflet/*
+src/jquery/*
+src/underscore/*
+src/d3-dispatch/*
+src/hammerjs/*
