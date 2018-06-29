@@ -12,3 +12,4 @@ cp node_modules/d3-dispatch/build/d3-dispatch.min.js src/d3-dispatch/build/d3-di
 cp node_modules/hammerjs/hammer.min.js src/hammerjs/hammer.min.js
 
 aws s3 sync src s3://instituterice.axismaps.com
+aws cloudfront create-invalidation --distribution-id E1TLG7RZUOW3J3 --paths /\*
