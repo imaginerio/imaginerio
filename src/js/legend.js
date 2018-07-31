@@ -34,26 +34,36 @@ let Legend = (function($, dispatch) {
         _.each(layersJson, function (category, categoryName) {
           let cat = $('<div>').attr('class', 'legend-category').appendTo('.legend-contents');
           $('<div>').attr('class', 'category-title').html(categoryName.toUpperCase()).appendTo(cat);
-          _.each(category, function (obj) { // there's an extra level here
-            _.each(obj, function (group, groupName) {
-              let gr = $('<div>').attr('class', 'legend-group').attr('data-group', groupName).appendTo(cat);
-              let groupTitle = $('<div>').attr('class', 'group-title').appendTo(gr);
-              $('<label>')
-                .html(names[groupName.toLowerCase()] || groupName)
-                .prepend('<input type="checkbox" value="' + groupName + '"checked>')
-                .appendTo(groupTitle);
-              _.each(group.features, function (feature) {
-                let layer = $('<div>').attr('class', 'layer').appendTo(gr);
-                addLayerExisting(feature, layer);
-                let plan = getPlansForLayer(feature);
-                if (plan) {
-                  addLayerPlanned(feature, layer, plan);
-                }
-              });
 
-              let swatch = add_swatch(group.style).appendTo(groupTitle);
-            });
+          _.each(category, function (obj, objName) { // there's an extra level here
+            if (obj.features) addLayerGroup (obj, objName);
+            else _.each(obj, addLayerGroup);
           });
+
+
+          function addLayerGroup (group, groupName) {
+            let gr = $('<div>').attr('class', 'legend-group').attr('data-group', groupName).appendTo(cat);
+            let groupTitle = $('<div>').attr('class', 'group-title').appendTo(gr);
+            $('<label>')
+              .html(names[groupName.toLowerCase()] || groupName)
+              .prepend('<input type="checkbox" value="' + groupName + '"checked>')
+              .appendTo(groupTitle);
+            _.each(group.features, function (feature, key) {
+              console.log(feature)
+              let layer = $('<div>').attr('class', 'layer').appendTo(gr);
+              addLayerExisting(feature, key, layer);
+              if (feature.style) {
+                add_swatch(feature.style).appendTo(layer);
+                layer.addClass('styled');
+              }
+              let plan = getPlansForLayer(feature);
+              if (plan) {
+                addLayerPlanned(feature, key, layer, plan);
+              }
+            });
+
+            let swatch = add_swatch(group.style).appendTo(groupTitle);
+          }
         });
 
         if (plans.length) {
@@ -65,7 +75,7 @@ let Legend = (function($, dispatch) {
           }
           $('<div>').attr('class', 'category-title').html('PLANS').appendTo(cat);
           let gr = $('<div>').attr('class', 'legend-group').attr('data-group', 'views').appendTo(cat);
-          addLayerPlanned('Plans', gr, plans, false, true).html('<i class="icon-tsquare"></i>Plans (' + year + ')')
+          addLayerPlanned('Plans', '', gr, plans, false, true).html('<i class="icon-tsquare"></i>Plans (' + year + ')')
         }
 
         plans.forEach(function (plan) {
@@ -79,8 +89,8 @@ let Legend = (function($, dispatch) {
             let gr = $('<div>').attr('class', 'legend-group planned').appendTo('.legend-contents');
             let layer = $('<div>').attr('class', 'layer').appendTo(gr);
             features.forEach(function (feature) {
-              addLayerExisting(feature, layer, true);
-              addLayerPlanned(feature, layer, [plan], true);
+              addLayerExisting(feature, '', layer, true);
+              addLayerPlanned(feature, '', layer, [plan], true);
             });
           }
         })
@@ -110,7 +120,8 @@ let Legend = (function($, dispatch) {
     return planArray;
   }
 
-  function addLayerExisting (name, container, notpresent) {
+  function addLayerExisting (feature, key, container, notpresent) {
+    let name = feature.id ? key : feature;
     let l = $('<div>')
       .attr('class', 'layer-existing')
       .attr('data-name', name)
@@ -126,7 +137,8 @@ let Legend = (function($, dispatch) {
       }
   }
 
-  function addLayerPlanned (name, container, planArray, onlyPlan, wholePlan) {
+  function addLayerPlanned (feature, key, container, planArray, onlyPlan, wholePlan) {
+    let name = feature.id ? key : feature;
     let div = $('<div>')
       .attr('class', 'layer-plans')
       .data('name', name)

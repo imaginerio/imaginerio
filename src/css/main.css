@@ -725,6 +725,15 @@ header.search #controls-right .search-hide {
   cursor: pointer;
 }
 
+.layer.styled .layer-existing {
+  width: 140px;
+}
+
+.layer.styled .swatch {
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .plans-dropdown {
   position: absolute;
   border-radius: 5px;
