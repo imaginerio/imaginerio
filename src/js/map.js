@@ -158,7 +158,7 @@ let Map = (function($, dispatch) {
     removeViewsheds();
     viewshedPoints = null;
     $.getJSON(server + 'visual/' + year, function(json) {
-      if (!json.features.length) return;
+      if (!json.features || !json.features.length) return;
       let points = _.map(json.features, function (f) {
         return {type:'Feature', 
           properties: _.extend(

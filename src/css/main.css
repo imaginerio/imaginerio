@@ -697,7 +697,7 @@ header.search #controls-right .search-hide {
   margin-right: 10px;
 }
 
-.group-title .swatch {
+.swatch {
   float: right;
   margin-top: 10px;
   width: 60px;
@@ -730,8 +730,7 @@ header.search #controls-right .search-hide {
 }
 
 .layer.styled .swatch {
-  display: inline-block;
-  vertical-align: middle;
+  margin-top: 5px;
 }
 
 .plans-dropdown {

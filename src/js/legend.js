@@ -62,7 +62,7 @@ let Legend = (function($, dispatch) {
               }
             });
 
-            let swatch = add_swatch(group.style).appendTo(groupTitle);
+          if (group.style) add_swatch(group.style).appendTo(groupTitle);
           }
         });
 
@@ -81,7 +81,7 @@ let Legend = (function($, dispatch) {
         plans.forEach(function (plan) {
           let features = [];
           plan.features.forEach(function (feature) {
-            if (!$('.layer-existing[data-name="' + feature + '"]').length) features.push(feature);
+            if (!$('.layer-existing[data-name="' + plan.featuretyp + '"]').length) features.push(feature);
           });
           if (features.length) {
             let cat = $('<div>').attr('class', 'legend-category').appendTo('.legend-contents');
@@ -112,7 +112,7 @@ let Legend = (function($, dispatch) {
     if (!plans) return;
     let planArray;
     plans.forEach(function (plan) {
-      if (plan.features.indexOf(layer) !== -1) {
+      if (plan.featuretyp == layer.indexOf(layer) !== -1) {
         if (!planArray) planArray = [];
         planArray.push(plan);
       }
