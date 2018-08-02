@@ -146,7 +146,7 @@ let Legend = (function($, dispatch) {
     let div = $('<div>')
       .attr('class', 'layer-plans')
       .data('name', name)
-      .data('plans', _.pluck(planArray, 'name'))
+      .data('plans', _.pluck(planArray, 'planname'))
       .html('Plans')
       .prepend('<i class="icon-tsquare">')
       .appendTo(container)
@@ -164,7 +164,7 @@ let Legend = (function($, dispatch) {
           .appendTo('main')
         planArray.forEach(function (p) {
           $('<p>')
-            .attr('class', 'plan-menu-item' + (div.data('selected-plan') == p.name ? ' highlighted' : ''))
+            .attr('class', 'plan-menu-item' + (div.data('selected-plan') == p.planname ? ' highlighted' : ''))
             .html(p.planname)
             .appendTo(menu)
             .click(function (e) {
@@ -174,7 +174,7 @@ let Legend = (function($, dispatch) {
               } else {
                 highlightPlan(p.planname, wholePlan ? undefined : name);
                 div.addClass('highlighted');
-                div.data('selected-plan', p.name);
+                div.data('selected-plan', p.planname);
               }
             });
         });
@@ -235,8 +235,7 @@ let Legend = (function($, dispatch) {
   function highlightPlan (planName, feature) {
     dispatch.call('removehighlight', this);
     Dispatch.call('removeprobe', this);
-    let url = server + 'plan?name=' + encodeURIComponent(planName);
-    if (feature) url += '&feature=' + feature;
+    let url = server + 'plan/' + encodeURIComponent(planName);
     $.getJSON(url, function (json) {
       dispatch.call('highlightfeature', this, json);
       if (mobile) legend.addClass('collapsed');
