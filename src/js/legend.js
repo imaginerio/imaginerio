@@ -49,17 +49,16 @@ let Legend = (function($, dispatch) {
               .prepend('<input type="checkbox" value="' + groupName + '"checked>')
               .appendTo(groupTitle);
             _.each(group.features, function (feature, key) {
-              console.log(feature)
               let layer = $('<div>').attr('class', 'layer').appendTo(gr);
               addLayerExisting(feature, key, layer);
               if (feature.style) {
                 add_swatch(feature.style).appendTo(layer);
                 layer.addClass('styled');
               }
-              let plan = getPlansForLayer(feature);
-              if (plan) {
-                addLayerPlanned(feature, key, layer, plan);
-              }
+              // let plan = getPlansForLayer(feature);
+              // if (plan) {
+              //   addLayerPlanned(feature, key, layer, plan);
+              // }
             });
 
           if (group.style) add_swatch(group.style).appendTo(groupTitle);
@@ -75,25 +74,29 @@ let Legend = (function($, dispatch) {
           }
           $('<div>').attr('class', 'category-title').html('PLANS').appendTo(cat);
           let gr = $('<div>').attr('class', 'legend-group').attr('data-group', 'views').appendTo(cat);
-          addLayerPlanned('Plans', '', gr, plans, false, true).html('<i class="icon-tsquare"></i>Plans (' + year + ')')
+          let unique = _.uniq(plans, false, function (p) {
+            return p.planname;
+          });
+          addLayerPlanned('Plans', '', gr, unique, false, true).html('<i class="icon-tsquare"></i>Plans (' + year + ')')
         }
 
-        plans.forEach(function (plan) {
-          let features = [];
-          plan.features.forEach(function (feature) {
-            if (!$('.layer-existing[data-name="' + plan.featuretyp + '"]').length) features.push(feature);
-          });
-          if (features.length) {
-            let cat = $('<div>').attr('class', 'legend-category').appendTo('.legend-contents');
-            $('<div>').attr('class', 'category-title').html(plan.name.toUpperCase()).appendTo(cat);
-            let gr = $('<div>').attr('class', 'legend-group planned').appendTo('.legend-contents');
-            let layer = $('<div>').attr('class', 'layer').appendTo(gr);
-            features.forEach(function (feature) {
-              addLayerExisting(feature, '', layer, true);
-              addLayerPlanned(feature, '', layer, [plan], true);
-            });
-          }
-        })
+        // plans.forEach(function (plan) {
+        //   if (!$('.layer-existing[data-name="' + plan.featuretyp + '"]').length) {
+        //     if (!$('.legend-category[data-name="' + plan.planname + '"]').length) {
+
+        //     }
+        //   }features.push(plan);
+        //   if (features.length) {
+        //     let cat = $('<div>').attr('class', 'legend-category').appendTo('.legend-contents');
+        //     $('<div>').attr('class', 'category-title').html(plan.planname.toUpperCase()).appendTo(cat);
+        //     let gr = $('<div>').attr('class', 'legend-group planned').appendTo('.legend-contents');
+        //     let layer = $('<div>').attr('class', 'layer').appendTo(gr);
+        //     features.forEach(function (feature) {
+        //       addLayerExisting(feature, '', layer, true);
+        //       addLayerPlanned(feature, '', layer, [plan], true);
+        //     });
+        //   }
+        // })
 
         dispatch.call('setlayers', this, Lg.layers());
         dispatch.call('statechange', this);
@@ -110,9 +113,10 @@ let Legend = (function($, dispatch) {
 
   function getPlansForLayer (layer) {
     if (!plans) return;
+    let name = layer.id ? layer.id : layer;
     let planArray;
     plans.forEach(function (plan) {
-      if (plan.featuretyp == layer.indexOf(layer) !== -1) {
+      if (plan.featuretyp.toLowerCase() == name) {
         if (!planArray) planArray = [];
         planArray.push(plan);
       }
@@ -161,14 +165,14 @@ let Legend = (function($, dispatch) {
         planArray.forEach(function (p) {
           $('<p>')
             .attr('class', 'plan-menu-item' + (div.data('selected-plan') == p.name ? ' highlighted' : ''))
-            .html(p.name)
+            .html(p.planname)
             .appendTo(menu)
             .click(function (e) {
-              if (div.data('selected-plan') == p.name) {
+              if (div.data('selected-plan') == p.planname) {
                 div.data('selected-plan', null);
                 dispatch.call('removehighlight', this);
               } else {
-                highlightPlan(p.name, wholePlan ? undefined : name);
+                highlightPlan(p.planname, wholePlan ? undefined : name);
                 div.addClass('highlighted');
                 div.data('selected-plan', p.name);
               }
