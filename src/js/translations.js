@@ -65,7 +65,7 @@ const translations = [
   {
     name: 'probe-area-text',
     selector: '.probe-area-text',
-    en: 'Expore by area ',
+    en: 'Explore by area ',
     pr: 'Explorar por área ',
   },
   {
