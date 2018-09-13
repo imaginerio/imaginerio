@@ -101,7 +101,7 @@ const getMap = (components) => {
     function showLocation(latlng) {
       if (locationMarker && map.hasLayer(locationMarker)) map.removeLayer(locationMarker);
       if (!locationBounds.contains(latlng)) {
-        alert('Geolocation is only supported in Beirut.');
+        alert('Geolocation is only supported in Rio.');
         map.stopLocate();
       } else {
         locationMarker = L.circleMarker(latlng, {
