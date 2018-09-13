@@ -4,8 +4,8 @@
 	 width="60px" height="20px" viewBox="0 0 60 20" enable-background="new 0 0 60 20" xml:space="preserve">
 <style type="text/css">
 	.syn0{fill:#E5BAC2;}
-	.syn{opacity:0.8;fill:#FFFFFF;enable-background:new    ;}
-	.syn{fill:#C18694;}
+	.syn1{opacity:0.8;fill:#FFFFFF;enable-background:new    ;}
+	.syn2{fill:#C18694;}
 </style>
 <path class="syn0" d="M11.3,17.4c-0.4,0-0.6-0.3-0.6-0.6V3.4c0-0.4,0.3-0.6,0.6-0.6h37.3c0.3,0,0.7,0.3,0.7,0.6v13.4
 	c0,0.4-0.3,0.6-0.7,0.6H11.3z"/>
