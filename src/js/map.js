@@ -37,6 +37,7 @@ const getMap = (components) => {
   let highlightTopStyle;
   let highlightMarkerBottomStyle;
   let highlightMarkerTopStyle;
+  let planAttribution;
 
   let layers = ['all']; // either 'all' or a list of DISABLED layers
 
@@ -316,6 +317,7 @@ const getMap = (components) => {
   M.removeHighlight = () => {
     const { probes } = components;
     probes.hideMapProbe();
+    map.attributionControl.removeAttribution(M.planAttribution);
 
     if (highlightLayerBottom && map.hasLayer(highlightLayerBottom)) map.removeLayer(highlightLayerBottom).removeLayer(highlightLayerTop);
     return M;
@@ -358,13 +360,17 @@ const getMap = (components) => {
   };
 
   M.drawPlanFeature = (name) => {
-    const { init } = components;
-    const { server } = init;
+    const { init, translations } = components;
+    const { server, language } = init;
 
     $.getJSON(`${server}plan/${encodeURI(name)}`, (json) => {
       const { features } = json;
       if (features.length > 0) {
         M.drawLoadedFeature(json);
+        map.attributionControl.removeAttribution(M.planAttribution);
+        const attr = translations.find(d => d.name.match(name));
+        M.planAttribution = attr[language];
+        map.attributionControl.addAttribution(M.planAttribution);
       }
     });
   };

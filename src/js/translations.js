@@ -140,4 +140,27 @@ const eraTranslations = [
   },
 ];
 
-export default [...translations, ...eraTranslations];
+const planCredits = [
+  {
+    name: 'Beaurepaire-Rohan 1840-1843',
+    en: 'Interpreted by Verena Andreatta',
+    pr: 'Interpretado por Verena Andreatta',
+  },
+  {
+    name: 'Comissão de Melhoramentos 1875-1876',
+    en: 'Interpreted by Verena Andreatta',
+    pr: 'Interpretado por Verena Andreatta',
+  },
+  {
+    name: 'Pereira Passos 1903-1906',
+    en: 'Interpreted by Verena Andreatta',
+    pr: 'Interpretado por Verena Andreatta',
+  },
+  {
+    name: 'Le Corbusier',
+    en: 'Interpreted by Farès el-Dahdah',
+    pr: 'Interpretado por Farès el-Dahdah',
+  },
+];
+
+export default [...translations, ...eraTranslations, ...planCredits];
