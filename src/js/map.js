@@ -214,7 +214,7 @@ const getMap = (components) => {
       const Dispatch = dispatch;
       const { mapProbe } = probes;
 
-      if (!json.features.length) return;
+      if (!json.features || !json.features.length) return;
       const points = _.map(json.features, f => ({
         type: 'Feature',
         properties: _.extend(
