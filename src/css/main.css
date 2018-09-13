@@ -462,7 +462,7 @@ header.search #controls-right .search-hide {
   cursor: pointer;
 }
 
-.geolocate-control .icon-spinner, .geolocate-control.locating .icon-direction {
+.geolocate-control, .geolocate-control .icon-spinner, .geolocate-control.locating .icon-direction {
   display: none;
 }
 
@@ -1375,6 +1375,10 @@ i.icon-ok:hover,
 
   .flex-column {
     position: relative;
+  }
+
+  .geolocate-control {
+    display: block;
   }
   
   /*HEADER*/
