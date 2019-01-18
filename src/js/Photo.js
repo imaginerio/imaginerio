@@ -16,40 +16,44 @@ const getPhoto = (components) => {
     let request;
 
     function getMetadata() {
-      request = $.getJSON(`https://www.sscommons.org/openlibrary/secure/imagefpx/${data.id}/7731849/5`, (json) => {
-        P.metadata = json[0];
-        P.metadata.imageServer = P.metadata.imageServer.replace(/^http/, 'https');
-        tempImages.forEach((img) => {
-          img.div.empty().css('background-image', 'url(' + getUrl(img.size) + ')');
-          if (img.setDimensions) {
-            const s = P.getScaled(img.size);
-            img.div.css('width', s[0] + 'px').css('height', s[1] + 'px');
-          }
+      window.fetch('https://library.artstor.org/api/secure/userinfo', { credentials: 'include' })
+        .then(() => {
+          window.fetch(`https://library.artstor.org/api/v1/metadata?object_ids=${data.id}&openlib=true`, { credentials: 'include' })
+            .then(res => res.text())
+            .then((text) => {
+              const json = JSON.parse(text);
+              [P.metadata] = json.metadata;
+              tempImages.forEach((img) => {
+                img.div.empty().css('background-image', `url(${getUrl(img.size)})`);
+                if (img.setDimensions) {
+                  const s = P.getScaled(img.size);
+                  img.div.css('width', `${s[0]}px`).css('height', `${s[1]}px`);
+                }
+              });
+            });
         });
-  
-        request = $.ajax(`https://www.sscommons.org/openlibrary/secure/metadata/${data.id}?_method=FpHtml`, {
-          dataType: 'html',
-          success(html) {
-            P.href = $(html).find('td').last().text()
-              .replace(/\s/gm, '');
-          },
-        });
-      });
+      P.href = `https://library.artstor.org/#/asset/${data.id}`;
     }
-  
+
     getMetadata();
-  
+
     function getUrl(size) {
       const scaled = P.getScaled(size);
-      return P.metadata.imageServer + P.metadata.imageUrl + '&&wid=' + scaled[0] + '&hei=' + scaled[1] + '&rgnn=0,0,1,1&cvt=JPEG';
+      let imgPath;
+      if (P.metadata.image_url.lastIndexOf('.fpx') > -1) {
+        imgPath = `/${P.metadata.image_url.substring(0, P.metadata.image_url.lastIndexOf('.fpx') + 4)}`;
+      } else {
+        imgPath = `/${P.metadata.image_url}`;
+      }
+      return `https://tsprod.artstor.org/rosa-iiif-endpoint-1.0-SNAPSHOT/fpx${encodeURIComponent(imgPath)}/full/${Math.round(scaled[0])},${Math.round(scaled[1])}/0/native.jpg`;
     }
-  
+
     P.getImage = (size, setDimensionsOnLoad) => {
       const div = $('<div>')
         .append('<i class="icon-circle-notch animate-spin"></i>')
         .bind('destroyed', () => {
           divs.splice(divs.indexOf(div), 1);
-          if (!divs.length && request && request.readyState != 4) {
+          if (!divs.length && request && request.readyState !== 4) {
             request.abort();
             request = null;
           }
@@ -61,11 +65,11 @@ const getPhoto = (components) => {
           getMetadata();
         }
       } else {
-        div.empty().css('background-image', 'url(' + getUrl(size) + ')');
+        div.empty().css('background-image', `url(${getUrl(size)})`);
       }
       return div;
-    }
-  
+    };
+
     P.getScaled = (size) => {
       let newSize = [];
       const ratio = P.metadata.width / P.metadata.height;
@@ -80,9 +84,10 @@ const getPhoto = (components) => {
       } else {
         newSize = [size[0], size[0] / ratio];
       }
+      console.log(newSize);
       return newSize;
     };
-  
+
     return P;
   };
   return Photo;
