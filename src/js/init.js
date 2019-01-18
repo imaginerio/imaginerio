@@ -17,10 +17,10 @@ const getInit = (components) => {
   let server = 'https://irio.axismaps.io/';
   let tileserver = 'https://irio.axismaps.io/tiles/';
   let rasterserver = 'https://irio.axismaps.io/raster/';
-  
+
   const thumbnaillUrl = 'https://mdxdv.artstor.org/thumb/imgstor/size1/sslps/c7731849/';
   const imageUrl = 'https://mdxdv.artstor.org/thumb/imgstor/size2/sslps/c7731849/';
-  
+
   let years;
   let year;
   const minYear = 1830;
@@ -28,31 +28,29 @@ const getInit = (components) => {
   let language;
   let currentEra = eras[0];
   const darkBlue = 'rgb(1, 34, 95)';
-  
+
   Init.mapProbing = false;
-  
-  
+
   const params = {};
-  
-  (function($){
+
+  (function ($) {
     $.event.special.destroyed = {
-      remove: function(o) {
+      remove(o) {
         if (o.handler) {
-          o.handler()
+          o.handler();
         }
-      }
-    }
-  })(jQuery)
-  
+      },
+    };
+  }(jQuery));
+
   // runtime stuff
-  
   const mobile = window.innerWidth <= 700;
   const mobileLandscape = mobile && window.innerWidth >= 415;
 
-  if (gup( 'dev' ) == 'true') {
-    server = 'https://imaginerio-dev.axismaps.io:3000';
-    tileserver = 'http://imaginerio-dev.axismaps.io:3001/tiles/';
-    rasterserver = 'http://imaginerio-dev.axismaps.io:3001/raster/';
+  if (gup('dev') === 'true') {
+    server = 'https://imaginerio-dev.axismaps.io/';
+    tileserver = 'http://imaginerio-dev.axismaps.io/tiles/';
+    rasterserver = 'http://imaginerio-dev.axismaps.io/raster/';
   }
 
   function loadTimeline(callback) {
@@ -84,7 +82,6 @@ const getInit = (components) => {
   checkHash();
   year = params.year || 1565; // a year that actually has something
   language = params.language || 'en';
-  
 
   loadTimeline(() => {
     loadNames(() => {
@@ -98,11 +95,10 @@ const getInit = (components) => {
   };
 
   preloadImages();
-  
+
   function initialize() {
     eras[eras.length - 1].dates[1] = new Date().getFullYear();
-    
-    
+
     Map.initialize('map').setYear(year);
     Timeline.initialize(eras, 'timeline').setYear(year);
     Filmstrip.initialize();
@@ -112,12 +108,11 @@ const getInit = (components) => {
     init_ui();
     updateEra();
 
-  
     if (params.year) {
       Filmstrip.setYear(year);
       $('main').removeClass('eras');
     }
-  
+
     if (params.zoom) {
       Map.setView(params.center, params.zoom);
     }
@@ -175,7 +170,7 @@ const getInit = (components) => {
 
       optionsContainer.removeClass('language-dropdown-content--on');
       $('body').off('touchstart', closeDropdownMobile);
-      
+
       // const target = $(e.target);
       // const isMenu = target.hasClass('language-dropdown-option') ||
       //   target.hasClass('language-dropdown-content') ||
@@ -226,7 +221,7 @@ const getInit = (components) => {
             closeDropdown();
           }, menuCloseDelay);
         });
-  
+
       optionsContainer
         .on('mouseover', () => {
           stopDropdownTimer();
@@ -255,7 +250,7 @@ const getInit = (components) => {
       const newLanguage = $(this).attr('data-language');
       language = newLanguage;
       Init.language = language;
-      
+
       // show/hide dropdown options
       setDropdownOptionVisibility();
       updateLanguage();
@@ -322,23 +317,22 @@ const getInit = (components) => {
       $('.mobile-back-to-map-button').click(() => {
         $('#legend').toggleClass('collapsed');
       });
-      
+
       $('#filmstrip').addClass('collapsed').insertBefore('#map');
     } else {
       $('.mobile').hide();
     }
-    
-  
+
     // $('#fixed-probe .icon-times').click(function onClick() {
     //   // show probe-hint???
     //   $('#fixed-probe').hide();
     //   Dispatch.call('removehighlight', this);
     //   Map.clearSelected();
     // });
-  
+
     $('.lightbox').click(function onClick(e) {
       // close on background click
-      if (e.target == this || $(e.target).hasClass('icon-times')) {
+      if (e.target === this || $(e.target).hasClass('icon-times')) {
         $('.lightbox').hide();
         $('.lightbox').removeClass('register');
       }
@@ -438,7 +432,7 @@ const getInit = (components) => {
   function showEra(i, noTransition) {
     $('main').removeClass('start');
     $('#eras-button .back-to-page-text').html(translations.find(d => d.name === 'start')[language]);
-    let e = eras[i];
+    const e = eras[i];
     zoomToEra(e);
     console.log('e', e);
     Filmstrip.setYear(e.dates[0], e.dates[1]);
@@ -447,7 +441,7 @@ const getInit = (components) => {
     if (noTransition) {
       $('.era-intro .era-description-inner').remove();
       $('<div class="era-description-inner">')
-        .append('<p class="era-description">' + e.description + '<p>')
+        .append(`<p class="era-description">${e.description}<p>`)
         .appendTo('.era-description-container')
         .css('margin-left', '0%');
       $('.era-years').html(e.dates.map(formatYear).join(' – '))
@@ -455,35 +449,35 @@ const getInit = (components) => {
       $('#intro h1').html(e[language])
         .css('margin-left', '0%');
     } else {
-      let dur = 500;
-      let endOld = i < $('#intro').data('era') ? '100%' : '-100%';
-      let startNew = i < $('#intro').data('era') ? '-100%' : '0%';
-      let newDesc = $('<div class="era-description-inner">')
-         .append('<p class="era-description">' + e.description + '<p>')
-         .css('margin-left', startNew);
-      let newYear = $('<p class="era-years">')
-         .html(e.dates.map(formatYear).join(' – '))
-         .css('margin-left', startNew);
-      let newTitle = $('<h1>' + e[language] + '</h1>')
+      const dur = 500;
+      const endOld = i < $('#intro').data('era') ? '100%' : '-100%';
+      const startNew = i < $('#intro').data('era') ? '-100%' : '0%';
+      const newDesc = $('<div class="era-description-inner">')
+        .append(`<p class="era-description">${e.description}<p>`)
         .css('margin-left', startNew);
-      if (startNew == '-100%') {
+      const newYear = $('<p class="era-years">')
+        .html(e.dates.map(formatYear).join(' – '))
+        .css('margin-left', startNew);
+      const newTitle = $(`<h1>${e[language]}</h1>`)
+        .css('margin-left', startNew);
+      if (startNew === '-100%') {
         newDesc.prependTo('.era-description-container')
           .animate({
-             'margin-left': '0%'
-          }, dur, function () {
+            'margin-left': '0%',
+          }, dur, () => {
             $('.era-description-inner').last().remove();
           });
         newYear.prependTo('.era-years-container')
           .animate({
-             'margin-left': '0%'
-          }, dur, function () {
-            $('.era-years').last().remove()
+            'margin-left': '0%',
+          }, dur, () => {
+            $('.era-years').last().remove();
           });
         newTitle.prependTo('.title-container')
           .animate({
-             'margin-left': '0%'
-          }, dur, function () {
-            $('.title-container h1').last().remove()
+            'margin-left': '0%',
+          }, dur, () => {
+            $('.title-container h1').last().remove();
           });
       } else {
         $('.era-description-inner').last()
@@ -509,7 +503,7 @@ const getInit = (components) => {
         newTitle.appendTo('.title-container');
       }
     }
-    
+
     $('.go-button')
       .html(`${translations.find(d => d.name === 'go-to-map')[language]} <i class="icon-right-big"></i>`)
       .toggleClass('era', !mobile)
@@ -518,10 +512,10 @@ const getInit = (components) => {
         goToEra(e);
       });
     $('#intro').data('era', i);
-    $('#era-stepper .icon-angle-left').toggleClass('disabled', (i == 0));
-    $('#era-stepper .icon-angle-right').toggleClass('disabled', (i == eras.length - 1));
+    $('#era-stepper .icon-angle-left').toggleClass('disabled', (i === 0));
+    $('#era-stepper .icon-angle-right').toggleClass('disabled', (i === eras.length - 1));
   }
-  
+
   function goToEra(e) {
     $('main').removeClass('eras');
     Dispatch.call('setyear', this, e.dates[0]);
@@ -534,27 +528,23 @@ const getInit = (components) => {
       Map.setView(e.center, e.zoom);
     }
   }
-  
+
   function formatYear(y) {
-    if (y < 0) return - y + ' BC';
+    if (y < 0) return `${-y} BC`;
     return y;
   }
-  
-  function gup(name) {
-    name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
-    var regexS = "[\\?&]"+name+"=([^&#]*)";
-    var regex = new RegExp( regexS );
-    var results = regex.exec( window.location.href );
-    if( results == null )
-      return "";
-    else
-      return results[1];
-  }
-  
-  function checkHash() {
 
-    
-    const hash = window.location.hash.replace( '#', '' ).replace(/\?.+$/, '').split( '/' );
+  function gup(name) {
+    name = name.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
+    const regexS = `[\\?&]${name}=([^&#]*)`;
+    const regex = new RegExp(regexS);
+    const results = regex.exec(window.location.href);
+    if (results == null) { return ''; }
+    return results[1];
+  }
+
+  function checkHash() {
+    const hash = window.location.hash.replace('#', '').replace(/\?.+$/, '').split('/');
 
     if (hash.length > 1) {
       console.log('hide dropdown');
@@ -562,12 +552,12 @@ const getInit = (components) => {
     }
     params.language = hash[0] ? hash[0] : '';
     params.year = hash[1] ? parseInt(hash[1], 10) : '';
-    params.zoom = hash[2] ? parseInt(hash[2]) : '';
-    params.center = hash[3] && hash[4] ? [parseFloat(hash[3]), parseFloat(hash[4]) ] : '';
-    params.layers = hash[5] ? hash[5].split( '&' ) : [];
+    params.zoom = hash[2] ? parseInt(hash[2], 10) : '';
+    params.center = hash[3] && hash[4] ? [parseFloat(hash[3]), parseFloat(hash[4])] : '';
+    params.layers = hash[5] ? hash[5].split('&') : [];
     params.raster = hash[6] ? hash[6] : '';
   }
-  
+
   function updateHash() {
     // console.log('update hash');
     if ($('main').hasClass('eras')) {
@@ -581,16 +571,16 @@ const getInit = (components) => {
     }
     layers = layers.join('&');
     const raster = $('#overlay-info').data('p') ? $('#overlay-info').data('p').data.id : '';
-  
+
     const mapView = Map.getView();
-  
-    window.location.hash = language + "/" + year + "/" + mapView[1] + "/" + mapView[0].lat + "/" + mapView[0].lng + "/" + layers + "/" + raster;
-  
-    $('.twitter').attr('href', $('.twitter').attr('data-href') + 'text=imagineRio' + '&url=' + encodeURIComponent(window.location.href));
-    $('.fb-share-btn').attr('href', $('.fb-share-btn').attr('data-href') + '&u=' + encodeURIComponent(window.location.href));
+
+    window.location.hash = `${language}/${year}/${mapView[1]}/${mapView[0].lat}/${mapView[0].lng}/${layers}/${raster}`;
+
+    $('.twitter').attr('href', `${$('.twitter').attr('data-href')}text=imagineRio` + `&url=${encodeURIComponent(window.location.href)}`);
+    $('.fb-share-btn').attr('href', `${$('.fb-share-btn').attr('data-href')}&u=${encodeURIComponent(window.location.href)}`);
     // Update Social Media links
     // $( '.twitter-button a' ).attr( 'href', 'https://twitter.com/intent/tweet?url=' + encodeURIComponent( window.location.href ) );
-  
+
     // $( '.facebook-button a' ).attr('href', 'http://www.facebook.com/sharer/sharer.php?u=imaginerio.org/' + encodeURIComponent( window.location.hash ) + '&title=Imagine Rio');
   }
 
@@ -599,7 +589,7 @@ const getInit = (components) => {
       .attr('class', 'icon-circle-notch animate-spin');
     const layers = Legend.layers().sort().join(',');
     const raster = $('#overlay-info').data('p') ? $('#overlay-info').data('p').data.file : 'null';
-    const url = server + 'export/en/' + year + '/' + layers + '/' + raster + '/' + Map.getBounds().toBBoxString() + '/';
+    const url = `${server}export/en/${year}/${layers}/${raster}/${Map.getBounds().toBBoxString()}/`;
     console.log('raster', raster);
     console.log('export url', url);
     document.getElementById('download_iframe').src = url;
