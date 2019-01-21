@@ -2,3 +2,8 @@ npm-debug.log*
 node_modules/
 bundle.js
 styles.css
+/src/d3-dispatch
+/src/hammerjs
+/src/jquery
+/src/leaflet
+/src/underscore
