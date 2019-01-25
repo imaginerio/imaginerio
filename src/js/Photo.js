@@ -30,9 +30,9 @@ const getPhoto = (components) => {
                   img.div.css('width', `${s[0]}px`).css('height', `${s[1]}px`);
                 }
               });
+              P.href = `https://library.artstor.org/#/asset/${P.metadata.object_id}`;
             });
         });
-      P.href = `https://library.artstor.org/#/asset/${data.id}`;
     }
 
     getMetadata();
