@@ -150,7 +150,7 @@ const getProbes = (components) => {
           .attr('class', 'image blue-button')
           .attr('href', 'https://www.sscommons.org/openlibrary/' + p.href + '&fs=true')
           .attr('target', 'blank')
-          .html('View image on SharedShelf Commons')
+          .html('View image on Artstor')
           .appendTo(buttonContainer);
       });
 
