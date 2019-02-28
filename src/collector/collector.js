@@ -22,33 +22,35 @@ let tooltips = {
 
 let metaserver = 'https://beirut.axismaps.io';
 let tileserver = 'https://beirut.axismaps.io/tiles/';
-let year;
-let maxYear = 2017;
+let year = 1950;
+let minYear = 1800;
+let maxYear = 2019;
 let tiles = {};
 let shown = {};
 
 /* General Map */
 let leafletMap = L.map('map', {
-  center: [29.717, -95.402],
+  center: [33.9, 35.5],
+  maxBounds: [[33.8297,35.4142],[33.9509,35.56]],
   zoom: 16,
-  minZoom: 15,
+  minZoom: 14,
   maxZoom: 18,
   doubleClickZoom: false
 });
 
-let base = L.tileLayer(tileserver + year + '/{z}/{x}/{y}.png').addTo(leafletMap);
+let base = L.tileLayer(tileserver + year + '/all/{z}/{x}/{y}.png').addTo(leafletMap);
 
 /* Slider */
-let pipValues = _.range(1900, 2025, 25);
+let pipValues = _.range(minYear, 2025, 25);
 pipValues.push(maxYear);
 
 let slider = noUiSlider.create(document.querySelector('.slider'), {
-  start: [1900],
+  start: [minYear],
   connect: false,
   step: 1,
   range: {
-    min: [1900],
-    max: [2017]
+    min: [minYear],
+    max: [maxYear]
   },
   pips: {
     mode: 'values',
