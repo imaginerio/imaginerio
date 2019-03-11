@@ -1,9 +1,10 @@
 function rasterProbe (p) {
   Dispatch.call('removeall', this);
-  $('#fixed-probe .content').empty();
+  $('#fixed-probe .content, #fixed-probe .probe-credits-row').empty();
   $('#fixed-probe').show().removeClass('map-feature');
   $('.search-results').hide();
   let title = $('<p>').attr('class', 'fixed-probe-title').html(p.data.description).appendTo('#fixed-probe .content');
+  $('#fixed-probe .probe-credits-row').append(`${p.data.creator || ''}<br>${p.data.date || ''} <span class="image-credit">${p.data.credits || ''}</span>`);
   console.log(p)
   if (p.data.layer == 'viewsheds') {
     console.log(Filmstrip.getRasters())
