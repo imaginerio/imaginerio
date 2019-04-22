@@ -48,7 +48,7 @@ function rasterProbe (p) {
         .appendTo(div);
       $('<a>')
         .attr('class', 'image blue-button')
-        .attr('href', 'https://www.sscommons.org/openlibrary/' + p.href + '&fs=true')
+        .attr('href', p.href)
         .attr('target', 'blank')
         .html('View image on Artstor')
         .appendTo(div);
