@@ -1,12 +1,19 @@
 #timeline {
   height: $timeline-height;
   padding: 0 30px;
-  box-shadow: 0 4px 4px rgba(0,0,0,.1);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, .1);
   position: relative;
   z-index: 1;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none
 }
 
-.year-stepper, .timeline-inner {
+.year-stepper,
+.timeline-inner {
   display: inline-block;
   vertical-align: middle;
 }
@@ -20,7 +27,7 @@
   margin-right: 20px;
 }
 
-.year-stepper > * {
+.year-stepper>* {
   display: inline-block;
   vertical-align: middle;
 }
@@ -37,7 +44,8 @@
   cursor: pointer;
 }
 
-.year-stepper i:before, .stepper i:before {
+.year-stepper i:before,
+.stepper i:before {
   color: $stepper-color;
   border-radius: 12.5px;
   border: 1px solid $stepper-color;
@@ -52,7 +60,8 @@
   border-color: $stepper-color-hover;
 }
 
-.year-stepper i.disabled:before, .year-stepper i.disabled:hover:before {
+.year-stepper i.disabled:before,
+.year-stepper i.disabled:hover:before {
   color: $stepper-color-disabled;
   border-color: $stepper-color-disabled;
 }
@@ -70,11 +79,16 @@
   border-radius: 5px;
   position: absolute;
   overflow: hidden;
-  background: #7ca2ce; /* Old browsers */
-  background: -moz-linear-gradient(left, $pale-green 0%, $dark-green 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(left, $pale-green 0%,$dark-green 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to right, $pale-green 0%,$dark-green 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$pale-green', endColorstr='$dark-green',GradientType=1 ); /* IE6-9 */
+  background: #7ca2ce;
+  /* Old browsers */
+  background: -moz-linear-gradient(left, $pale-green 0%, $dark-green 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, $pale-green 0%, $dark-green 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, $pale-green 0%, $dark-green 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$pale-green', endColorstr='$dark-green', GradientType=1);
+  /* IE6-9 */
 }
 
 .timeline-slider {
@@ -136,7 +150,8 @@
   font-size: 12px;
 }
 
-.ticks:first-child .tick:first-child, .ticks:last-child .tick:last-child {
+.ticks:first-child .tick:first-child,
+.ticks:last-child .tick:last-child {
   border: none;
 }
 
@@ -187,8 +202,8 @@
 
 #timeline .era {
   position: absolute;
-  width: 0; 
-  height: 0; 
+  width: 0;
+  height: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
   border-bottom: 5px solid white;
@@ -196,7 +211,8 @@
   margin-left: -5px;
 }
 
-#timeline .era:first-child, #timeline .era:last-child {
+#timeline .era:first-child,
+#timeline .era:last-child {
   display: none;
 }
 
