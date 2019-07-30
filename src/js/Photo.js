@@ -15,9 +15,9 @@ let Photo = function (data, thumbUrl) {
   let request;
 
   function getMetadata() {
-    window.fetch('https://library.artstor.org/api/secure/userinfo', { credentials: 'include' })
+    window.fetch('http://128.42.130.20:8080/rest/login?email=ualas@rice.edu&password=JXW5K39uydN5SKWL', { credentials: 'include' })
       .then(() => {
-        window.fetch(`https://library.artstor.org/api/v1/metadata?object_ids=${data.id}&openlib=true`, { credentials: 'include' })
+        window.fetch(`http://128.42.130.20:8080/rest/items/b5424092-44a1-4a78-a324-4583111feeed/bitstreams`, { credentials: 'include' })
           .then(res => res.text())
           .then((text) => {
             const json = JSON.parse(text);
