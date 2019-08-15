@@ -541,6 +541,7 @@ header.search #controls-right .search-hide {
   margin: 20px 10px;
   cursor: pointer;
   background-color: #eee;
+  background-size: contain;
 }
 
 #filmstrip .filmstrip-thumbnail:first-child {

@@ -17,11 +17,12 @@ let Photo = function (data, thumbUrl) {
   function getMetadata() {
     window.fetch('http://128.42.130.20:8080/rest/login?email=ualas@rice.edu&password=JXW5K39uydN5SKWL', { credentials: 'include' })
       .then(() => {
-        window.fetch(`http://128.42.130.20:8080/rest/items/b5424092-44a1-4a78-a324-4583111feeed/bitstreams`, { credentials: 'include' })
+        console.log(P);
+        window.fetch(`http://128.42.130.20:8080/rest/items/${P.data.id}/bitstreams`, { credentials: 'include' })
           .then(res => res.text())
           .then((text) => {
             const json = JSON.parse(text);
-            [P.metadata] = json.metadata;
+            [P.metadata] = json;
             tempImages.forEach((img) => {
               img.div.empty().css('background-image', `url(${getUrl(img.size)})`);
               if (img.setDimensions) {
@@ -36,15 +37,8 @@ let Photo = function (data, thumbUrl) {
 
   getMetadata();
 
-  function getUrl(size) {
-    const scaled = P.getScaled(size);
-    let imgPath;
-    if (P.metadata.image_url.lastIndexOf('.fpx') > -1) {
-      imgPath = `/${P.metadata.image_url.substring(0, P.metadata.image_url.lastIndexOf('.fpx') + 4)}`;
-    } else {
-      imgPath = `/${P.metadata.image_url}`;
-    }
-    return `https://tsprod.artstor.org/rosa-iiif-endpoint-1.0-SNAPSHOT/fpx${encodeURIComponent(imgPath)}/full/${Math.round(scaled[0])},${Math.round(scaled[1])}/0/native.jpg`;
+  function getUrl() {
+    return `http://128.42.130.20:8080${P.metadata.retrieveLink}`;
   }
 
   P.getImage = function (size, setDimensionsOnLoad) {
