@@ -15,10 +15,10 @@ let Photo = function (data, thumbUrl) {
   let request;
 
   function getMetadata() {
-    window.fetch('http://128.42.130.20:8080/rest/login?email=ualas@rice.edu&password=JXW5K39uydN5SKWL', { credentials: 'include' })
-      .then(() => {
-        console.log(P);
-        window.fetch(`http://128.42.130.20:8080/rest/items/${P.data.id}/bitstreams`, { credentials: 'include' })
+    window.fetch(`http://128.42.130.20:8080/rest/handle/${P.data.id}`, { credentials : 'include' })
+      .then(res => res.json())
+      .then((meta) => {
+        window.fetch(`http://128.42.130.20:8080/rest/items/${meta.uuid}/bitstreams`, { credentials: 'include' })
           .then(res => res.text())
           .then((text) => {
             const json = JSON.parse(text);
