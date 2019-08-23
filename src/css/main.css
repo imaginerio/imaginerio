@@ -521,6 +521,7 @@ header.search #controls-right .search-hide {
   overflow: hidden;
   margin: 0 3px;
   background-color: #eee;
+  background-size: cover;
 }
 
 .mini-thumbs i {
@@ -839,6 +840,7 @@ header.search #controls-right .search-hide {
   display: block;
   background-repeat: no-repeat;
   cursor: pointer;
+  background-size: cover;
 }
 
 #fixed-probe hr {
@@ -1139,6 +1141,7 @@ header.search #controls-right .search-hide {
 
 .lightbox-image {
   margin: 20px auto;
+  background-size: cover;
 }
 
 .lightbox a.image {
