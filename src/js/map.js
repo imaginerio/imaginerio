@@ -222,15 +222,12 @@ const getMap = (components) => {
           f.properties,
           {
             cone: L.geoJSON(
-              {
-                type: 'Feature',
-                geometry: f.geometry,
-              },
+              _.find(f.geometry.geometries, g => g.type === 'Polygon'),
               { style() { return viewshedConeStyle; } },
             ),
           },
         ),
-        geometry: { type: 'Point', coordinates: f.geometry.coordinates[0][0] },
+        geometry: _.find(f.geometry.geometries, g => g.type === 'Point'),
       }));
       viewshedPoints = L.geoJSON({ type: 'FeatureCollection', features: points }, {
 
