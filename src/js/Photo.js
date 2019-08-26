@@ -25,13 +25,20 @@ const getPhoto = (components) => {
               const json = JSON.parse(text);
               [P.metadata] = json;
               tempImages.forEach((img) => {
-                img.div.empty().css('background-image', `url(${getUrl(img.size)})`);
-                if (img.setDimensions) {
-                  const s = P.getScaled(img.size);
-                  img.div.css('width', `${s[0]}px`).css('height', `${s[1]}px`);
-                }
+                const image = new Image();
+                image.onload = function () {
+                  img.div.empty().css('background-image', `url(${getUrl()})`);
+                  P.metadata.width = this.width;
+                  P.metadata.height = this.height;
+                  img.div.empty().css('background-image', `url(${getUrl(img.size)})`);
+                  if (img.setDimensions) {
+                    const s = P.getScaled(img.size);
+                    img.div.css('width', `${s[0]}px`).css('height', `${s[1]}px`);
+                  }
+                };
+                image.src = getUrl();
               });
-              P.href = `https://library.artstor.org/#/asset/${P.metadata.object_id}`;
+              P.href = `https://library.artstor.org/#/asset/${P.data.repository}`;
             });
         });
     }
