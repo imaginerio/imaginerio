@@ -16,13 +16,14 @@ const getPhoto = (components) => {
     let request;
 
     function getMetadata() {
-      window.fetch('https://library.artstor.org/api/secure/userinfo', { credentials: 'include' })
-        .then(() => {
-          window.fetch(`https://library.artstor.org/api/v1/metadata?object_ids=${data.id}&openlib=true`, { credentials: 'include' })
+      window.fetch(`http://128.42.130.20:8080/rest/handle/${P.data.id}`, { credentials: 'include' })
+        .then(res => res.json())
+        .then((meta) => {
+          window.fetch(`http://128.42.130.20:8080/rest/items/${meta.uuid}/bitstreams`, { credentials: 'include' })
             .then(res => res.text())
             .then((text) => {
               const json = JSON.parse(text);
-              [P.metadata] = json.metadata;
+              [P.metadata] = json;
               tempImages.forEach((img) => {
                 img.div.empty().css('background-image', `url(${getUrl(img.size)})`);
                 if (img.setDimensions) {
@@ -37,15 +38,8 @@ const getPhoto = (components) => {
 
     getMetadata();
 
-    function getUrl(size) {
-      const scaled = P.getScaled(size);
-      let imgPath;
-      if (P.metadata.image_url.lastIndexOf('.fpx') > -1) {
-        imgPath = `/${P.metadata.image_url.substring(0, P.metadata.image_url.lastIndexOf('.fpx') + 4)}`;
-      } else {
-        imgPath = `/${P.metadata.image_url}`;
-      }
-      return `https://tsprod.artstor.org/rosa-iiif-endpoint-1.0-SNAPSHOT/fpx${encodeURIComponent(imgPath)}/full/${Math.round(scaled[0])},${Math.round(scaled[1])}/0/native.jpg`;
+    function getUrl() {
+      return `http://128.42.130.20:8080${P.metadata.retrieveLink}`;
     }
 
     P.getImage = (size, setDimensionsOnLoad) => {
