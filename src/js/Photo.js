@@ -16,10 +16,10 @@ const getPhoto = (components) => {
     let request;
 
     function getMetadata() {
-      window.fetch(`http://128.42.130.20:8080/rest/handle/${P.data.id}`, { credentials: 'include' })
+      window.fetch(`https://dmi.rice.edu:8443/rest/handle/${P.data.id}`, { credentials: 'include' })
         .then(res => res.json())
         .then((meta) => {
-          window.fetch(`http://128.42.130.20:8080/rest/items/${meta.uuid}/bitstreams`, { credentials: 'include' })
+          window.fetch(`https://dmi.rice.edu:8443/rest/items/${meta.uuid}/bitstreams`, { credentials: 'include' })
             .then(res => res.text())
             .then((text) => {
               const json = JSON.parse(text);
@@ -46,7 +46,7 @@ const getPhoto = (components) => {
     getMetadata();
 
     function getUrl() {
-      return `http://128.42.130.20:8080${P.metadata.retrieveLink}`;
+      return `https://dmi.rice.edu:8443${P.metadata.retrieveLink}`;
     }
 
     P.getImage = (size, setDimensionsOnLoad) => {
