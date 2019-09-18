@@ -573,6 +573,7 @@ header.search #controls-right .search-hide {
   overflow: hidden;
   margin: 0 3px;
   background-color: #eee;
+  background-size: cover;
 }
 
 .mini-thumbs i {
@@ -593,6 +594,7 @@ header.search #controls-right .search-hide {
   margin: 20px 10px;
   cursor: pointer;
   background-color: #eee;
+  background-size: cover;
 }
 
 #filmstrip .filmstrip-thumbnail:first-child {
@@ -910,6 +912,7 @@ header.search #controls-right .search-hide {
   display: block;
   background-repeat: no-repeat;
   cursor: pointer;
+  background-size: cover;
 }
 
 #fixed-probe hr {
