@@ -15,36 +15,37 @@ let Photo = function (data, thumbUrl) {
   let request;
 
   function getMetadata() {
-    window.fetch('https://library.artstor.org/api/secure/userinfo', { credentials: 'include' })
-      .then(() => {
-        window.fetch(`https://library.artstor.org/api/v1/metadata?object_ids=${data.id}&openlib=true`, { credentials: 'include' })
+    window.fetch(`https://dmi.rice.edu:8443/rest/handle/${P.data.id}`, { credentials: 'include' })
+      .then(res => res.json())
+      .then((meta) => {
+        window.fetch(`https://dmi.rice.edu:8443/rest/items/${meta.uuid}/bitstreams`, { credentials: 'include' })
           .then(res => res.text())
           .then((text) => {
             const json = JSON.parse(text);
-            [P.metadata] = json.metadata;
+            [P.metadata] = json;
             tempImages.forEach((img) => {
-              img.div.empty().css('background-image', `url(${getUrl(img.size)})`);
-              if (img.setDimensions) {
-                const s = P.getScaled(img.size);
-                img.div.css('width', `${s[0]}px`).css('height', `${s[1]}px`);
-              }
+              const image = new Image();
+              image.onload = function () {
+                img.div.empty().css('background-image', `url(${getUrl()})`);
+                P.metadata.width = this.width;
+                P.metadata.height = this.height;
+                img.div.empty().css('background-image', `url(${getUrl(img.size)})`);
+                if (img.setDimensions) {
+                  const s = P.getScaled(img.size);
+                  img.div.css('width', `${s[0]}px`).css('height', `${s[1]}px`);
+                }
+              };
+              image.src = getUrl();
             });
-            P.href = `https://library.artstor.org/#/asset/${P.metadata.object_id}`;
+            P.href = `https://library.artstor.org/#/asset/${P.data.repository}`;
           });
       });
   }
 
   getMetadata();
 
-  function getUrl(size) {
-    const scaled = P.getScaled(size);
-    let imgPath;
-    if (P.metadata.image_url.lastIndexOf('.fpx') > -1) {
-      imgPath = `/${P.metadata.image_url.substring(0, P.metadata.image_url.lastIndexOf('.fpx') + 4)}`;
-    } else {
-      imgPath = `/${P.metadata.image_url}`;
-    }
-    return `https://tsprod.artstor.org/rosa-iiif-endpoint-1.0-SNAPSHOT/fpx${encodeURIComponent(imgPath)}/full/${Math.round(scaled[0])},${Math.round(scaled[1])}/0/native.jpg`;
+  function getUrl() {
+    return `https://dmi.rice.edu:8443${P.metadata.retrieveLink}`;
   }
 
   P.getImage = function (size, setDimensionsOnLoad) {
