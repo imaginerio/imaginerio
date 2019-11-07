@@ -1230,6 +1230,7 @@ header.search #controls-right .search-hide {
 
 .lightbox-image {
   margin: 20px auto;
+  background-size: contain;
 }
 
 .lightbox a.image {
