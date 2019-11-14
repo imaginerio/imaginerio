@@ -22,7 +22,11 @@ let Photo = function (data, thumbUrl) {
           .then(res => res.text())
           .then((text) => {
             const json = JSON.parse(text);
-            [P.metadata] = json;
+            if (json.length > 1) {
+              P.metadata = json.find(i => i.mimeType.match(/image/));
+            } else {
+              [P.metadata] = json;
+            }
             tempImages.forEach((img) => {
               const image = new Image();
                 image.onload = function () {
