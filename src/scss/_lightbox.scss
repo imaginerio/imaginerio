@@ -47,6 +47,7 @@
 .lightbox-image {
   margin: 20px auto;
   background-size: cover;
+  max-height: calc(80% - 90px);
 }
 
 .lightbox a.image {
