@@ -17,17 +17,17 @@ let Photo = function (data, thumbUrl) {
   function getMetadata() {
     tempImages.forEach((img) => {
       const image = new Image();
-        image.onload = function () {
-          img.div.empty().css('background-image', `url(${getUrl()})`);
-          P.metadata.width = this.width;
-          P.metadata.height = this.height;
-          img.div.empty().css('background-image', `url(${getUrl(img.size)})`);
-          if (img.setDimensions) {
-            const s = P.getScaled(img.size);
-            img.div.css('width', `${s[0]}px`).css('height', `${s[1]}px`);
-          }
+      image.addEventListener('load', function () {
+        img.div.empty().css('background-image', `url(${getUrl()})`);
+        P.metadata.width = this.width;
+        P.metadata.height = this.height;
+        img.div.empty().css('background-image', `url(${getUrl(img.size)})`);
+        if (img.setDimensions) {
+          const s = P.getScaled(img.size);
+          img.div.css('width', `${s[0]}px`).css('height', `${s[1]}px`);
         }
-        image.src = getUrl();
+      });
+      image.src = getUrl();
     });
     P.href = `https://library.artstor.org/#/asset/${P.data.repository}`;
   }
@@ -36,13 +36,12 @@ let Photo = function (data, thumbUrl) {
 
   function getUrl(size) {
     let imgSize = 'thumb';
-    console.log(size);
     if (size && (size[0] > 400 || size[1] > 400 )){
       imgSize = 'full';
     } else if (size && (size[0] >= 150 || size[1] >= 150 )){
       imgSize = 'medium';
     }
-    return `http://instituterice-images.s3-website-us-east-1.amazonaws.com/${P.data.file}/${imgSize}.jpg`;
+    return `https://instituterice-images.s3.amazonaws.com/${P.data.file}/${imgSize}.jpg`;
   }
 
   P.getImage = function (size, setDimensionsOnLoad) {
